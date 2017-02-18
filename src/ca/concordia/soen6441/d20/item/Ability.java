@@ -1,0 +1,22 @@
+package ca.concordia.soen6441.d20.item;
+
+public class Ability {
+	private int score;
+	private int modifier;
+	
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public int getModifier() {
+		return modifier;
+	}
+	public void setModifier(int modifier) {
+		this.modifier = modifier;
+	}
+	
+	
+
+}
