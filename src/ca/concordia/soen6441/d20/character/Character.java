@@ -18,11 +18,15 @@ public class Character extends GameObject {
 	
 	protected List<Ability> abilities;
 	protected List<Item> wearItems;
-		
-	public Character() {
-		super();
+	
+	public Character(int initialPosistionX, int initialPositionY) {
+		super(initialPosistionX, initialPositionY);
 		abilities = new ArrayList<>();
 		wearItems = new ArrayList<>();
+	}
+		
+	public Character() {
+		this(0, 0);
 	}
 
 	/**

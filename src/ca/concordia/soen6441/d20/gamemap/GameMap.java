@@ -48,12 +48,12 @@ public class GameMap {
 		return elements.get(location);
 	}
 	
-	private void emptyMap() {
-		for(int i=0; i<this.height; i++){
-			for(int j=0; j<this.width; j++) {
-				this.field[i][j] = EMPTY;
-			}
-		}
+	public int getWidth() {
+		return this.width;
+	}
+	
+	public int getHeight() {
+		return this.height;
 	}
 	
 	/**
@@ -106,6 +106,11 @@ public class GameMap {
 		return true;
 	}
 	
-	
-
+	private void emptyMap() {
+		for(int i=0; i<this.height; i++){
+			for(int j=0; j<this.width; j++) {
+				this.field[i][j] = EMPTY;
+			}
+		}
+	}
 }
