@@ -2,19 +2,22 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="dungeons" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>test.sample_entities.GameObjectModel</class>
+		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntity</class>
 		<class>Test</class>
-		<class>test.sample_entities.FighterModel</class>
-		<class>test.sample_entities.GameMapModel</class>
+		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.FighterEntity</class>
+		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.GameMapEntity</class>
+		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.WallEntity</class>
+		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntity</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby:firstdb;create=true"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:dungeonsdb;create=true"/>
 			<property name="javax.persistence.jdbc.user" value=""/>
 			<property name="javax.persistence.jdbc.password" value=""/>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.connection.autocommit" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>
