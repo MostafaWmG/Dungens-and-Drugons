@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -23,7 +24,7 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance
-@DiscriminatorColumn(name="GAMEOBJ_TYPE")
+@DiscriminatorColumn(name="OBJ_TYPE")
 @Table(name="GAME_OBJECT")
 public abstract class GameObjectEntity implements Serializable {
 	/**

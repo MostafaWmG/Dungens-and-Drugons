@@ -5,9 +5,9 @@ package test.ca.concordia.soen6441.model.persistence.sample_entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * This is a mock class which represents a fighter. It is created for testing
@@ -20,24 +20,38 @@ import javax.persistence.Table;
 //@Table(name="FIGHTER")
 public class FighterEntity extends GameObjectEntity implements Serializable {
 
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "FighterEntity [items=" + items + ", getId()=" + getId() + "]";
+	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private ArrayList<ItemEntity> items;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(
+			name="FIGHTER_ITEMS",
+			joinColumns=@JoinColumn(name="MAP_ID", referencedColumnName="ID"),
+			inverseJoinColumns=@JoinColumn(name="OBJECT_ID", referencedColumnName="ID"))
+	private List<ItemEntity> items;
 	
 	/**
 	 * @return the items
 	 */
-	public ArrayList<ItemEntity> getItems() {
+	public List<ItemEntity> getItems() {
 		return items;
 	}
 
 	/**
 	 * @param items the items to set
 	 */
-	public void setItems(ArrayList<ItemEntity> items) {
+	public void setItems(List<ItemEntity> items) {
 		this.items = items;
 	}
 

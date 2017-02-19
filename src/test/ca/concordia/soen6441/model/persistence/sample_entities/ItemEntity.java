@@ -11,7 +11,7 @@ import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEn
  *
  */
 @Entity
-
+//@Table(name="ITEM")
 public class ItemEntity extends GameObjectEntity implements Serializable {
 
 	

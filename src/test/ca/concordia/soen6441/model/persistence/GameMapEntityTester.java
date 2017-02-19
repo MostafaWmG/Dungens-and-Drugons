@@ -58,13 +58,13 @@ public class GameMapEntityTester {
 		
 		ArrayList<GameObjectEntity> objects = new ArrayList<GameObjectEntity>();
 		
-		FighterEntity fighter1 = new FighterEntity(1,  "Fighter1");
+		FighterEntity fighter1 = new FighterEntity(3,  "Fighter1");
 		fighter1.getItems().add(item1);
 		objects.add(fighter1);
 		
-		FighterEntity fighter2 = new FighterEntity(2, "Fighter2");
+		FighterEntity fighter2 = new FighterEntity(4, "Fighter2");
 		fighter2.getItems().add(item2);
-//		objects.add(fighter2);
+		objects.add(fighter2);
 		
 		gameMap = new GameMapEntity(1, "GameMap1", objects);
 		System.out.println(gameMap);

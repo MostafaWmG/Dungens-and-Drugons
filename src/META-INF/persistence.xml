@@ -3,7 +3,6 @@
 	<persistence-unit name="dungeons" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntity</class>
-		<class>Test</class>
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.FighterEntity</class>
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.GameMapEntity</class>
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.WallEntity</class>
