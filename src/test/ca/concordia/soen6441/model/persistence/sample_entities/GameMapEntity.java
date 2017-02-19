@@ -5,17 +5,9 @@ package test.ca.concordia.soen6441.model.persistence.sample_entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * This is a mock class which represents a game map. It is created  only for
@@ -34,7 +26,7 @@ public class GameMapEntity implements Serializable {
 	@Id
 	@Column(name="ID")
 	private int id;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			name="MAP_OBJ",
 			joinColumns=@JoinColumn(name="MAP_ID", referencedColumnName="ID"),
