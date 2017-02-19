@@ -18,6 +18,12 @@ import test.ca.concordia.soen6441.model.persistence.sample_entities.GameMapEntit
 import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntity;
 import test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntity;
 
+/**
+ * A simple class which shows persistent functionality using Hibernate 4.3.11. At 
+ * the moment Derby 10.13.1 (embedded) is the backend.
+ * @author Saman Saadi
+ *
+ */
 public class GameMapEntityTester {
 	
 	private static EntityManagerFactory emf;
@@ -76,25 +82,5 @@ public class GameMapEntityTester {
 		System.out.println(gameMap);
 		assertTrue(true);
 	}
-
-//	@Test
-//	public void testGetObjects() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetObjects() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testGetName() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetName() {
-//		fail("Not yet implemented");
-//	}
 
 }
