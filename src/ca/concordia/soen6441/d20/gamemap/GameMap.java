@@ -34,10 +34,7 @@ public class GameMap {
 	public GameMap(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.field = new GameObject[this.height][];
-		for(int i = 0; i< this.height; i++) {
-			this.field[i] = new GameObject[width];
-		}
+		field = new GameObject[width][height];
 		
 		elements = new HashMap<>();
 		
@@ -46,6 +43,10 @@ public class GameMap {
 	
 	public GameObject getGameObjectAtLocation(Location location) {
 		return elements.get(location);
+	}
+	
+	public void setGameObjectAtLocation(Location location,GameObject gameObject) {
+		 elements.put(location, gameObject);
 	}
 	
 	public int getWidth() {

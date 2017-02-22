@@ -14,20 +14,31 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class Grid extends JButton implements ActionListener{
 	
-	private int x;
-	private int y;
 	private ImageIcon icon;
 	private MapEditor mapEditor;
 	private String tag;
 	
-	public Grid(MapEditor mapEditor,int x, int y,String tag)
+	public Grid(MapEditor mapEditor,String tag)
 	{
-		this.x = x;
-		this.y = y;
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
-		icon = new ImageIcon("3.png");
-		setIcon(icon);
+		
+		if(tag == "Ground"){
+			icon = new ImageIcon("3.png");
+			setIcon(icon);
+		}else if (tag == "Wall"){
+			icon = new ImageIcon("1.png");
+			setIcon(icon);
+		}else if (tag == "Enemy"){
+			icon = new ImageIcon("2.png");
+			setIcon(icon);
+		}else if (tag == "Enter"){
+			icon = new ImageIcon("4.png");
+			setIcon(icon);
+		}else if (tag == "Exit"){
+			icon = new ImageIcon("5.png");
+			setIcon(icon);
+		}
 	}
 
 	@Override

@@ -7,8 +7,8 @@ public class PlayerFactory implements CharacterFactory {
 
 	//TODOI: here we ned to implement the 3d20+1 dice to create a player randomly
 	@Override
-	public Character create() {
-		return new Player();
+	public Character create(String tag) {
+		return new Player(tag);
 	}
 
 }

@@ -8,9 +8,16 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import ca.concordia.soen6441.constants.Constants;
+import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
+import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
+import ca.concordia.soen6441.d20.gamemap.element.Entery;
+import ca.concordia.soen6441.d20.gamemap.element.Exit;
+import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+import ca.concordia.soen6441.d20.gamemap.element.Wall;
 /**
  * this is mapEditor View 
  * @author wmg
@@ -44,9 +51,9 @@ public class MapEditor  extends JFrame implements ActionListener{
 		this.row = row;
 		this.column = column;
 		viewElements = new Grid[row][column];
-		iconButtons = new JButton[3];
+		iconButtons = new JButton[5];
 		setCurrentPointer(new ImageIcon());
-		images = new ImageIcon[3];
+		images = new ImageIcon[5];
 		//enable absolute positioning mode 
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -115,7 +122,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 			
 			for(int i = 0; i < row ; i++)
 				for(int j = 0; j < column ; j++){
-					viewElements[i][j]=new Grid(this,i,j,"Ground");
+					viewElements[i][j]=new Grid(this,"Ground");
 					viewElements[i][j].setSize(elementSizeX, elementSizeY);
 					viewElements[i][j].setLocation((dimension.width - row * (elementSizeX +1 ) ) / 2 + i * (elementSizeX +1 ) ,  30 + j * (elementSizeY + 1));
 					viewElements[i][j].addActionListener( viewElements[i][j]);
@@ -132,8 +139,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 				images[i] = new ImageIcon((i+1)+".png");
 				
 				iconButtons[i] = new JButton(images[i]);
-				iconButtons[i].setSize(elementSizeX,elementSizeY);
-				iconButtons[i].setLocation(10,40 + (elementSizeY + 1) * i);
+				iconButtons[i].setSize(30,30);
+				iconButtons[i].setLocation(10,40 + (30 + 1) * i);
 				iconButtons[i].setActionCommand("image"+i);
 				getContentPane().add(iconButtons[i]);
 				iconButtons[i].addActionListener(this);
@@ -160,29 +167,82 @@ public class MapEditor  extends JFrame implements ActionListener{
 				setTag("Ground");
 			}
 			
+			if(e.getActionCommand().equals ("image3")){
+				setCurrentPointer((ImageIcon) iconButtons[3].getIcon());
+				setTag("Enter");
+			}
+			
+			if(e.getActionCommand().equals ("image4")){
+				setCurrentPointer((ImageIcon) iconButtons[4].getIcon());
+				setTag("Exit");
+			}
+			
 			if(e.getActionCommand().equals("Save"))
 			{
-				save();
+				
+				save(JOptionPane.showInputDialog(this, "Save"));
 			}
 			
 			if(e.getActionCommand().equals("Load"))
 			{
-				load();
+				load(JOptionPane.showInputDialog(this, "Load"));
 			}
 		}
 	}
 
-	public void save(){
+	public void save(String fileName){
 		map = new GameMap(row,column);
+		PlayerFactory playerFactory = new PlayerFactory();
 		
-		for(int i = 0; i < row ; i++)
+		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-				//setting up the model
+				
+				if(viewElements[i][j].getTag() == "Ground"){
+					Location location = new Location(i,j);
+					map.setGameObjectAtLocation(location,new GameObject(location));
+				}else if(viewElements[i][j].getTag() == "Wall"){
+					Location location = new Location(i,j);
+					map.setGameObjectAtLocation(location,new Wall());
+				}else if (viewElements[i][j].getTag() == "Enemy"){
+					Location location = new Location(i,j);
+					map.setGameObjectAtLocation(location,playerFactory.create("Enemy"));
+				}else if (viewElements[i][j].getTag() == "Enter"){
+					Location location = new Location(i,j);
+					map.setGameObjectAtLocation(location,new Entery());
+				}else if (viewElements[i][j].getTag() == "Exit"){
+					Location location = new Location(i,j);
+					map.setGameObjectAtLocation(location,new Exit());
+				}
 			}
+		}
+		
+		// we need to save map object into file @saman;
 	}
 	
-	public void load(){
+	@SuppressWarnings("null")
+	public void load(String fileName){
 		
+		GameMap map = null;
+		//load map from file here and replace null with it @ saman
+		
+		viewElements = new Grid[map.getWidth()][map.getHeight()];
+
+		for(int i = 0; i < row ; i++){
+			for(int j = 0; j < column ; j++){
+				
+				if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Ground"){
+					viewElements[i][j] = new Grid(this,"Ground");
+				}else if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Wall"){
+					viewElements[i][j] = new Grid(this,"Wall");
+				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enemy"){
+					viewElements[i][j] = new Grid(this,"Enemy");
+				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enter"){
+					viewElements[i][j] = new Grid(this,"Enter");
+				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Exit"){
+					viewElements[i][j] = new Grid(this,"Exit");
+				}
+			}
+		}
 	}
 	
 	public ImageIcon getCurrentPointer() {
