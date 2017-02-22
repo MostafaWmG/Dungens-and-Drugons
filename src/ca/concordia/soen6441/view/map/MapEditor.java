@@ -105,8 +105,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 		 */
 		public void initializeGrid(){
 			//setting up the grid
-			int x = (dimension.width )/ row ;
-			int y = (dimension.height) / column ;
+			int x = (dimension.width )/ column ;
+			int y = (dimension.height) / row ;
 //			System.out.println(x+ ":"+ y);
 			if( x <= 44 )
 				elementSizeX = x - 5  ;
@@ -124,7 +124,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 				for(int j = 0; j < column ; j++){
 					viewElements[i][j]=new Grid(this,"Ground");
 					viewElements[i][j].setSize(elementSizeX, elementSizeY);
-					viewElements[i][j].setLocation((dimension.width - row * (elementSizeX +1 ) ) / 2 + i * (elementSizeX +1 ) ,  30 + j * (elementSizeY + 1));
+					viewElements[i][j].setLocation( (dimension.width - column * (elementSizeX +1 ) ) / 2 + j * (elementSizeX +1 ), 30 + i * (elementSizeY + 1));
+
 					viewElements[i][j].addActionListener( viewElements[i][j]);
 					getContentPane().add(viewElements[i][j]);
 				}
@@ -191,7 +192,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	}
 
 	public void save(String fileName){
-		map = new GameMap(row,column);
+		map = new GameMap(column, row);
 		PlayerFactory playerFactory = new PlayerFactory();
 		
 		for(int i = 0; i < row ; i++){

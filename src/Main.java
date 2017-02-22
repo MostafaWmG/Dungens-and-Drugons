@@ -86,18 +86,18 @@ public class Main extends JFrame implements ActionListener{
 				try {
 
 					this.setVisible(false);
-					String row = JOptionPane.showInputDialog(getContentPane(), "EnterRow", "Row", WIDTH);
+					String row = JOptionPane.showInputDialog(getContentPane(), "EnterRow", "Row", HEIGHT);
 					String column = JOptionPane.showInputDialog(getContentPane(), "EnterColumn", "column", WIDTH);
 
-					int x = Integer.parseInt(row);
-					int y = Integer.parseInt(column);
+					int x = Integer.parseInt(column);
+					int y = Integer.parseInt(row);
 					
 					// Maximum of our grid  other maps is not valid to small for screen
 					if(y >=65)
 						y= 64;
 					if(x >=150)
 						x =150;
-					new MapEditor(x,y);
+					new MapEditor(y,x);
 
 				} catch (NumberFormatException error) {
 					JOptionPane.showMessageDialog(getContentPane(), "Wrong InPut!!");

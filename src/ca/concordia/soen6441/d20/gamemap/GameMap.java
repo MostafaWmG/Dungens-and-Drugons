@@ -34,7 +34,7 @@ public class GameMap {
 	public GameMap(int width, int height) {
 		this.width = width;
 		this.height = height;
-		field = new GameObject[width][height];
+		field = new GameObject[height][width];
 		
 		elements = new HashMap<>();
 		
