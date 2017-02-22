@@ -1,8 +1,10 @@
 package ca.concordia.soen6441.d20.item;
 
 public class Ability {
-	private int score;
-	private int modifier;
+	
+	protected int score;
+	protected int modifier;
+	protected  AbilityEnum ability; 
 	
 	public int getScore() {
 		return score;
@@ -16,7 +18,4 @@ public class Ability {
 	public void setModifier(int modifier) {
 		this.modifier = modifier;
 	}
-	
-	
-
 }
