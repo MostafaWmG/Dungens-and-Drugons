@@ -18,4 +18,12 @@ public class Ability {
 	public void setModifier(int modifier) {
 		this.modifier = modifier;
 	}
+	
+	public AbilityEnum getAbility(){
+		return ability;
+	}
+	
+	public void setAbility(AbilityEnum ability){
+		this.ability = ability;
+	}
 }

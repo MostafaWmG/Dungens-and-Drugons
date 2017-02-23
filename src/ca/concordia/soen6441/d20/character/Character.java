@@ -1,11 +1,14 @@
 package ca.concordia.soen6441.d20.character;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Ability;
 import ca.concordia.soen6441.d20.item.Item;
+import ca.concordia.soen6441.d20.item.AbilityEnum;
 
 /**
  * this class represents a character, a monster or a player
@@ -19,14 +22,21 @@ public class Character extends GameObject {
 	protected List<Ability> abilities;
 	protected List<Item> wearItems;
 	
+	protected Map<AbilityEnum,Ability> ability;
+	
 	public Character(int initialPosistionX, int initialPositionY) {
 		super(initialPosistionX, initialPositionY);
 		abilities = new ArrayList<>();
 		wearItems = new ArrayList<>();
+		ability = new HashMap();
 	}
 		
 	public Character() {
 		this(0, 0);
+		abilities = new ArrayList<>();
+		wearItems = new ArrayList<>();
+		ability = new HashMap();
+		
 	}
 
 	/**
@@ -51,5 +61,10 @@ public class Character extends GameObject {
 	
 	public void addAbility(Ability ability) {
 		abilities.add(ability);
+		this.ability.put(ability.getAbility(), ability);
+	}
+	
+	private void emptyMap() {
+//		for(AbilityEnum i : ability.)
 	}
 }
