@@ -15,7 +15,7 @@ import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 public class GameMap {
 	public static final GameObject EMPTY = null;
 	/**
-	 * used to instanciate the map and easily position its elements
+	 * used to instantiate the map and easily position its elements
 	 */
 	private GameObject [][]field;
 	/**
@@ -25,15 +25,17 @@ public class GameMap {
 	
 	private int width;
 	private int height;
+	private String mapName;
 	
 	/**
-	 * creates a map of the dimention required
+	 * creates a map of the dimension required
 	 * @param width the width of the map
 	 * @param height the height of the map
 	 */
-	public GameMap(int width, int height) {
+	public GameMap(String mapName,int width, int height) {
 		this.width = width;
 		this.height = height;
+		this.mapName = mapName;
 		field = new GameObject[height][width];
 		
 		elements = new HashMap<>();
@@ -55,6 +57,20 @@ public class GameMap {
 	
 	public int getHeight() {
 		return this.height;
+	}
+	
+	/**
+	 * @return the mapName
+	 */
+	public String getMapName() {
+		return mapName;
+	}
+
+	/**
+	 * @param mapName the mapName to set
+	 */
+	public void setMapName(String mapName) {
+		this.mapName = mapName;
 	}
 	
 	/**

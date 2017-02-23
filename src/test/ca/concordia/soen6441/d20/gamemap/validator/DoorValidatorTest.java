@@ -17,7 +17,7 @@ public class DoorValidatorTest {
 	
 	@Before
 	public void setUp() {
-		gameMap = new GameMap(20, 10);
+		gameMap = new GameMap("test",20, 10);
 		validator = new DoorValidator(gameMap);
 	}
 

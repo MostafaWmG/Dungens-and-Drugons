@@ -16,7 +16,7 @@ public class GameMapTest {
 	public void setUp() {
 		int width = 20;
 		int height = 10;
-		this.gameMap = new GameMap(width, height);
+		this.gameMap = new GameMap("test",width, height);
 	}
 
 	@Test
