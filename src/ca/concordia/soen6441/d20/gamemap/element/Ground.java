@@ -11,7 +11,7 @@ import ca.concordia.soen6441.d20.common.Location;
  */
 public class Ground extends GameObject {
 	
-	private GroundEntity entity;
+	private GroundEntity groundEntity;
 
 	public Ground(Location location)
 	{
@@ -34,17 +34,27 @@ public class Ground extends GameObject {
 	private void init()
 	{
 		setTag("Ground");
-		setEntity(new GroundEntity());
+		setGroundEntity(new GroundEntity());
 	}
 	
 	@Override
 	public GameObjectEntity getEntity() {
-		return entity;
+		return groundEntity;
+	}
+
+	/**
+	 * @return the groundEntity
+	 */
+	public GroundEntity getGroundEntity() {
+		return groundEntity;
+	}
+
+	/**
+	 * @param groundEntity the groundEntity to set
+	 */
+	public void setGroundEntity(GroundEntity groundEntity) {
+		this.groundEntity = groundEntity;
 	}
 	
-	public void setEntity(GroundEntity entity)
-	{
-		this.entity = entity;
-	}
 
 }
