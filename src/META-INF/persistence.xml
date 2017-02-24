@@ -8,6 +8,7 @@
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.WallEntitySample</class>
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.GameMapEntity</class>
+		<class>ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
 		<properties>

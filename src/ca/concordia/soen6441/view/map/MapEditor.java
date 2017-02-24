@@ -17,6 +17,7 @@ import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 /**
  * this is mapEditor View 
@@ -200,7 +201,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 				
 				if(viewElements[i][j].getTag() == "Ground"){
 					Location location = new Location(i,j);
-					map.setGameObjectAtLocation(location,new GameObject(location));
+					map.setGameObjectAtLocation(location,new Ground(location));
 				}else if(viewElements[i][j].getTag() == "Wall"){
 					Location location = new Location(i,j);
 					map.setGameObjectAtLocation(location,new Wall());

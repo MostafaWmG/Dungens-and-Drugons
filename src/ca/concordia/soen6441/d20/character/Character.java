@@ -5,6 +5,7 @@ import java.util.Map;
 //import java.util.Map.Entry;
 
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Ability;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
@@ -191,6 +192,12 @@ public class Character extends GameObject {
 	
 	public void setLevel(int level){
 		this.level = level;
+	}
+
+	@Override
+	public GameObjectEntity getEntity() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 //	private void emptyMap(Map map) {

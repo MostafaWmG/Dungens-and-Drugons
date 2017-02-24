@@ -5,4 +5,10 @@ public class Entery extends GameObject{
 	public  Entery(){
 		tag = "Enter";
 	}
+
+	@Override
+	public GameObjectEntity getEntity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

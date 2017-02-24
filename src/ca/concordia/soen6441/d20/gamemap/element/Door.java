@@ -9,4 +9,10 @@ public class Door extends GameObject {
 		super(x,y);
 	}
 
+	@Override
+	public GameObjectEntity getEntity() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
