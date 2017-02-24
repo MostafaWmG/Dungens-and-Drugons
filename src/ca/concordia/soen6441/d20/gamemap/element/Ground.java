@@ -10,6 +10,8 @@ import ca.concordia.soen6441.d20.common.Location;
  *
  */
 public class Ground extends GameObject {
+	
+	private GroundEntity entity;
 
 	public Ground(Location location)
 	{
@@ -32,12 +34,17 @@ public class Ground extends GameObject {
 	private void init()
 	{
 		setTag("Ground");
+		setEntity(new GroundEntity());
 	}
 	
 	@Override
 	public GameObjectEntity getEntity() {
-		// TODO Auto-generated method stub
-		return null;
+		return entity;
+	}
+	
+	public void setEntity(GroundEntity entity)
+	{
+		this.entity = entity;
 	}
 
 }
