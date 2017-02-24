@@ -4,6 +4,7 @@ import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
 public class GameObject {
+	// location : to be reFactored
 	protected Location location;
 	protected GameMap field;
 	protected String tag ;

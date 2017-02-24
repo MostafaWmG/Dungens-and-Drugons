@@ -13,9 +13,10 @@ public class Player extends Character {
 	
 	private List<Item> backpack;
 	
-	public Player(String tag) {
+	public Player(String tag,String name) {
 		super();
 		this.tag = tag;
+		this.name = name;
 		backpack = new ArrayList<>();
 	}
 	

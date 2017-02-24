@@ -15,6 +15,16 @@ public class Ability {
 	protected int modifier;
 	protected  AbilityEnum ability; 
 	
+	public Ability(AbilityEnum ability,int  score, int modifier){
+		this.ability = ability;
+		this.score = score;
+		this.modifier = modifier;
+	}
+	
+	public Ability(){
+		
+	}
+	
 	public int getScore() {
 		return score;
 	}

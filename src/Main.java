@@ -2,12 +2,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ca.concordia.soen6441.constants.Constants;
+import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.view.map.MapEditor;
 /**
  * this a Main class 
@@ -38,7 +40,7 @@ public class Main extends JFrame implements ActionListener{
 
 		//setting up characterEditorButton
 		JButton characterEditorButton = new JButton("CharacterEditor");
-		initializeButton(characterEditorButton,"characterEditor",20,0,0,constants.LOCATION_HEIGHT_OFFSET,1);
+		initializeButton(characterEditorButton,"CharacterEditor",20,0,0,constants.LOCATION_HEIGHT_OFFSET,1);
 
 		//setting up playButton
 		JButton playButton = new JButton("Play");
@@ -103,6 +105,16 @@ public class Main extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(getContentPane(), "Wrong InPut!!");
 					this.setVisible(true);
 				} 
+			}else if (e.getActionCommand().equals("CharacterEditor") ){
+				@SuppressWarnings("resource")
+				Scanner scanner = new Scanner(System.in);
+				System.out.println("Character Edtior Section: ");
+				System.out.println("Please Enter Your Character Name : ");
+				String charName = scanner.nextLine();
+				System.out.println("Please Enter Your Character Type : ");
+				String charType = scanner.nextLine();
+				PlayerFactory playerFactory = new PlayerFactory();
+				playerFactory.create(charType,charName);
 			}
 		}
 	}

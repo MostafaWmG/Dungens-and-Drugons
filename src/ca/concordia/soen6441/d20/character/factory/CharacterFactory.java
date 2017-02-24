@@ -16,7 +16,7 @@ public interface CharacterFactory {
 	 * @param tag player or monster
 	 * @return
 	 */
-	public Character create(String tag);
+	public Character create(String tag,String name);
 	
 	/**
 	 * this method could use by a user to create an item.
