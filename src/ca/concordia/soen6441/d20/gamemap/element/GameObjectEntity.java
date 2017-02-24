@@ -25,7 +25,10 @@ public abstract class GameObjectEntity implements Serializable {
 	private long Id;
 
 	// TODO location : to be reFactored
+	@Transient
 	private Location location;
+	// TODO remove Transient
+	@Transient
 	private GameMap field;
 	//TODO Do we really need tag?
 	private String tag ;
