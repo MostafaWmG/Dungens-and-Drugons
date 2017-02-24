@@ -2,10 +2,10 @@ package ca.concordia.soen6441.d20.gamemap.element;
 
 public class Entery extends GameObject{
 	
-	private EntryEntity entity;
+//	private EntryEntity entity;
 
 	public  Entery(){
-		getEntity.setTag("Enter");
+//		getEntity.setTag("Enter");
 	}
 
 	@Override
@@ -14,9 +14,9 @@ public class Entery extends GameObject{
 		return null;
 	}
 	
-	@Override
-	public void setEntity(EntryEntity entity){
-		
-		this.entity = entity;
-	}
+//	@Override
+//	public void setEntity(EntryEntity entity){
+//		
+//		this.entity = entity;
+//	}
 }
