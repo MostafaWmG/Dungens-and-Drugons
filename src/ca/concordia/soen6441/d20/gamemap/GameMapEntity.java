@@ -21,7 +21,14 @@ public class GameMapEntity implements Serializable {
 
 	public GameMapEntity() {
 		super();
-	}   
+	}
+	
+	public GameMap getModel()
+	{
+		//TODO Implement this method
+		return null;
+	}
+	
 	public long getId() {
 		return this.id;
 	}

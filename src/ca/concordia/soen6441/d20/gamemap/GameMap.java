@@ -43,6 +43,12 @@ public class GameMap {
 		emptyMap();
 	}
 	
+	public GameMapEntity getEntity()
+	{
+		//TODO implement this function
+		return null;
+	}
+	
 	public GameObject getGameObjectAtLocation(Location location) {
 		return elements.get(location);
 	}
