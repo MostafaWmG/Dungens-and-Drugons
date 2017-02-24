@@ -69,9 +69,9 @@ public class Character extends GameObject {
 	 */
 	public void move(int dx, int dy) {
 		try {
-			this.field.move(location.getX(), location.getY(), location.getX()+dx, location.getY()+dy);
-			location.setX(location.getX()+dx);
-			location.setY(location.getY()+dy);
+			this.getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
+			getLocation().setX(getLocation().getX()+dx);
+			getLocation().setY(getLocation().getY()+dy);
 		
 		} catch(MoveNotValidException e) {
 			e.printStackTrace();
@@ -132,7 +132,7 @@ public class Character extends GameObject {
 	 */
 	public void showAbilities(){
 		
-		System.out.println("Name:" + name + " ,CharacterType: " + tag);
+		System.out.println("Name:" + name + " ,CharacterType: " + getTag());
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
 			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i]).getScore() + " ,modifier : " + abilities.get(AbilityEnum.values()[i]).getModifier() );
 		}

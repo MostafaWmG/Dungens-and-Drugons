@@ -31,7 +31,7 @@ public class Ground extends GameObject {
 	
 	private void init()
 	{
-		tag = "Ground";
+		setTag("Ground");
 	}
 	
 	@Override

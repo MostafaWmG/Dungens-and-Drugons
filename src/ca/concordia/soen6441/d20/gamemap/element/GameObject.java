@@ -3,14 +3,10 @@ package ca.concordia.soen6441.d20.gamemap.element;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
-public abstract class GameObject {
-	// TODO location : to be reFactored
-	protected Location location;
-	protected GameMap field;
-	protected String tag ;
-	
+public abstract class GameObject {	
+
 	public GameObject(Location location) {
-		this.location = location;
+		setLocation(location);
 	}
 	
 	public GameObject() {
@@ -19,12 +15,8 @@ public abstract class GameObject {
 	
 	public GameObject(int x, int y) {
 		this(new Location(x,y));
-	}
-	
-	public Location getLocation() {
-		return location;
-	}
-	
+	}	
+		
 	/**
 	 * All GameObject sub-classes must implement this method. By using this
 	 * method GameMap is able to extract entities for saving data.
@@ -33,10 +25,39 @@ public abstract class GameObject {
 	public abstract GameObjectEntity getEntity();
 	
 	public String getTag(){
-		return tag;
+		return getEntity().getTag();
 	}
 	
 	public void setTag(String tag){
-		this.tag = tag;
+		getEntity().setTag(tag);
 	}
+	
+	/**
+	 * @return the field
+	 */
+	public GameMap getField() {
+		return getEntity().getField();
+	}
+
+	/**
+	 * @param field the field to set
+	 */
+	public void setField(GameMap field) {
+		getEntity().setField(field);
+	}
+
+	
+	/**
+	 * @return the location
+	 */
+	public Location getLocation() {
+		return getEntity().getLocation();
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+		getEntity().setLocation(location);
+	}	
 }
