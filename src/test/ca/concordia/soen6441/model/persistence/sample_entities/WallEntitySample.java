@@ -2,7 +2,7 @@ package test.ca.concordia.soen6441.model.persistence.sample_entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntity;
+import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntitySample;
 
 /**
  * This is a mock class which represnets a wall in game map. It is created for
@@ -12,16 +12,16 @@ import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEn
  */
 @Entity
 //@Table(name="WALL")
-public class WallEntity extends GameObjectEntity implements Serializable {
+public class WallEntitySample extends GameObjectEntitySample implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
 
-	public WallEntity() {
+	public WallEntitySample() {
 	super();	
 	}
 	
-	public WallEntity(int id, String name) {
+	public WallEntitySample(int id, String name) {
 		super(id, name);
 	}
    

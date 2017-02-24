@@ -18,7 +18,7 @@ import javax.persistence.*;
 
 @Entity
 //@Table(name="FIGHTER")
-public class FighterEntity extends GameObjectEntity implements Serializable {
+public class FighterEntitySample extends GameObjectEntitySample implements Serializable {
 
 
 	/* (non-Javadoc)
@@ -55,12 +55,12 @@ public class FighterEntity extends GameObjectEntity implements Serializable {
 		this.items = items;
 	}
 
-	public FighterEntity() {
+	public FighterEntitySample() {
 		super();
 		init();
 	}
 	
-	public FighterEntity(int id, String name)
+	public FighterEntitySample(int id, String name)
 	{
 		super(id, name);
 		init();

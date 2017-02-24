@@ -2,7 +2,7 @@ package test.ca.concordia.soen6441.model.persistence.sample_entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntity;
+import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntitySample;
 
 /**
  * This is a mock class which represents an item. It is created for testing
@@ -12,7 +12,7 @@ import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEn
  */
 @Entity
 //@Table(name="ITEM")
-public class ItemEntity extends GameObjectEntity implements Serializable {
+public class ItemEntity extends GameObjectEntitySample implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;

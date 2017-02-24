@@ -17,8 +17,8 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="GAME_MAP")
-public class GameMapEntity implements Serializable {
+@Table(name="GAME_MAP_SAMPLE")
+public class GameMapEntitySample implements Serializable {
 	/**
 	 * 
 	 */
@@ -31,12 +31,12 @@ public class GameMapEntity implements Serializable {
 			name="MAP_OBJ",
 			joinColumns=@JoinColumn(name="MAP_ID", referencedColumnName="ID"),
 			inverseJoinColumns=@JoinColumn(name="OBJECT_ID", referencedColumnName="ID"))
-	private List<GameObjectEntity> objects;
+	private List<GameObjectEntitySample> objects;
 	private String name;
 
 	private void init()
 	{
-		objects = new ArrayList<GameObjectEntity>();
+		objects = new ArrayList<GameObjectEntitySample>();
 	}
 	
 	/* (non-Javadoc)
@@ -47,11 +47,11 @@ public class GameMapEntity implements Serializable {
 		return "GameMapEntity [id=" + id + ", objects=" + objects + ", name=" + name + "]";
 	}
 
-	public GameMapEntity() {
+	public GameMapEntitySample() {
 		init();
 	}
 	
-	public GameMapEntity(int id, String name, List<GameObjectEntity> objects)
+	public GameMapEntitySample(int id, String name, List<GameObjectEntitySample> objects)
 	{
 		setId(id);
 		setName(name);
@@ -73,13 +73,13 @@ public class GameMapEntity implements Serializable {
 	/**
 	 * @return the objects
 	 */	
-	public List<GameObjectEntity> getObjects() {
+	public List<GameObjectEntitySample> getObjects() {
 		return objects;
 	}
 	/**
 	 * @param objects the objects to set
 	 */
-	public void setObjects(List<GameObjectEntity> objects) {
+	public void setObjects(List<GameObjectEntitySample> objects) {
 		this.objects = objects;
 	}
 	/**

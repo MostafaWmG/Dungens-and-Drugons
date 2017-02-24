@@ -13,9 +13,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import test.ca.concordia.soen6441.model.persistence.sample_entities.FighterEntity;
-import test.ca.concordia.soen6441.model.persistence.sample_entities.GameMapEntity;
-import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntity;
+import test.ca.concordia.soen6441.model.persistence.sample_entities.FighterEntitySample;
+import test.ca.concordia.soen6441.model.persistence.sample_entities.GameMapEntitySample;
+import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntitySample;
 import test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntity;
 
 /**
@@ -49,7 +49,7 @@ public class GameMapEntityTester {
 	public void testGameMapEntity()
 	{
 		tx.begin();
-		GameMapEntity gameMap = em.find(GameMapEntity.class, 1);
+		GameMapEntitySample gameMap = em.find(GameMapEntitySample.class, 1);
 		tx.commit();
 		if (gameMap != null)
 		{
@@ -62,17 +62,17 @@ public class GameMapEntityTester {
 		ItemEntity item1 = new ItemEntity(1, "Sword1");
 		ItemEntity item2 = new ItemEntity(2, "Sword2");
 		
-		ArrayList<GameObjectEntity> objects = new ArrayList<GameObjectEntity>();
+		ArrayList<GameObjectEntitySample> objects = new ArrayList<GameObjectEntitySample>();
 		
-		FighterEntity fighter1 = new FighterEntity(3,  "Fighter1");
+		FighterEntitySample fighter1 = new FighterEntitySample(3,  "Fighter1");
 		fighter1.getItems().add(item1);
 		objects.add(fighter1);
 		
-		FighterEntity fighter2 = new FighterEntity(4, "Fighter2");
+		FighterEntitySample fighter2 = new FighterEntitySample(4, "Fighter2");
 		fighter2.getItems().add(item2);
 		objects.add(fighter2);
 		
-		gameMap = new GameMapEntity(1, "GameMap1", objects);
+		gameMap = new GameMapEntitySample(1, "GameMap1", objects);
 		System.out.println(gameMap);
 		
 		tx.begin();

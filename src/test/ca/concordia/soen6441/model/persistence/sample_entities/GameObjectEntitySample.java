@@ -4,15 +4,13 @@
 package test.ca.concordia.soen6441.model.persistence.sample_entities;
 
 import java.io.Serializable;
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,8 +23,8 @@ import javax.persistence.Table;
 @Entity
 @Inheritance
 @DiscriminatorColumn(name="OBJ_TYPE")
-@Table(name="GAME_OBJECT")
-public abstract class GameObjectEntity implements Serializable {
+@Table(name="GAME_OBJECT_SAMPLE")
+public abstract class GameObjectEntitySample implements Serializable {
 	/**
 	 * 
 	 */
@@ -36,7 +34,7 @@ public abstract class GameObjectEntity implements Serializable {
 	private int id;
 	private String name;
 
-	public GameObjectEntity()
+	public GameObjectEntitySample()
 	{
 		super();
 	}
@@ -49,7 +47,7 @@ public abstract class GameObjectEntity implements Serializable {
 		return "GameObjectEntity [id=" + id + ", name=" + name + "]";
 	}
 
-	public GameObjectEntity(int id, String name) {
+	public GameObjectEntitySample(int id, String name) {
 		setId(id);
 		setName(name);
 	}
