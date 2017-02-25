@@ -202,16 +202,16 @@ public class MapEditor  extends JFrame implements ActionListener{
 					map.setGameObjectAtLocation(location,new Ground(location));
 				}else if(viewElements[i][j].getTag() == "Wall"){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,new Wall());
+					map.setGameObjectAtLocation(location,new Wall(location));
 				}else if (viewElements[i][j].getTag() == "Enemy"){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,playerFactory.create("Enemy",mapName));
 				}else if (viewElements[i][j].getTag() == "Enter"){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,new Entery());
+					map.setGameObjectAtLocation(location,new Entery(location));
 				}else if (viewElements[i][j].getTag() == "Exit"){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,new Exit());
+					map.setGameObjectAtLocation(location,new Exit(location));
 				}
 			}
 		}

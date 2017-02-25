@@ -1,13 +1,29 @@
 package ca.concordia.soen6441.d20.gamemap.element;
 
+import ca.concordia.soen6441.d20.common.Location;
+
 public class Entery extends GameObject{
 	
 	private EnteryEntity enteryEntity;
 
+	public  Entery(int x , int y){
+		setEnteryEntity(new EnteryEntity());
+		setTag("Enter");
+		setLocation(new Location(x, y));
+	}
+	
+	public  Entery(Location location){
+		setEnteryEntity(new EnteryEntity());
+		setTag("Enter");
+		setLocation(location);
+	}
+
 	public  Entery(){
 		setEnteryEntity(new EnteryEntity());
 		setTag("Enter");
+		setLocation(new Location(0, 0));
 	}
+
 
 	@Override
 	public GameObjectEntity getEntity() {
