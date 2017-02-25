@@ -8,12 +8,12 @@ import javax.persistence.*;
  *@author Negar Sadeghi
  */
 @Entity
-public class EntryEntity extends GameObjectEntity implements Serializable {
+public class EnteryEntity extends GameObjectEntity implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
 	
-	public EntryEntity() {
+	public EnteryEntity() {
 		// TODO Auto-generated constructor stub
 		super();	
 		}
