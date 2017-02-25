@@ -1,13 +1,6 @@
 package ca.concordia.soen6441.d20.character;
-import java.util.HashMap;
-import java.util.Iterator;
-//import java.util.Iterator;
-import java.util.Map;
-//import java.util.Map.Entry;
-
-
-
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
@@ -40,8 +33,8 @@ public class Character extends GameObject {
 	protected int level;
 	protected String name;
 	
-	protected Map<ItemEnum, Item> wearItems;
-	protected Map<AbilityEnum, Ability> abilities;
+	protected List <Item> wearItems;
+	protected List <Ability> abilities;
 	protected ArmorClass armorClass;
 	protected AttackBonus attackBonus;
 	protected DamageBonus damageBonus;
@@ -51,26 +44,26 @@ public class Character extends GameObject {
 	
 	public Character(int initialPosistionX, int initialPositionY) {
 		level = 1;
-		wearItems = new HashMap<ItemEnum,Item>();
-		abilities = new HashMap<AbilityEnum,Ability>();
+		wearItems = new ArrayList<Item>();
+		abilities = new ArrayList<Ability>();
 		setCharacterAbility();
-		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY).getModifier());
-		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH).getModifier());
+		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY.getValue()).getModifier());
+		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH.getValue()).getModifier());
 		attackBonus = new AttackBonus(level);
-		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION).getModifier(),level);
+		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
 		setAbilitiesListener();
 		acBonus = false;
 	}
 		
 	public Character() {
 		level = 1;
-		wearItems = new HashMap<ItemEnum,Item>();
-		abilities = new HashMap<AbilityEnum,Ability>();
+		wearItems = new ArrayList<Item>();
+		abilities = new ArrayList<Ability>();
 		setCharacterAbility();
-		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY).getModifier());
-		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH).getModifier());
+		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY.getValue()).getModifier());
+		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH.getValue()).getModifier());
 		attackBonus = new AttackBonus(level);
-		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION).getModifier(),level);
+		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
 		setAbilitiesListener();
 		acBonus = false;
 	}
@@ -115,9 +108,9 @@ public class Character extends GameObject {
 	}
 	
 	public void setAbilitiesListener(){
-		abilities.get(AbilityEnum.DEXTERITY).addListener(armorClass);
-		abilities.get(AbilityEnum.CONSTITUTION).addListener(hitPoint);
-		abilities.get(AbilityEnum.STRENGTH).addListener(damageBonus);
+		abilities.get(AbilityEnum.DEXTERITY.getValue()).addListener(armorClass);
+		abilities.get(AbilityEnum.CONSTITUTION.getValue()).addListener(hitPoint);
+		abilities.get(AbilityEnum.STRENGTH.getValue()).addListener(damageBonus);
 	}
 	
 	public void levelUp(int point){
@@ -133,7 +126,7 @@ public class Character extends GameObject {
 	 * @return if true : has this item 
 	 */
 	public boolean hasItem(ItemEnum itemEnum){
-		if(wearItems.containsKey(itemEnum))
+		if(wearItems.get(itemEnum.getValue()) != null)
 			return true;
 		else
 			return false;
@@ -145,7 +138,7 @@ public class Character extends GameObject {
 	public void showAbilities(){
 		
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
-			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i]).getScore() + " ,modifier : " + abilities.get(AbilityEnum.values()[i]).getModifier() );
+			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + abilities.get(AbilityEnum.values()[i].getValue()).getModifier() );
 		}
 	}
 	
@@ -154,11 +147,11 @@ public class Character extends GameObject {
 	 * @param ability the ability we are adding .
 	 */
 	public void addAbility(Ability ability) {
-		abilities.put(ability.getAbilityEnum(), ability);
+		abilities.add(ability.getAbilityEnum().getValue(), ability);
 	}
 	
 	public Ability getAbility(AbilityEnum abilityEnum){
-		return (Ability) abilities.get(abilityEnum);
+		return (Ability) abilities.get(abilityEnum.getValue());
 	}
 	
 	/**
@@ -166,11 +159,11 @@ public class Character extends GameObject {
 	 * @param item which is going to be wear.
 	 */
 	public void addItem(Item item) {
-		wearItems.put(item.getItemEnum(), item);
+		wearItems.add(item.getItemEnum().getValue(),item);
 	}
 	
 	public Item getItem(ItemEnum itemEnum){
-		return (Item) wearItems.get(itemEnum);
+		return (Item)wearItems.get(itemEnum.getValue());
 	}
 	
 	public ArmorClass getArmor(){
@@ -205,13 +198,11 @@ public class Character extends GameObject {
 		this.level = level;
 	}
 
-	private void iterate(Map<AbilityEnum,Ability> map , int value) {
-		Iterator<Entry<AbilityEnum, Ability>> iterator = map.entrySet().iterator();
+	private void iterate(List<Ability> list , int value) {
 		
-		while(iterator.hasNext()){
-			map.entrySet().iterator().next().getValue().update(value);
-		}
-		
+		for(int i =0 ; i < list.size() ; i ++){
+			list.get(i).update(value);
+		}		
 	}
 
 	@Override
