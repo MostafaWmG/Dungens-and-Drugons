@@ -69,7 +69,7 @@ public class Character extends GameObject {
 		setCharacterAbility();
 		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY).getModifier());
 		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH).getModifier());
-		attackBonus = new AttackBonus(1);
+		attackBonus = new AttackBonus(level);
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION).getModifier(),level);
 		setAbilitiesListener();
 		acBonus = false;
