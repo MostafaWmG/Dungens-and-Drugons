@@ -144,7 +144,6 @@ public class Character extends GameObject {
 	 */
 	public void showAbilities(){
 		
-		System.out.println("Name:" + name + " ,CharacterType: " + getTag());
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
 			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i]).getScore() + " ,modifier : " + abilities.get(AbilityEnum.values()[i]).getModifier() );
 		}
