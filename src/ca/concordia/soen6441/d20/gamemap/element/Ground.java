@@ -15,26 +15,27 @@ public class Ground extends GameObject {
 
 	public Ground(Location location)
 	{
-		super(location);
 		init();
+		groundEntity.setLocation(location);
+		
 	}
 	
 	public Ground()
 	{
-		super();
 		init();
+		groundEntity.setLocation(new Location(0, 0));
 	}
 	
 	public Ground(int x, int y)
 	{
-		super(x, y);
 		init();
+		groundEntity.setLocation(new Location(x, y));
 	}
 	
 	private void init()
 	{
-		setTag("Ground");
 		setGroundEntity(new GroundEntity());
+		setTag("Ground");
 	}
 	
 	@Override

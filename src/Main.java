@@ -96,7 +96,7 @@ public class Main extends JFrame implements ActionListener{
 			// save the character into file  . you need to save character object into file @saman @negar.
 			System.out.println("Character saved successfully");
 		}else if (result.equals("no")){
-			System.out.println("Character romved");
+			System.out.println("Character removed");
 		}else {
 			System.out.println("Error");
 		}
@@ -110,6 +110,24 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	private void createItem(){
+		System.out.println("Please Enter Your Character Name : ");
+		String charName = scanner.nextLine();
+		System.out.println("Please Enter Your Character Type : ");
+		String charType = scanner.nextLine();
+		PlayerFactory PlayerFactory = new PlayerFactory();
+		Character character = PlayerFactory.create(charType,charName);
+		System.out.println("Do you want to save your character (yes or no )?");
+		String result = scanner.nextLine();
+		
+		if(result.equals("yes")){
+			// save the character into file  . you need to save character object into file @saman @negar.
+			System.out.println("Character saved successfully");
+		}else if (result.equals("no")){
+			System.out.println("Character removed");
+		}else {
+			System.out.println("Error");
+		}
+		
 		scanner.close();
 	}
 	
@@ -153,9 +171,9 @@ public class Main extends JFrame implements ActionListener{
 				System.out.println("EditCharacter:(Type e) , CreateCharacter : (Type C) " );
 				String hitButton = scanner.nextLine();
 				
-				if(hitButton.equals("e")){
+				if(hitButton.equals("c")){
 					createCharacter();
-				}else if (hitButton.equals("c")){
+				}else if (hitButton.equals("e")){
 					editCharacter();
 				}else {
 					System.out.println("Error");
@@ -168,9 +186,9 @@ public class Main extends JFrame implements ActionListener{
 				System.out.println("EditItem:(Type e) , CreateItem : (Type C) " );
 				String hitButton = scanner.nextLine();
 				
-				if(hitButton.equals("e")){
+				if(hitButton.equals("c")){
 					createItem();
-				}else if (hitButton.equals("c")){
+				}else if (hitButton.equals("e")){
 					editItem();
 				}else {
 					System.out.println("Error");

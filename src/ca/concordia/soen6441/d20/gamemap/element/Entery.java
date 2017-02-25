@@ -2,21 +2,32 @@ package ca.concordia.soen6441.d20.gamemap.element;
 
 public class Entery extends GameObject{
 	
-//	private EntryEntity entity;
+	private EnteryEntity enteryEntity;
 
 	public  Entery(){
-//		getEntity.setTag("Enter");
+		setEnteryEntity(new EnteryEntity());
+		setTag("Enter");
 	}
 
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub
-		return null;
+		return enteryEntity;
 	}
-	
-//	@Override
-//	public void setEntity(EntryEntity entity){
-//		
-//		this.entity = entity;
-//	}
+
+	/**
+	 * @return the enteryEntity
+	 */
+	public EnteryEntity getEnteryEntity() {
+		return enteryEntity;
+	}
+
+	/**
+	 * @param enteryEntity the enteryEntity to set
+	 */
+	public void setEnteryEntity(EnteryEntity enteryEntity) {
+		this.enteryEntity = enteryEntity;
+	}
+
+
 }
