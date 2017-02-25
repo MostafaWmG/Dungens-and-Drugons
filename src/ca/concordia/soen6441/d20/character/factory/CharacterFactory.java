@@ -2,6 +2,7 @@ package ca.concordia.soen6441.d20.character.factory;
 
 import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
+import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 /*
@@ -25,4 +26,5 @@ public interface CharacterFactory {
 	 * @return the item that we build if it is null we can't build this item because of gameRules.
 	 */
 	public Item createItem(ItemEnum itemEnum , AbilityEnum enchantmentType);
+	public Item createItem(ItemEnum itemEnum , AttributeEnum attributeType);
 }

@@ -14,10 +14,17 @@ public class Item {
 	private int point;
 	private ItemEnum itemEnum;
 	private AbilityEnum enchantmentType;
+	private AttributeEnum attributeType;
 
 	public Item(ItemEnum item,AbilityEnum enchantmentType, int point){
 		itemEnum = item;
 		this.enchantmentType = enchantmentType;
+		this.point = point;
+	}
+	
+	public Item(ItemEnum item,AttributeEnum attributeType, int point){
+		itemEnum = item;
+		this.attributeType = attributeType;
 		this.point = point;
 	}
 	
@@ -40,5 +47,19 @@ public class Item {
 	
 	public void setItemEum(ItemEnum itemEnum){
 		this.itemEnum = itemEnum;
+	}
+
+	/**
+	 * @return the attributeEnum
+	 */
+	public AttributeEnum getAttributeType() {
+		return attributeType;
+	}
+
+	/**
+	 * @param attributeEnum the attributeEnum to set
+	 */
+	public void setAttributeType(AttributeEnum attributeEnum) {
+		this.attributeType = attributeEnum;
 	}
 }

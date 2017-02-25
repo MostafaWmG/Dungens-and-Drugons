@@ -1,9 +1,15 @@
 package ca.concordia.soen6441.d20.character;
 import java.util.HashMap;
+import java.util.Iterator;
 //import java.util.Iterator;
 import java.util.Map;
 //import java.util.Map.Entry;
 
+
+
+import java.util.Map.Entry;
+
+import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
@@ -12,6 +18,7 @@ import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.ArmorClass;
 import ca.concordia.soen6441.d20.item.AttackBonus;
 import ca.concordia.soen6441.d20.item.DamageBonus;
+import ca.concordia.soen6441.d20.item.HitPoint;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 
@@ -38,30 +45,36 @@ public class Character extends GameObject {
 	protected ArmorClass armorClass;
 	protected AttackBonus attackBonus;
 	protected DamageBonus damageBonus;
+	protected HitPoint hitPoint;
+	protected Dice dice;
 	protected boolean acBonus;
 	
 	public Character(int initialPosistionX, int initialPositionY) {
-		super(initialPosistionX, initialPositionY);
+		level = 1;
 		wearItems = new HashMap<ItemEnum,Item>();
 		abilities = new HashMap<AbilityEnum,Ability>();
-		armorClass = new ArmorClass();
-		damageBonus = new DamageBonus();
-		attackBonus = new AttackBonus();
-		level = 1;
+		setCharacterAbility();
+		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY).getModifier());
+		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH).getModifier());
+		attackBonus = new AttackBonus(level);
+		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION).getModifier(),level);
+		setAbilitiesListener();
 		acBonus = false;
 	}
 		
 	public Character() {
-		this(0, 0);
+		level = 1;
 		wearItems = new HashMap<ItemEnum,Item>();
 		abilities = new HashMap<AbilityEnum,Ability>();
-		armorClass = new ArmorClass();
-		damageBonus = new DamageBonus();
-		attackBonus = new AttackBonus();
-		level = 1;
+		setCharacterAbility();
+		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY).getModifier());
+		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH).getModifier());
+		attackBonus = new AttackBonus(level);
+		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION).getModifier(),level);
+		setAbilitiesListener();
 		acBonus = false;
 	}
-
+	
 	/**
 	 * move the character around 
 	 * @param dx x delta of the movement, relative to the character current position
@@ -81,40 +94,39 @@ public class Character extends GameObject {
 	public void attack(Character enemy) {
 		
 	}
-	
+		
 	/**
-	 * update armor at the creation phase and levelUp phase
+	 * randomly determining the character abilites using dice6 and d20 rules
 	 */
-	public void updateArmor(){
-		if(acBonus){
-			// calculate using ac bonus
-		}else{
-			armorClass.setPoint(10 + abilities.get(AbilityEnum.DEXTERITY).getModifier());
+	private void setCharacterAbility(){
+		
+		int roll = 0;
+		dice  = new Dice();
+		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
+			
+			roll = 0 ;
+			roll = dice.roll6() + dice.roll6() + dice.roll6() ;
+			
+			System.out.println("DEBUGLOG!! " + " character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
+			// To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down).
+		    addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
+		
 	}
 	
-	/**
-	 * updateAttack at the creation phase and levelUp phase
-	 */
-	public void updateAttack(){
-		attackBonus.setPoint(1 * level);
+	public void setAbilitiesListener(){
+		abilities.get(AbilityEnum.DEXTERITY).addListener(armorClass);
+		abilities.get(AbilityEnum.CONSTITUTION).addListener(hitPoint);
+		abilities.get(AbilityEnum.STRENGTH).addListener(damageBonus);
 	}
 	
-	/**
-	 * updateAttack at the creation phase and levelUp phase
-	 */
-	public void updateDamage(){
-		damageBonus.setPoint(abilities.get(AbilityEnum.STRENGTH).getModifier());
+	public void levelUp(int point){
+		level ++ ;
+		attackBonus.update(level);
+		hitPoint.setLevel(level);
+		iterate(abilities, point);
 	}
-	
-	/**
-	 * update all damage , attack , armor
-	 */
-	public void updateAll(){
-		updateDamage();
-		updateAttack();
-		updateArmor();
-	}
+
 	/**
 	 * check if character have wore this item or not
 	 * @param itemEnum type of item
@@ -132,7 +144,6 @@ public class Character extends GameObject {
 	 */
 	public void showAbilities(){
 		
-		System.out.println("Name:" + name + " ,CharacterType: " + getTag());
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
 			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i]).getScore() + " ,modifier : " + abilities.get(AbilityEnum.values()[i]).getModifier() );
 		}
@@ -194,18 +205,18 @@ public class Character extends GameObject {
 		this.level = level;
 	}
 
+	private void iterate(Map<AbilityEnum,Ability> map , int value) {
+		Iterator<Entry<AbilityEnum, Ability>> iterator = map.entrySet().iterator();
+		
+		while(iterator.hasNext()){
+			map.entrySet().iterator().next().getValue().update(value);
+		}
+		
+	}
+
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-//	private void emptyMap(Map map) {
-//		Iterator iterator = map.entrySet().iterator();
-//		
-//		while(iterator.hasNext()){
-//			Map.Entry pair = (Map.Entry) iterator.next();
-//			pair.setValue(null);
-//		}
-//	}
 }

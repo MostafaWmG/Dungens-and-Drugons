@@ -3,8 +3,8 @@ package ca.concordia.soen6441.d20.character.factory;
 import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.d20.character.Player;
 import ca.concordia.soen6441.d20.dice.Dice;
-import ca.concordia.soen6441.d20.item.Ability;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
+import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 
@@ -34,8 +34,6 @@ public class PlayerFactory implements CharacterFactory {
 	@Override
 	public Character create(String tag,String name) {
 		character = new Player(tag,name);
-		setCharacterAbility();
-		character.updateAll();
 		character.showAbilities();
 		character.getArmor().showPoint();
 		character.getAttack().showPoint();
@@ -53,25 +51,17 @@ public class PlayerFactory implements CharacterFactory {
 	public Item createItem(ItemEnum itemEnum, AbilityEnum enchantmentType) {
 		
 			if(itemEnum == ItemEnum.HELMET){
-				if(enchantmentType == AbilityEnum.INTELLIGENCE ||enchantmentType == AbilityEnum.WISDOM || enchantmentType == AbilityEnum.ARMORCLASS){
+				if(enchantmentType == AbilityEnum.INTELLIGENCE ||enchantmentType == AbilityEnum.WISDOM){
 					return new Item(itemEnum,enchantmentType,+1);
 				}else{
 					return null;
 				}
 			}else if(itemEnum == ItemEnum.ARMOR){
-				if(enchantmentType == AbilityEnum.ARMORCLASS ){
-					return new Item(itemEnum,enchantmentType,+1);
-				}else{
-					return null;
-				}
+				return null;
 			}else if(itemEnum == ItemEnum.SHIELD){
-				if(enchantmentType == AbilityEnum.ARMORCLASS ){
-					return new Item(itemEnum,enchantmentType,+1);
-				}else{
-					return null;
-				}
+				return null;
 			}else if(itemEnum == ItemEnum.RING){
-				if(enchantmentType == AbilityEnum.ARMORCLASS || enchantmentType == AbilityEnum.STRENGTH || enchantmentType == AbilityEnum.CONSTITUTION || enchantmentType == AbilityEnum.WISDOM || enchantmentType == AbilityEnum.CHARISMA){
+				if(enchantmentType == AbilityEnum.STRENGTH || enchantmentType == AbilityEnum.CONSTITUTION || enchantmentType == AbilityEnum.WISDOM || enchantmentType == AbilityEnum.CHARISMA){
 					return new Item(itemEnum,enchantmentType,+1);
 				}else{
 					return null;
@@ -83,40 +73,65 @@ public class PlayerFactory implements CharacterFactory {
 					return null;
 				}
 			}else if(itemEnum == ItemEnum.BOOTS){
-				if(enchantmentType == AbilityEnum.ARMORCLASS || enchantmentType == AbilityEnum.DEXTERITY){
+				if(enchantmentType == AbilityEnum.DEXTERITY){
 					return new Item(itemEnum,enchantmentType,+1);
 				}else{
 					return null;
 				}
 			}else if(itemEnum == ItemEnum.WEAPON){
-				if(enchantmentType == AbilityEnum.ATTACKBOUNS || enchantmentType == AbilityEnum.DAMAGEBOUNS){
-					return new Item(itemEnum,enchantmentType,+1);
-				}else{
-					return null;
-				}
+				return null;
 			}else{
 				return null;
 			}
 			
 	}
 
-	/**
-	 * randomly determining the character abilites using dice6 and d20 rules
-	 */
-	private void setCharacterAbility(){
+	@Override
+	public Item createItem(ItemEnum itemEnum, AttributeEnum attributeType) {
 		
-		int roll = 0;
-		
-		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
-			
-			roll = 0 ;
-			roll = dice.roll6() + dice.roll6() + dice.roll6() ;
-			
-			System.out.println("DEBUGLOG!! " + " character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
-			// To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down).
-		    character.addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
+		if(itemEnum == ItemEnum.HELMET){
+			if(attributeType == AttributeEnum.ARMORCLASS){
+				return new Item(itemEnum,attributeType,+1);
+			}else{
+				return null;
+			}
+		}else if(itemEnum == ItemEnum.ARMOR){
+			if(attributeType == AttributeEnum.ARMORCLASS ){
+				return new Item(itemEnum,attributeType,+1);
+			}else{
+				return null;
+			}
+		}else if(itemEnum == ItemEnum.SHIELD){
+			if(attributeType == AttributeEnum.ARMORCLASS ){
+				return new Item(itemEnum,attributeType,+1);
+			}else{
+				return null;
+			}
+		}else if(itemEnum == ItemEnum.RING){
+			if(attributeType == AttributeEnum.ARMORCLASS ){
+				return new Item(itemEnum,attributeType,+1);
+			}else{
+				return null;
+			}
+		}else if(itemEnum == ItemEnum.BELT){
+			return null;
+		}else if(itemEnum == ItemEnum.BOOTS){
+			if(attributeType == AttributeEnum.ARMORCLASS){
+				return new Item(itemEnum,attributeType,+1);
+			}else{
+				return null;
+			}
+		}else if(itemEnum == ItemEnum.WEAPON){
+			if(attributeType == AttributeEnum.ATTACKBOUNS || attributeType == AttributeEnum.DAMAGEBOUNS){
+				return new Item(itemEnum,attributeType,+1);
+			}else{
+				return null;
+			}
+		}else{
+			return null;
 		}
-		
 	}
+	
+	
 	
 }

@@ -1,7 +1,10 @@
 package ca.concordia.soen6441.d20.gamemap.element;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+
 
 /**
  * Entity implementation class for Entity: GroundEntity
@@ -20,6 +23,7 @@ public class GroundEntity extends GameObjectEntity implements Serializable {
 	@Override
 	public GameObject getModel() {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
    

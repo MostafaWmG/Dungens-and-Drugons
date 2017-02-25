@@ -4,19 +4,7 @@ import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
 public abstract class GameObject {	
-
-	public GameObject(Location location) {
-		setLocation(location);
-	}
 	
-	public GameObject() {
-		this(0, 0);		
-	}
-	
-	public GameObject(int x, int y) {
-		this(new Location(x,y));
-	}	
-		
 	/**
 	 * All GameObject sub-classes must implement this method. By using this
 	 * method GameMap is able to extract entities for saving data.

@@ -18,6 +18,8 @@ public class Player extends Character {
 	
 	public Player(String tag,String name) {
 		super();
+		// we need this tag . it will show character is a monster or player . name shows the custom name for player or monster.
+		// we can re factor that later
 		setTag(tag);
 		this.name = name;
 		backpack = new ArrayList<>();
