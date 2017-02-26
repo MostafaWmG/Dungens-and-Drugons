@@ -10,10 +10,16 @@
 		<class>ca.concordia.soen6441.d20.gamemap.GameMapEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.GroundEntity</class>
-		<class>ca.concordia.soen6441.d20.gamemap.element.EntryEntity</class>
+		<class>ca.concordia.soen6441.d20.gamemap.element.EnteryEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.WallEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.ExitEntity</class>
+<<<<<<< HEAD
 		<class>ca.concordia.soen6441.d20.gamemap.element.DoorEntity</class>
+		<class>ca.concordia.soen6441.d20.character.CharacterEntity</class>
+=======
+		<!--  TODO uncomment the following line -->
+		<!--   <class>ca.concordia.soen6441.d20.gamemap.element.DoorEntity</class> -->
+>>>>>>> 5f69e01be9f39f0de75915114bd3ad46bb37e09a
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
 		<properties>

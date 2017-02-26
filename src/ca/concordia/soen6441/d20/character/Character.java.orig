@@ -5,6 +5,7 @@ import java.util.List;
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+import ca.concordia.soen6441.d20.gamemap.element.GroundEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Ability;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
@@ -24,9 +25,14 @@ import ca.concordia.soen6441.d20.item.ItemEnum;
 // ArmorClass,HitPoint,DamageBonus,AttackBonus need to re factor and all of them can have same interface or inherits from attribute
 public class Character extends GameObject {
 	/**
+<<<<<<< HEAD
+	 * level : level of the character 
+	 * name : name of the character
+=======
 	 * level : level
 	 * name : name 
 	 * characterEntity: used for saving and loading characters
+>>>>>>> a1a305c36bcb9089652f5fefdde28158f36701e8
 	 * wearItems : items that character already wear
 	 * armorClass: the armor of the character
 	 * attackBonus : the attack of the character
@@ -48,6 +54,9 @@ public class Character extends GameObject {
 	protected Dice dice;
 	
 	public Character(int initialPosistionX, int initialPositionY) {
+		
+		//I think level should be deleted now, since it is defined in its entity class
+		level = 1;
 		wearItems = new ArrayList<Item>();
 		abilities = new ArrayList<Ability>();
 		setCharacterAbility();
@@ -55,9 +64,14 @@ public class Character extends GameObject {
 		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH.getValue()).getModifier());
 		attackBonus = new AttackBonus(level);
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
-		setAbilitiesListener();		
+		setAbilitiesListener();
+<<<<<<< HEAD
+=======
+		acBonus = false;
+		
 		init();
 		
+>>>>>>> a1a305c36bcb9089652f5fefdde28158f36701e8
 	}
 		
 	public Character() {
@@ -71,7 +85,11 @@ public class Character extends GameObject {
 		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH.getValue()).getModifier());
 		attackBonus = new AttackBonus(level);
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
-		setAbilitiesListener();		
+		setAbilitiesListener();
+<<<<<<< HEAD
+=======
+		acBonus = false;
+		
 		init();
 	}
 	/*
@@ -80,6 +98,7 @@ public class Character extends GameObject {
 	private void init(){
 		
 		setCharacterEntity(new CharacterEntity());
+>>>>>>> a1a305c36bcb9089652f5fefdde28158f36701e8
 	}
 	
 	/**
@@ -191,10 +210,17 @@ public class Character extends GameObject {
 	 * @param point the amount of level that our character gain in level up action
 	 */
 	public void levelUp(int point){
+<<<<<<< HEAD
+		level ++ ;
+		attackBonus.update(level);
+		hitPoint.setLevel(level);
+		iterate(abilities,wearItems, point);
+=======
 		characterEntity.level ++ ;
 		attackBonus.update(characterEntity.level);
 		hitPoint.setLevel(characterEntity.level);
-		iterate(abilities,wearItems, point);
+		iterate(abilities, point);
+>>>>>>> a1a305c36bcb9089652f5fefdde28158f36701e8
 	}
 
 	/**
