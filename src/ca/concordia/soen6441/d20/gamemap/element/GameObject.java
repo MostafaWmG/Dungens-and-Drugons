@@ -3,7 +3,7 @@ package ca.concordia.soen6441.d20.gamemap.element;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
-public abstract class GameObject {	
+public abstract class GameObject {		
 	
 	/**
 	 * All GameObject sub-classes must implement this method. By using this

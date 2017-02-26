@@ -15,26 +15,41 @@ public class Ground extends GameObject {
 
 	public Ground(Location location)
 	{
-		init();
+		initEmptyEntity();
 		groundEntity.setLocation(location);
 		
 	}
 	
 	public Ground()
 	{
-		init();
+		initEmptyEntity();
 		groundEntity.setLocation(new Location(0, 0));
 	}
 	
 	public Ground(int x, int y)
 	{
-		init();
+		initEmptyEntity();
 		groundEntity.setLocation(new Location(x, y));
+	}
+	
+	/**
+	 * We usually use this constructor for loading from database
+	 * @param entity
+	 */
+	public Ground(GroundEntity entity)
+	{
+		setGroundEntity(entity);
+		init();
+	}
+	
+	private void initEmptyEntity()
+	{
+		setGroundEntity(new GroundEntity());
+		init();
 	}
 	
 	private void init()
 	{
-		setGroundEntity(new GroundEntity());
 		setTag("Ground");
 	}
 	

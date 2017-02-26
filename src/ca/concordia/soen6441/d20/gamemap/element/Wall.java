@@ -7,21 +7,39 @@ public class Wall extends GameObject {
 	private WallEntity wallEntity;
 	
 	public Wall(int x , int y){
-		setWallEntity(new WallEntity());
-		setTag("Wall");
+		initEmptyWallEntity();
 		setLocation(new Location(x, y));
 	}
 	
 	public Wall(Location location){
-		setWallEntity(new WallEntity());
-		setTag("Wall");
+		initEmptyWallEntity();
 		setLocation(location);
 	}
 	
-	public Wall(){
-		setWallEntity(new WallEntity());
-		setTag("Wall");
+	public Wall(){		
+		initEmptyWallEntity();
 		setLocation(new Location(0, 0));
+	}
+	
+	/**
+	 * We usually use this constructor for loading from database
+	 * @param entity
+	 */
+	public Wall(WallEntity entity)
+	{
+		setWallEntity(entity);
+		init();
+	}
+	
+	private void initEmptyWallEntity()
+	{
+		setWallEntity(new WallEntity());
+		init();
+	}
+	
+	private void init()
+	{
+		setTag("Wall");
 	}
 
 	@Override

@@ -8,20 +8,35 @@ public class Entery extends GameObject{
 
 	public  Entery(int x , int y){
 		setEnteryEntity(new EnteryEntity());
-		setTag("Enter");
+		init();
 		setLocation(new Location(x, y));
 	}
 	
 	public  Entery(Location location){
 		setEnteryEntity(new EnteryEntity());
-		setTag("Enter");
+		init();
 		setLocation(location);
 	}
 
 	public  Entery(){
 		setEnteryEntity(new EnteryEntity());
-		setTag("Enter");
+		init();
 		setLocation(new Location(0, 0));
+	}
+	
+	/**
+	 * We usually use this constructor for loading data from database
+	 * @param entity
+	 */
+	public Entery(EnteryEntity entity)
+	{
+		setEnteryEntity(entity);
+		init();
+	}
+	
+	private void init()
+	{
+		setTag("Enter");
 	}
 
 

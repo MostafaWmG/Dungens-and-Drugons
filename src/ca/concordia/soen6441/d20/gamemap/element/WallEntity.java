@@ -20,7 +20,7 @@ public class WallEntity extends GameObjectEntity implements Serializable {
 	
 	public GameObject createModel(){
 		
-		return null;
+		return new Wall(this);
 		}
    
 }

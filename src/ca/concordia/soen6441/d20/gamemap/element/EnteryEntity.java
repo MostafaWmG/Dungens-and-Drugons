@@ -14,13 +14,11 @@ public class EnteryEntity extends GameObjectEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public EnteryEntity() {
-		// TODO Auto-generated constructor stub
 		super();	
 		}
 		
-	public GameObject createModel(){
-		
-		return null;
-		}
-	   
-	}
+	public GameObject createModel()
+	{
+		return new Entery(this);
+	}	   
+}

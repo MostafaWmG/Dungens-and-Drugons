@@ -8,21 +8,33 @@ public class Exit extends GameObject{
 	
 	public Exit(int x , int y){
 		setExitEntity(new ExitEntity());
-		setTag("Exit");
+		init();
 		setLocation(new Location(x, y));
 	}
 	
 	public Exit(Location location){
 		setExitEntity(new ExitEntity());
-		setTag("Exit");
+		init();
 		setLocation(location);
 	}
 	
 	public Exit(){
 		setExitEntity(new ExitEntity());
-		setTag("Exit");
+		init();
 		setLocation(new Location(0,0));
 	}
+	
+	public Exit(ExitEntity entity)
+	{
+		setExitEntity(entity);
+		init();
+	}
+	
+	private void init()
+	{
+		setTag("Exit");
+	}
+	
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub
