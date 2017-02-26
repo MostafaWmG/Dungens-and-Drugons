@@ -28,7 +28,7 @@ public class GameMapEntitySample implements Serializable {
 	private int id;
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
-			name="MAP_OBJ",
+			name="MAP_OBJ_SAMPLE",
 			joinColumns=@JoinColumn(name="MAP_ID", referencedColumnName="ID"),
 			inverseJoinColumns=@JoinColumn(name="OBJECT_ID", referencedColumnName="ID"))
 	private List<GameObjectEntitySample> objects;
