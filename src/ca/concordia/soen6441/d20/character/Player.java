@@ -21,7 +21,7 @@ public class Player extends Character {
 		// we need this tag . it will show character is a monster or player . name shows the custom name for player or monster.
 		// we can re factor that later
 		setTag(tag);
-		this.name = name;
+		setName(name);
 		backpack = new ArrayList<>();
 	}
 	

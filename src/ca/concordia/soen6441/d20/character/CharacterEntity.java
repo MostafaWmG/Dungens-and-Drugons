@@ -20,6 +20,8 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	//TODO Fighters, armors and some other game objects have level. So I don't think we should put level here
+	//Maybe we need to put it in GameObject
 	private int level;
 	protected List <Item> wearItems;
 

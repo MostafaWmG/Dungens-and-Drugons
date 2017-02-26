@@ -33,6 +33,9 @@ public abstract class GameObjectEntity implements Serializable {
 	private GameMap field;
 	//TODO Do we really need tag?
 	private String tag ;
+	
+	@Column(unique=true)
+	private String name;
 
 	public GameObjectEntity() {
 		super();
@@ -92,5 +95,20 @@ public abstract class GameObjectEntity implements Serializable {
 	 */
 	public void setTag(String tag) {
 		this.tag = tag;
-	}   
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }
