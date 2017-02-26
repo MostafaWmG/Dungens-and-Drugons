@@ -10,46 +10,76 @@ import java.util.Vector;
  */
 public class Ability implements LevelUp{
 	
-	/**
-	 *  score: the attribute that represent the abilityScore. 
-	 *  modifier :the attribute that that represent abilityModifier.
-	 *  ability :the attribute that represent the ability name.
-	 */
-	protected int score;
-	protected int modifier;
-	protected  AbilityEnum ability; 
+	private AbilityEntity abilityEntity;
 	protected List<LevelUp> levelUpAction;
 	
 	public Ability(AbilityEnum ability,int  score, int modifier){
-		this.ability = ability;
-		this.score = score;
-		this.modifier = modifier;
-		levelUpAction = new Vector<LevelUp>();
+		initEmptyEntity();
+		setAbilityEnum(ability);
+		setScore(score);
+		setModifier(modifier);
+		init();
 	}
 	
 	public Ability(){
-		
+		initEmptyEntity();
+		init();
+	}
+	
+	/**
+	 * Usually we use this constructor to load data from database
+	 * @param entity
+	 */
+	public Ability(AbilityEntity entity)
+	{
+		setAbilityEntity(entity);
+		init();
+	}
+	
+	private void initEmptyEntity()
+	{
+		setAbilityEntity(new AbilityEntity());
+	}
+	
+	private void init()
+	{
+		levelUpAction = new Vector<LevelUp>();
 	}
 	
 	public int getScore() {
-		return score;
+		return getAbilityEntity().getScore();
 	}
 	public void setScore(int score) {
-		this.score = score;
+		getAbilityEntity().setScore(score);
 	}
 	public int getModifier() {
-		return modifier;
+		return getAbilityEntity().getModifier();
 	}
 	public void setModifier(int modifier) {
-		this.modifier = modifier;
+		getAbilityEntity().setModifier(modifier);
 	}
 	
 	public AbilityEnum getAbilityEnum(){
-		return ability;
+		return getAbilityEntity().getAbility();
 	}
 	
 	public void setAbilityEnum(AbilityEnum ability){
-		this.ability = ability;
+		getAbilityEntity().setAbility(ability);
+	}
+	
+
+	/**
+	 * @return the abilityEntity
+	 */
+	public AbilityEntity getAbilityEntity() {
+		return abilityEntity;
+	}
+
+	/**
+	 * @param abilityEntity the abilityEntity to set
+	 */
+	public void setAbilityEntity(AbilityEntity abilityEntity) {
+		this.abilityEntity = abilityEntity;
 	}
 
 	public void addListener(LevelUp levelUp) {
@@ -58,7 +88,7 @@ public class Ability implements LevelUp{
 	
 	private void synceModifier(){
 		setModifier((int)Math.floor( (getScore() - 10) /2 ) );
-	}
+	}		
 	
 	@Override
 	public void update(int point) {

@@ -6,7 +6,7 @@
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.FighterEntitySample</class>
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.GameMapEntitySample</class>
 		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.WallEntitySample</class>
-		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntity</class>
+		<class>test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntitySample</class>
 		<class>ca.concordia.soen6441.d20.gamemap.GameMapEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.GroundEntity</class>
@@ -15,6 +15,9 @@
 		<class>ca.concordia.soen6441.d20.gamemap.element.ExitEntity</class>
 		<class>ca.concordia.soen6441.d20.character.CharacterEntity</class>
 		<class>ca.concordia.soen6441.d20.common.Location</class>
+		<class>ca.concordia.soen6441.d20.item.ItemEntity</class>
+		<class>ca.concordia.soen6441.d20.item.AbilityEntity</class>
+		<class>ca.concordia.soen6441.d20.item.ArmorClassEntity</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
 		<properties>

@@ -9,63 +9,86 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
  * @author alvaro
  */
 public class Item extends GameObject implements LevelUp{
-	/**
-	 *  point: the attribute that represent the enchantment point. 
-	 *  itemEnum :the attribute that that represent item's name.
-	 *  enchantmentType :the attribute that represent the enchantmentType.
-	 */
-	private int point;
-	private ItemEnum itemEnum;
-	private AbilityEnum enchantmentType;
-	private AttributeEnum attributeType;
+	
+	private ItemEntity itemEntity;
 
 	public Item(ItemEnum item,AbilityEnum enchantmentType, int point) {
-		itemEnum = item;
-		this.enchantmentType = enchantmentType;
-		this.attributeType = null;
-		this.point = point;
+		initEmptyEntity();
+		getItemEntity().setItemEnum(item);
+		getItemEntity().setEnchantmentType(enchantmentType);
+		getItemEntity().setAttributeType(null);
+		getItemEntity().setPoint(point);
 	}
 	
 	public Item(ItemEnum item,AttributeEnum attributeType, int point){
-		itemEnum = item;
-		this.attributeType = attributeType;
-		this.enchantmentType = null;
-		this.point = point;
+		initEmptyEntity();
+		getItemEntity().setItemEnum(item);
+		getItemEntity().setAttributeType(attributeType);
+		getItemEntity().setEnchantmentType(null);
+		getItemEntity().setPoint(point);
 	}
 	
+	/**
+	 * Usually we use this constructor for loading data from database
+	 * @param entity
+	 */
+	public Item(ItemEntity entity)
+	{
+		setItemEntity(entity);
+	}
+	
+	private void initEmptyEntity()
+	{
+		setItemEntity(new ItemEntity());
+	}
+	
+	/**
+	 * @return the itemEntity
+	 */
+	public ItemEntity getItemEntity() {
+		return itemEntity;
+	}
+
+	/**
+	 * @param itemEntity the itemEntity to set
+	 */
+	public void setItemEntity(ItemEntity itemEntity) {
+		this.itemEntity = itemEntity;
+	}
+
 	public int getEnchantmentPoint() {
-		return point;
+		return getItemEntity().getPoint();
 	}
 	public void setEnchantmentPoint(int point) {
-		this.point = point;
+		getItemEntity().setPoint(point);
 	}
 	public AbilityEnum getEnchantmentType(){
-		return enchantmentType;
+		return getItemEntity().getEnchantmentType();
 	}
 	
 	public void setEnchantmentType(AbilityEnum enchantmentType){
-		this.enchantmentType = enchantmentType;
+		getItemEntity().setEnchantmentType(enchantmentType);
 	}
 	public ItemEnum getItemEnum(){
-		return itemEnum;
+		return getItemEntity().getItemEnum();
 	}
 	
 	public void setItemEum(ItemEnum itemEnum){
-		this.itemEnum = itemEnum;
+		getItemEntity().setItemEnum(itemEnum);
 	}
 
 	/**
 	 * @return the attributeEnum
 	 */
 	public AttributeEnum getAttributeType() {
-		return attributeType;
+		return getItemEntity().getAttributeType();
 	}
 
 	/**
 	 * @param attributeEnum the attributeEnum to set
 	 */
 	public void setAttributeType(AttributeEnum attributeEnum) {
-		this.attributeType = attributeEnum;
+		getItemEntity().setAttributeType(attributeEnum);
 	}
 
 	@Override
@@ -75,7 +98,6 @@ public class Item extends GameObject implements LevelUp{
 
 	@Override
 	public GameObjectEntity getEntity() {
-		// TODO Auto-generated method stub
-		return null;
+		return getItemEntity();
 	}
 }

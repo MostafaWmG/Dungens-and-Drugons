@@ -12,16 +12,16 @@ import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEn
  */
 @Entity
 //@Table(name="ITEM")
-public class ItemEntity extends GameObjectEntitySample implements Serializable {
+public class ItemEntitySample extends GameObjectEntitySample implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
 
-	public ItemEntity(int id, String name)
+	public ItemEntitySample(int id, String name)
 	{
 		super(id, name);
 	}
-	public ItemEntity() {
+	public ItemEntitySample() {
 		super();
 	}
    
