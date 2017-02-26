@@ -54,7 +54,7 @@ public class Character extends GameObject {
 		attackBonus = new AttackBonus(getLevel());
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel());
 		setAbilitiesListener();		
-
+		emptyWearList();
 		
 	}
 		
@@ -68,7 +68,7 @@ public class Character extends GameObject {
 		attackBonus = new AttackBonus(getLevel());
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel());
 		setAbilitiesListener();		
-
+		emptyWearList();
 	}
 	/*
 	 * This method sets entity for each object created
@@ -165,7 +165,7 @@ public class Character extends GameObject {
 			roll = 0 ;
 			roll = dice.roll6() + dice.roll6() + dice.roll6() ;
 			
-			System.out.println("DEBUGLOG!! " + " character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
+			System.out.println(" character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
 			// To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down).
 			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
@@ -288,6 +288,14 @@ public class Character extends GameObject {
 		}		
 	}
 	
+	/**
+	 * empty the wearItems list
+	 */
+	private void emptyWearList(){
+		for(int i = 0; i < wearItems.size() ; i ++){
+			wearItems.set(i, null);
+		}
+	}
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub

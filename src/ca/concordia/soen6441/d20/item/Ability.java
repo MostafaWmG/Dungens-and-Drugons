@@ -56,7 +56,7 @@ public class Ability implements LevelUp{
 		levelUpAction.add(levelUp);
 	}
 	
-	private void synceModifier(){
+	public void synceModifier(){
 		setModifier((int)Math.floor( (getScore() - 10) /2 ) );
 	}
 	
@@ -67,5 +67,9 @@ public class Ability implements LevelUp{
 		for(int i = 0 ; i < levelUpAction.size(); i++){
 			levelUpAction.get(i).update(getModifier());
 		}
+	}
+	
+	public void show(){
+		System.out.println("Ability Name: "+ability+" Score: "+score+" Modifier: "+modifier );
 	}
 }
