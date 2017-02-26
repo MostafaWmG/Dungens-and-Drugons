@@ -21,7 +21,7 @@ public class GroundEntity extends GameObjectEntity implements Serializable {
 	}
 
 	@Override
-	public GameObject getModel() {
+	public GameObject createModel() {
 		// TODO Auto-generated method stub
 		
 		return null;

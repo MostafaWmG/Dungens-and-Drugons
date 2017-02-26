@@ -5,11 +5,13 @@ import java.util.Map;
 
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 
 /** 
  * this class represents a Map where different game element can be located
  * @author alvaro
+ * @author Saman Saadi
  *
  */
 public class GameMap {
@@ -29,21 +31,40 @@ public class GameMap {
 	 * @param width the width of the map
 	 * @param height the height of the map
 	 */
-	public GameMap(String mapName,int width, int height) {
-		init();
+	public GameMap(String mapName,int width, int height) {		
+		setGameMapEntity(new GameMapEntity());
 		setWidth(width);
 		setHeight(height);
 		setMapName(mapName);
-		field = new GameObject[height][width];
-		
-		elements = new HashMap<>();
-		
-		emptyMap();
+		init();
+	}
+	
+	/**
+	 * We usually use this constructor when we want to load from database
+	 * @param gameMapEntity
+	 */
+	public GameMap(GameMapEntity gameMapEntity)
+	{
+		setGameMapEntity(gameMapEntity);
+		initVolatileAttirubtes();
+	}
+	
+	/**
+	 * This method is responsible to initialize all attributes which will not persist on database
+	 */
+	private void initVolatileAttirubtes()
+	{
+		init();
+		for (GameObjectEntity entity : getGameMapEntity().getObjects())
+			place(entity.createModel(), entity.getLocation());
 	}
 	
 	private void init()
 	{
-		setGameMapEntity(new GameMapEntity());
+		//TODO usually the first dimension is width		
+		field = new GameObject[getGameMapEntity().getHeight()][getGameMapEntity().getWidth()];		
+		elements = new HashMap<>();		
+		emptyMap();
 	}
 	
 	public GameMapEntity getEntity()
