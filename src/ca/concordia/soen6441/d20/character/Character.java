@@ -10,6 +10,7 @@ import ca.concordia.soen6441.d20.item.Ability;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.ArmorClass;
 import ca.concordia.soen6441.d20.item.AttackBonus;
+import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.DamageBonus;
 import ca.concordia.soen6441.d20.item.HitPoint;
 import ca.concordia.soen6441.d20.item.Item;
@@ -20,15 +21,17 @@ import ca.concordia.soen6441.d20.item.ItemEnum;
  * @author alvaro
  * @author mostafa
  */
+// ArmorClass,HitPoint,DamageBonus,AttackBonus need to re factor and all of them can have same interface or inherits from attribute
 public class Character extends GameObject {
 	/**
-	 * level : level
-	 * name : name 
+	 * level : level of the character 
+	 * name : name of the character
 	 * wearItems : items that character already wear
 	 * armorClass: the armor of the character
 	 * attackBonus : the attack of the character
 	 * damageBonus : the damage of the character
-	 * acBonus : check if character have any Armor bonus from items or not 
+	 * hitPoint    : the hitPoint of the character
+	 * dice        : the dice class for rolling a dice
 	 */
 	protected int level;
 	protected String name;
@@ -40,7 +43,6 @@ public class Character extends GameObject {
 	protected DamageBonus damageBonus;
 	protected HitPoint hitPoint;
 	protected Dice dice;
-	protected boolean acBonus;
 	
 	public Character(int initialPosistionX, int initialPositionY) {
 		level = 1;
@@ -52,7 +54,6 @@ public class Character extends GameObject {
 		attackBonus = new AttackBonus(level);
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
 		setAbilitiesListener();
-		acBonus = false;
 	}
 		
 	public Character() {
@@ -65,7 +66,6 @@ public class Character extends GameObject {
 		attackBonus = new AttackBonus(level);
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
 		setAbilitiesListener();
-		acBonus = false;
 	}
 	
 	/**
@@ -87,9 +87,62 @@ public class Character extends GameObject {
 	public void attack(Character enemy) {
 		
 	}
-		
+	
 	/**
-	 * randomly determining the character abilites using dice6 and d20 rules
+	 * order to character to wear this item
+	 * @param item the item that is going to be weared.
+	 */
+	public void putOnItem(Item item){
+		
+		if(hasItem(item.getItemEnum())){
+			 System.out.println("Character already has item");
+		}else {
+			wearItems.add(item.getItemEnum().getValue(), item);
+			wearItem(item, item.getEnchantmentPoint());
+			System.out.println("characted wore the item");
+		}
+	}
+	
+	// need to  re factor
+	/**
+	 * this method updates the character statistics that character gains by wearing or removing the item
+	 * @param item the item that character wears
+	 * @param value the item value that affect the character
+	 */
+	public void wearItem(Item item , int value){
+		if (item.getAttributeType() == null ){
+			abilities.get(item.getEnchantmentType().getValue()).update(value);
+		}else if (item.getEnchantmentType() == null){
+			
+			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
+				armorClass.setBase(armorClass.getBase() + value);
+			}else if (item.getAttributeType() == AttributeEnum.ATTACKBONUS){
+				attackBonus.setBase(attackBonus.getBase() + value);
+			}else if (item.getAttributeType() == AttributeEnum.DAMAGEBONUS){
+				damageBonus.setBase(damageBonus.getBase() + value);
+			}
+		}else {
+			System.out.println("Error: wrong info");
+		}
+	}
+	
+	/**
+	 * this method will remove an item form character .
+	 * @param item the item that is going to be removed.
+	 */
+	public void removeItem(Item item){
+		
+		if(hasItem(item.getItemEnum())){
+			wearItems.remove(item.getItemEnum().getValue());
+			wearItem(item, -1 * item.getEnchantmentPoint());
+			System.out.println("item Removed");
+		}else {
+			 System.out.println("Character dont have this item");
+		}
+	}
+	
+	/**
+	 * randomly determining the character abilities using dice6 and d20 rules
 	 */
 	private void setCharacterAbility(){
 		
@@ -107,17 +160,25 @@ public class Character extends GameObject {
 		
 	}
 	
+	/**
+	 * this method sets the listeners of abilities.
+	 * so when we modify any of these abilities it will automatically changes other statistics related to it. 
+	 */
 	public void setAbilitiesListener(){
 		abilities.get(AbilityEnum.DEXTERITY.getValue()).addListener(armorClass);
 		abilities.get(AbilityEnum.CONSTITUTION.getValue()).addListener(hitPoint);
 		abilities.get(AbilityEnum.STRENGTH.getValue()).addListener(damageBonus);
 	}
 	
+	/**
+	 * this method will level up our character 
+	 * @param point the amount of level that our character gain in level up action
+	 */
 	public void levelUp(int point){
 		level ++ ;
 		attackBonus.update(level);
 		hitPoint.setLevel(level);
-		iterate(abilities, point);
+		iterate(abilities,wearItems, point);
 	}
 
 	/**
@@ -198,13 +259,23 @@ public class Character extends GameObject {
 		this.level = level;
 	}
 
-	private void iterate(List<Ability> list , int value) {
+	/**
+	 * it will iterate the list 
+	 * @param list the list need to be iterated.
+	 * @param value the value need to be updated.
+	 */
+	private  void iterate(List<Ability> list,List<Item> list2 , int value ) {
+		
+		for(int i =0 ; i < list2.size() ; i ++){
+			if(list2.get(i) != null)
+				list2.get(i).update(value);
+		}		
 		
 		for(int i =0 ; i < list.size() ; i ++){
 			list.get(i).update(value);
 		}		
 	}
-
+	
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub

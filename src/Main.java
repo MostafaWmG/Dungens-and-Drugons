@@ -8,8 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.character.factory.ItemFactory;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
@@ -97,18 +95,23 @@ public class Main extends JFrame implements ActionListener{
 		String charType = scanner.nextLine();
 		PlayerFactory PlayerFactory = new PlayerFactory();
 		Character character = PlayerFactory.create(charType,charName);
-		System.out.println("Do you want to save your character (yes or no )?");
-		String result = scanner.nextLine();
 		
-		if(result.equals("yes")){
-			// save the character into file  . you need to save character object into file @saman @negar.
-			System.out.println("Character saved successfully");
-		}else if (result.equals("no")){
-			System.out.println("Character removed");
+		if(character != null){
+			System.out.println("Do you want to save your character (yes or no )?");
+			String result = scanner.nextLine();
+			
+			if(result.equals("yes")){
+				// save the character into file  . you need to save character object into file @saman @negar.
+				System.out.println("Character saved successfully");
+			}else if (result.equals("no")){
+				System.out.println("Character removed");
+			}else {
+				System.out.println("Error");
+			}
 		}else {
-			System.out.println("Error");
+			System.out.println("Error null");
 		}
-		
+
 //		scanner.close();
 	}
 	

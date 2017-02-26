@@ -62,7 +62,7 @@ public class Ability implements LevelUp{
 	
 	@Override
 	public void update(int point) {
-		setScore(point);
+		setScore(getScore() + point);
 		synceModifier();
 		for(int i = 0 ; i < levelUpAction.size(); i++){
 			levelUpAction.get(i).update(getModifier());
