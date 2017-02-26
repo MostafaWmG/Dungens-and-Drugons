@@ -49,7 +49,7 @@ public class Character extends GameObject {
 		wearItems = new ArrayList<Item>();
 		abilities = new ArrayList<Ability>();
 		setCharacterAbility();
-		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY.getValue()).getModifier());
+		armorClass = new ArmorClass(abilities .get(AbilityEnum.DEXTERITY.getValue()).getModifier());
 		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH.getValue()).getModifier());
 		attackBonus = new AttackBonus(getLevel());
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel());
