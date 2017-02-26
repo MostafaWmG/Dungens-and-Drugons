@@ -1,16 +1,30 @@
 package ca.concordia.soen6441.d20.item;
 
 public class DamageBonus implements LevelUp{
-	private int base;
-	private int modifier;
+
+	private DamageBonusEntity damageBonusEntity;
 	
 	public DamageBonus(int modifier){
-		this.modifier = modifier;
-		base = 0;
+		initEmptyEntity();
+		setModifier(modifier);
+		setBase(0);
+	}
+	/**
+	 * Usually we use this constructor for loading data
+	 * @param entity
+	 */
+	public DamageBonus(DamageBonusEntity entity)
+	{
+		setDamageBonusEntity(entity);
+	}
+	
+	private void initEmptyEntity()
+	{
+		setDamageBonusEntity(new DamageBonusEntity());
 	}
 	
 	public int getPoint(){
-		return (modifier + base);
+		return (getModifier() + getBase());
 	}
 	
 	public void showPoint(){
@@ -26,27 +40,42 @@ public class DamageBonus implements LevelUp{
 	 * @return the base
 	 */
 	public int getBase() {
-		return base;
+		return getDamageBonusEntity().getBase();
 	}
 
 	/**
 	 * @param base the base to set
 	 */
 	public void setBase(int base) {
-		this.base = base;
+		getDamageBonusEntity().setBase(base);
 	}
 
 	/**
 	 * @return the modifier
 	 */
 	public int getModifier() {
-		return modifier;
+		return getDamageBonusEntity().getModifier();
 	}
 
 	/**
 	 * @param modifier the modifier to set
 	 */
 	public void setModifier(int modifier) {
-		this.modifier = modifier;
+		getDamageBonusEntity().setModifier(modifier);
 	}
+
+	/**
+	 * @return the damageBonusEntity
+	 */
+	public DamageBonusEntity getDamageBonusEntity() {
+		return damageBonusEntity;
+	}
+
+	/**
+	 * @param damageBonusEntity the damageBonusEntity to set
+	 */
+	public void setDamageBonusEntity(DamageBonusEntity damageBonusEntity) {
+		this.damageBonusEntity = damageBonusEntity;
+	}
+	
 }

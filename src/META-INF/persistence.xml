@@ -18,6 +18,9 @@
 		<class>ca.concordia.soen6441.d20.item.ItemEntity</class>
 		<class>ca.concordia.soen6441.d20.item.AbilityEntity</class>
 		<class>ca.concordia.soen6441.d20.item.ArmorClassEntity</class>
+		<class>ca.concordia.soen6441.d20.item.AttackBonusEntity</class>
+		<class>ca.concordia.soen6441.d20.item.DamageBonusEntity</class>
+		<class>ca.concordia.soen6441.d20.item.HitPointEntity</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
 		<properties>

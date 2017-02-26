@@ -5,20 +5,35 @@ package ca.concordia.soen6441.d20.item;
 import ca.concordia.soen6441.d20.dice.Dice;
 
 public class HitPoint implements LevelUp {
-	private int base;
-	private int modifier;
-	private int level;
+
+	private HitPointEntity hitPointEntity;
+	//TODO we have Dice both in HitPoint and Character
 	private Dice dice ;
 		
 	public HitPoint(int modifier,int level){
-		base = 10;
-		this.modifier = modifier;
+		setBase(10);
+		setModifier(modifier);		
+		setLevel(level);
+		init();
+	}
+	
+	/**
+	 * 
+	 * @param entity
+	 */
+	public HitPoint(HitPointEntity entity)
+	{
+		setHitPointEntity(entity);
+		init();
+	}
+	
+	private void init()
+	{
 		dice = new Dice();
-		this.level = level;
 	}
 	
 	public int getPoint(){
-		return (base+modifier);
+		return (getBase() + getModifier());
 	}
 		
 	public void showPoint(){
@@ -35,41 +50,56 @@ public class HitPoint implements LevelUp {
 	 * @return the level
 	 */
 	public int getLevel() {
-		return level;
+		return getHitPointEntity().getLevel();
 	}
 
 	/**
 	 * @param level the level to set
 	 */
 	public void setLevel(int level) {
-		this.level = level;
+		getHitPointEntity().setLevel(level);
 	}
 
 	/**
 	 * @return the base
 	 */
 	public int getBase() {
-		return base;
+		return getHitPointEntity().getBase();
 	}
 
 	/**
 	 * @param base the base to set
 	 */
 	public void setBase(int base) {
-		this.base = base;
+		getHitPointEntity().setBase(base);
 	}
 
 	/**
 	 * @return the modifier
 	 */
 	public int getModifier() {
-		return modifier;
+		return getHitPointEntity().getModifier();
 	}
 
 	/**
 	 * @param modifier the modifier to set
 	 */
 	public void setModifier(int modifier) {
-		this.modifier = modifier;
+		getHitPointEntity().setModifier(modifier);
 	}
+
+	/**
+	 * @return the hitPointEntity
+	 */
+	public HitPointEntity getHitPointEntity() {
+		return hitPointEntity;
+	}
+
+	/**
+	 * @param hitPointEntity the hitPointEntity to set
+	 */
+	public void setHitPointEntity(HitPointEntity hitPointEntity) {
+		this.hitPointEntity = hitPointEntity;
+	}
+	
 }
