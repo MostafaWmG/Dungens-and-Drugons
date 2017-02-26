@@ -5,7 +5,7 @@ package ca.concordia.soen6441.d20.item;
  * @author wmg
  * @author alvaro
  */
-public class Item {
+public class Item implements LevelUp{
 	/**
 	 *  point: the attribute that represent the enchantment point. 
 	 *  itemEnum :the attribute that that represent item's name.
@@ -16,15 +16,17 @@ public class Item {
 	private AbilityEnum enchantmentType;
 	private AttributeEnum attributeType;
 
-	public Item(ItemEnum item,AbilityEnum enchantmentType, int point){
+	public Item(ItemEnum item,AbilityEnum enchantmentType, int point) {
 		itemEnum = item;
 		this.enchantmentType = enchantmentType;
+		this.attributeType = null;
 		this.point = point;
 	}
 	
 	public Item(ItemEnum item,AttributeEnum attributeType, int point){
 		itemEnum = item;
 		this.attributeType = attributeType;
+		this.enchantmentType = null;
 		this.point = point;
 	}
 	
@@ -61,5 +63,10 @@ public class Item {
 	 */
 	public void setAttributeType(AttributeEnum attributeEnum) {
 		this.attributeType = attributeEnum;
+	}
+
+	@Override
+	public void update(int modifier) {
+		setEnchantmentPoint(getEnchantmentPoint() +  (int)(modifier/5));
 	}
 }
