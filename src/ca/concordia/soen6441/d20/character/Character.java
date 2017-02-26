@@ -87,9 +87,9 @@ public class Character extends GameObject {
 		try {
 			//changing keyword "this" to characterEntity
 			//adding characterEntity to the other lines
-			characterEntity.getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
-			characterEntity.getLocation().setX(getLocation().getX()+dx);
-			characterEntity.getLocation().setY(getLocation().getY()+dy);
+			getCharacterEntity().getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
+			getCharacterEntity().getLocation().setX(getLocation().getX()+dx);
+			getCharacterEntity().getLocation().setY(getLocation().getY()+dy);
 		
 		} catch(MoveNotValidException e) {
 			e.printStackTrace();
@@ -187,9 +187,9 @@ public class Character extends GameObject {
 	 * @param point the amount of level that our character gain in level up action
 	 */
 	public void levelUp(int point){
-		characterEntity.setLevel(characterEntity.getLevel() + 1);
-		attackBonus.update(characterEntity.getLevel());
-		hitPoint.setLevel(characterEntity.getLevel());
+		getCharacterEntity().setLevel(getCharacterEntity().getLevel() + 1);
+		attackBonus.update(getCharacterEntity().getLevel());
+		hitPoint.setLevel(getCharacterEntity().getLevel());
 		iterate(abilities,wearItems, point);
 	}
 
@@ -199,7 +199,7 @@ public class Character extends GameObject {
 	 * @return if true : has this item 
 	 */
 	public boolean hasItem(ItemEnum itemEnum){
-		if(characterEntity.wearItems.get(itemEnum.getValue()) != null)
+		if(getCharacterEntity().wearItems.get(itemEnum.getValue()) != null)
 			return true;
 		else
 			return false;
@@ -232,11 +232,11 @@ public class Character extends GameObject {
 	 * @param item which is going to be wear.
 	 */
 	public void addItem(Item item) {
-		characterEntity.wearItems.add(item.getItemEnum().getValue(),item);
+		getCharacterEntity().wearItems.add(item.getItemEnum().getValue(),item);
 	}
 	
 	public Item getItem(ItemEnum itemEnum){
-		return (Item)characterEntity.wearItems.get(itemEnum.getValue());
+		return (Item)getCharacterEntity().wearItems.get(itemEnum.getValue());
 	}
 	
 	public ArmorClass getArmor(){
@@ -263,12 +263,12 @@ public class Character extends GameObject {
 		this.damageBonus = damageBonus;
 	}
 	public int getLevel(){
-		return characterEntity.getLevel();
+		return getCharacterEntity().getLevel();
 		
 	}
 	
 	public void setLevel(int level){
-		characterEntity.setLevel(level);
+		getCharacterEntity().setLevel(level);
 	}
 
 	/**
