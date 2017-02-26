@@ -1,11 +1,14 @@
 package ca.concordia.soen6441.d20.item;
 
+import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+
 /**
  * every new Item class represent an actual item . 
  * @author wmg
  * @author alvaro
  */
-public class Item implements LevelUp{
+public class Item extends GameObject implements LevelUp{
 	/**
 	 *  point: the attribute that represent the enchantment point. 
 	 *  itemEnum :the attribute that that represent item's name.
@@ -68,5 +71,11 @@ public class Item implements LevelUp{
 	@Override
 	public void update(int modifier) {
 		setEnchantmentPoint(getEnchantmentPoint() +  (int)(modifier/5));
+	}
+
+	@Override
+	public GameObjectEntity getEntity() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
