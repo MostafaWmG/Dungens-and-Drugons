@@ -22,6 +22,7 @@ public abstract class GameObjectEntity implements Serializable {
 	//TODO Test that id is generated without any problem
 	@Id
 	@GeneratedValue
+	@Column(name="ID")
 	private long Id;
 
 	// TODO location : to be reFactored

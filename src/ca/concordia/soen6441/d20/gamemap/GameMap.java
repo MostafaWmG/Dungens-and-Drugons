@@ -21,11 +21,8 @@ public class GameMap {
 	/**
 	 * used to store the map element by location
 	 */
-	private Map<Location, GameObject> elements;
-	
-	private int width;
-	private int height;
-	private String mapName;
+	private Map<Location, GameObject> elements;		
+	private GameMapEntity gameMapEntity;
 	
 	/**
 	 * creates a map of the dimension required
@@ -33,9 +30,10 @@ public class GameMap {
 	 * @param height the height of the map
 	 */
 	public GameMap(String mapName,int width, int height) {
-		this.width = width;
-		this.height = height;
-		this.mapName = mapName;
+		init();
+		setWidth(width);
+		setHeight(height);
+		setMapName(mapName);
 		field = new GameObject[height][width];
 		
 		elements = new HashMap<>();
@@ -43,42 +41,74 @@ public class GameMap {
 		emptyMap();
 	}
 	
+	private void init()
+	{
+		setGameMapEntity(new GameMapEntity());
+	}
+	
 	public GameMapEntity getEntity()
 	{
-		//TODO implement this function
-		return null;
+		return getGameMapEntity();
 	}
 	
 	public GameObject getGameObjectAtLocation(Location location) {
 		return elements.get(location);
 	}
 	
-	public void setGameObjectAtLocation(Location location,GameObject gameObject) {
+	public void setGameObjectAtLocation(Location location,GameObject gameObject) {		
 		 elements.put(location, gameObject);
+		gameObject.setLocation(location);
+		getGameMapEntity().addGameObjectEntity(gameObject.getEntity());
 	}
 	
 	public int getWidth() {
-		return this.width;
+		return getGameMapEntity().getWidth();
+	}
+	
+	public void setWidth(int width)
+	{
+		getGameMapEntity().setWidth(width);
 	}
 	
 	public int getHeight() {
-		return this.height;
+		return getGameMapEntity().getHeight();
+	}
+	
+	public void setHeight(int height)
+	{
+		getGameMapEntity().setHeight(height);
 	}
 	
 	/**
 	 * @return the mapName
 	 */
 	public String getMapName() {
-		return mapName;
+		return getGameMapEntity().getName();
 	}
 
 	/**
 	 * @param mapName the mapName to set
 	 */
 	public void setMapName(String mapName) {
-		this.mapName = mapName;
+		getGameMapEntity().setName(mapName);
 	}
 	
+	
+	
+	/**
+	 * @return the gameMapEntity
+	 */
+	public GameMapEntity getGameMapEntity() {
+		return gameMapEntity;
+	}
+
+	/**
+	 * @param gameMapEntity the gameMapEntity to set
+	 */
+	public void setGameMapEntity(GameMapEntity gameMapEntity) {
+		this.gameMapEntity = gameMapEntity;
+	}
+
 	/**
 	 * this class allows us to place a GameObject into the map
 	 * if the position is alredy used, no element is placed, 
@@ -87,14 +117,15 @@ public class GameMap {
 	 * @param location locaton where the element must be placed
 	 */
 	public void place(GameObject element, Location location) {
-		if(location.getX() < 0 || location.getX() >= width) return;
-		if(location.getY() < 0 || location.getY() >= height) return;
+		if(location.getX() < 0 || location.getX() >= getWidth()) return;
+		if(location.getY() < 0 || location.getY() >= getHeight()) return;
 		
 		if(field[location.getY()][location.getX()] != EMPTY) return;
 		
 		field[location.getY()][location.getX()] = element;
-		elements.put(location, element);
+		setGameObjectAtLocation(location, element);
 	}
+	
 	
 	/** move an element from one point of the map to the other, 
 	 * if the final position is not empty, the original position is empty,
@@ -112,16 +143,22 @@ public class GameMap {
 		this.field[destinationY][destinationX] = this.field[originY][originX];
 		this.field[originY][originX] = EMPTY;
 		GameObject object = this.elements.remove(new Location(originX, originY));
-		if(object != null) this.elements.put(new Location(destinationX, destinationY), object);
+		if(object != null)
+		{
+			Location location = new Location(destinationX, destinationY);
+			setGameObjectAtLocation(location, object);
+		}
+		else
+			throw new NullPointerException("I cannot find the game object in elements");
 
 	}
 	
 	private boolean moveCanBeDone(int originX, int originY, int destinationX, int destinationY) {
 		if(originX<0 || originY<0 || destinationX<0 ||destinationY<0) return false;
 		
-		if(originX >= width || destinationX >= width ) return false;
+		if(originX >= getWidth() || destinationX >= getWidth() ) return false;
 		
-		if(originY >= height || destinationY >= height ) return false;
+		if(originY >= getHeight() || destinationY >= getHeight() ) return false;
 		
 		if(this.field[originY][originX] == EMPTY) return false;
 		
@@ -130,8 +167,8 @@ public class GameMap {
 	}
 	
 	private void emptyMap() {
-		for(int i=0; i<this.height; i++){
-			for(int j=0; j<this.width; j++) {
+		for(int i=0; i<this.getHeight(); i++){
+			for(int j=0; j<this.getWidth(); j++) {
 				this.field[i][j] = EMPTY;
 			}
 		}
