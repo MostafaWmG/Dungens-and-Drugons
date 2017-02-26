@@ -5,6 +5,7 @@ import java.util.List;
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+import ca.concordia.soen6441.d20.gamemap.element.GroundEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Ability;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
@@ -24,6 +25,7 @@ public class Character extends GameObject {
 	/**
 	 * level : level
 	 * name : name 
+	 * characterEntity: used for saving and loading characters
 	 * wearItems : items that character already wear
 	 * armorClass: the armor of the character
 	 * attackBonus : the attack of the character
@@ -32,6 +34,8 @@ public class Character extends GameObject {
 	 */
 	protected int level;
 	protected String name;
+	
+	private CharacterEntity characterEntity;
 	
 	protected List <Item> wearItems;
 	protected List <Ability> abilities;
@@ -43,6 +47,8 @@ public class Character extends GameObject {
 	protected boolean acBonus;
 	
 	public Character(int initialPosistionX, int initialPositionY) {
+		
+		//I think level should be deleted now, since it is defined in its entity class
 		level = 1;
 		wearItems = new ArrayList<Item>();
 		abilities = new ArrayList<Ability>();
@@ -53,9 +59,14 @@ public class Character extends GameObject {
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
 		setAbilitiesListener();
 		acBonus = false;
+		
+		init();
+		
 	}
 		
 	public Character() {
+		
+		//I think level should be deleted now, since it is defined in its entity class
 		level = 1;
 		wearItems = new ArrayList<Item>();
 		abilities = new ArrayList<Ability>();
@@ -66,6 +77,15 @@ public class Character extends GameObject {
 		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),level);
 		setAbilitiesListener();
 		acBonus = false;
+		
+		init();
+	}
+	/*
+	 * This method sets entity for each object created
+	 */
+	private void init(){
+		
+		setCharacterEntity(new CharacterEntity());
 	}
 	
 	/**
@@ -75,9 +95,11 @@ public class Character extends GameObject {
 	 */
 	public void move(int dx, int dy) {
 		try {
-			this.getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
-			getLocation().setX(getLocation().getX()+dx);
-			getLocation().setY(getLocation().getY()+dy);
+			//changing keyword "this" to characterEntity
+			//adding characterEntity to the other lines
+			characterEntity.getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
+			characterEntity.getLocation().setX(getLocation().getX()+dx);
+			characterEntity.getLocation().setY(getLocation().getY()+dy);
 		
 		} catch(MoveNotValidException e) {
 			e.printStackTrace();
@@ -102,7 +124,7 @@ public class Character extends GameObject {
 			
 			System.out.println("DEBUGLOG!! " + " character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
 			// To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down).
-		    addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
+			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
 		
 	}
@@ -114,9 +136,9 @@ public class Character extends GameObject {
 	}
 	
 	public void levelUp(int point){
-		level ++ ;
-		attackBonus.update(level);
-		hitPoint.setLevel(level);
+		characterEntity.level ++ ;
+		attackBonus.update(characterEntity.level);
+		hitPoint.setLevel(characterEntity.level);
 		iterate(abilities, point);
 	}
 
@@ -126,7 +148,7 @@ public class Character extends GameObject {
 	 * @return if true : has this item 
 	 */
 	public boolean hasItem(ItemEnum itemEnum){
-		if(wearItems.get(itemEnum.getValue()) != null)
+		if(characterEntity.wearItems.get(itemEnum.getValue()) != null)
 			return true;
 		else
 			return false;
@@ -159,11 +181,11 @@ public class Character extends GameObject {
 	 * @param item which is going to be wear.
 	 */
 	public void addItem(Item item) {
-		wearItems.add(item.getItemEnum().getValue(),item);
+		characterEntity.wearItems.add(item.getItemEnum().getValue(),item);
 	}
 	
 	public Item getItem(ItemEnum itemEnum){
-		return (Item)wearItems.get(itemEnum.getValue());
+		return (Item)characterEntity.wearItems.get(itemEnum.getValue());
 	}
 	
 	public ArmorClass getArmor(){
@@ -208,6 +230,20 @@ public class Character extends GameObject {
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub
-		return null;
+		return characterEntity;
+	}
+	
+	/*
+	 * @return the character entity 
+	 */
+	public CharacterEntity getCharacterEntity(){
+		return characterEntity;
+	}
+	
+	/*
+	 * @param characterEntity to set
+	 */
+	public void setCharacterEntity(CharacterEntity characterEntity){
+		this.characterEntity = characterEntity;
 	}
 }

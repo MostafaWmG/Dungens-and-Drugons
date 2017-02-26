@@ -14,6 +14,7 @@
 		<class>ca.concordia.soen6441.d20.gamemap.element.WallEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.ExitEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.DoorEntity</class>
+		<class>ca.concordia.soen6441.d20.character.CharacterEntity</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
 		<properties>
