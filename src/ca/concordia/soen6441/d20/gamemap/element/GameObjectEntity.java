@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import ca.concordia.soen6441.d20.common.Location;
-import ca.concordia.soen6441.d20.gamemap.GameMap;
 
 /**
  * Entity implementation class for Entity: GameObjectEntity
@@ -24,15 +23,8 @@ public abstract class GameObjectEntity implements Serializable {
 	@GeneratedValue
 	@Column(name="ID")
 	private long Id;
-
-	// TODO location : to be reFactored
-	@Transient
+	
 	private Location location;
-	// TODO remove Transient
-	@Transient
-	private GameMap field;
-	//TODO Do we really need tag?
-	private String tag ;
 	
 	@Column(unique=true)
 	private String name;
@@ -67,34 +59,6 @@ public abstract class GameObjectEntity implements Serializable {
 	 */
 	public void setLocation(Location location) {
 		this.location = location;
-	}
-
-	/**
-	 * @return the field
-	 */
-	public GameMap getField() {
-		return field;
-	}
-
-	/**
-	 * @param field the field to set
-	 */
-	public void setField(GameMap field) {
-		this.field = field;
-	}
-
-	/**
-	 * @return the tag
-	 */
-	public String getTag() {
-		return tag;
-	}
-
-	/**
-	 * @param tag the tag to set
-	 */
-	public void setTag(String tag) {
-		this.tag = tag;
 	}
 
 	/**

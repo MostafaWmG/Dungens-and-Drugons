@@ -1,13 +1,22 @@
 package ca.concordia.soen6441.d20.common;
 
+import javax.persistence.*;
+
 /**
  * this class represents the location in the map where an element is situated.
  * @author alvaro
  *
  */
+@Embeddable
 public class Location {
 	private int x;
 	private int y;
+	
+	public Location()
+	{
+		x = 0;
+		y = 0;
+	}
 	
 	public Location(int x, int y) {
 		this.x = x;

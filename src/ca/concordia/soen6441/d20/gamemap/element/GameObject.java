@@ -3,7 +3,14 @@ package ca.concordia.soen6441.d20.gamemap.element;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
-public abstract class GameObject {		
+public abstract class GameObject {
+
+	/**
+	 * current selected field. Note that we don't store it in database.
+	 */
+	private GameMap field;
+	//TODO Do we really need tag?
+	private String tag ;
 	
 	/**
 	 * All GameObject sub-classes must implement this method. By using this
@@ -13,25 +20,25 @@ public abstract class GameObject {
 	public abstract GameObjectEntity getEntity();
 	
 	public String getTag(){
-		return getEntity().getTag();
+		return tag;
 	}
 	
 	public void setTag(String tag){
-		getEntity().setTag(tag);
+		this.tag = tag;
 	}
 	
 	/**
 	 * @return the field
 	 */
 	public GameMap getField() {
-		return getEntity().getField();
+		return field;
 	}
 
 	/**
 	 * @param field the field to set
 	 */
 	public void setField(GameMap field) {
-		getEntity().setField(field);
+		this.field = field;
 	}
 
 	

@@ -87,7 +87,7 @@ public class Character extends GameObject {
 		try {
 			//changing keyword "this" to characterEntity
 			//adding characterEntity to the other lines
-			getCharacterEntity().getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
+			getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
 			getCharacterEntity().getLocation().setX(getLocation().getX()+dx);
 			getCharacterEntity().getLocation().setY(getLocation().getY()+dy);
 		

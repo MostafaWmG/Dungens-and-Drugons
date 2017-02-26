@@ -79,6 +79,7 @@ public class GameMap {
 	public void setGameObjectAtLocation(Location location,GameObject gameObject) {		
 		 elements.put(location, gameObject);
 		gameObject.setLocation(location);
+		gameObject.setField(this);
 		getGameMapEntity().addGameObjectEntity(gameObject.getEntity());
 	}
 	
