@@ -1,16 +1,34 @@
 package ca.concordia.soen6441.d20.item;
 
-public class ArmorClass implements LevelUp {
-	private int base;
-	private int modfier;
+import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+
+public class ArmorClass extends GameObject implements LevelUp {
+	
+	private ArmorClassEntity armorClassEntity;
 	
 	public ArmorClass(int modifier){
-		base = 10;
-		this.modfier = modifier;
+		initEmptyEntity();
+		setBase(10);
+		setModfier(modifier);
+	}
+	
+	/**
+	 * Usually we use this constructor to load data from database
+	 * @param entity
+	 */
+	public ArmorClass(ArmorClassEntity entity)
+	{
+		setArmorClassEntity(entity);
+	}
+	
+	private void initEmptyEntity()
+	{
+		setArmorClassEntity(new ArmorClassEntity());
 	}
 	
 	public int getPoint(){
-		return (base + modfier);
+		return (getBase() + getModfier());
 	}
 		
 	public void showPoint(){
@@ -26,28 +44,47 @@ public class ArmorClass implements LevelUp {
 	 * @return the modfier
 	 */
 	public int getModfier() {
-		return modfier;
+		return getArmorClassEntity().getModfier();
 	}
 
 	/**
 	 * @param modfier the modfier to set
 	 */
 	public void setModfier(int modfier) {
-		this.modfier = modfier;
+		getArmorClassEntity().setModfier(modfier);
 	}
 
 	/**
 	 * @return the base
 	 */
 	public int getBase() {
-		return base;
+		return getArmorClassEntity().getBase();
 	}
 
 	/**
 	 * @param base the base to set
 	 */
 	public void setBase(int base) {
-		this.base = base;
+		getArmorClassEntity().setBase(base);
+	}
+	
+
+	/**
+	 * @return the armorClassEntity
+	 */
+	public ArmorClassEntity getArmorClassEntity() {
+		return armorClassEntity;
 	}
 
+	/**
+	 * @param armorClassEntity the armorClassEntity to set
+	 */
+	public void setArmorClassEntity(ArmorClassEntity armorClassEntity) {
+		this.armorClassEntity = armorClassEntity;
+	}
+
+	@Override
+	public GameObjectEntity getEntity() {
+		return getArmorClassEntity();
+	}
 }

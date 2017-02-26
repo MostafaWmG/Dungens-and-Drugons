@@ -16,7 +16,7 @@ import org.junit.Test;
 import test.ca.concordia.soen6441.model.persistence.sample_entities.FighterEntitySample;
 import test.ca.concordia.soen6441.model.persistence.sample_entities.GameMapEntitySample;
 import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntitySample;
-import test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntity;
+import test.ca.concordia.soen6441.model.persistence.sample_entities.ItemEntitySample;
 
 /**
  * A simple class which shows persistent functionality using Hibernate 4.3.11. At 
@@ -59,8 +59,8 @@ public class GameMapEntityTester {
 			return;
 		}
 		
-		ItemEntity item1 = new ItemEntity(1, "Sword1");
-		ItemEntity item2 = new ItemEntity(2, "Sword2");
+		ItemEntitySample item1 = new ItemEntitySample(1, "Sword1");
+		ItemEntitySample item2 = new ItemEntitySample(2, "Sword2");
 		
 		ArrayList<GameObjectEntitySample> objects = new ArrayList<GameObjectEntitySample>();
 		

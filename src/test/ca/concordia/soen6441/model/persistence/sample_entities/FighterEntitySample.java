@@ -39,19 +39,19 @@ public class FighterEntitySample extends GameObjectEntitySample implements Seria
 			name="FIGHTER_ITEMS",
 			joinColumns=@JoinColumn(name="MAP_ID", referencedColumnName="ID"),
 			inverseJoinColumns=@JoinColumn(name="OBJECT_ID", referencedColumnName="ID"))
-	private List<ItemEntity> items;
+	private List<ItemEntitySample> items;
 	
 	/**
 	 * @return the items
 	 */
-	public List<ItemEntity> getItems() {
+	public List<ItemEntitySample> getItems() {
 		return items;
 	}
 
 	/**
 	 * @param items the items to set
 	 */
-	public void setItems(List<ItemEntity> items) {
+	public void setItems(List<ItemEntitySample> items) {
 		this.items = items;
 	}
 
@@ -68,6 +68,6 @@ public class FighterEntitySample extends GameObjectEntitySample implements Seria
 	
 	private void init()
 	{
-		items = new ArrayList<ItemEntity>();
+		items = new ArrayList<ItemEntitySample>();
 	}
 }
