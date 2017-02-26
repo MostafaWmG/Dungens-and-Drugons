@@ -255,6 +255,14 @@ public class Character extends GameObject {
 		this.attackBonus = attackBonus;
 	}
 	
+	public HitPoint getHitPoint(){
+		return hitPoint;
+	}
+	
+	public void setHitPoint(HitPoint hitPoint){
+		this.hitPoint = hitPoint;
+	}
+	
 	public DamageBonus getDamage(){
 		return damageBonus;
 	}

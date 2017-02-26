@@ -10,7 +10,7 @@ public class ArmorClass extends GameObject implements LevelUp {
 	public ArmorClass(int modifier){
 		initEmptyEntity();
 		setBase(10);
-		setModfier(modifier);
+		setModifier(modifier);
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class ArmorClass extends GameObject implements LevelUp {
 
 	@Override
 	public void update(int modifier) {
-		setModfier(modifier);		
+		setModifier(modifier);		
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class ArmorClass extends GameObject implements LevelUp {
 	/**
 	 * @param modfier the modfier to set
 	 */
-	public void setModfier(int modfier) {
+	public void setModifier(int modfier) {
 		getArmorClassEntity().setModfier(modfier);
 	}
 
