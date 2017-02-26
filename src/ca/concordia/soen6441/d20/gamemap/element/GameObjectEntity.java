@@ -46,7 +46,7 @@ public abstract class GameObjectEntity implements Serializable {
 	 * is able to construct GameMap for loading data.
 	 * @return
 	 */
-	public abstract GameObject getModel();
+	public abstract GameObject createModel();
 	
 	public long getId() {
 		return this.Id;

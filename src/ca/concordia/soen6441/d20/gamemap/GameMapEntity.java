@@ -46,10 +46,9 @@ public class GameMapEntity implements Serializable {
 		getObjects().add(entity);
 	}
 	
-	public GameMap getModel()
+	public GameMap createModel()
 	{
-		//TODO Implement this method
-		return null;
+		return new GameMap(this);
 	}
 	
 	public long getId() {

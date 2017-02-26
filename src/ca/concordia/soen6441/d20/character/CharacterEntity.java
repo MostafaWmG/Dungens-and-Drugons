@@ -31,7 +31,7 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 		wearItems = new ArrayList<Item>();
 		
 	}
-   public GameObject getModel(){
+   public GameObject createModel(){
 	   //TODO
 	   return null;
    }

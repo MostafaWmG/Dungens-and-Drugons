@@ -18,7 +18,7 @@ public class ExitEntity extends GameObjectEntity implements Serializable {
 		super();
 	}
 	
-	public GameObject getModel(){
+	public GameObject createModel(){
 		
 		return null;
 	}

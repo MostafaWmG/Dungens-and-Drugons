@@ -18,7 +18,7 @@ public class EnteryEntity extends GameObjectEntity implements Serializable {
 		super();	
 		}
 		
-	public GameObject getModel(){
+	public GameObject createModel(){
 		
 		return null;
 		}

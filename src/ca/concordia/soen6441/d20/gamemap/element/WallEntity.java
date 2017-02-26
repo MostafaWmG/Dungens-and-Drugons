@@ -18,7 +18,7 @@ public class WallEntity extends GameObjectEntity implements Serializable {
 		super();
 	}
 	
-	public GameObject getModel(){
+	public GameObject createModel(){
 		
 		return null;
 		}
