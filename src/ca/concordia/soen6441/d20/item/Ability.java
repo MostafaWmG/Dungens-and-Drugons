@@ -100,6 +100,6 @@ public class Ability implements LevelUp{
 	}
 	
 	public void show(){
-		System.out.println("Ability Name: "+ability+" Score: "+score+" Modifier: "+modifier );
+		System.out.println("Ability Name: "+getAbilityEnum()+" Score: "+getScore()+" Modifier: "+getModifier() );
 	}
 }
