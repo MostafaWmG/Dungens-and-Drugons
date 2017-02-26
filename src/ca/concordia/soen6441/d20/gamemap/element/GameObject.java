@@ -47,5 +47,15 @@ public abstract class GameObject {
 	 */
 	public void setLocation(Location location) {
 		getEntity().setLocation(location);
-	}	
+	}
+	
+	public String getName()
+	{
+		return getEntity().getName();
+	}
+	
+	public void setName(String name)
+	{
+		getEntity().setName(name);
+	}
 }
