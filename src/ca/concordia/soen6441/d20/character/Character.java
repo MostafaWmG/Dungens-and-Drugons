@@ -136,9 +136,9 @@ public class Character extends GameObject {
 	}
 	
 	public void levelUp(int point){
-		characterEntity.level ++ ;
-		attackBonus.update(characterEntity.level);
-		hitPoint.setLevel(characterEntity.level);
+		characterEntity.setLevel(characterEntity.getLevel() + 1);
+		attackBonus.update(characterEntity.getLevel());
+		hitPoint.setLevel(characterEntity.getLevel());
 		iterate(abilities, point);
 	}
 

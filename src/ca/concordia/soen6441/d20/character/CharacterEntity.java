@@ -20,7 +20,7 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public int level;
+	private int level;
 	protected List <Item> wearItems;
 
 	public CharacterEntity() {
@@ -30,8 +30,31 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 		
 	}
    public GameObject getModel(){
+	   //TODO
 	   return null;
    }
-   
-   
+	/**
+	 * @return the level
+	 */
+	public int getLevel() {
+		return level;
+	}
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	/**
+	 * @return the wearItems
+	 */
+	public List<Item> getWearItems() {
+		return wearItems;
+	}
+	/**
+	 * @param wearItems the wearItems to set
+	 */
+	public void setWearItems(List<Item> wearItems) {
+		this.wearItems = wearItems;
+	}      
 }
