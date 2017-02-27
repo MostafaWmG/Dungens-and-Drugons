@@ -170,10 +170,18 @@ public class Character extends GameObject {
 			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
 		
-		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-			addItem(null);
-		}
+//		for(int i = 0 ; i < ItemEnum.values().length; i ++){
+//			addItem(null);
+//		}
 		
+		//for test only
+		for(int i = 0 ; i < ItemEnum.values().length; i ++){
+			if(i == ItemEnum.values().length -1){
+				addItem(new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
+			}else {
+				addItem(new Item(ItemEnum.values()[i], AbilityEnum.values()[i], i));
+			}
+		}
 	}
 	
 	/**

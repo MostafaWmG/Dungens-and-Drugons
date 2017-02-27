@@ -7,6 +7,7 @@ import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.ArmorClass;
 import ca.concordia.soen6441.d20.item.AttackBonus;
+import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.DamageBonus;
 import ca.concordia.soen6441.d20.item.HitPoint;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -105,16 +106,74 @@ public class CharacterEditor {
 		System.out.println("Enter Item Name:");
 		String itemName = scanner.nextLine();
 		ItemEnum itemEnum = ItemEnum.valueOf(itemName.toUpperCase());
-//		System.out.println("enum:" + abilityEnum + " value" + abilityEnum.getValue());
-//		character;
+		if(character.getItem(itemEnum) == null){
+			System.out.println(itemEnum + " empty slot !!!");
+		}else{
+			character.getItem(itemEnum).show();
+			
+			System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
+			String change = scanner.nextLine();
+			if(change.equals("p")){
+				changeItemPoint(character,itemEnum);
+			}else if (change.equals("t")){
+				changeItemType(character,itemEnum);
+			}else{
+				System.out.println("Error");
+			}
+		}
 	}
 	
+	/**
+	 * this a method for changing item type
+	 * @param character character 
+	 * @param itemEnum	item that is changing
+	 */
+	public void changeItemType(Character character,ItemEnum itemEnum){		
+		System.out.println("Enter new item type : ");
+		String itemTypeString = scanner.nextLine();
+		if(AbilityEnum.valueOf(itemTypeString.toUpperCase()) != null && character.getItem(itemEnum).getEnchantmentType() != null){
+			character.getItem(itemEnum).setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+			character.getItem(itemEnum).show();
+			saveCharacterChanges(character, "Item");
+		}else if (AttributeEnum.valueOf(itemTypeString.toUpperCase())!= null && character.getItem(itemEnum).getAttributeType() !=null){
+			character.getItem(itemEnum).setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
+			character.getItem(itemEnum).show();
+			saveCharacterChanges(character, "Item");
+		}else{
+			System.out.println("Error");
+		}
+	}
+	
+	/**
+	 * this is a method for changing itemPoint
+	 * @param character character
+	 * @param itemEnum item that is changing
+	 */
+	public void changeItemPoint(Character character,ItemEnum itemEnum){
+		System.out.println("Enter number to change Point:");
+
+		try{
+			String number = scanner.nextLine();
+			int numberScore = Integer.parseInt(number);
+			character.getItem(itemEnum).setEnchantmentPoint(numberScore);
+			character.getItem(itemEnum).show();
+			
+			saveCharacterChanges(character, "Item");
+			
+		}catch(Exception e){
+			System.out.println("Error not int");
+		}
+	}
+	
+	/**
+	 * this method is for changing the ability of a character [intelligence,wisdom,etc..]
+	 * @param character
+	 */
 	private void editAbility(Character character){
 		character.showAbilities();
 		System.out.println("Enter Ability Name:");
 		String abilityName = scanner.nextLine();
 		AbilityEnum abilityEnum = AbilityEnum.valueOf(abilityName.toUpperCase());
-//		System.out.println("enum:" + abilityEnum + " value" + abilityEnum.getValue());
 		character.getAbility(abilityEnum).show();
 		
 
@@ -126,23 +185,8 @@ public class CharacterEditor {
 				character.getAbility(abilityEnum).setScore(numberScore);
 				character.getAbility(abilityEnum).synceModifier();
 				character.getAbility(abilityEnum).show();
-
-				System.out.println("Do you want to change another ability:(yes or no)");
-				String answer = scanner.nextLine();
 				
-				if(answer.equals("yes")){
-					editAbility(character);
-				}else if (answer.equals("no")){
-					System.out.println("Do you want to save character changes:(yes or no)");
-					answer = scanner.nextLine();
-					if(answer.equals("yes")){
-						// save(character.name);
-					}else {
-						
-					}
-				}else {
-					System.out.println("Error IO");
-				}
+				saveCharacterChanges(character, "ability");
 				
 			}catch(Exception e){
 				System.out.println("Error not int");
@@ -233,27 +277,42 @@ public class CharacterEditor {
 				break;
 			}
 			
-			System.out.println("Do you want to change another attribute:(yes or no)");
-			String answer = scanner.nextLine();
-			
-			if(answer.equals("yes")){
-				editAttribute(character);
-			}else if (answer.equals("no")){
-				System.out.println("Do you want to save character changes:(yes or no)");
-				answer = scanner.nextLine();
-				if(answer.equals("yes")){
-					// save(character.name);
-				}else {
-					
-				}
-			}else {
-				System.out.println("Error IO");
-			}
+			saveCharacterChanges(character, "attribute");
 			
 		}catch(Exception e){
 			System.out.println("Error not int");
 		}
 
+	}
+	
+	/**
+	 * this is a method that saves the character changes
+	 * @param character character
+	 * @param section which part of character is changing
+	 */
+	private void saveCharacterChanges(Character character , String section){
+		System.out.println("Do you want to change another "+section+":(yes or no)");
+		String answer = scanner.nextLine();
+		
+		if(answer.equals("yes")){
+			if(section.equals("ability")){
+				editAbility(character);
+			}else if (section.equals("Item")){
+				editItem(character);
+			}else if (section.equals("attribute")){
+				editAttribute(character);
+			}
+		}else if (answer.equals("no")){
+			System.out.println("Do you want to save character changes:(yes or no)");
+			answer = scanner.nextLine();
+			if(answer.equals("yes")){
+				// save(character.name);
+			}else {
+				
+			}
+		}else {
+			System.out.println("Error IO");
+		}
 	}
 }
 
