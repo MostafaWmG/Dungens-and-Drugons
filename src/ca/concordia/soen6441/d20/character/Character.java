@@ -46,13 +46,13 @@ public class Character extends GameObject {
 	
 	public Character(int initialPosistionX, int initialPositionY) {
 		init();
-		wearItems = new ArrayList<Item>();
-		abilities = new ArrayList<Ability>();
+		setWearItems(new ArrayList<Item>());
+		setAbilities(new ArrayList<Ability>());
 		setCharacterAbility();
-		armorClass = new ArmorClass(abilities .get(AbilityEnum.DEXTERITY.getValue()).getModifier());
-		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH.getValue()).getModifier());
-		attackBonus = new AttackBonus(getLevel());
-		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel());
+		setArmor(new ArmorClass(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier()));
+		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
+		setAttack(new AttackBonus(getLevel())); 
+		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();		
 		emptyWearList();
 		
@@ -60,13 +60,13 @@ public class Character extends GameObject {
 		
 	public Character() {
 		init();
-		wearItems = new ArrayList<Item>();
-		abilities = new ArrayList<Ability>();
+		setWearItems(new ArrayList<Item>());
+		setAbilities(new ArrayList<Ability>());
 		setCharacterAbility();
-		armorClass = new ArmorClass(abilities.get(AbilityEnum.DEXTERITY.getValue()).getModifier());
-		damageBonus = new DamageBonus(abilities.get(AbilityEnum.STRENGTH.getValue()).getModifier());
-		attackBonus = new AttackBonus(getLevel());
-		hitPoint = new HitPoint(abilities.get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel());
+		setArmor(new ArmorClass(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier()));
+		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
+		setAttack(new AttackBonus(getLevel())); 
+		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();		
 		emptyWearList();
 	}
@@ -101,15 +101,27 @@ public class Character extends GameObject {
 	}
 	
 	/**
+	 * check if character have wore this item or not
+	 * @param itemEnum type of item
+	 * @return if true : has this item 
+	 */
+	public boolean hasItem(ItemEnum itemEnum){
+		if(getItem(itemEnum) != null)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
 	 * order to character to wear this item
-	 * @param item the item that is going to be weared.
+	 * @param item the item that is going to be wear.
 	 */
 	public void putOnItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
 			 System.out.println("Character already has item");
 		}else {
-			wearItems.add(item.getItemEnum().getValue(), item);
+			getWearItems().add(item.getItemEnum().getValue(), item);
 			wearItem(item, item.getEnchantmentPoint());
 			System.out.println("characted wore the item");
 		}
@@ -123,15 +135,15 @@ public class Character extends GameObject {
 	 */
 	public void wearItem(Item item , int value){
 		if (item.getAttributeType() == null ){
-			abilities.get(item.getEnchantmentType().getValue()).update(value);
+			getAbilities().get(item.getEnchantmentType().getValue()).update(value);
 		}else if (item.getEnchantmentType() == null){
 			
 			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
-				armorClass.setBase(armorClass.getBase() + value);
+				getArmor().setBase(getArmor().getBase() + value);
 			}else if (item.getAttributeType() == AttributeEnum.ATTACKBONUS){
-				attackBonus.setBase(attackBonus.getBase() + value);
+				getAttack().setBase(getAttack().getBase() + value);
 			}else if (item.getAttributeType() == AttributeEnum.DAMAGEBONUS){
-				damageBonus.setBase(damageBonus.getBase() + value);
+				getDamage().setBase(getDamage().getBase() + value);
 			}
 		}else {
 			System.out.println("Error: wrong info");
@@ -145,7 +157,7 @@ public class Character extends GameObject {
 	public void removeItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
-			wearItems.remove(item.getItemEnum().getValue());
+			getWearItems().remove(item.getItemEnum().getValue());
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
 		}else {
@@ -189,9 +201,9 @@ public class Character extends GameObject {
 	 * so when we modify any of these abilities it will automatically changes other statistics related to it. 
 	 */
 	public void setAbilitiesListener(){
-		abilities.get(AbilityEnum.DEXTERITY.getValue()).addListener(armorClass);
-		abilities.get(AbilityEnum.CONSTITUTION.getValue()).addListener(hitPoint);
-		abilities.get(AbilityEnum.STRENGTH.getValue()).addListener(damageBonus);
+		getAbilities().get(AbilityEnum.DEXTERITY.getValue()).addListener(armorClass);
+		getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).addListener(hitPoint);
+		getAbilities().get(AbilityEnum.STRENGTH.getValue()).addListener(damageBonus);
 	}
 	
 	/**
@@ -200,21 +212,9 @@ public class Character extends GameObject {
 	 */
 	public void levelUp(int point){
 		getCharacterEntity().setLevel(getCharacterEntity().getLevel() + 1);
-		attackBonus.update(getCharacterEntity().getLevel());
-		hitPoint.setLevel(getCharacterEntity().getLevel());
-		iterate(abilities,wearItems, point);
-	}
-
-	/**
-	 * check if character have wore this item or not
-	 * @param itemEnum type of item
-	 * @return if true : has this item 
-	 */
-	public boolean hasItem(ItemEnum itemEnum){
-		if(getCharacterEntity().wearItems.get(itemEnum.getValue()) != null)
-			return true;
-		else
-			return false;
+		getAttack().update(getCharacterEntity().getLevel());
+		getHitPoint().setLevel(getCharacterEntity().getLevel());
+		iterate(getAbilities(),getWearItems(), point);
 	}
 	
 	/**
@@ -223,7 +223,7 @@ public class Character extends GameObject {
 	public void showAbilities(){
 		
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
-			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + abilities.get(AbilityEnum.values()[i].getValue()).getModifier() );
+			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
 		}
 	}
 	
@@ -231,10 +231,10 @@ public class Character extends GameObject {
 	 * print all attributes of character
 	 */
 	public void showAttributes(){
-		armorClass.showPoint();
-		damageBonus.showPoint();
-		attackBonus.showPoint();
-		hitPoint.showPoint();
+		getArmor().showPoint();
+		getDamage().showPoint();
+		getAttack().showPoint();
+		getHitPoint().showPoint();
 	}
 	
 	/**
@@ -262,6 +262,13 @@ public class Character extends GameObject {
 		return (Ability) abilities.get(abilityEnum.getValue());
 	}
 	
+	public List<Ability> getAbilities(){
+		return abilities;
+	}
+	
+	public void setAbilities(ArrayList<Ability> abilities){
+		this.abilities = abilities;
+	}
 	/**
 	 * character will wear this item.
 	 * @param item which is going to be wear.
@@ -277,6 +284,14 @@ public class Character extends GameObject {
 	
 	public Item getItem(ItemEnum itemEnum){
 		return (Item)getCharacterEntity().wearItems.get(itemEnum.getValue());
+	}
+	
+	public List<Item> getWearItems(){
+		return wearItems;
+	}
+	
+	public void setWearItems(ArrayList<Item> wearItems){
+		this.wearItems = wearItems;
 	}
 	
 	public ArmorClass getArmor(){
