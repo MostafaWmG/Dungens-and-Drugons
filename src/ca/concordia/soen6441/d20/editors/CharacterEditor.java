@@ -10,6 +10,7 @@ import ca.concordia.soen6441.d20.item.AttackBonus;
 import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.DamageBonus;
 import ca.concordia.soen6441.d20.item.HitPoint;
+import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 /**
  * this is a characterEditor userInterface class
@@ -152,17 +153,21 @@ public class CharacterEditor {
 	public void changeItemPoint(Character character,ItemEnum itemEnum){
 		System.out.println("Enter number to change Point:");
 
-		try{
+//		try{
 			String number = scanner.nextLine();
 			int numberScore = Integer.parseInt(number);
-			character.getItem(itemEnum).setEnchantmentPoint(numberScore);
+			Item newItem = character.getItem(itemEnum);
+			newItem.setEnchantmentPoint(numberScore);
+			character.removeItem(character.getItem(itemEnum));
+			character.putOnItem(newItem);
 			character.getItem(itemEnum).show();
-			
+			//test only
+			character.showAbilities();
 			saveCharacterChanges(character, "Item");
 			
-		}catch(Exception e){
+//		}catch(Exception e){
 			System.out.println("Error not int");
-		}
+//		}
 	}
 	
 	/**

@@ -36,7 +36,7 @@ public class Character extends GameObject {
 	 */	
 	private CharacterEntity characterEntity;
 	
-	protected List <Item> wearItems;
+//	protected List <Item> wearItems;
 	protected List <Ability> abilities;
 	protected ArmorClass armorClass;
 	protected AttackBonus attackBonus;
@@ -53,9 +53,7 @@ public class Character extends GameObject {
 		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
 		setAttack(new AttackBonus(getLevel())); 
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
-		setAbilitiesListener();		
-		emptyWearList();
-		
+		setAbilitiesListener();			
 	}
 		
 	public Character() {
@@ -68,7 +66,6 @@ public class Character extends GameObject {
 		setAttack(new AttackBonus(getLevel())); 
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();		
-		emptyWearList();
 	}
 	/*
 	 * This method sets entity for each object created
@@ -113,17 +110,20 @@ public class Character extends GameObject {
 	}
 	
 	/**
-	 * order to character to wear this item
+	 * order to character to wear this item.
 	 * @param item the item that is going to be wear.
+	 * @return shows if character already filed this slot with any item or not.
 	 */
-	public void putOnItem(Item item){
+	public boolean putOnItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
 			 System.out.println("Character already has item");
+			 return true;
 		}else {
-			getWearItems().add(item.getItemEnum().getValue(), item);
+			getWearItems().set(item.getItemEnum().getValue(), item);
 			wearItem(item, item.getEnchantmentPoint());
 			System.out.println("characted wore the item");
+			return false;
 		}
 	}
 	
@@ -157,7 +157,7 @@ public class Character extends GameObject {
 	public void removeItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
-			getWearItems().remove(item.getItemEnum().getValue());
+			getWearItems().set(item.getItemEnum().getValue(),null);
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
 		}else {
@@ -182,16 +182,18 @@ public class Character extends GameObject {
 			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
 		
-//		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-//			addItem(null);
-//		}
+		for(int i = 0 ; i < ItemEnum.values().length; i ++){
+			addItem(null);
+		}
+		
+//		emptyWearList();
 		
 		//for test only
 		for(int i = 0 ; i < ItemEnum.values().length; i ++){
 			if(i == ItemEnum.values().length -1){
-				addItem(new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
+				getWearItems().set(i,new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
 			}else {
-				addItem(new Item(ItemEnum.values()[i], AbilityEnum.values()[i], i));
+				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
 			}
 		}
 	}
@@ -223,7 +225,7 @@ public class Character extends GameObject {
 	public void showAbilities(){
 		
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
-			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
+			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
 		}
 	}
 	
@@ -238,14 +240,15 @@ public class Character extends GameObject {
 	}
 	
 	/**
+	 * getWearItems().get(i).show();
 	 * show all items of the character
 	 */
 	public void showItems(){
-		for(int i = 0 ; i < getCharacterEntity().wearItems.size() ; i ++){
-			if(getCharacterEntity().wearItems.get(i) !=null){
-				getCharacterEntity().wearItems.get(i).show();
+		for(int i = 0 ; i < getWearItems().size() ; i ++){
+			if(getWearItems().get(i) !=null){
+				getWearItems().get(i).show();
 			}else {
-				System.out.println(ItemEnum.values()[i] + " empty slot");
+				System.out.println(ItemEnum.values()[i] + " empty slot" + getWearItems().get(i));
 			}
 		}
 	}
@@ -287,11 +290,11 @@ public class Character extends GameObject {
 	}
 	
 	public List<Item> getWearItems(){
-		return wearItems;
+		return getCharacterEntity().wearItems;
 	}
 	
 	public void setWearItems(ArrayList<Item> wearItems){
-		this.wearItems = wearItems;
+		getCharacterEntity().wearItems = wearItems;
 	}
 	
 	public ArmorClass getArmor(){
@@ -355,8 +358,8 @@ public class Character extends GameObject {
 	 * empty the wearItems list
 	 */
 	private void emptyWearList(){
-		for(int i = 0; i < wearItems.size() ; i ++){
-			wearItems.set(i, null);
+		for(int i = 0; i < getWearItems().size() ; i ++){
+			getWearItems().set(i, null);
 		}
 	}
 	@Override
