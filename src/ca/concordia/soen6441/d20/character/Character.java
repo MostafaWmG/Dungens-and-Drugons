@@ -170,6 +170,10 @@ public class Character extends GameObject {
 			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
 		
+		for(int i = 0 ; i < ItemEnum.values().length; i ++){
+			wearItems.add(null);
+		}
+		
 	}
 	
 	/**
@@ -212,6 +216,29 @@ public class Character extends GameObject {
 		
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
 			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + abilities.get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + abilities.get(AbilityEnum.values()[i].getValue()).getModifier() );
+		}
+	}
+	
+	/**
+	 * print all attributes of character
+	 */
+	public void showAttributes(){
+		armorClass.showPoint();
+		damageBonus.showPoint();
+		attackBonus.showPoint();
+		hitPoint.showPoint();
+	}
+	
+	/**
+	 * show all items of the character
+	 */
+	public void showItems(){
+		for(int i = 0 ; i < wearItems.size() ; i ++){
+			if(wearItems.get(i) !=null){
+				wearItems.get(i).show();
+			}else {
+				System.out.println(ItemEnum.values()[i] + " empty slot");
+			}
 		}
 	}
 	

@@ -100,4 +100,12 @@ public class Item extends GameObject implements LevelUp{
 	public GameObjectEntity getEntity() {
 		return getItemEntity();
 	}
+	
+	public void show(){
+		if(getItemEntity().getAttributeType() !=null){
+		 System.out.println("Item name: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint());
+		}else if (getItemEntity().getEnchantmentType() !=null){
+			System.out.println("Item name: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint());
+		}
+	}
 }

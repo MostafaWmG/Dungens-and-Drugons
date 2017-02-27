@@ -79,25 +79,32 @@ public class CharacterEditor {
 		// Character character = load(characterLoaded);
 		System.out.println("Edit item :(Type i) , Edit Ability :(Type a) , Edit Attribute: (Type t)");
 		String hitButton = scanner.nextLine();
-
+	
 		if(hitButton.equals("i")){
 			//			editItem(character)
+			editItem(new Character());
 		}else if (hitButton.equals("a")){
 			//editAbility(character)
 				editAbility( new Character());
 		}else if (hitButton.equals("t")){
-			//			editAttribute(character);
+//						editAttribute(character);
+			editAttribute(new Character());
 		}else{
 			System.out.println("Error");
 		}
 		//		Scanner.close();
 	}
 	
+	/**
+	 * edit a specific item on a character 
+	 * @param character character
+	 */
 	private void editItem(Character character){
-		
+		character.showItems();
 	}
 	
 	private void editAbility(Character character){
+		character.showAbilities();
 		System.out.println("Enter Ability Name:");
 		String abilityName = scanner.nextLine();
 		AbilityEnum abilityEnum = AbilityEnum.valueOf(abilityName.toUpperCase());
@@ -141,26 +148,34 @@ public class CharacterEditor {
 	 * @param character character
 	 */
 	private void editAttribute(Character character){
+		String armorCheck = "armorClassArmorClassarmorclass";
+		String attackCheck = "attackBonusAttackBonusattackbonus";
+		String damageCheck = "damageBonusDamageBonusdamagebonus";
+		String hitPointCheck = "hitPointHitPointhitpoin";
+		String leveCheck = "levelLevel";
+		
+		character.showAttributes();
+		System.out.println("Level: " + character.getLevel());
 		System.out.println("Enter Attribute Name:");
 		String attributeName = scanner.nextLine();
 		
-		if(attributeName.contains("armorClassArmorClassarmorclass")){
+		if(armorCheck.contains(attributeName)){
 			armorClass = character.getArmor();
 			armorClass.showPoint();
 			changeAttribute(character,0);
-		}else if (attributeName.contains("attackBonusAttackBonusattackbonus")){
+		}else if (attackCheck.contains(attributeName)){
 			attackBonus = character.getAttack();
 			attackBonus.showPoint();
 			changeAttribute(character,1);
-		}else if (attributeName.contains("damageBonusDamageBonusdamagebonus")){
+		}else if (damageCheck.contains(attributeName)){
 			damageBonus = character.getDamage();
 			damageBonus.showPoint();
 			changeAttribute(character,2);
-		}else if (attributeName.contains("hitPointHitPointhitpoin")){
+		}else if (hitPointCheck.contains(attributeName)){
 			hitPoint = character.getHitPoint();
 			hitPoint.showPoint();
 			changeAttribute(character,3);
-		}else if (attributeName.contains("levelLevel")){
+		}else if (leveCheck.contains(attributeName)){
 			level = character.getLevel();
 			System.out.println("Level: "+ level);
 			changeAttribute(character,4);
@@ -212,7 +227,7 @@ public class CharacterEditor {
 				break;
 			}
 			
-			System.out.println("Do you want to change another ability:(yes or no)");
+			System.out.println("Do you want to change another attribute:(yes or no)");
 			String answer = scanner.nextLine();
 			
 			if(answer.equals("yes")){

@@ -11,6 +11,7 @@ public class HitPoint implements LevelUp {
 	private Dice dice ;
 		
 	public HitPoint(int modifier,int level){
+		initEmptyEntity();
 		setBase(10);
 		setModifier(modifier);		
 		setLevel(level);
@@ -30,6 +31,11 @@ public class HitPoint implements LevelUp {
 	private void init()
 	{
 		dice = new Dice();
+	}
+	
+	private void initEmptyEntity()
+	{
+		setHitPointEntity(new HitPointEntity());
 	}
 	
 	public int getPoint(){
