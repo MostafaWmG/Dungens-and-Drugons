@@ -171,7 +171,7 @@ public class Character extends GameObject {
 		}
 		
 		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-			wearItems.add(null);
+			addItem(null);
 		}
 		
 	}
@@ -233,9 +233,9 @@ public class Character extends GameObject {
 	 * show all items of the character
 	 */
 	public void showItems(){
-		for(int i = 0 ; i < wearItems.size() ; i ++){
-			if(wearItems.get(i) !=null){
-				wearItems.get(i).show();
+		for(int i = 0 ; i < getCharacterEntity().wearItems.size() ; i ++){
+			if(getCharacterEntity().wearItems.get(i) !=null){
+				getCharacterEntity().wearItems.get(i).show();
 			}else {
 				System.out.println(ItemEnum.values()[i] + " empty slot");
 			}
@@ -259,7 +259,12 @@ public class Character extends GameObject {
 	 * @param item which is going to be wear.
 	 */
 	public void addItem(Item item) {
-		getCharacterEntity().wearItems.add(item.getItemEnum().getValue(),item);
+		if(item == null){
+			getCharacterEntity().wearItems.add(null);
+		}else{
+			getCharacterEntity().wearItems.add(item.getItemEnum().getValue(),item);
+		}
+
 	}
 	
 	public Item getItem(ItemEnum itemEnum){

@@ -9,6 +9,7 @@ import ca.concordia.soen6441.d20.item.ArmorClass;
 import ca.concordia.soen6441.d20.item.AttackBonus;
 import ca.concordia.soen6441.d20.item.DamageBonus;
 import ca.concordia.soen6441.d20.item.HitPoint;
+import ca.concordia.soen6441.d20.item.ItemEnum;
 /**
  * this is a characterEditor userInterface class
  */
@@ -101,6 +102,11 @@ public class CharacterEditor {
 	 */
 	private void editItem(Character character){
 		character.showItems();
+		System.out.println("Enter Item Name:");
+		String itemName = scanner.nextLine();
+		ItemEnum itemEnum = ItemEnum.valueOf(itemName.toUpperCase());
+//		System.out.println("enum:" + abilityEnum + " value" + abilityEnum.getValue());
+//		character;
 	}
 	
 	private void editAbility(Character character){
