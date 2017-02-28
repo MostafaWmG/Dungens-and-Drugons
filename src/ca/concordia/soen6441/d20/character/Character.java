@@ -36,7 +36,6 @@ public class Character extends GameObject {
 	 */	
 	private CharacterEntity characterEntity;
 	
-//	protected List <Item> wearItems;
 	protected List <Ability> abilities;
 	protected ArmorClass armorClass;
 	protected AttackBonus attackBonus;
@@ -53,7 +52,11 @@ public class Character extends GameObject {
 		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
 		setAttack(new AttackBonus(getLevel())); 
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
-		setAbilitiesListener();			
+		setAbilitiesListener();
+		showAttributes();
+//		emptyWearList();
+		testWearItems();
+
 	}
 		
 	public Character() {
@@ -65,7 +68,10 @@ public class Character extends GameObject {
 		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
 		setAttack(new AttackBonus(getLevel())); 
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
-		setAbilitiesListener();		
+		setAbilitiesListener();	
+		showAttributes();
+//		emptyWearList();
+		testWearItems();
 	}
 	/*
 	 * This method sets entity for each object created
@@ -138,7 +144,7 @@ public class Character extends GameObject {
 			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
 			getAbilities().get(item.getEnchantmentType().getValue()).update(value);
 		}else if (item.getEnchantmentType() == null){
-			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
+			System.out.println("debug1: "+ item.getAttributeType() + " value: " + value);
 			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
 				getArmor().setBase(getArmor().getBase() + value);
 			}else if (item.getAttributeType() == AttributeEnum.ATTACKBONUS){
@@ -178,7 +184,7 @@ public class Character extends GameObject {
 			roll = 0 ;
 			roll = dice.roll6() + dice.roll6() + dice.roll6() ;
 			
-			System.out.println(" character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
+			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
 			// To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down).
 			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
@@ -187,16 +193,6 @@ public class Character extends GameObject {
 			addItem(null);
 		}
 		
-//		emptyWearList();
-		
-		//for test only
-		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-			if(i == ItemEnum.values().length -1){
-				getWearItems().set(i,new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
-			}else {
-				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
-			}
-		}
 	}
 	
 	/**
@@ -363,6 +359,21 @@ public class Character extends GameObject {
 			getWearItems().set(i, null);
 		}
 	}
+	
+	private void testWearItems(){
+		//for test only
+		for(int i = 0 ; i < ItemEnum.values().length; i ++){
+			if(i == ItemEnum.values().length -1){
+			putOnItem(new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
+//			getWearItems().set(i,new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
+			}else {
+				putOnItem(new Item(ItemEnum.values()[i], AbilityEnum.values()[i], i));
+//				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
+			}
+		}
+		showAbilities();
+	}
+	
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub

@@ -120,4 +120,92 @@ public class Item extends GameObject implements LevelUp{
 			System.out.println("Item name: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint());
 		}
 	}
+	
+	public boolean validate(Item item){
+		if(item.getItemEnum() == ItemEnum.HELMET){
+			if(item.getEnchantmentType() == null){
+				if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
+					return true;
+				}else {
+					return false;
+				}
+			}else{
+				if(item.getEnchantmentType() == AbilityEnum.INTELLIGENCE || item.getEnchantmentType() == AbilityEnum.WISDOM){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}else if(item.getItemEnum() == ItemEnum.ARMOR){
+			if(item.getEnchantmentType() == null){
+				if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
+					return true;
+				}else {
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else if (item.getItemEnum() == ItemEnum.SHIELD){
+			if(item.getEnchantmentType() == null){
+				if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
+					return true;
+				}else {
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else if (item.getItemEnum() == ItemEnum.RING){
+			if(item.getEnchantmentType() == null){
+				if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
+					return true;
+				}else {
+					return false;
+				}
+			}else{
+				if(item.getEnchantmentType() == AbilityEnum.STRENGTH || item.getEnchantmentType() == AbilityEnum.CONSTITUTION ||item.getEnchantmentType() == AbilityEnum.WISDOM ||item.getEnchantmentType() == AbilityEnum.CHARISMA){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}else if (item.getItemEnum() == ItemEnum.BELT){
+			if(item.getEnchantmentType() == null){
+				return false;
+			}else{
+				if(item.getEnchantmentType() == AbilityEnum.STRENGTH || item.getEnchantmentType() == AbilityEnum.CONSTITUTION){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}else if (item.getItemEnum() == ItemEnum.BOOTS) {
+			if(item.getEnchantmentType() == null){
+				if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
+					return true;
+				}else {
+					return false;
+				}
+			}else{
+				if(item.getEnchantmentType() == AbilityEnum.DEXTERITY ){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}else if (item.getItemEnum() == ItemEnum.WEAPON) {
+			if(item.getEnchantmentType() == null){
+				if(item.getAttributeType() == AttributeEnum.ATTACKBONUS ||item.getAttributeType() == AttributeEnum.DAMAGEBONUS ){
+					return true;
+				}else {
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
 }

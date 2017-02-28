@@ -129,20 +129,66 @@ public class CharacterEditor {
 	 * @param character character 
 	 * @param itemEnum	item that is changing
 	 */
-	public void changeItemType(Character character,ItemEnum itemEnum){		
+	public void changeItemType(Character character,ItemEnum itemEnum){
+		boolean enumChecker = false;
+		
 		System.out.println("Enter new item type : ");
 		String itemTypeString = scanner.nextLine();
-		if(AbilityEnum.valueOf(itemTypeString.toUpperCase()) != null && character.getItem(itemEnum).getEnchantmentType() != null){
-			character.getItem(itemEnum).setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
-			character.getItem(itemEnum).show();
-			saveCharacterChanges(character, "Item");
-		}else if (AttributeEnum.valueOf(itemTypeString.toUpperCase())!= null && character.getItem(itemEnum).getAttributeType() !=null){
-			character.getItem(itemEnum).setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
-			character.getItem(itemEnum).show();
-			saveCharacterChanges(character, "Item");
-		}else{
-			System.out.println("Error");
+		
+		try {
+			AbilityEnum.valueOf(itemTypeString.toUpperCase());
+			System.out.println("phase1: " +enumChecker);
+		} catch (IllegalArgumentException e) {
+			enumChecker = true;
+			System.out.println("phase2: "+ enumChecker);
 		}
+		
+		try {
+			//ability
+			if(!enumChecker){
+				Item newItem = new Item(character.getItem(itemEnum));
+				character.removeItem(character.getItem(itemEnum));
+				if(newItem.getEnchantmentType() == null){
+					newItem.setAttributeType(null);
+					newItem.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+				}else {
+					newItem.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+				}
+				
+				if(newItem.validate(newItem)){
+					character.putOnItem(newItem);
+					character.getItem(itemEnum).show();
+					character.showAbilities();
+					character.showAttributes();
+					saveCharacterChanges(character, "Item");
+				}else{
+					System.out.println("item is not valid by d20 rules");
+				}
+
+			}else if(enumChecker){
+				Item newItem = new Item(character.getItem(itemEnum));
+				character.removeItem(character.getItem(itemEnum));
+				if(newItem.getAttributeType() == null){
+					newItem.setEnchantmentType(null);
+					newItem.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
+				}else {
+					newItem.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
+				}
+				
+				if(newItem.validate(newItem)){
+					character.putOnItem(newItem);
+					character.getItem(itemEnum).show();
+					character.showAbilities();
+					character.showAttributes();
+					saveCharacterChanges(character, "Item");
+				}else{
+					System.out.println("item is not valid by d20 rules");
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Wrong input");
+		}
+
 	}
 	
 	/**
