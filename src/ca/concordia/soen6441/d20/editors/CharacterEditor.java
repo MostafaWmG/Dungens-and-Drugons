@@ -153,21 +153,18 @@ public class CharacterEditor {
 	public void changeItemPoint(Character character,ItemEnum itemEnum){
 		System.out.println("Enter number to change Point:");
 
-//		try{
-			String number = scanner.nextLine();
-			int numberScore = Integer.parseInt(number);
-			Item newItem = character.getItem(itemEnum);
-			newItem.setEnchantmentPoint(numberScore);
-			character.removeItem(character.getItem(itemEnum));
-			character.putOnItem(newItem);
-			character.getItem(itemEnum).show();
-			//test only
-			character.showAbilities();
-			saveCharacterChanges(character, "Item");
-			
-//		}catch(Exception e){
-			System.out.println("Error not int");
-//		}
+
+		String number = scanner.nextLine();
+		int numberScore = Integer.parseInt(number);
+		Item newItem = new Item(character.getItem(itemEnum));
+		newItem.setEnchantmentPoint(numberScore);
+		character.removeItem(character.getItem(itemEnum));
+		character.putOnItem(newItem);
+		character.getItem(itemEnum).show();
+		//test only
+		character.showAbilities();
+		saveCharacterChanges(character, "Item");
+
 	}
 	
 	/**

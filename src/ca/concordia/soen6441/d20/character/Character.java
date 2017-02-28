@@ -135,9 +135,10 @@ public class Character extends GameObject {
 	 */
 	public void wearItem(Item item , int value){
 		if (item.getAttributeType() == null ){
+			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
 			getAbilities().get(item.getEnchantmentType().getValue()).update(value);
 		}else if (item.getEnchantmentType() == null){
-			
+			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
 			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
 				getArmor().setBase(getArmor().getBase() + value);
 			}else if (item.getAttributeType() == AttributeEnum.ATTACKBONUS){
@@ -203,9 +204,9 @@ public class Character extends GameObject {
 	 * so when we modify any of these abilities it will automatically changes other statistics related to it. 
 	 */
 	public void setAbilitiesListener(){
-		getAbilities().get(AbilityEnum.DEXTERITY.getValue()).addListener(armorClass);
-		getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).addListener(hitPoint);
-		getAbilities().get(AbilityEnum.STRENGTH.getValue()).addListener(damageBonus);
+		getAbilities().get(AbilityEnum.DEXTERITY.getValue()).addListener(getArmor());
+		getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).addListener(getHitPoint());
+		getAbilities().get(AbilityEnum.STRENGTH.getValue()).addListener(getDamage());
 	}
 	
 	/**

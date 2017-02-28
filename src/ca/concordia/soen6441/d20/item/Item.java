@@ -29,6 +29,18 @@ public class Item extends GameObject implements LevelUp{
 	}
 	
 	/**
+	 * copy constructor
+	 * @param item the item needed to be copied.
+	 */
+	public Item(Item item){
+		initEmptyEntity();
+		getItemEntity().setItemEnum(item.getItemEnum() );
+		getItemEntity().setAttributeType(item.getAttributeType());
+		getItemEntity().setEnchantmentType(item.getEnchantmentType());
+		getItemEntity().setPoint(item.getEnchantmentPoint());
+	}
+	
+	/**
 	 * Usually we use this constructor for loading data from database
 	 * @param entity
 	 */
