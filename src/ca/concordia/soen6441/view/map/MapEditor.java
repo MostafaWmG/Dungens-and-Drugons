@@ -18,6 +18,7 @@ import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
+import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
  * this is mapEditor View 
  * @author wmg
@@ -216,7 +217,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 			}
 		}
 		
-		// we need to save map object into file @saman;
+		DaoFactory.getGameMapDao().create(map.getEntity());
 	}
 	
 	@SuppressWarnings("null")
