@@ -15,7 +15,7 @@ public class AbilityEntity implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name="ID")
+	@Column(name="ABILITY_ID")
 	private long id;
 	/**
 	 * the attribute that represent the abilityScore.

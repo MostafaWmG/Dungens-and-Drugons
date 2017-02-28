@@ -30,11 +30,23 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	//TODO Fighters, armors and some other game objects have level. So I don't think we should put level here
 	//Maybe we need to put it in GameObject
 	private int level;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="ABILITY_ID", referencedColumnName="ID")
 	private List <AbilityEntity> abilities;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="ID", referencedColumnName="ID")
 	private List <ItemEntity> wearItems;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ARMOR_ID")
 	private ArmorClassEntity armorClass;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="ATTACK_ID")
 	private AttackBonusEntity attackBonus;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="DAMAGE_ID")
 	private DamageBonusEntity damageBonus;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="HITPOINT_ID")
 	private HitPointEntity hitPoint;	
 
 	public CharacterEntity() {
