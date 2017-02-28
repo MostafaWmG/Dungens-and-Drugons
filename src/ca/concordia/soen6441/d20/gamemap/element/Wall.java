@@ -5,7 +5,11 @@ import ca.concordia.soen6441.d20.common.Location;
 public class Wall extends GameObject {
 
 	private WallEntity wallEntity;
-	
+	/**
+	 * This constructor creates a wall object with specified x and y coordinates
+	 * @param x x-coordinate of the wall
+	 * @param y y-coordinate of the wall
+	 */
 	public Wall(int x , int y){
 		initEmptyWallEntity();
 		setLocation(new Location(x, y));
