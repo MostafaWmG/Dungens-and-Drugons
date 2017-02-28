@@ -11,17 +11,19 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 public class Item extends GameObject implements LevelUp{
 	
 	private ItemEntity itemEntity;
-
-	public Item(ItemEnum item,AbilityEnum enchantmentType, int point) {
+	
+	public Item(String name,ItemEnum item,AbilityEnum enchantmentType, int point) {
 		initEmptyEntity();
+		setName(name);
 		getItemEntity().setItemEnum(item);
 		getItemEntity().setEnchantmentType(enchantmentType);
 		getItemEntity().setAttributeType(null);
 		getItemEntity().setPoint(point);
 	}
 	
-	public Item(ItemEnum item,AttributeEnum attributeType, int point){
+	public Item(String name,ItemEnum item,AttributeEnum attributeType, int point){
 		initEmptyEntity();
+		setName(name);
 		getItemEntity().setItemEnum(item);
 		getItemEntity().setAttributeType(attributeType);
 		getItemEntity().setEnchantmentType(null);

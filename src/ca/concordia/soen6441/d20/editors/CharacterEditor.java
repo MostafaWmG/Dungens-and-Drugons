@@ -113,7 +113,7 @@ public class CharacterEditor {
 		// here we need to call the load function to load item from file 
 		// Item item = load(itemLoaded);
 		// this is just for a test.
-		Item item = new Item(ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
+		Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
 		character.putOnItem(item);
 		character.show();
 		saveCharacterChanges(character, "add");

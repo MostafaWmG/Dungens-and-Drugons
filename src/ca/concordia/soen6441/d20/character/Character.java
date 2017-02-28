@@ -66,7 +66,7 @@ public class Character extends GameObject {
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();
 		showAttributes();
-//		emptyWearList();
+		emptyWearList();
 		testWearItems();
 
 	}
@@ -208,7 +208,8 @@ public class Character extends GameObject {
 		}
 		
 		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-			addItem(null);
+//			addItem(null);
+//			addItem(new Item(null,null,0));
 		}
 		
 	}
@@ -441,7 +442,7 @@ public class Character extends GameObject {
 	 */
 	private void emptyWearList(){
 		for(int i = 0; i < getWearItems().size() ; i ++){
-			getWearItems().set(i, null);
+//			getWearItems().set(i, new Item(null,null,-1));
 		}
 	}
 	
@@ -449,10 +450,10 @@ public class Character extends GameObject {
 		//for test only
 		for(int i = 0 ; i < ItemEnum.values().length; i ++){
 			if(i == ItemEnum.values().length -1){
-			putOnItem(new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
+			putOnItem(new Item("test"+i,ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
 //			getWearItems().set(i,new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
 			}else {
-				putOnItem(new Item(ItemEnum.values()[i], AbilityEnum.values()[i], i));
+				putOnItem(new Item("test"+i,ItemEnum.values()[i], AbilityEnum.values()[i], i));
 //				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
 			}
 		}

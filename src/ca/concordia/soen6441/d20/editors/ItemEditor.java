@@ -55,11 +55,11 @@ public class ItemEditor {
 		
 		try {
 			if(!enumChecker){
-				Item item = itemFactory.createItem(ItemEnum.valueOf(itemEnumString.toUpperCase()),AttributeEnum.valueOf(itemType.toUpperCase()));
+				Item item = itemFactory.createItem(itemName,ItemEnum.valueOf(itemEnumString.toUpperCase()),AttributeEnum.valueOf(itemType.toUpperCase()));
 				item.show();
 				saveItemFactory(item,"create");
 			}else{
-				Item item = itemFactory.createItem(ItemEnum.valueOf(itemEnumString.toUpperCase()), AbilityEnum.valueOf(itemType.toUpperCase()));
+				Item item = itemFactory.createItem(itemName,ItemEnum.valueOf(itemEnumString.toUpperCase()), AbilityEnum.valueOf(itemType.toUpperCase()));
 				item.show();
 				saveItemFactory(item, "create");
 			}
@@ -79,7 +79,7 @@ public class ItemEditor {
 		//load item from file 
 		// Item item = load(itemName);
 		//this is only for test
-		Item item = new Item(ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 3);
+		Item item = new Item(itemName,ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 3);
 		
 		System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
 		String change = scanner.nextLine();
