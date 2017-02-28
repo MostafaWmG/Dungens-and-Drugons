@@ -83,18 +83,19 @@ public class CharacterEditor {
 		System.out.println("Edit item :(Type i) , Edit Ability :(Type a) , Edit Attribute: (Type t) ,Add Own Items:(Type o)");
 		String hitButton = scanner.nextLine();
 	
+		// we need to create all this characters throw character factory;
 		if(hitButton.equals("i")){
 			//			editItem(character)
-			editItem(new Character());
+			editItem(new Character("Player","randomName"));
 		}else if (hitButton.equals("a")){
 			//editAbility(character)
-				editAbility( new Character());
+				editAbility( new Character("Player","randomName"));
 		}else if (hitButton.equals("t")){
 //						editAttribute(character);
-			editAttribute(new Character());
+			editAttribute(new Character("Player","randomName"));
 		}else if (hitButton.equals("o")){
 			//addItem(character);
-			addItem(new Character());
+			addItem(new Character("Player","randomName"));
 		}else{
 			System.out.println("Error");
 		}

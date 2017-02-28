@@ -2,7 +2,6 @@ package ca.concordia.soen6441.d20.editors;
 
 import java.util.Scanner;
 
-import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.d20.character.factory.ItemFactory;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.AttributeEnum;
@@ -15,7 +14,7 @@ import ca.concordia.soen6441.d20.item.ItemEnum;
  */
 public class ItemEditor {
 	private Scanner scanner;
-	private ItemEnum itemEnum;
+
 	
 	public ItemEditor() {
 		System.out.println("Item Builder Section: ");

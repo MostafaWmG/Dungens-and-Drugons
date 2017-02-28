@@ -1,7 +1,7 @@
 package ca.concordia.soen6441.d20.character.factory;
 
 import ca.concordia.soen6441.d20.character.Character;
-import ca.concordia.soen6441.d20.character.Player;
+//import ca.concordia.soen6441.d20.character.Player;
 import ca.concordia.soen6441.d20.dice.Dice;
 
 /**
@@ -29,11 +29,19 @@ public class PlayerFactory implements CharacterFactory {
 	 */
 	@Override
 	public Character create(String tag,String name) {
-		character = new Player(tag,name);
-		character.showAbilities();
-		character.getArmor().showPoint();
-		character.getAttack().showPoint();
-		character.getDamage().showPoint();
+		if(tag.equals("Enemy")){
+			return createCharacter(tag, name);
+		}else if(tag.equals("Player")){
+			return createCharacter(tag, name);
+		}else {
+			return null;
+		}
+
+	}
+	
+	private Character createCharacter(String tag,String name){
+		character = new Character(tag,name);
+//		character.showAll();
 		return character;
-	}	
+	}
 }

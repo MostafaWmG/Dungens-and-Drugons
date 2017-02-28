@@ -22,7 +22,7 @@ public class MonsterValidatorTest {
 
 	@Test
 	public void whenAGameMapHasAMonsterItShouldBeValid() {
-		Character monster = new Character();
+		Character monster = new Character("Enemy","n");
 		gameMap.place(monster, monster.getLocation());
 		
 		boolean valid = this.validator.validate();
@@ -39,8 +39,8 @@ public class MonsterValidatorTest {
 	
 	@Test
 	public void whenGamemapHasMoreThanOneMonsterItShouldBeValid() {
-		GameObject monster = new Character();
-		GameObject secondMonster = new Character(9, 7);
+		GameObject monster = new Character("Enemy","n");
+		GameObject secondMonster = new Character("Enemy","m",9, 7);
 		gameMap.place(monster, monster.getLocation());
 		gameMap.place(secondMonster, secondMonster.getLocation());
 		

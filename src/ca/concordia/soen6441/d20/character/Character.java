@@ -36,6 +36,7 @@ public class Character extends GameObject {
 	 */	
 	private CharacterEntity characterEntity;
 	
+	protected List<Item> backPack;
 	protected List <Ability> abilities;
 	protected List <Item> wearItems;
 	protected ArmorClass armorClass;
@@ -44,8 +45,10 @@ public class Character extends GameObject {
 	protected HitPoint hitPoint;
 	protected Dice dice;
 	
-	public Character(int initialPosistionX, int initialPositionY) {
+	public Character(String tag,String name,int initialPosistionX, int initialPositionY) {
 		init();
+		setName(name);
+		setTag(tag);
 		setWearItems(new ArrayList<Item>());
 		setAbilities(new ArrayList<Ability>());
 		setCharacterAbility();
@@ -60,8 +63,10 @@ public class Character extends GameObject {
 
 	}
 		
-	public Character() {
+	public Character(String tag,String name) {
 		init();
+		setName(name);
+		setTag(tag);
 		setWearItems(new ArrayList<Item>());
 		setAbilities(new ArrayList<Ability>());
 		setCharacterAbility();

@@ -1,6 +1,6 @@
 package ca.concordia.soen6441.d20.gamemap.validator;
 
-import ca.concordia.soen6441.d20.character.Player;
+//import ca.concordia.soen6441.d20.character.Player;
 import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
@@ -31,7 +31,8 @@ public class MonsterValidator {
 		for(int x=0; x<width; x++) {
 			for (int y=0; y<height; y++) {
 				GameObject object = gameMap.getGameObjectAtLocation(new Location(x, y));
-				if (object instanceof Character && !(object instanceof Player)) valid = true;
+//				if (object instanceof Character && !(object instanceof Player)) valid = true;
+				if(object instanceof Character && object.getTag().equals("Enemy")) valid = true;
 			}
 		}
 		return valid;		
