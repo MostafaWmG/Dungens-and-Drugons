@@ -2,6 +2,7 @@ package ca.concordia.soen6441.d20.character;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
@@ -23,6 +24,10 @@ import ca.concordia.soen6441.d20.item.ItemEnum;
  */
 // ArmorClass,HitPoint,DamageBonus,AttackBonus need to re factor and all of them can have same interface or inherits from attribute
 public class Character extends GameObject {
+	private static final int BACKPACK_SIZE = 10;
+
+	private static final int BACK_PACK_FULL = -1;
+
 	/**
 	 * level : level
 	 * name : name 
@@ -49,6 +54,9 @@ public class Character extends GameObject {
 		init();
 		setName(name);
 		setTag(tag);
+		setLocation(new Location(initialPosistionX,initialPositionY));
+		setBackPack(new ArrayList<Item>());
+		initializeBackPack();
 		setWearItems(new ArrayList<Item>());
 		setAbilities(new ArrayList<Ability>());
 		setCharacterAbility();
@@ -67,6 +75,8 @@ public class Character extends GameObject {
 		init();
 		setName(name);
 		setTag(tag);
+		setBackPack(new ArrayList<Item>());
+		initializeBackPack();
 		setWearItems(new ArrayList<Item>());
 		setAbilities(new ArrayList<Ability>());
 		setCharacterAbility();
@@ -326,6 +336,43 @@ public class Character extends GameObject {
 		getCharacterEntity().getWearItems().clear();
 		for (Item item : wearItems)
 			getCharacterEntity().getWearItems().add(item.getItemEntity());
+	}
+	
+	public void setBackPack(ArrayList<Item> backPack){
+		this.backPack = backPack;
+	}
+	
+	public List<Item> getBackPack(){
+		return backPack;
+	}
+	
+	/**
+	 * this method initialize backpack
+	 */
+	public void initializeBackPack(){
+		for(int i = 0; i < BACKPACK_SIZE ; i ++){
+			getBackPack().add(null);
+		}
+	}
+	
+	/**
+	 * find first empty slot in backPack <increasingly>
+	 * @return empty slot
+	 */
+	public int findEmptyPositionInBackPack(){
+		for (int i = 0 ; i < BACKPACK_SIZE; i ++ ){
+			if(getBackPack().get(i) != null){
+				return i ;
+			}
+		}
+		// back pack full
+		return BACK_PACK_FULL;
+	}
+	
+	public void showBackPack(){
+		for(int i = 0 ; i < BACKPACK_SIZE; i ++){
+			System.out.println("Slot " + i + " : "+ ((getBackPack().get(i) == null) ? getBackPack().get(i) : getBackPack().get(i).getItemEnum()));
+		}
 	}
 	
 	public ArmorClass getArmor(){
