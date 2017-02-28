@@ -157,10 +157,10 @@ public class CharacterEditor {
 		
 		try {
 			AbilityEnum.valueOf(itemTypeString.toUpperCase());
-			System.out.println("phase1: " +enumChecker);
+//			System.out.println("phase1: " +enumChecker);
 		} catch (IllegalArgumentException e) {
 			enumChecker = true;
-			System.out.println("phase2: "+ enumChecker);
+//			System.out.println("phase2: "+ enumChecker);
 		}
 		
 		try {

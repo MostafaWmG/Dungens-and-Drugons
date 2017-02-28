@@ -2,6 +2,7 @@ package ca.concordia.soen6441.d20.editors;
 
 import java.util.Scanner;
 
+import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.d20.character.factory.ItemFactory;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.AttributeEnum;
@@ -36,106 +37,172 @@ public class ItemEditor {
 	 * this is a method for creating an item.
 	 */
 	private void createItem(){
+		boolean enumChecker = false;
+		
+		System.out.println("Please Enter Your Item Name: ");
+		String itemName = scanner.nextLine();
+		System.out.println("Please Enter Your Item : ");
+		String itemEnumString = scanner.nextLine();
 		System.out.println("Please Enter Your Item Type : ");
 		String itemType = scanner.nextLine();
-		System.out.println("Please Enter Your enchantment Type : ");
-		String enchantmentType = scanner.nextLine();
-		convertStringToEnum(itemType);
-		Item item = builder(enchantmentType);
-		if(item !=null){
-			System.out.println("Do you want to save your character (yes or no )?");
-			String result = scanner.nextLine();
-			
-			if(result.equals("yes")){
-				// save the character into file  . you need to save character object into file @saman @negar.
-				// save(item);
-				System.out.println("Character saved successfully");
-			}else if (result.equals("no")){
-				System.out.println("Character removed");
-				
-			}else {
-				System.out.println("Error");
-			}
-		}else {
-			System.out.println("Error null");
-		}
-
 		
-//		scanner.close();
+		try {
+			AttributeEnum.valueOf(itemType.toUpperCase());
+		} catch (IllegalArgumentException e) {
+			enumChecker = true;
+		}
+		
+		ItemFactory itemFactory = new ItemFactory();
+		
+		try {
+			if(!enumChecker){
+				Item item = itemFactory.createItem(ItemEnum.valueOf(itemEnumString.toUpperCase()),AttributeEnum.valueOf(itemType.toUpperCase()));
+				item.show();
+				saveItemFactory(item,"create");
+			}else{
+				Item item = itemFactory.createItem(ItemEnum.valueOf(itemEnumString.toUpperCase()), AbilityEnum.valueOf(itemType.toUpperCase()));
+				item.show();
+				saveItemFactory(item, "create");
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Wrong Info");
+		}catch (NullPointerException e) {
+			System.out.println("It Is Not A Valid Item");
+		}
 	}
 	
 	/**
 	 * this a method for editing items.
 	 */
 	private void editItem(){
-
-	}
-	
-	//need re factor  
-	/**
-	 * this a method that convert string from keyboard to enum that we needed.
-	 * @param string a string from keyboard
-	 */
-	private void convertStringToEnum(String string){
+		System.out.println("Please Enter Your Item Name:");
+		String itemName = scanner.nextLine();
+		//load item from file 
+		// Item item = load(itemName);
+		//this is only for test
+		Item item = new Item(ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 3);
 		
-		if(string .equals("helmet") || string.equals("Helmet")){
-			itemEnum = ItemEnum.HELMET;
-		}else if(string .equals("armor") || string.equals("Armor")){
-			itemEnum = ItemEnum.ARMOR;
-		}else if(string .equals("shield") || string.equals("Shield")){
-			itemEnum = ItemEnum.SHIELD;
-		}else if(string .equals("ring") || string.equals("Ring")){
-			itemEnum = ItemEnum.RING;
-		}else if(string .equals("belt") || string.equals("Belt")){
-			itemEnum = ItemEnum.BELT;
-		}else if(string .equals("boots") || string.equals("Boots")){
-			itemEnum = ItemEnum.BOOTS;
-		}else if(string .equals("weapon") || string.equals("Weapon")){
-			itemEnum = ItemEnum.WEAPON;
+		System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
+		String change = scanner.nextLine();
+		if(change.equals("p")){
+			changeItemPoint(item);
+		}else if (change.equals("t")){
+			changeItemType(item);
+		}else{
+			System.out.println("Error");
 		}
 	}
 	
-	// need re factor 
 	/**
-	 * this a method that create items and save them
-	 * @param string a string from keyboard
-	 * @return Item that we need 
+	 * this is a method for changing itemPoint
+	 * @param Item item
 	 */
-	private Item builder(String string){
+	public void changeItemPoint(Item item){
+		item.show();
+		System.out.println("Enter number to change Point:");
+
+		String number = scanner.nextLine();
+		int numberScore = Integer.parseInt(number);
+		item.setEnchantmentPoint(numberScore);
+		item.show();
+		saveItemFactory(item, "edit");
+	}
+	
+	/**
+	 * this a method for changing item type
+	 * @param Item item 
+	 */
+	public void changeItemType(Item item){
+		boolean enumChecker = false;
 		
-		ItemFactory itemFactory = new ItemFactory();
-		AbilityEnum enchantmentTypeEnum;
-		AttributeEnum attributeEnum;
+		item.show();
+		System.out.println("Enter new item type : ");
+		String itemTypeString = scanner.nextLine();
 		
-		if(string.equals("intelligence") || string.equals("Intelligence")){
-			enchantmentTypeEnum =  AbilityEnum.INTELLIGENCE;
-			return itemFactory.createItem(itemEnum,enchantmentTypeEnum);
-		}else if ( string.equals("strength") || string.equals("Strength")){
-			enchantmentTypeEnum =  AbilityEnum.STRENGTH;
-			return itemFactory.createItem(itemEnum,enchantmentTypeEnum);
-		}else if ( string.equals("constitution") || string.equals("Constitution")){
-			enchantmentTypeEnum =  AbilityEnum.CONSTITUTION;
-			return itemFactory.createItem(itemEnum,enchantmentTypeEnum);
-		}else if ( string.equals("wisdom") || string.equals("Wisdom")){
-			enchantmentTypeEnum =  AbilityEnum.WISDOM;
-			return itemFactory.createItem(itemEnum,enchantmentTypeEnum);
-		}else if ( string.equals("charisma") || string.equals("Charisma")){
-			enchantmentTypeEnum =  AbilityEnum.CHARISMA;
-			return itemFactory.createItem(itemEnum,enchantmentTypeEnum);
-		}else if ( string.equals("dexterity") || string.equals("Dexterity")){
-			enchantmentTypeEnum =  AbilityEnum.DEXTERITY;
-			return itemFactory.createItem(itemEnum,enchantmentTypeEnum);
-		}else if ( string.equals("armorClass") || string.equals("ArmorClass")){
-			attributeEnum =  AttributeEnum.ARMORCLASS;
-			return itemFactory.createItem(itemEnum,attributeEnum);
-		}else if ( string.equals("attackBonus") || string.equals("AttackBonus")){
-			attributeEnum =  AttributeEnum.ATTACKBONUS;
-			return itemFactory.createItem(itemEnum,attributeEnum);
-		}else if ( string.equals("damageBonus") || string.equals("DamageBonus")){
-			attributeEnum =  AttributeEnum.DAMAGEBONUS;
-			return itemFactory.createItem(itemEnum,attributeEnum);
+		try {
+			AbilityEnum.valueOf(itemTypeString.toUpperCase());
+//			System.out.println("phase1: " +enumChecker);
+		} catch (IllegalArgumentException e) {
+			enumChecker = true;
+//			System.out.println("phase2: "+ enumChecker);
+		}
+		
+		try {
+			//ability
+			if(!enumChecker){
+				if(item.getEnchantmentType() == null){
+					item.setAttributeType(null);
+					item.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+				}else{
+					item.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));	
+				}
+							
+				if(item.validate(item)){
+					item.show();
+					saveItemFactory(item, "edit");
+				}else{
+					System.out.println("item is not valid by d20 rules");
+				}
+
+			}else if(enumChecker){
+				if(item.getAttributeType() == null){
+					item.setEnchantmentType(null);
+					item.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));	
+				}else{
+					item.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));	
+				}
+			
+				if(item.validate(item)){
+					item.show();
+					saveItemFactory(item, "edit");
+				}else{
+					System.out.println("item is not valid by d20 rules");
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Wrong input");
+		}
+
+	}
+	
+	/**
+	 * this is a method that saves the item 
+	 * @param Item item
+	 * @param section which part of character is changing
+	 */
+	private void saveItemFactory(Item item , String section){
+		System.out.println("Do you want to save item changes:(yes or no)");
+		String answer = scanner.nextLine();
+		
+		if(answer.equals("yes")){
+			// save(item);
+			reset(item, section);
+		}else if (answer.equals("no")){
+			reset(item, section);
 		}else {
-			return null;
+			System.out.println("Error IO");
+		}
+	}
+	
+	/**
+	 * this is a method to back to the beginning of itemEditor
+	 * @param item item
+	 * @param section edit/create
+	 */
+	private void reset(Item item , String section){
+		System.out.println("Do you want to create/edit another item :(yes or no)");
+		String answer = scanner.nextLine();
+		
+		if(answer.equals("yes")){
+			if (section.equals("create")){
+				createItem();
+			}else if (section.equals("edit")){
+				editItem();
+			}
+		}else if (answer.equals("no")){
+
+		}else {
+			System.out.println("Error IO");
 		}
 	}
 }
