@@ -13,22 +13,25 @@ public class Ground extends GameObject {
 	
 	private GroundEntity groundEntity;
 
-	public Ground(Location location)
+	public Ground(String name,Location location)
 	{
 		initEmptyEntity();
+		setName(name);
 		groundEntity.setLocation(location);
 		
 	}
 	
-	public Ground()
+	public Ground(String name)
 	{
 		initEmptyEntity();
+		setName(name);
 		groundEntity.setLocation(new Location(0, 0));
 	}
 	
-	public Ground(int x, int y)
+	public Ground(String name,int x, int y)
 	{
 		initEmptyEntity();
+		setName(name);
 		groundEntity.setLocation(new Location(x, y));
 	}
 	

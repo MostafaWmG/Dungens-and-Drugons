@@ -6,21 +6,24 @@ public class Exit extends GameObject{
 	
 	private ExitEntity exitEntity;
 	
-	public Exit(int x , int y){
+	public Exit(String name,int x , int y){
 		setExitEntity(new ExitEntity());
 		init();
+		setName(name);
 		setLocation(new Location(x, y));
 	}
 	
-	public Exit(Location location){
+	public Exit(String name,Location location){
 		setExitEntity(new ExitEntity());
 		init();
+		setName(name);
 		setLocation(location);
 	}
 	
-	public Exit(){
+	public Exit(String name){
 		setExitEntity(new ExitEntity());
 		init();
+		setName(name);
 		setLocation(new Location(0,0));
 	}
 	

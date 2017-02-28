@@ -2,6 +2,8 @@ package ca.concordia.soen6441.d20.character;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.cfg.annotations.Nullability;
+
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
@@ -68,7 +70,7 @@ public class Character extends GameObject {
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();
 		showAttributes();
-		emptyWearList();
+//		emptyWearList();
 		testWearItems();
 
 	}
@@ -141,10 +143,10 @@ public class Character extends GameObject {
 	 * @return if true : has this item 
 	 */
 	public boolean hasItem(ItemEnum itemEnum){
-		if(getItem(itemEnum) != null)
-			return true;
-		else
+		if(getItem(itemEnum).getAttributeType() == null && getItem(itemEnum).getEnchantmentType() == null  )
 			return false;
+		else
+			return true;
 	}
 	
 	/**
@@ -198,7 +200,7 @@ public class Character extends GameObject {
 		
 		if(hasItem(item.getItemEnum())){
 			//TODO the line of code is not easy to persist
-			getWearItems().set(item.getItemEnum().getValue(),null);
+			getWearItems().set(item.getItemEnum().getValue(),new Item(item.getItemEnum().getValue()+"", item.getItemEnum()));
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
 		}else {
@@ -224,8 +226,7 @@ public class Character extends GameObject {
 		}
 		
 		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-//			addItem(null);
-//			addItem(new Item(null,null,0));
+			addItem(new Item(i+"",ItemEnum.values()[i]));
 		}
 		
 	}
@@ -294,10 +295,10 @@ public class Character extends GameObject {
 	 */
 	public void showItems(){
 		for(int i = 0 ; i < getWearItems().size() ; i ++){
-			if(getWearItems().get(i) !=null){
-				getWearItems().get(i).show();
+			if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
+				System.out.println(ItemEnum.values()[i] + " empty slot");
 			}else {
-				System.out.println(ItemEnum.values()[i] + " empty slot" + getWearItems().get(i));
+				getWearItems().get(i).show();
 			}
 		}
 	}
@@ -330,9 +331,10 @@ public class Character extends GameObject {
 	 * @param item which is going to be wear.
 	 */
 	public void addItem(Item item) {
-		if(item == null){
-			getWearItems().add(null);
-			getCharacterEntity().getWearItems().add(null);
+		if(item.getEnchantmentType() == null && item.getAttributeType() == null){
+			Item newItem = new Item(item.getName(),item.getItemEnum());
+			getWearItems().add(newItem);
+			getCharacterEntity().getWearItems().add(newItem.getItemEntity());
 		}else{
 			getWearItems().add(item.getItemEnum().getValue(),item);
 			getCharacterEntity().getWearItems().add(item.getItemEnum().getValue(),item.getItemEntity());
@@ -458,7 +460,7 @@ public class Character extends GameObject {
 	 */
 	private void emptyWearList(){
 		for(int i = 0; i < getWearItems().size() ; i ++){
-//			getWearItems().set(i, new Item(null,null,-1));
+			getWearItems().set(i, new Item(i+"",ItemEnum.values()[i]));
 		}
 	}
 	
