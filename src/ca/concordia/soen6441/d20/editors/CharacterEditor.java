@@ -80,7 +80,7 @@ public class CharacterEditor {
 		String characterLoaded = scanner.nextLine();
 		// here we need to call the load function to load character from file 
 		// Character character = load(characterLoaded);
-		System.out.println("Edit item :(Type i) , Edit Ability :(Type a) , Edit Attribute: (Type t)");
+		System.out.println("Edit item :(Type i) , Edit Ability :(Type a) , Edit Attribute: (Type t) ,Add Own Items:(Type o)");
 		String hitButton = scanner.nextLine();
 	
 		if(hitButton.equals("i")){
@@ -92,10 +92,30 @@ public class CharacterEditor {
 		}else if (hitButton.equals("t")){
 //						editAttribute(character);
 			editAttribute(new Character());
+		}else if (hitButton.equals("o")){
+			//addItem(character);
+			addItem(new Character());
 		}else{
 			System.out.println("Error");
 		}
 		//		Scanner.close();
+	}
+	
+	/**
+	 * this is a method for adding items from file to character.
+	 * @param character character
+	 */
+	private void addItem(Character character){
+		System.out.println("Load the Item:");
+		System.out.println("Name:");
+		String itemLoaded = scanner.nextLine();
+		// here we need to call the load function to load item from file 
+		// Item item = load(itemLoaded);
+		// this is just for a test.
+		Item item = new Item(ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
+		character.putOnItem(item);
+		character.show();
+		saveCharacterChanges(character, "add");
 	}
 	
 	/**
@@ -339,7 +359,12 @@ public class CharacterEditor {
 	 * @param section which part of character is changing
 	 */
 	private void saveCharacterChanges(Character character , String section){
-		System.out.println("Do you want to change another "+section+":(yes or no)");
+		if(section.equals("add")){
+			System.out.println("Do you want to add another item :(yes or no)");
+		}else{
+			System.out.println("Do you want to change another "+section+":(yes or no)");
+		}
+
 		String answer = scanner.nextLine();
 		
 		if(answer.equals("yes")){
@@ -349,6 +374,8 @@ public class CharacterEditor {
 				editItem(character);
 			}else if (section.equals("attribute")){
 				editAttribute(character);
+			}else if (section.equals("add")){
+				addItem(character);
 			}
 		}else if (answer.equals("no")){
 			System.out.println("Do you want to save character changes:(yes or no)");

@@ -123,12 +123,12 @@ public class Character extends GameObject {
 	public boolean putOnItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
-			 System.out.println("Character already has item");
+			 System.out.println("Character already has this item");
 			 return true;
 		}else {
 			getWearItems().set(item.getItemEnum().getValue(), item);
 			wearItem(item, item.getEnchantmentPoint());
-			System.out.println("characted wore the item");
+//			System.out.println("characted wore the item");
 			return false;
 		}
 	}
@@ -141,10 +141,10 @@ public class Character extends GameObject {
 	 */
 	public void wearItem(Item item , int value){
 		if (item.getAttributeType() == null ){
-			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
+//			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
 			getAbilities().get(item.getEnchantmentType().getValue()).update(value);
 		}else if (item.getEnchantmentType() == null){
-			System.out.println("debug1: "+ item.getAttributeType() + " value: " + value);
+//			System.out.println("debug1: "+ item.getAttributeType() + " value: " + value);
 			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
 				getArmor().setBase(getArmor().getBase() + value);
 			}else if (item.getAttributeType() == AttributeEnum.ATTACKBONUS){
@@ -234,6 +234,23 @@ public class Character extends GameObject {
 		getDamage().showPoint();
 		getAttack().showPoint();
 		getHitPoint().showPoint();
+	}
+	
+	/**
+	 * show both attributes and abilities
+	 */
+	public void show(){
+		showAbilities();
+		showAttributes();
+	}
+	
+	/**
+	 * show all :attributes and abilities and items
+	 */
+	public void showAll(){
+		showAbilities();
+		showAttributes();
+		showItems();
 	}
 	
 	/**
