@@ -37,6 +37,7 @@ public class Character extends GameObject {
 	private CharacterEntity characterEntity;
 	
 	protected List <Ability> abilities;
+	protected List <Item> wearItems;
 	protected ArmorClass armorClass;
 	protected AttackBonus attackBonus;
 	protected DamageBonus damageBonus;
@@ -126,6 +127,7 @@ public class Character extends GameObject {
 			 System.out.println("Character already has this item");
 			 return true;
 		}else {
+			//TODO
 			getWearItems().set(item.getItemEnum().getValue(), item);
 			wearItem(item, item.getEnchantmentPoint());
 //			System.out.println("characted wore the item");
@@ -164,6 +166,7 @@ public class Character extends GameObject {
 	public void removeItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
+			//TODO the line of code is not easy to persist
 			getWearItems().set(item.getItemEnum().getValue(),null);
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
@@ -273,6 +276,7 @@ public class Character extends GameObject {
 	 */
 	public void addAbility(Ability ability) {
 		abilities.add(ability.getAbilityEnum().getValue(), ability);
+		getCharacterEntity().getAbilities().add(ability.getAbilityEnum().getValue(), ability.getAbilityEntity());
 	}
 	
 	public Ability getAbility(AbilityEnum abilityEnum){
@@ -285,6 +289,9 @@ public class Character extends GameObject {
 	
 	public void setAbilities(ArrayList<Ability> abilities){
 		this.abilities = abilities;
+		getCharacterEntity().getAbilities().clear();
+		for (Ability ability : abilities)
+			getCharacterEntity().getAbilities().add(ability.getAbilityEntity());
 	}
 	/**
 	 * character will wear this item.
@@ -292,23 +299,28 @@ public class Character extends GameObject {
 	 */
 	public void addItem(Item item) {
 		if(item == null){
-			getCharacterEntity().wearItems.add(null);
+			getWearItems().add(null);
+			getCharacterEntity().getWearItems().add(null);
 		}else{
-			getCharacterEntity().wearItems.add(item.getItemEnum().getValue(),item);
+			getWearItems().add(item.getItemEnum().getValue(),item);
+			getCharacterEntity().getWearItems().add(item.getItemEnum().getValue(),item.getItemEntity());
 		}
 
 	}
 	
 	public Item getItem(ItemEnum itemEnum){
-		return (Item)getCharacterEntity().wearItems.get(itemEnum.getValue());
+		return (Item)getWearItems().get(itemEnum.getValue());
 	}
 	
 	public List<Item> getWearItems(){
-		return getCharacterEntity().wearItems;
+		return wearItems;
 	}
 	
 	public void setWearItems(ArrayList<Item> wearItems){
-		getCharacterEntity().wearItems = wearItems;
+		this.wearItems = wearItems;
+		getCharacterEntity().getWearItems().clear();
+		for (Item item : wearItems)
+			getCharacterEntity().getWearItems().add(item.getItemEntity());
 	}
 	
 	public ArmorClass getArmor(){
@@ -317,6 +329,7 @@ public class Character extends GameObject {
 	
 	public void setArmor(ArmorClass armorClass){
 		this.armorClass = armorClass;
+		getCharacterEntity().setArmorClass(armorClass.getArmorClassEntity());
 	}
 	
 	public AttackBonus getAttack(){
@@ -325,6 +338,7 @@ public class Character extends GameObject {
 	
 	public void setAttack(AttackBonus attackBonus){
 		this.attackBonus = attackBonus;
+		getCharacterEntity().setAttackBonus(attackBonus.getAttackBonusEntity());
 	}
 	
 	public HitPoint getHitPoint(){
@@ -333,6 +347,7 @@ public class Character extends GameObject {
 	
 	public void setHitPoint(HitPoint hitPoint){
 		this.hitPoint = hitPoint;
+		getCharacterEntity().setHitPoint(hitPoint.getHitPointEntity());
 	}
 	
 	public DamageBonus getDamage(){
@@ -341,6 +356,7 @@ public class Character extends GameObject {
 	
 	public void setDamage(DamageBonus damageBonus){
 		this.damageBonus = damageBonus;
+		getCharacterEntity().setDamageBonus(damageBonus.getDamageBonusEntity());
 	}
 	public int getLevel(){
 		return getCharacterEntity().getLevel();
@@ -393,7 +409,6 @@ public class Character extends GameObject {
 	
 	@Override
 	public GameObjectEntity getEntity() {
-		// TODO Auto-generated method stub
 		return characterEntity;
 	}
 	
