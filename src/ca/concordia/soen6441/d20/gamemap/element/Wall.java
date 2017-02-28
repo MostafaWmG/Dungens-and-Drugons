@@ -10,18 +10,21 @@ public class Wall extends GameObject {
 	 * @param x x-coordinate of the wall
 	 * @param y y-coordinate of the wall
 	 */
-	public Wall(int x , int y){
+	public Wall(String name,int x , int y){
 		initEmptyWallEntity();
+		setName(name);
 		setLocation(new Location(x, y));
 	}
 	
-	public Wall(Location location){
+	public Wall(String name,Location location){
 		initEmptyWallEntity();
+		setName(name);
 		setLocation(location);
 	}
 	
-	public Wall(){		
+	public Wall(String name){		
 		initEmptyWallEntity();
+		setName(name);
 		setLocation(new Location(0, 0));
 	}
 	

@@ -6,21 +6,24 @@ public class Entery extends GameObject{
 	
 	private EnteryEntity enteryEntity;
 
-	public  Entery(int x , int y){
+	public  Entery(String name,int x , int y){
 		setEnteryEntity(new EnteryEntity());
 		init();
+		setName(name);
 		setLocation(new Location(x, y));
 	}
 	
-	public  Entery(Location location){
+	public  Entery(String name ,Location location){
 		setEnteryEntity(new EnteryEntity());
 		init();
+		setName(name);
 		setLocation(location);
 	}
 
-	public  Entery(){
+	public  Entery(String name){
 		setEnteryEntity(new EnteryEntity());
 		init();
+		setName(name);
 		setLocation(new Location(0, 0));
 	}
 	
