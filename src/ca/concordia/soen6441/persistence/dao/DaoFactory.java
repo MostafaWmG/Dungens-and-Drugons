@@ -1,6 +1,7 @@
 package ca.concordia.soen6441.persistence.dao;
 
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
+import ca.concordia.soen6441.persistence.dao.interfaces.INamedEntityDao;
 
 /**
  * 
@@ -10,10 +11,13 @@ import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 public class DaoFactory {
 	private static class DaoHolder
 	{
-		static final JpaDao<GameMapEntity, Long> jpaGameMapDao = new JpaDao<>(GameMapEntity.class); 
+		static final JpaNamedEntityDao<GameMapEntity, Long> jpaGameMapDao = 
+				new JpaNamedEntityDao<>(GameMapEntity.class, 
+										"findGameMapEntityByName", 
+										"findGameMapEntityAll"); 
 	}
 	
-	public static IGenericDao<GameMapEntity, Long> getGameMapDao()
+	public static INamedEntityDao<GameMapEntity, Long> getGameMapDao()
 	{
 		return DaoHolder.jpaGameMapDao;
 	}

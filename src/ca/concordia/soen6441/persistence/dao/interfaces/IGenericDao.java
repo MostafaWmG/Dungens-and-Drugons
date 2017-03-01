@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ca.concordia.soen6441.persistence.dao;
+package ca.concordia.soen6441.persistence.dao.interfaces;
 
 import java.io.Serializable;
 

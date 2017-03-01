@@ -15,7 +15,17 @@ import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEn
  * @author Saman Saadi
  *
  */
+@NamedQueries({
+	@NamedQuery(
+			name="findGameMapEntityByName",
+			query="SELECT gmp FROM GameMapEntity gmp WHERE gmp.name = :name"
+			),
+	@NamedQuery(
+			name="findGameMapEntityAll",
+			query="SELECT gmp FROM GameMapEntity gmp")
+})
 @Entity
+@Table(name="GAME_MAP")
 public class GameMapEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;

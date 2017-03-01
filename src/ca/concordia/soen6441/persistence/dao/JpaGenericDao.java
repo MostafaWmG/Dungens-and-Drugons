@@ -9,15 +9,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import ca.concordia.soen6441.persistence.dao.interfaces.IGenericDao;
+
 
 /**
  * @author Saman Saadi
  *
  */
-public class JpaDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
+public class JpaGenericDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 		
-	static final EntityManagerFactory emf; 
-	static final EntityManager em;
+	protected static final EntityManagerFactory emf; 
+	protected static final EntityManager em;
 	
 	protected Class<T> type;
 	
@@ -27,7 +29,7 @@ public class JpaDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 		em  = emf.createEntityManager();
 	}
 	
-	public JpaDao(Class<T> type)
+	public JpaGenericDao(Class<T> type)
 	{
 		this.type = type;
 	}
@@ -67,6 +69,4 @@ public class JpaDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 		t = update(t);
 		em.remove(t);		
 	}
-
-
 }
