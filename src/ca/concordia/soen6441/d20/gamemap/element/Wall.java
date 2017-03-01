@@ -1,4 +1,8 @@
 package ca.concordia.soen6441.d20.gamemap.element;
+/**
+ * This class creates walls that are on the game map. 
+ * They are considered as obstacles for player to go to certain coordinations.
+ */
 
 import ca.concordia.soen6441.d20.common.Location;
 

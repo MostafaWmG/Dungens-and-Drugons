@@ -19,7 +19,7 @@ import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 
 /**
- * this class represents a character, a monster or a player
+ * This class is used to create a character, a monster or a player.
  * @author alvaro
  * @author mostafa
  */
@@ -30,15 +30,16 @@ public class Character extends GameObject {
 	private static final int BACK_PACK_FULL = -1;
 
 	/**
-	 * level : level
-	 * name : name 
-	 * characterEntity: used for saving and loading characters
-	 * wearItems : items that character already wear
-	 * armorClass: the armor of the character
-	 * attackBonus : the attack of the character
-	 * damageBonus : the damage of the character
-	 * hitPoint    : the hitPoint of the character
-	 * dice        : the dice class for rolling a dice
+	*  Each character object(character, player or monster) has blow characteristics:
+	*level : level of the character
+	* name : name of the character
+	* characterEntity: it is used for saving and loading characters
+	* wearItems : items that character already wear
+	* armorClass: the armor of the character
+	* attackBonus : the attack of the character
+	* damageBonus : the damage of the character
+	* hitPoint    : the hitPoint of the character
+	* dice  : the dice class for rolling a dice
 	 */	
 	private CharacterEntity characterEntity;
 	
@@ -51,6 +52,13 @@ public class Character extends GameObject {
 	protected HitPoint hitPoint;
 	protected Dice dice;
 	
+	/**
+	 * This constructor creates a character object with given tag,name,inistial x and y cooridnates.
+	 * @param tag sets tag for the character
+	 * @param name sets the name of the character
+	 * @param initialPosistionX initial x-coordinate of the character
+	 * @param initialPositionY initial y-coordinate of the character
+	 */
 	public Character(String tag,String name,int initialPosistionX, int initialPositionY) {
 		init();
 		setName(name);
@@ -71,7 +79,11 @@ public class Character extends GameObject {
 		testWearItems();
 
 	}
-		
+	/**
+	 * This constructor creates a character object with given tag,name.
+	 * @param tag sets tag for the character
+	 * @param name sets the name of the character
+	 */
 	public Character(String tag,String name) {
 		init();
 		setName(name);
@@ -104,7 +116,7 @@ public class Character extends GameObject {
 		//TODO
 	}
 	
-	/*
+	/**
 	 * This method sets entity for each object created
 	 */
 	private void init(){
@@ -290,8 +302,8 @@ public class Character extends GameObject {
 	}
 	
 	/**
-	 * getWearItems().get(i).show();
 	 * show all items of the character
+	 * getWearItems().get(i).show();
 	 */
 	public void showItems(){
 		System.out.println("<<<ITEMS>>>");
@@ -338,14 +350,26 @@ public class Character extends GameObject {
 		getCharacterEntity().getAbilities().add(ability.getAbilityEnum().getValue(), ability.getAbilityEntity());
 	}
 	
+	/**
+	 * 
+	 * @param abilityEnum 
+	 * @return
+	 */
 	public Ability getAbility(AbilityEnum abilityEnum){
 		return (Ability) abilities.get(abilityEnum.getValue());
 	}
 	
+	/**
+	 * @return a list of abilities that the character has
+	 */
 	public List<Ability> getAbilities(){
 		return abilities;
 	}
 	
+	/**
+	 * 
+	 * @param abilities sets a list of abilities for the character
+	 */
 	public void setAbilities(ArrayList<Ability> abilities){
 		this.abilities = abilities;
 		getCharacterEntity().getAbilities().clear();
@@ -367,15 +391,27 @@ public class Character extends GameObject {
 		}
 
 	}
-	
+	/**
+	 * 
+	 * @param itemEnum that is available in ItemEnum 
+	 * @return the item matching the itemEnum from character's items.
+	 */
 	public Item getItem(ItemEnum itemEnum){
 		return (Item)getWearItems().get(itemEnum.getValue());
 	}
 	
+	/**
+	 * 
+	 * @return a list of Items that the character is wearing.
+	 */
 	public List<Item> getWearItems(){
 		return wearItems;
 	}
 	
+	/**
+	 * 
+	 * @param wearItems sets a lists of items for the character to wear.
+	 */
 	public void setWearItems(ArrayList<Item> wearItems){
 		this.wearItems = wearItems;
 		getCharacterEntity().getWearItems().clear();
@@ -383,10 +419,18 @@ public class Character extends GameObject {
 			getCharacterEntity().getWearItems().add(item.getItemEntity());
 	}
 	
+	/**
+	 * 
+	 * @param backPack sets a list of Items for character to put them in his backpack. 
+	 */
 	public void setBackPack(ArrayList<Item> backPack){
 		this.backPack = backPack;
 	}
 	
+	/**
+	 * 
+	 * @return Items that are in the backpack.
+	 */
 	public List<Item> getBackPack(){
 		return backPack;
 	}
@@ -508,46 +552,87 @@ public class Character extends GameObject {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return armor class of the character.
+	 */
 	public ArmorClass getArmor(){
 		return armorClass;
 	}
 	
+	/**
+	 * 
+	 * @param armorClass set the character's armor class.
+	 */
 	public void setArmor(ArmorClass armorClass){
 		this.armorClass = armorClass;
 		getCharacterEntity().setArmorClass(armorClass.getArmorClassEntity());
 	}
 	
+	/**
+	 * 
+	 * @return attackBunos of the character.
+	 */
 	public AttackBonus getAttack(){
 		return attackBonus;
 	}
 	
+	/**
+	 * 
+	 * @param attackBonus set the attack bonus for the character.
+	 */
 	public void setAttack(AttackBonus attackBonus){
 		this.attackBonus = attackBonus;
 		getCharacterEntity().setAttackBonus(attackBonus.getAttackBonusEntity());
 	}
 	
+	/**
+	 * 
+	 * @return hit point of the character.
+	 */
 	public HitPoint getHitPoint(){
 		return hitPoint;
 	}
 	
+	/**
+	 * 
+	 * @param hitPoint sets hit point for the character.
+	 */
 	public void setHitPoint(HitPoint hitPoint){
 		this.hitPoint = hitPoint;
 		getCharacterEntity().setHitPoint(hitPoint.getHitPointEntity());
 	}
 	
+	/**
+	 * 
+	 * @return damage bonus for the character.
+	 */
 	public DamageBonus getDamage(){
 		return damageBonus;
 	}
 	
+	/**
+	 * 
+	 * @param damageBonus set the damage bonus for the character.
+	 */
 	public void setDamage(DamageBonus damageBonus){
 		this.damageBonus = damageBonus;
 		getCharacterEntity().setDamageBonus(damageBonus.getDamageBonusEntity());
 	}
+	
+	/**
+	 * 
+	 * @return character's level.
+	 */
 	public int getLevel(){
 		return getCharacterEntity().getLevel();
 		
 	}
 	
+	/**
+	 * 
+	 * @param level set this level for the character.
+	 */
 	public void setLevel(int level){
 		getCharacterEntity().setLevel(level);
 	}
@@ -593,19 +678,22 @@ public class Character extends GameObject {
 		show();
 	}
 	
+	/**
+	 * @return GameObjectEntity for loading character from database
+	 */
 	@Override
 	public GameObjectEntity getEntity() {
 		return characterEntity;
 	}
 	
-	/*
+	/**
 	 * @return the character entity 
 	 */
 	public CharacterEntity getCharacterEntity(){
 		return characterEntity;
 	}
 	
-	/*
+	/**
 	 * @param characterEntity to set
 	 */
 	public void setCharacterEntity(CharacterEntity characterEntity){
