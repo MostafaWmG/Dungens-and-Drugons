@@ -1,7 +1,5 @@
 package ca.concordia.soen6441.d20.item;
 
-import ca.concordia.soen6441.d20.gamemap.element.GameObject;
-import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -10,22 +8,21 @@ import javax.persistence.*;
  * @author Saman Saadi
  */
 @Entity
-
-public class ArmorClassEntity extends GameObjectEntity implements Serializable {
+@Table(name="Armor")
+public class ArmorClassEntity implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue
+	@Column(name="ID")
+	private long id;
 	private int base;
 	private int modfier;
 
 	public ArmorClassEntity() {
 		super();
-	}
-
-	@Override
-	public GameObject createModel() {
-		return new ArmorClass(this);
 	}
 
 	/**
@@ -55,5 +52,23 @@ public class ArmorClassEntity extends GameObjectEntity implements Serializable {
 	public void setModfier(int modfier) {
 		this.modfier = modfier;
 	}
-	
+			
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public ArmorClass createArmorModel()
+	{
+		return new ArmorClass(this);
+	}
 }

@@ -58,10 +58,6 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 		attackBonus = new AttackBonusEntity();
 		hitPoint = new HitPointEntity();
 	}
-   public GameObject createModel(){
-	   //TODO
-	   return null;
-   }
 	/**
 	 * @return the level
 	 */
@@ -145,5 +141,9 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	 */
 	public void setHitPoint(HitPointEntity hitPoint) {
 		this.hitPoint = hitPoint;
+	}
+	@Override
+	public GameObject createModel() {
+		return new Character(this);
 	}		
 }

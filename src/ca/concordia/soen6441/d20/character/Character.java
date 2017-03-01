@@ -10,6 +10,7 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Ability;
+import ca.concordia.soen6441.d20.item.AbilityEntity;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.ArmorClass;
 import ca.concordia.soen6441.d20.item.AttackBonus;
@@ -92,6 +93,20 @@ public class Character extends GameObject {
 //		emptyWearList();
 		testWearItems();
 	}
+	
+	/**
+	 * We usually use this constructor to load data
+	 * @param entity
+	 */
+	public Character(CharacterEntity entity)
+	{
+		setCharacterEntity(entity);
+		//TODO support backpack loading
+		for (ItemEntity item : entity.getWearItems())
+			addItem(item.createItemModel());
+		//TODO
+	}
+	
 	/*
 	 * This method sets entity for each object created
 	 */

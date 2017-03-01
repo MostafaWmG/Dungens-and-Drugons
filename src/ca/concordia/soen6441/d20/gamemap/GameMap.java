@@ -56,7 +56,7 @@ public class GameMap {
 	{
 		init();
 		for (GameObjectEntity entity : getGameMapEntity().getObjects())
-			place(entity.createModel(), entity.getLocation());
+			place(entity.createModel(), entity.getLocation(), false);
 	}
 	
 	private void init()
@@ -76,11 +76,16 @@ public class GameMap {
 		return elements.get(location);
 	}
 	
-	public void setGameObjectAtLocation(Location location,GameObject gameObject) {		
+	public void setGameObjectAtLocation(Location location,GameObject gameObject) {
+		setGameObjectAtLocation(location, gameObject, true);
+	}
+	
+	public void setGameObjectAtLocation(Location location,GameObject gameObject, boolean saveEntity) {
 		 elements.put(location, gameObject);
 		gameObject.setLocation(location);
 		gameObject.setField(this);
-		getGameMapEntity().addGameObjectEntity(gameObject.getEntity());
+		if (saveEntity)
+			getGameMapEntity().addGameObjectEntity(gameObject.getEntity());		
 	}
 	
 	public int getWidth() {
@@ -139,13 +144,17 @@ public class GameMap {
 	 * @param location locaton where the element must be placed
 	 */
 	public void place(GameObject element, Location location) {
+		place(element, location, true);
+	}
+	
+	private void place(GameObject element, Location location, boolean saveEntity) {
 		if(location.getX() < 0 || location.getX() >= getWidth()) return;
 		if(location.getY() < 0 || location.getY() >= getHeight()) return;
 		
 		if(field[location.getY()][location.getX()] != EMPTY) return;
 		
 		field[location.getY()][location.getX()] = element;
-		setGameObjectAtLocation(location, element);
+		setGameObjectAtLocation(location, element, saveEntity);		
 	}
 	
 	

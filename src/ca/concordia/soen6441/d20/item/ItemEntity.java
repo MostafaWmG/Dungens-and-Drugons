@@ -38,10 +38,16 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 
 	public ItemEntity() {
 		super();
-	}   
+	}
+	
+	public Item createItemModel()
+	{
+		return new Item(this);
+	}
+	
 	@Override
 	public GameObject createModel() {
-		return new Item(this);
+		return createItemModel();
 	}
 	/**
 	 * @return the point

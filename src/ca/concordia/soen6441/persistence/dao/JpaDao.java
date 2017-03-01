@@ -44,7 +44,7 @@ public class JpaDao<T, PK extends Serializable> implements IGenericDao<T, PK> {
 		em.getTransaction().begin();
 		em.persist(t);
 		em.getTransaction().commit();
-		em.flush();
+		//em.flush();
 		return t;
 	}
 

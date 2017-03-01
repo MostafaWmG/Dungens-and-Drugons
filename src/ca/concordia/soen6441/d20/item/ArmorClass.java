@@ -1,9 +1,6 @@
 package ca.concordia.soen6441.d20.item;
 
-import ca.concordia.soen6441.d20.gamemap.element.GameObject;
-import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
-
-public class ArmorClass extends GameObject implements LevelUp {
+public class ArmorClass implements LevelUp {
 	
 	private ArmorClassEntity armorClassEntity;
 	
@@ -82,9 +79,9 @@ public class ArmorClass extends GameObject implements LevelUp {
 	public void setArmorClassEntity(ArmorClassEntity armorClassEntity) {
 		this.armorClassEntity = armorClassEntity;
 	}
-
-	@Override
-	public GameObjectEntity getEntity() {
+	
+	public ArmorClassEntity getEntity()
+	{
 		return getArmorClassEntity();
 	}
 }
