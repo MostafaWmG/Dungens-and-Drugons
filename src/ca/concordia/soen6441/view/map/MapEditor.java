@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.derby.tools.sysinfo;
+
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.common.Location;
@@ -222,11 +224,21 @@ public class MapEditor  extends JFrame implements ActionListener{
 	
 	@SuppressWarnings("null")
 	public void load(String fileName){
-		
-		GameMap map = null;
+//		removeGrid();
+		GameMap map = DaoFactory.getGameMapDao().read((long)1).createModel();
 		//load map from file here and replace null with it @ saman
 		
+		System.out.println("width : "+ map.getWidth() + "height : " + map.getHeight());
+		for(int i = 0 ; i < map.getWidth(); i ++){
+			for( int j = 0 ; j < map.getHeight(); j ++){
+				System.out.println("elementi: "+i+" elementj: "+j+" GameObject: " + map.getGameObjectAtLocation(new Location(i,j)).getTag());
+			}
+		}
+		row = map.getWidth();
+		column = map.getHeight();
 		viewElements = new Grid[map.getWidth()][map.getHeight()];
+		initializeGrid();
+
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
@@ -244,6 +256,14 @@ public class MapEditor  extends JFrame implements ActionListener{
 				}
 			}
 		}
+	}
+	
+	public void removeGrid(){
+		for(int i = 0; i < row ; i++){
+			for(int j = 0; j < column ; j++){
+//				viewElements[i][j]
+			 }
+			}
 	}
 	
 	public ImageIcon getCurrentPointer() {
