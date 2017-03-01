@@ -223,23 +223,26 @@ public class MapEditor  extends JFrame implements ActionListener{
 	@SuppressWarnings("null")
 	public void load(String fileName){
 		
-		GameMap map = null;
+		GameMap map = DaoFactory.getGameMapDao().read((long)1).createModel();
 		//load map from file here and replace null with it @ saman
-		
+		row = map.getHeight();
+		column = map.getWidth();
 		viewElements = new Grid[map.getWidth()][map.getHeight()];
+		initializeGrid();
+
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
 				
-				if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Ground"){
+				if(map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Ground"){
 					viewElements[i][j] = new Grid(this,"Ground");
-				}else if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Wall"){
+				}else if(map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Wall"){
 					viewElements[i][j] = new Grid(this,"Wall");
-				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enemy"){
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Enemy"){
 					viewElements[i][j] = new Grid(this,"Enemy");
-				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enter"){
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Enter"){
 					viewElements[i][j] = new Grid(this,"Enter");
-				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Exit"){
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Exit"){
 					viewElements[i][j] = new Grid(this,"Exit");
 				}
 			}

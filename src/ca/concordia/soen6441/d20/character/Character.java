@@ -355,7 +355,7 @@ public class Character extends GameObject {
 	 */
 	public void initializeBackPack(){
 		for(int i = 0; i < BACKPACK_SIZE ; i ++){
-			getBackPack().add(null);
+			getBackPack().add(new Item(i+7+"", ItemEnum.values()[i]));
 		}
 	}
 	
