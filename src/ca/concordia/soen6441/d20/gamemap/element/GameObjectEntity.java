@@ -10,6 +10,16 @@ import ca.concordia.soen6441.d20.common.Location;
  * @author Saman Saadi
  */
 
+@NamedQueries({
+	@NamedQuery(
+			name="findGameObjectEntityByName",
+			query="SELECT goe FROM GameObjectEntity goe WHERE goe.name = :name"
+			),
+	@NamedQuery(
+			name="findGameObjectEntityAll",
+			query="SELECT goe FROM GameObjectEntity goe")
+})
+
 @Entity
 @Inheritance
 @DiscriminatorColumn(name="OBJ_TYPE")
