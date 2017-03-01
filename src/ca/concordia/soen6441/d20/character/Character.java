@@ -173,10 +173,10 @@ public class Character extends GameObject {
 	 */
 	public void wearItem(Item item , int value){
 		if (item.getAttributeType() == null ){
-//			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
+			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
 			getAbilities().get(item.getEnchantmentType().getValue()).update(value);
 		}else if (item.getEnchantmentType() == null){
-//			System.out.println("debug1: "+ item.getAttributeType() + " value: " + value);
+			System.out.println("debug1: "+ item.getAttributeType() + " value: " + value);
 			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
 				getArmor().setBase(getArmor().getBase() + value);
 			}else if (item.getAttributeType() == AttributeEnum.ATTACKBONUS){
@@ -212,6 +212,7 @@ public class Character extends GameObject {
 		
 		int roll = 0;
 		dice  = new Dice();
+		System.out.println("<<<CHARACTED CREATED RANDOMLY>>> ");
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
 			
 			roll = 0 ;
@@ -253,6 +254,7 @@ public class Character extends GameObject {
 	 * print all statistics of the characters
 	 */
 	public void showAbilities(){
+		System.out.println("<<<ABILITIES>>>");
 		
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
 			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
@@ -263,6 +265,7 @@ public class Character extends GameObject {
 	 * print all attributes of character
 	 */
 	public void showAttributes(){
+		System.out.println("<<<ATTRIBUITES>>>");
 		getArmor().showPoint();
 		getDamage().showPoint();
 		getAttack().showPoint();
@@ -291,6 +294,7 @@ public class Character extends GameObject {
 	 * show all items of the character
 	 */
 	public void showItems(){
+		System.out.println("<<<ITEMS>>>");
 		for(int i = 0 ; i < getWearItems().size() ; i ++){
 			if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
 				System.out.println(ItemEnum.values()[i] + " empty slot");
@@ -304,6 +308,7 @@ public class Character extends GameObject {
 	 * show items in the backpack
 	 */
 	public void showBackPack(){
+		System.out.println("<<<BACK PACK>>> ");
 		for(int i = 0 ; i < BACKPACK_SIZE; i ++){
 			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
 				System.out.println("Slot " + i + " : "+ "Empty");	
@@ -319,6 +324,7 @@ public class Character extends GameObject {
 	 * show items in your backpack and show your worn items
 	 */
 	public void showInvetory(){
+		System.out.println("<<<INVENTORY>>>");
 		showItems();
 		showBackPack();
 	}
@@ -401,7 +407,6 @@ public class Character extends GameObject {
 	public int findEmptyPositionInBackPack(){
 		for (int i = 0 ; i < BACKPACK_SIZE; i ++ ){
 			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
-			}else{
 				return i ;
 			}
 		}
@@ -437,15 +442,22 @@ public class Character extends GameObject {
 	 * remove one item from wearList and put it into backpack if it is not full
 	 * @param itemWear the item selected from wearList
 	 */
-	public void putWearItemIntoBackPack(Item itemWear){
+	public boolean putWearItemIntoBackPack(Item itemWear){
+		
+		if(itemWear.getAttributeType() == null && itemWear.getEnchantmentType() == null){
+			System.out.println(itemWear.getItemEnum() + "is Empty");
+			return false; 
+		}
+		
 		if(findEmptyPositionInBackPack() == -1){
 			System.out.println("Back Pack Is Full");
-			return;
+			return false;
 		}
 
 		Item newItem = new Item(itemWear); 
 		removeItem(itemWear);
 		addBackPack(newItem);
+		return true;
 	}
 	
 	/**
@@ -453,11 +465,16 @@ public class Character extends GameObject {
 	 * @param itemWear the item selected from wearList
 	 * @param itemBp the item selected from backPack
 	 */
-	public void switchWearItemWithBackPack(Item itemWear,Item itemBp){
+	public boolean switchWearItemWithBackPack(Item itemWear,Item itemBp){
+		if(itemBp.getAttributeType() == null && itemBp.getEnchantmentType() == null){
+			System.out.println("Slot is Empty");
+			return false;
+		}
+		
 		if(itemWear.getItemEnum() != itemBp.getItemEnum()){
 			if(hasItem(itemBp.getItemEnum())){
 				System.out.println("Character can't wore the same model of item");
-				return;
+				return false;
 			}
 		}
 		Item newItemWear = new Item(itemWear);
@@ -467,18 +484,28 @@ public class Character extends GameObject {
 		ArrayList<Item> backPack = (ArrayList<Item>) getBackPack();
 		backPack.trimToSize();
 		getBackPack().add(newItemWear);
+		return true;
 	}
 	
 	/**
 	 * move item from backPack into wearList if character does not have the same model already.
 	 * @param itemBp selected item from backPack
 	 */
-	public void putBackPackIntoWearList(Item itemBp){
+	public boolean putBackPackIntoWearList(Item itemBp){
+		if(itemBp.getAttributeType() == null && itemBp.getEnchantmentType() == null){
+			System.out.println("Slot is Empty");
+			return false;
+		}
+		
 		if(hasItem(itemBp.getItemEnum())){
 			System.out.println("Character can't wore the same model of item");
-			return;
+			return false;
 		}
 		putOnItem(itemBp);
+		getBackPack().remove(itemBp);
+		ArrayList<Item> backPack = (ArrayList<Item>) getBackPack();
+		backPack.trimToSize();
+		return true;
 	}
 
 	public ArmorClass getArmor(){
@@ -562,7 +589,8 @@ public class Character extends GameObject {
 //				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
 			}
 		}
-		showAbilities();
+		System.out.println("<<<TEST PARAMETRS>>>");
+		show();
 	}
 	
 	@Override

@@ -25,7 +25,7 @@ public class CharacterEditor {
 	private int level;
 	
 	public CharacterEditor() {
-		System.out.println("Character Edtior Section: ");
+		System.out.println("<<<Character Edtior Section>>>");
 		System.out.println("Choose Section : ");
 		System.out.println("EditCharacter:(Type e) , CreateCharacter : (Type C) " );
 		scanner = new Scanner(System.in);
@@ -80,7 +80,7 @@ public class CharacterEditor {
 		String characterLoaded = scanner.nextLine();
 		// here we need to call the load function to load character from file 
 		// Character character = load(characterLoaded);
-		System.out.println("Edit item :(Type i) , Edit Ability :(Type a) , Edit Attribute: (Type t) ,Add Own Items:(Type o)");
+		System.out.println("Edit WornItems :(Type i) , Edit Abilities :(Type a) , Edit Attributes: (Type t) , Inventory:(Type: n)");
 		String hitButton = scanner.nextLine();
 	
 		// we need to create all this characters throw character factory;
@@ -96,10 +96,108 @@ public class CharacterEditor {
 		}else if (hitButton.equals("o")){
 			//addItem(character);
 			addItem(new Character("Player","randomName"));
+		}else if (hitButton.equals("n")){
+			inventory(new Character("Player","randomName"));
 		}else{
 			System.out.println("Error");
 		}
 		//		Scanner.close();
+	}
+	
+	/**
+	 * this is a method for showing inventory and editing it
+	 * @param character selected character
+	 */
+	private void inventory(Character character){
+		character.showInvetory();
+		
+		System.out.println("Choose: move Item From Character To Invetory(Type c)" );
+		System.out.println("Choose: move Item From Inventory To Character(Type i)" );
+		System.out.println("Choose: switch Item Between Character To Invetory (Type s)");
+		System.out.println("Choose: add from your saved items into inventory (Type a )");
+		String hitButton = scanner.nextLine();
+		
+		if(hitButton.equals("c")){
+			characterToInventory(character);
+		}else if (hitButton.equals("i")){
+			inventoryToCharacter(character);
+		}else if (hitButton.equals("s")){
+			switchItems(character);
+		}else if (hitButton.equals("a")){
+			addItem(character);
+		}else{
+			System.out.println("Error");
+		}
+	}
+	
+	/**
+	 * move item from character wearList to backPack
+	 * @param character loaded character
+	 */
+	private void characterToInventory(Character character){
+		System.out.println("Enter your Item Model from Character");
+		String itemModel = scanner.nextLine();
+		
+		try {
+			boolean reulst  = character.putWearItemIntoBackPack(character.getItem(ItemEnum.valueOf(itemModel.toUpperCase())));
+			if(reulst){
+				character.showInvetory();
+				character.showAbilities();
+				character.showAttributes();
+			}
+
+			saveCharacterChanges(character, "inventory");
+		} catch (Exception e) {
+			System.out.println("Wrong Info");
+		}
+	}
+	
+	/**
+	 * move item from character backPack to wearList
+	 * @param character loaded character
+	 */
+	private void inventoryToCharacter(Character character){
+		System.out.println("Enter Slot Number Of Item In BackPack You Want To Wear: ");
+		String itemModelString = scanner.nextLine();
+		
+		try {
+			int itemModel = Integer.parseInt(itemModelString);
+			boolean result =character.putBackPackIntoWearList(character.getBackPack().get(itemModel));
+			if(result){
+				character.showInvetory();
+				character.showAbilities();
+				character.showAttributes();
+			}
+
+			saveCharacterChanges(character, "inventory");
+		} catch (Exception e) {
+			System.out.println("Wrong Info");
+		}
+	}
+	
+	/**
+	 * switch items between character and backPack
+	 * @param character selected character
+	 */
+	private void switchItems(Character character){
+		System.out.println("Enter Slot Number In backPack: ");
+		String itemNumberString = scanner.nextLine();
+		System.out.println("Enter your Item Model from Character: ");
+		String itemModel = scanner.nextLine();
+		
+		try {
+			int itemNumber = Integer.parseInt(itemNumberString);
+			boolean result =character.switchWearItemWithBackPack(character.getItem(ItemEnum.valueOf(itemModel.toUpperCase())), character.getBackPack().get(itemNumber));
+			if(result){
+				character.showInvetory();
+				character.showAbilities();
+				character.showAttributes();
+			}
+
+			saveCharacterChanges(character, "inventory");
+		} catch (Exception e) {
+			System.out.println("Wrong Info");
+		}
 	}
 	
 	/**
@@ -110,13 +208,36 @@ public class CharacterEditor {
 		System.out.println("Load the Item:");
 		System.out.println("Name:");
 		String itemLoaded = scanner.nextLine();
+		System.out.println("Choose : Add to BackPack (Type b)");
+		System.out.println("Choose : Add to Character (Type c)");
 		// here we need to call the load function to load item from file 
 		// Item item = load(itemLoaded);
 		// this is just for a test.
-		Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
-		character.putOnItem(item);
-		character.show();
-		saveCharacterChanges(character, "add");
+		String hitButton = scanner.nextLine();
+		
+		if(hitButton.equals("c")){
+			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
+			boolean result = character.putOnItem(item);
+			if(!result){
+				character.showInvetory();
+				character.showAbilities();
+				character.showAttributes();
+			}
+			saveCharacterChanges(character, "inventory");
+		}else if (hitButton.equals("b")){
+			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
+			boolean result = character.addBackPack(item);
+			if(result){
+				character.showInvetory();
+				character.showAbilities();
+				character.showAttributes();
+			}
+			saveCharacterChanges(character, "inventory");
+		}else{
+			System.out.println("Error");
+		}
+		
+
 	}
 	
 	/**
@@ -360,8 +481,8 @@ public class CharacterEditor {
 	 * @param section which part of character is changing
 	 */
 	private void saveCharacterChanges(Character character , String section){
-		if(section.equals("add")){
-			System.out.println("Do you want to add another item :(yes or no)");
+		if (section.equals("inventory")){
+			System.out.println("Do you want to back to inventory :(yes or no)");
 		}else{
 			System.out.println("Do you want to change another "+section+":(yes or no)");
 		}
@@ -375,8 +496,8 @@ public class CharacterEditor {
 				editItem(character);
 			}else if (section.equals("attribute")){
 				editAttribute(character);
-			}else if (section.equals("add")){
-				addItem(character);
+			}else if (section.equals("inventory")){
+				inventory(character);
 			}
 		}else if (answer.equals("no")){
 			System.out.println("Do you want to save character changes:(yes or no)");
