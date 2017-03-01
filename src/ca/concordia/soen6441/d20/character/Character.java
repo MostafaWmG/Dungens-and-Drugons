@@ -2,15 +2,12 @@ package ca.concordia.soen6441.d20.character;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.cfg.annotations.Nullability;
-
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Ability;
-import ca.concordia.soen6441.d20.item.AbilityEntity;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.ArmorClass;
 import ca.concordia.soen6441.d20.item.AttackBonus;
@@ -304,6 +301,29 @@ public class Character extends GameObject {
 	}
 	
 	/**
+	 * show items in the backpack
+	 */
+	public void showBackPack(){
+		for(int i = 0 ; i < BACKPACK_SIZE; i ++){
+			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
+				System.out.println("Slot " + i + " : "+ "Empty");	
+			}else{
+				System.out.print("Slot " + i+" ");	
+				getBackPack().get(i).show();
+			}
+			
+		}
+	}
+	
+	/**
+	 * show items in your backpack and show your worn items
+	 */
+	public void showInvetory(){
+		showItems();
+		showBackPack();
+	}
+	
+	/**
 	 * add ability to the character
 	 * @param ability the ability we are adding .
 	 */
@@ -370,8 +390,7 @@ public class Character extends GameObject {
 	 */
 	public void initializeBackPack(){
 		for(int i = 0; i < BACKPACK_SIZE ; i ++){
-//			getBackPack().add(new Item(i+7+"", ItemEnum.values()[i]));
-			getBackPack().addAll(null);
+			getBackPack().add(new Item(i+7+"", ItemEnum.HELMET));
 		}
 	}
 	
@@ -381,7 +400,8 @@ public class Character extends GameObject {
 	 */
 	public int findEmptyPositionInBackPack(){
 		for (int i = 0 ; i < BACKPACK_SIZE; i ++ ){
-			if(getBackPack().get(i) != null){
+			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
+			}else{
 				return i ;
 			}
 		}
@@ -389,12 +409,78 @@ public class Character extends GameObject {
 		return BACK_PACK_FULL;
 	}
 	
-	public void showBackPack(){
-		for(int i = 0 ; i < BACKPACK_SIZE; i ++){
-			System.out.println("Slot " + i + " : "+ ((getBackPack().get(i) == null) ? getBackPack().get(i) : getBackPack().get(i).getItemEnum()));
+	/**
+	 * add item to backpack
+	 * @param item item 
+	 * @return if backpack is full or not
+	 */
+	public boolean addBackPack(Item item){
+		if(findEmptyPositionInBackPack() == -1){
+			System.out.println("Back Pack Is Full");
+			return false;
+		}else {
+			int index = findEmptyPositionInBackPack();
+			getBackPack().add(index, item);
+			return true;
 		}
 	}
 	
+	/**
+	 * remove item from backPack at index
+	 * @param index selected item at the index to be removed.
+	 */
+	public void removeBackPack(int index){
+		getBackPack().add(index,new Item(index+7+"", ItemEnum.HELMET));
+	}
+	
+	/**
+	 * remove one item from wearList and put it into backpack if it is not full
+	 * @param itemWear the item selected from wearList
+	 */
+	public void putWearItemIntoBackPack(Item itemWear){
+		if(findEmptyPositionInBackPack() == -1){
+			System.out.println("Back Pack Is Full");
+			return;
+		}
+
+		Item newItem = new Item(itemWear); 
+		removeItem(itemWear);
+		addBackPack(newItem);
+	}
+	
+	/**
+	 * switch one item from WearList to BackPack if character doesn't wore the same model of item already
+	 * @param itemWear the item selected from wearList
+	 * @param itemBp the item selected from backPack
+	 */
+	public void switchWearItemWithBackPack(Item itemWear,Item itemBp){
+		if(itemWear.getItemEnum() != itemBp.getItemEnum()){
+			if(hasItem(itemBp.getItemEnum())){
+				System.out.println("Character can't wore the same model of item");
+				return;
+			}
+		}
+		Item newItemWear = new Item(itemWear);
+		removeItem(itemWear);
+		putOnItem(itemBp);
+		getBackPack().remove(itemBp);
+		ArrayList<Item> backPack = (ArrayList<Item>) getBackPack();
+		backPack.trimToSize();
+		getBackPack().add(newItemWear);
+	}
+	
+	/**
+	 * move item from backPack into wearList if character does not have the same model already.
+	 * @param itemBp selected item from backPack
+	 */
+	public void putBackPackIntoWearList(Item itemBp){
+		if(hasItem(itemBp.getItemEnum())){
+			System.out.println("Character can't wore the same model of item");
+			return;
+		}
+		putOnItem(itemBp);
+	}
+
 	public ArmorClass getArmor(){
 		return armorClass;
 	}
