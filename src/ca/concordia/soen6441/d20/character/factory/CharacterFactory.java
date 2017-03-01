@@ -2,7 +2,7 @@ package ca.concordia.soen6441.d20.character.factory;
 
 import ca.concordia.soen6441.d20.character.Character;
 
-/*
+/**
  * this an interface for creating character and items.
  * @author mostafa
  * @author alvaro

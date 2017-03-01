@@ -39,6 +39,12 @@ public class PlayerFactory implements CharacterFactory {
 
 	}
 	
+	/**
+	 * Creating a character.
+	 * @param tag set the tag for the character.
+	 * @param name set the name for the character.
+	 * @return character object.
+	 */
 	private Character createCharacter(String tag,String name){
 		character = new Character(tag,name);
 //		character.showAll();
