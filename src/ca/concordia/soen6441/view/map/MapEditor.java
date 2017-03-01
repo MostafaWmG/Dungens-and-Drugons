@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.derby.tools.sysinfo;
+
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.common.Location;
@@ -222,11 +224,18 @@ public class MapEditor  extends JFrame implements ActionListener{
 	
 	@SuppressWarnings("null")
 	public void load(String fileName){
-		
+//		removeGrid();
 		GameMap map = DaoFactory.getGameMapDao().read((long)1).createModel();
 		//load map from file here and replace null with it @ saman
-		row = map.getHeight();
-		column = map.getWidth();
+		
+		System.out.println("width : "+ map.getWidth() + "height : " + map.getHeight());
+		for(int i = 0 ; i < map.getWidth(); i ++){
+			for( int j = 0 ; j < map.getHeight(); j ++){
+				System.out.println("elementi: "+i+" elementj: "+j+" GameObject: " + map.getGameObjectAtLocation(new Location(i,j)).getTag());
+			}
+		}
+		row = map.getWidth();
+		column = map.getHeight();
 		viewElements = new Grid[map.getWidth()][map.getHeight()];
 		initializeGrid();
 
@@ -234,19 +243,27 @@ public class MapEditor  extends JFrame implements ActionListener{
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
 				
-				if(map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Ground"){
+				if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Ground"){
 					viewElements[i][j] = new Grid(this,"Ground");
-				}else if(map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Wall"){
+				}else if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Wall"){
 					viewElements[i][j] = new Grid(this,"Wall");
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Enemy"){
+				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enemy"){
 					viewElements[i][j] = new Grid(this,"Enemy");
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Enter"){
+				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enter"){
 					viewElements[i][j] = new Grid(this,"Enter");
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag() == "Exit"){
+				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Exit"){
 					viewElements[i][j] = new Grid(this,"Exit");
 				}
 			}
 		}
+	}
+	
+	public void removeGrid(){
+		for(int i = 0; i < row ; i++){
+			for(int j = 0; j < column ; j++){
+//				viewElements[i][j]
+			 }
+			}
 	}
 	
 	public ImageIcon getCurrentPointer() {
