@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
+import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
@@ -224,9 +226,15 @@ public class MapEditor  extends JFrame implements ActionListener{
 	
 	@SuppressWarnings("null")
 	public void load(String fileName){
-//		removeGrid();
-		GameMap map = DaoFactory.getGameMapDao().read((long)1).createModel();
-		//load map from file here and replace null with it @ saman
+//		removeGrid();		
+		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName(fileName);
+		if (list.isEmpty())
+		{
+			//TODO use appropriate procedure
+			System.out.println("Invalid map name");
+			return;
+		}
+		GameMap map = list.get(0).createModel();
 		
 		System.out.println("width : "+ map.getWidth() + "height : " + map.getHeight());
 		for(int i = 0 ; i < map.getWidth(); i ++){
