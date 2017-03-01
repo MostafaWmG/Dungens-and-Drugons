@@ -1,11 +1,15 @@
 package ca.concordia.soen6441.d20.gamemap;
 
+import java.security.KeyStore.Entry;
 import java.util.HashMap;
 import java.util.Map;
 
 import ca.concordia.soen6441.d20.common.Location;
+import ca.concordia.soen6441.d20.gamemap.element.Entery;
+import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 
 /** 
@@ -203,5 +207,39 @@ public class GameMap {
 				this.field[i][j] = EMPTY;
 			}
 		}
+	}
+	
+	public boolean mapValidator(){
+		Map<Location, Wall> walls = new HashMap<Location, Wall>();
+		Map<Location, Entery> enterDoor = new HashMap<Location, Entery>();
+		Map<Location, Exit> exitDoor = new HashMap<Location, Exit>();
+		
+		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
+			if(mapElement.getValue().getTag().equals("Wall")){
+				walls.put(mapElement.getKey(),(Wall) mapElement.getValue());
+			}else if (mapElement.getValue().getTag().equals("Enter") ) {
+				enterDoor.put(mapElement.getKey(),(Entery) mapElement.getValue());
+			}else if (mapElement.getValue().getTag().equals("Exit")){
+				exitDoor.put(mapElement.getKey(), (Exit)mapElement.getValue());	
+			}
+		}
+		
+		if(enterDoor.size() == 0){
+			System.out.println("not a valid map it has no entery door");
+			return false;
+		}else if (enterDoor.size() >= 2){
+			System.out.println("not a valid map it has more than one entery door");
+			return false;
+		}
+		
+		if(exitDoor.size() == 0){
+			System.out.println("not a valid map it has no exit door");
+			return false;
+		}else if (exitDoor.size() >=2){
+			System.out.println("not a valid map it has more than one exit door");
+			return false;
+		}
+		
+		return true;
 	}
 }

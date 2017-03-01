@@ -43,7 +43,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	private ImageIcon[] images;
 	private ImageIcon currentPointer;
 	private String tag;
-	
+	private PlayerFactory playerFactory ;
 	/**
 	 * constructor
 	 * @param row row of the mapView
@@ -52,6 +52,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	public MapEditor(int row, int column) {
 		
 		//initializing
+		playerFactory = new PlayerFactory();
 		this.row = row;
 		this.column = column;
 		viewElements = new Grid[row][column];
@@ -200,10 +201,9 @@ public class MapEditor  extends JFrame implements ActionListener{
 	 * @param mapName primary key
 	 */
 	public void save(String mapName){
-		
+
 		map = new GameMap(mapName,column, row);
-		PlayerFactory playerFactory = new PlayerFactory();
-		
+
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){				
 				if(viewElements[i][j].getTag().equals("Ground")){
@@ -224,11 +224,9 @@ public class MapEditor  extends JFrame implements ActionListener{
 				}
 			}
 		}
-		
-		if(DaoFactory.getGameMapDao().findByName(mapName) !=null){
-			System.out.println("map Deleted");
-			DaoFactory.getGameMapDao().update(map.getEntity());
-		}else{
+
+
+		if(map.mapValidator()){
 			System.out.println("map Created");
 			DaoFactory.getGameMapDao().create(map.getEntity());
 		}
