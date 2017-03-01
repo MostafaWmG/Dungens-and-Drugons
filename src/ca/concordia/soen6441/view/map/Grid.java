@@ -23,22 +23,7 @@ public class Grid extends JButton implements ActionListener{
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
 		
-		if(tag == "Ground"){
-			icon = new ImageIcon("3.png");
-			setIcon(icon);
-		}else if (tag == "Wall"){
-			icon = new ImageIcon("1.png");
-			setIcon(icon);
-		}else if (tag == "Enemy"){
-			icon = new ImageIcon("2.png");
-			setIcon(icon);
-		}else if (tag == "Enter"){
-			icon = new ImageIcon("4.png");
-			setIcon(icon);
-		}else if (tag == "Exit"){
-			icon = new ImageIcon("5.png");
-			setIcon(icon);
-		}
+		iconHandler();
 	}
 
 	@Override
@@ -56,5 +41,35 @@ public class Grid extends JButton implements ActionListener{
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	
+	public void setIcon(ImageIcon icon){
+		this.icon = icon;
+	}
+	
+	public ImageIcon getIcon(){
+		return icon;
+	}
+	
+	/**
+	 * this a method for showing icons by tag
+	 */
+	public void iconHandler(){
+		if(tag == "Ground"){
+			icon = new ImageIcon("3.png");
+			setIcon(icon);
+		}else if (tag == "Wall"){
+			icon = new ImageIcon("1.png");
+			setIcon(icon);
+		}else if (tag == "Enemy"){
+			icon = new ImageIcon("2.png");
+			setIcon(icon);
+		}else if (tag == "Enter"){
+			icon = new ImageIcon("4.png");
+			setIcon(icon);
+		}else if (tag == "Exit"){
+			icon = new ImageIcon("5.png");
+			setIcon(icon);
+		}
 	}
 }

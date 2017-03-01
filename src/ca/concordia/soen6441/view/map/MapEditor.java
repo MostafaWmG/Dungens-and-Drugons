@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.derby.tools.sysinfo;
 
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
@@ -191,42 +190,62 @@ public class MapEditor  extends JFrame implements ActionListener{
 			
 			if(e.getActionCommand().equals("Load"))
 			{
-				load(JOptionPane.showInputDialog(this, "Load"));
+				 load(JOptionPane.showInputDialog(this, "Load"));
 			}
 		}
 	}
 	
+	/**
+	 * this a method for saving a map
+	 * @param mapName primary key
+	 */
 	public void save(String mapName){
+		
 		map = new GameMap(mapName,column, row);
 		PlayerFactory playerFactory = new PlayerFactory();
 		
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){				
-				if(viewElements[i][j].getTag() == "Ground"){
+				if(viewElements[i][j].getTag().equals("Ground")){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,new Ground(mapName+i+j,location));
-				}else if(viewElements[i][j].getTag() == "Wall"){
+				}else if(viewElements[i][j].getTag().equals("Wall")){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,new Wall(mapName+i+j,location));
-				}else if (viewElements[i][j].getTag() == "Enemy"){
+				}else if (viewElements[i][j].getTag().equals("Enemy")){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,playerFactory.create("Enemy",mapName+i+j));
-				}else if (viewElements[i][j].getTag() == "Enter"){
+				}else if (viewElements[i][j].getTag().equals("Enter")){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,new Entery(mapName+i+j,location));
-				}else if (viewElements[i][j].getTag() == "Exit"){
+				}else if (viewElements[i][j].getTag().equals("Exit")){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,new Exit(mapName+i+j,location));
 				}
 			}
 		}
 		
-		DaoFactory.getGameMapDao().create(map.getEntity());
+		if(DaoFactory.getGameMapDao().findByName(mapName) !=null){
+			System.out.println("map Deleted");
+			DaoFactory.getGameMapDao().update(map.getEntity());
+		}else{
+			System.out.println("map Created");
+			DaoFactory.getGameMapDao().create(map.getEntity());
+		}
+
 	}
 	
-	@SuppressWarnings("null")
+	/**
+	 * this a method for loading map
+	 * @param fileName primary key
+	 */
 	public void load(String fileName){
-//		removeGrid();		
+		
+		if(fileName == null || (fileName != null && ("".equals(fileName))))   
+		{
+		    return;
+		}
+		removeGrid();		
 		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName(fileName);
 		if (list.isEmpty())
 		{
@@ -236,42 +255,59 @@ public class MapEditor  extends JFrame implements ActionListener{
 		}
 		GameMap map = list.get(0).createModel();
 		
-		System.out.println("width : "+ map.getWidth() + "height : " + map.getHeight());
-		for(int i = 0 ; i < map.getWidth(); i ++){
-			for( int j = 0 ; j < map.getHeight(); j ++){
-				System.out.println("elementi: "+i+" elementj: "+j+" GameObject: " + map.getGameObjectAtLocation(new Location(i,j)).getTag());
-			}
-		}
-		row = map.getWidth();
-		column = map.getHeight();
-		viewElements = new Grid[map.getWidth()][map.getHeight()];
+//		System.out.println("width : "+ map.getWidth() + "height : " + map.getHeight());
+//		for(int i = 0 ; i < map.getHeight(); i ++){
+//			for( int j = 0 ; j < map.getWidth(); j ++){
+//				System.out.println("elementi: "+i+" elementj: "+j+" GameObject: " + map.getGameObjectAtLocation(new Location(j,i)).getTag());
+//			}
+//		}
+		column = map.getWidth();
+		row = map.getHeight();
+		viewElements = new Grid[row][column];
 		initializeGrid();
 
+//		for(int i = 0 ; i < map.getHeight(); i ++){
+//			for( int j = 0 ; j < map.getWidth(); j ++){
+//				System.out.println(" Elementi: "+i+" elementj: "+j+" GameObject: " + viewElements[i][j].getTag());
+//		}
+//			}
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
 				
-				if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Ground"){
-					viewElements[i][j] = new Grid(this,"Ground");
-				}else if(map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Wall"){
-					viewElements[i][j] = new Grid(this,"Wall");
-				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enemy"){
-					viewElements[i][j] = new Grid(this,"Enemy");
-				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Enter"){
-					viewElements[i][j] = new Grid(this,"Enter");
-				}else if (map.getGameObjectAtLocation(new Location(i,j)).getTag() == "Exit"){
-					viewElements[i][j] = new Grid(this,"Exit");
+				if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Ground")){
+					viewElements[i][j].setTag("Ground");
+					viewElements[i][j].iconHandler();
+				}else if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Wall")){
+					viewElements[i][j].setTag("Wall");
+					viewElements[i][j].iconHandler();
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Enemy")){
+					viewElements[i][j].setTag("Enemy");
+					viewElements[i][j].iconHandler();
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Enter")){
+					viewElements[i][j].setTag("Enter");
+					viewElements[i][j].iconHandler();
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Exit")){
+					viewElements[i][j].setTag("Exit");
+					viewElements[i][j].iconHandler();
 				}
 			}
 		}
 	}
 	
+	/**
+	 * this method will remove previous grid
+	 */
 	public void removeGrid(){
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-//				viewElements[i][j]
-			 }
+				getContentPane().remove(viewElements[i][j]);
+				getContentPane().revalidate();
+				getContentPane().repaint();
+				}
 			}
+
+			viewElements = null;
 	}
 	
 	public ImageIcon getCurrentPointer() {
