@@ -8,7 +8,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
-import test.ca.concordia.soen6441.model.persistence.sample_entities.GameObjectEntitySample;
+
 
 /**
  * Entity implementation class for Entity: GameMapEntity

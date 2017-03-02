@@ -1,7 +1,6 @@
 package ca.concordia.soen6441.d20.character;
 
 import java.io.Serializable;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 

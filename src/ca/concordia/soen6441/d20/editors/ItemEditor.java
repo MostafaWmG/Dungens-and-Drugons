@@ -1,12 +1,15 @@
 package ca.concordia.soen6441.d20.editors;
 
+import java.util.List;
 import java.util.Scanner;
 
 import ca.concordia.soen6441.d20.character.factory.ItemFactory;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.Item;
+import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
+import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
  * this a class for create/edit Items.
  * @author wmg
@@ -76,10 +79,19 @@ public class ItemEditor {
 	private void editItem(){
 		System.out.println("Please Enter Your Item Name:");
 		String itemName = scanner.nextLine();
+		
+		List<ItemEntity> list = DaoFactory.getItemDao().findByName(itemName);
+		if (list.isEmpty())
+		{
+			//TODO use appropriate procedure
+			System.out.println("Invalid map name");
+			return;
+		}
+		Item item = (Item) list.get(0).createModel();
 		//load item from file 
 		// Item item = load(itemName);
 		//this is only for test
-		Item item = new Item(itemName,ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 3);
+//		Item item = new Item(itemName,ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 3);
 		
 		System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
 		String change = scanner.nextLine();
@@ -174,7 +186,7 @@ public class ItemEditor {
 		String answer = scanner.nextLine();
 		
 		if(answer.equals("yes")){
-			// save(item);
+			DaoFactory.getItemDao().create(item.getItemEntity());
 			reset(item, section);
 		}else if (answer.equals("no")){
 			reset(item, section);
@@ -189,7 +201,7 @@ public class ItemEditor {
 	 * @param section edit/create
 	 */
 	private void reset(Item item , String section){
-		System.out.println("Do you want to create/edit another item :(yes or no)");
+		System.out.println("Do you want to "+section+" another item :(yes or no)");
 		String answer = scanner.nextLine();
 		
 		if(answer.equals("yes")){

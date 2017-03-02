@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.concordia.soen6441.d20.common.Location;
+
 import ca.concordia.soen6441.d20.gamemap.GameMap;
-import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+
 
 public class GameMapTest {
 	private GameMap gameMap;

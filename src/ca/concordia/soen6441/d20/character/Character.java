@@ -699,20 +699,20 @@ public class Character extends GameObject {
 		}
 	}
 	
-	private void testWearItems(){
-		//for test only
-		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-			if(i == ItemEnum.values().length -1){
-			putOnItem(new Item("test"+i,ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
-//			getWearItems().set(i,new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
-			}else {
-				putOnItem(new Item("test"+i,ItemEnum.values()[i], AbilityEnum.values()[i], i));
-//				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
-			}
-		}
-		System.out.println("<<<TEST PARAMETRS>>>");
-		show();
-	}
+//	private void testWearItems(){
+//		//for test only
+//		for(int i = 0 ; i < ItemEnum.values().length; i ++){
+//			if(i == ItemEnum.values().length -1){
+//			putOnItem(new Item("test"+i,ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
+////			getWearItems().set(i,new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
+//			}else {
+//				putOnItem(new Item("test"+i,ItemEnum.values()[i], AbilityEnum.values()[i], i));
+////				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
+//			}
+//		}
+//		System.out.println("<<<TEST PARAMETRS>>>");
+//		show();
+//	}
 	
 	/**
 	 * @return GameObjectEntity for loading character from database

@@ -12,6 +12,7 @@ import ca.concordia.soen6441.d20.item.DamageBonus;
 import ca.concordia.soen6441.d20.item.HitPoint;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
+import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
  * this is a characterEditor userInterface class
  */
