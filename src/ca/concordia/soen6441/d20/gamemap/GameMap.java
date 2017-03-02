@@ -254,7 +254,7 @@ public class GameMap {
 		Map<Location,GameObject> mapCopy = new HashMap<Location, GameObject>();
 		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
 			mapCopy.put(mapElement.getKey(), mapElement.getValue());
-			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
+//			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
 		}
 		
 		Set<Location> enterPointSet = enterDoor.keySet();
@@ -354,7 +354,7 @@ public class GameMap {
 			}
 		}
 		
-//		System.out.println("Conditon: " + conditon);
+		System.out.println("Conditon: " + conditon);
 		if(!valid){
 			if(conditon == 0 ){
 				map.get(currentLocation).setTag("Wall");
@@ -388,15 +388,19 @@ public class GameMap {
 				conditionList.add(currentLocation);
 				map.get(currentLocation).setTag("Condition");
 				if(up){
+//					System.out.println("UP");
 					currentLocation.setY(finderUp.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(down){
+//					System.out.println("Down");
 					currentLocation.setY(finderDown.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(right){
+//					System.out.println("right");
 					currentLocation.setX(finderRight.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if (left){
+//					System.out.println("left");
 					currentLocation.setX(finderLeft.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}

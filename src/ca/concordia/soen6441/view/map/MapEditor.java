@@ -331,7 +331,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-				
+//				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getName());
 				if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Ground")){
 					viewElements[i][j].setTag("Ground");
 					viewElements[i][j].iconHandler();
@@ -349,11 +349,11 @@ public class MapEditor  extends JFrame implements ActionListener{
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Player")){
 					viewElements[i][j].setTag("Player");
-					viewElements[i][j].setCharacter(viewElements[i][j].getCharacter());
+//					viewElements[i][j].setCharacter(viewElements[i][j].getCharacter().getEntity());
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Item")){
 					viewElements[i][j].setTag("Item");
-					viewElements[i][j].setItem(viewElements[i][j].getItem());
+//					viewElements[i][j].setItem(viewElements[i][j].getItem());
 					viewElements[i][j].iconHandler();
 				}
 			}
