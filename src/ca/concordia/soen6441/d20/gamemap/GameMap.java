@@ -89,20 +89,39 @@ public class GameMap {
 		elements = new HashMap<>();		
 		emptyMap();
 	}
-	
+	/**
+	 * 
+	 * @return GameObjectEntity to load from database
+	 */
 	public GameMapEntity getEntity()
 	{
 		return getGameMapEntity();
 	}
 	
+	/**
+	 * 
+	 * @param location of objects on the map
+	 * @return elements that are on the given location
+	 */
 	public GameObject getGameObjectAtLocation(Location location) {
 		return elements.get(location);
 	}
 	
+	/**
+	 * 
+	 * @param location to set the object
+	 * @param gameObject that is desired to locate on the specified location
+	 */
 	public void setGameObjectAtLocation(Location location,GameObject gameObject) {
 		setGameObjectAtLocation(location, gameObject, true);
 	}
 	
+	/**
+	 * 
+	 * @param location location to set the object
+	 * @param gameObject that is desired to locate on the specified location
+	 * @param saveEntity true if we want to save the object on database
+	 */
 	public void setGameObjectAtLocation(Location location,GameObject gameObject, boolean saveEntity) {
 		 elements.put(location, gameObject);
 		gameObject.setLocation(location);
@@ -110,20 +129,34 @@ public class GameMap {
 		if (saveEntity)
 			getGameMapEntity().addGameObjectEntity(gameObject.getEntity());		
 	}
-	
+	/**
+	 * 
+	 * @return width of the game map
+	 */
 	public int getWidth() {
 		return getGameMapEntity().getWidth();
 	}
-	
+	/**
+	 * 
+	 * @param width to set for the game map
+	 */
 	public void setWidth(int width)
 	{
 		getGameMapEntity().setWidth(width);
 	}
 	
+	/**
+	 * 
+	 * @return height of the game map
+	 */
 	public int getHeight() {
 		return getGameMapEntity().getHeight();
 	}
 	
+	/**
+	 * 
+	 * @param height to set for the game map
+	 */
 	public void setHeight(int height)
 	{
 		getGameMapEntity().setHeight(height);
@@ -169,7 +202,14 @@ public class GameMap {
 	public void place(GameObject element, Location location) {
 		place(element, location, true);
 	}
-	
+	/**
+	 * this class allows us to place a GameObject into the map
+	 * if the position is alredy used, no element is placed, 
+	 * the same hapens if the location is out the map boundaries.
+	 * @param element element to be add to the map
+	 * @param location locaton where the element must be placed
+	 * @param saveEntity true if we want to save the object to database
+	 */
 	private void place(GameObject element, Location location, boolean saveEntity) {
 		if(location.getX() < 0 || location.getX() >= getWidth()) return;
 		if(location.getY() < 0 || location.getY() >= getHeight()) return;
@@ -206,7 +246,14 @@ public class GameMap {
 			throw new NullPointerException("I cannot find the game object in elements");
 
 	}
-	
+	/**
+	 * 
+	 * @param originX x coordinate where the element currently is
+	 * @param originY y coordinate where the element currently is
+	 * @param destinationX x coordinate where the element wants to be
+	 * @param destinationY y  coordinate where the element wants to be
+	 * @return true if the element can move to the destination
+	 */
 	private boolean moveCanBeDone(int originX, int originY, int destinationX, int destinationY) {
 		if(originX<0 || originY<0 || destinationX<0 ||destinationY<0) return false;
 		

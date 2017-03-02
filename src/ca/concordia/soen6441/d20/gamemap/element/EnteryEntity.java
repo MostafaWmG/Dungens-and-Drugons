@@ -17,6 +17,9 @@ public class EnteryEntity extends GameObjectEntity implements Serializable {
 		super();	
 		}
 		
+	/**
+	 * @return a  game object as entry for the game map
+	 */
 	public GameObject createModel()
 	{
 		return new Entery(this);
