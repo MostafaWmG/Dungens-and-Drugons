@@ -1,8 +1,10 @@
 package ca.concordia.soen6441.d20.editors;
 
+import java.util.List;
 import java.util.Scanner;
 
 import ca.concordia.soen6441.d20.character.Character;
+import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.ArmorClass;
@@ -11,6 +13,7 @@ import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.DamageBonus;
 import ca.concordia.soen6441.d20.item.HitPoint;
 import ca.concordia.soen6441.d20.item.Item;
+import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
@@ -57,7 +60,7 @@ public class CharacterEditor {
 			String result = scanner.nextLine();
 
 			if(result.equals("yes")){
-				// save the character into file  . you need to save character object into file @saman @negar.
+				DaoFactory.getCharacterDao().create(character.getCharacterEntity());
 				System.out.println("Character saved successfully");
 			}else if (result.equals("no")){
 				System.out.println("Character removed");
@@ -79,26 +82,29 @@ public class CharacterEditor {
 		System.out.println("Load the character:");
 		System.out.println("Name:");
 		String characterLoaded = scanner.nextLine();
-		// here we need to call the load function to load character from file 
-		// Character character = load(characterLoaded);
+
+		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(characterLoaded);
+		if (list.isEmpty())
+		{
+			//TODO use appropriate procedure
+			System.out.println("Invalid map name");
+			return;
+		}
+		Character character = (Character) list.get(0).createModel();
 		System.out.println("Edit WornItems :(Type i) , Edit Abilities :(Type a) , Edit Attributes: (Type t) , Inventory:(Type: n)");
 		String hitButton = scanner.nextLine();
 	
 		// we need to create all this characters throw character factory;
 		if(hitButton.equals("i")){
-			//			editItem(character)
-			editItem(new Character("Player","randomName"));
+			editItem(character);
 		}else if (hitButton.equals("a")){
-			//editAbility(character)
-				editAbility( new Character("Player","randomName"));
+				editAbility(character);
 		}else if (hitButton.equals("t")){
-//						editAttribute(character);
-			editAttribute(new Character("Player","randomName"));
+			editAttribute(character);
 		}else if (hitButton.equals("o")){
-			//addItem(character);
-			addItem(new Character("Player","randomName"));
+			addItem(character);
 		}else if (hitButton.equals("n")){
-			inventory(new Character("Player","randomName"));
+			inventory(character);
 		}else{
 			System.out.println("Error");
 		}
@@ -211,13 +217,19 @@ public class CharacterEditor {
 		String itemLoaded = scanner.nextLine();
 		System.out.println("Choose : Add to BackPack (Type b)");
 		System.out.println("Choose : Add to Character (Type c)");
-		// here we need to call the load function to load item from file 
-		// Item item = load(itemLoaded);
-		// this is just for a test.
+
+		List<ItemEntity> list = DaoFactory.getItemDao().findByName(itemLoaded);
+		if (list.isEmpty())
+		{
+			//TODO use appropriate procedure
+			System.out.println("Invalid map name");
+			return;
+		}
+		Item item = (Item) list.get(0).createModel();
 		String hitButton = scanner.nextLine();
 		
 		if(hitButton.equals("c")){
-			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
+//			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
 			boolean result = character.putOnItem(item);
 			if(!result){
 				character.showInvetory();
@@ -226,7 +238,7 @@ public class CharacterEditor {
 			}
 			saveCharacterChanges(character, "inventory");
 		}else if (hitButton.equals("b")){
-			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
+//			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
 			boolean result = character.addBackPack(item);
 			if(result){
 				character.showInvetory();
@@ -250,7 +262,7 @@ public class CharacterEditor {
 		System.out.println("Enter Item Name:");
 		String itemName = scanner.nextLine();
 		ItemEnum itemEnum = ItemEnum.valueOf(itemName.toUpperCase());
-		if(character.getItem(itemEnum) == null){
+		if(character.getItem(itemEnum).getAttributeType() ==null && character.getItem(itemEnum).getEnchantmentType() == null  ){
 			System.out.println(itemEnum + " empty slot !!!");
 		}else{
 			character.getItem(itemEnum).show();
@@ -392,7 +404,7 @@ public class CharacterEditor {
 		String armorCheck = "armorClassArmorClassarmorclass";
 		String attackCheck = "attackBonusAttackBonusattackbonus";
 		String damageCheck = "damageBonusDamageBonusdamagebonus";
-		String hitPointCheck = "hitPointHitPointhitpoin";
+		String hitPointCheck = "hitPointHitPointhitpoint";
 		String leveCheck = "levelLevel";
 		
 		character.showAttributes();
@@ -504,7 +516,7 @@ public class CharacterEditor {
 			System.out.println("Do you want to save character changes:(yes or no)");
 			answer = scanner.nextLine();
 			if(answer.equals("yes")){
-				// save(character.name);
+				DaoFactory.getCharacterDao().create(character.getCharacterEntity());
 			}else {
 				
 			}

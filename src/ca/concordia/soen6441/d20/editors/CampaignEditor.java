@@ -42,7 +42,7 @@ public class CampaignEditor {
 		// Campaign Campaign = load(CampaignLoaded);
 		
 		//test
-		Campaign test = new Campaign("i");
+		Campaign test = new Campaign(CampaignLoaded);
 		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName("mapa");
 		if (list.isEmpty())
 		{
