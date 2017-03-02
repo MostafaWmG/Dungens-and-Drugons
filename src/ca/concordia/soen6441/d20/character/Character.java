@@ -735,4 +735,16 @@ public class Character extends GameObject {
 	public void setCharacterEntity(CharacterEntity characterEntity){
 		this.characterEntity = characterEntity;
 	}
+	
+	@Override
+	public void setTag(String tag)
+	{
+		getCharacterEntity().setFighterType(tag);
+	}
+	
+	@Override
+	public String getTag()
+	{
+		return getCharacterEntity().getFighterType();
+	}
 }

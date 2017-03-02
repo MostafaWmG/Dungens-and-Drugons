@@ -59,7 +59,8 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	private DamageBonusEntity damageBonus;
 	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="HITPOINT_ID")
-	private HitPointEntity hitPoint;	
+	private HitPointEntity hitPoint;
+	String fighterType;
 
 	public CharacterEntity() {
 		super();
@@ -170,6 +171,18 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	 */
 	public void setBackpack(List<ItemEntity> backpack) {
 		this.backpack = backpack;
+	}
+	/**
+	 * @return the fighterType
+	 */
+	public String getFighterType() {
+		return fighterType;
+	}
+	/**
+	 * @param fighterType the fighterType to set
+	 */
+	public void setFighterType(String fighterType) {
+		this.fighterType = fighterType;
 	}
 	
 }
