@@ -76,8 +76,8 @@ public class Character extends GameObject {
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();
 		showAttributes();
-//		emptyWearList();
-		testWearItems();
+		emptyWearList();
+//		testWearItems();
 
 	}
 	/**
@@ -100,8 +100,8 @@ public class Character extends GameObject {
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();	
 		showAttributes();
-//		emptyWearList();
-		testWearItems();
+		emptyWearList();
+//		testWearItems();
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class Character extends GameObject {
 		setHitPoint(entity.getHitPoint().createHitPoint());
 		setAbilitiesListener();
 		showAttributes();
-		testWearItems();
+		emptyWearList();
 	}
 	
 	/**
@@ -222,7 +222,7 @@ public class Character extends GameObject {
 	public void removeItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
-			Item tmp = new Item(item.getItemEnum().getValue()+"", item.getItemEnum());
+			Item tmp = new Item(getName()+item.getItemEnum().getValue()+"", item.getItemEnum());
 			getWearItems().set(item.getItemEnum().getValue(), tmp);			
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), tmp.getItemEntity());
 			wearItem(item, -1 * item.getEnchantmentPoint());
@@ -251,7 +251,7 @@ public class Character extends GameObject {
 		}
 		
 		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-			addItem(new Item(i+"",ItemEnum.values()[i]));
+			addItem(new Item(getName()+i+"",ItemEnum.values()[i]));
 		}
 		
 	}
@@ -695,7 +695,7 @@ public class Character extends GameObject {
 	 */
 	private void emptyWearList(){
 		for(int i = 0; i < getWearItems().size() ; i ++){
-			getWearItems().set(i, new Item(i+"",ItemEnum.values()[i]));
+			getWearItems().set(i, new Item(getName()+i+"",ItemEnum.values()[i]));
 		}
 	}
 	
