@@ -1,5 +1,6 @@
 package ca.concordia.soen6441.persistence.dao;
 
+import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.persistence.dao.interfaces.INamedEntityDao;
@@ -20,6 +21,10 @@ public class DaoFactory {
 				new JpaNamedEntityDao<>(ItemEntity.class,
 										"findItemEntityByName",
 										"findItemEntityAll");
+		static final JpaNamedEntityDao<CharacterEntity, Long> jpaCharacterDao =
+				new JpaNamedEntityDao<>(CharacterEntity.class,
+										"findCharacterEntityByName",
+										"findCharacterEntityAll");
 	}
 	
 	public static INamedEntityDao<GameMapEntity, Long> getGameMapDao()
@@ -30,6 +35,11 @@ public class DaoFactory {
 	public static INamedEntityDao<ItemEntity, Long> getItemDao()
 	{
 		return DaoHolder.jpaItemDao;
+	}
+	
+	public static INamedEntityDao<CharacterEntity, Long> getCharacterDao()
+	{
+		return DaoHolder.jpaCharacterDao;
 	}
 
 }
