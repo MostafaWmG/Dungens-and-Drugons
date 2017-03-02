@@ -22,6 +22,17 @@ import ca.concordia.soen6441.d20.item.ItemEntity;
  * @author negar
  * @author Saman Saadi
  */
+
+@NamedQueries({
+	@NamedQuery(
+			name="findCharacterEntityByName",
+			query="SELECT character FROM CharacterEntity character WHERE character.name = :name"
+			),
+	@NamedQuery(
+			name="findCharacterEntityAll",
+			query="SELECT character FROM CharacterEntity character")
+})
+
 @Entity
 public class CharacterEntity extends GameObjectEntity implements Serializable {
 
