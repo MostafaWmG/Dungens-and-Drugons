@@ -126,8 +126,8 @@ public class Character extends GameObject {
 		setDamage(entity.getDamageBonus().createDamageBonus());
 		setHitPoint(entity.getHitPoint().createHitPoint());
 		setAbilitiesListener();
-		emptyWearList();
-		initializeBackPack();
+//		emptyWearList();
+//		initializeBackPack();
 		showAll();
 		showBackPack();
 	}
@@ -466,6 +466,9 @@ public class Character extends GameObject {
 	 */
 	public void setBackPack(ArrayList<Item> backPack){
 		this.backPack = backPack;
+		getCharacterEntity().getBackpack().clear();
+		for (Item item : backPack)
+			getCharacterEntity().getBackpack().add(item.getItemEntity());
 	}
 	
 	/**
@@ -481,7 +484,7 @@ public class Character extends GameObject {
 	 */
 	public void initializeBackPack(){
 		for(int i = 0; i < BACKPACK_SIZE ; i ++){
-			getBackPack().add(new Item(getName()+i+7+"", ItemEnum.HELMET));
+			addBackPack(new Item(getName()+i+7+"", ItemEnum.HELMET));
 		}
 	}
 	
@@ -517,9 +520,17 @@ public class Character extends GameObject {
 	private boolean addBackPack(Item item, boolean saveEntity)
 	{
 		if(getBackPack().isEmpty()){
-			getBackPack().add(item);
-			if (saveEntity)
-				getCharacterEntity().getBackpack().add(item.getItemEntity());
+			if(item.getEnchantmentType() == null && item.getAttributeType() == null){
+				Item newItem = new Item(item.getName(),item.getItemEnum());
+				getBackPack().add(newItem);
+				if (saveEntity)
+					getCharacterEntity().getBackpack().add(item.getItemEntity());
+			}else{
+				getBackPack().add(item);
+				if (saveEntity)
+					getCharacterEntity().getBackpack().add(item.getItemEntity());
+			}
+
 			return true;
 		}else {
 			if(findEmptyPositionInBackPack() == -1){
