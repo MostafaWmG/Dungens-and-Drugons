@@ -31,7 +31,7 @@ public class Character extends GameObject {
 	private static final int BACK_PACK_FULL = -1;
 
 	/**
-	*  Each character object(character, player or monster) has blow characteristics:
+	*  Each character object(character, player or monster) has below characteristics:
 	*level : level of the character
 	* name : name of the character
 	* characterEntity: it is used for saving and loading characters
@@ -367,7 +367,11 @@ public class Character extends GameObject {
 		addAbility(ability, true);
 
 	}
-	
+	/**
+	 * 
+	 * @param ability to add to the character
+	 * @param saveEntity true if we want to save the character object to database
+	 */
 	public void addAbility(Ability ability, boolean saveEntity)
 	{
 		abilities.add(ability.getAbilityEnum().getValue(), ability);
@@ -410,6 +414,11 @@ public class Character extends GameObject {
 		addItem(item, true);
 	}
 	
+	/**
+	 * 
+	 * @param item which is going to be wear.
+	 * @param saveEntity true if we want to save this items for character on database
+	 */
 	private void addItem(Item item, boolean saveEntity)
 	{
 		if(item.getEnchantmentType() == null && item.getAttributeType() == null){
@@ -499,6 +508,12 @@ public class Character extends GameObject {
 		return addBackPack(item, true);
 	}
 	
+	/**
+	 * 
+	 * @param item to add to backpack
+	 * @param saveEntity true if we want the item to be saved for character on database
+	 * @return true if the backpack has empty space
+	 */
 	private boolean addBackPack(Item item, boolean saveEntity)
 	{
 		if(findEmptyPositionInBackPack() == -1){
@@ -739,12 +754,18 @@ public class Character extends GameObject {
 		this.characterEntity = characterEntity;
 	}
 	
+	/**
+	 * @param tag to set for character
+	 */
 	@Override
 	public void setTag(String tag)
 	{
 		getCharacterEntity().setFighterType(tag);
 	}
 	
+	/**
+	 * @return tag of the character
+	 */
 	@Override
 	public String getTag()
 	{
