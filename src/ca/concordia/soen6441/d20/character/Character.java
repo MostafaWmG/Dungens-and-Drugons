@@ -111,6 +111,9 @@ public class Character extends GameObject {
 	public Character(CharacterEntity entity)
 	{
 		setCharacterEntity(entity);
+		backPack = new ArrayList<>();
+		wearItems = new ArrayList<>();
+		abilities = new ArrayList<>();
 		for (ItemEntity item : entity.getWearItems())
 			addItem(item.createItemModel(), false);
 		for (AbilityEntity ability : entity.getAbilities())
