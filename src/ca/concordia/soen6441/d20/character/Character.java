@@ -516,16 +516,24 @@ public class Character extends GameObject {
 	 */
 	private boolean addBackPack(Item item, boolean saveEntity)
 	{
-		if(findEmptyPositionInBackPack() == -1){
-			System.out.println("Back Pack Is Full");
-			return false;
-		}else {
-			int index = findEmptyPositionInBackPack();
-			getBackPack().add(index, item);
+		if(getBackPack().isEmpty()){
+			getBackPack().add(item);
 			if (saveEntity)
-				getCharacterEntity().getBackpack().add(index, item.getItemEntity());
+				getCharacterEntity().getBackpack().add(item.getItemEntity());
 			return true;
+		}else {
+			if(findEmptyPositionInBackPack() == -1){
+				System.out.println("Back Pack Is Full");
+				return false;
+			}else {
+				int index = findEmptyPositionInBackPack();
+				getBackPack().add(index, item);
+				if (saveEntity)
+					getCharacterEntity().getBackpack().add(index, item.getItemEntity());
+				return true;
+			}
 		}
+
 	}
 	
 	/**

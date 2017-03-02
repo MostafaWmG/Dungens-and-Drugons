@@ -118,9 +118,9 @@ public class CharacterEditor {
 	private void inventory(Character character){
 		character.showInvetory();
 		
-		System.out.println("Choose: move Item From Character To Invetory(Type c)" );
-		System.out.println("Choose: move Item From Inventory To Character(Type i)" );
-		System.out.println("Choose: switch Item Between Character To Invetory (Type s)");
+		System.out.println("Choose: move Item From Character To backPack(Type c)" );
+		System.out.println("Choose: move Item From backPack To Character(Type i)" );
+		System.out.println("Choose: switch Item Between Character To backPack (Type s)");
 		System.out.println("Choose: add from your saved items into inventory (Type a )");
 		String hitButton = scanner.nextLine();
 		
@@ -167,7 +167,7 @@ public class CharacterEditor {
 		System.out.println("Enter Slot Number Of Item In BackPack You Want To Wear: ");
 		String itemModelString = scanner.nextLine();
 		
-		try {
+//		try {
 			int itemModel = Integer.parseInt(itemModelString);
 			boolean result =character.putBackPackIntoWearList(character.getBackPack().get(itemModel));
 			if(result){
@@ -177,9 +177,9 @@ public class CharacterEditor {
 			}
 
 			saveCharacterChanges(character, "inventory");
-		} catch (Exception e) {
-			System.out.println("Wrong Info");
-		}
+//		} catch (Exception e) {
+//			System.out.println("Wrong Info");
+//		}
 	}
 	
 	/**
