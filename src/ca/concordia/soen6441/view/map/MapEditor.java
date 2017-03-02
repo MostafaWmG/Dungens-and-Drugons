@@ -229,6 +229,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 		if(map.mapValidator()){
 			System.out.println("map Created");
 			DaoFactory.getGameMapDao().create(map.getEntity());
+		}else {
+			System.out.println("Map is not Valid !!!!");
 		}
 
 	}

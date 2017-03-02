@@ -1,8 +1,14 @@
 package ca.concordia.soen6441.d20.gamemap;
 
 import java.security.KeyStore.Entry;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+
+import javax.print.attribute.standard.Finishings;
 
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
@@ -209,6 +215,10 @@ public class GameMap {
 		}
 	}
 	
+	/**
+	 * check if map is valid or not 
+	 * @return if map is valid or not
+	 */
 	public boolean mapValidator(){
 		Map<Location, Wall> walls = new HashMap<Location, Wall>();
 		Map<Location, Entery> enterDoor = new HashMap<Location, Entery>();
@@ -240,6 +250,160 @@ public class GameMap {
 			return false;
 		}
 		
-		return true;
+		//copy map
+		Map<Location,GameObject> mapCopy = new HashMap<Location, GameObject>();
+		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
+			mapCopy.put(mapElement.getKey(), mapElement.getValue());
+//			System.out.println("map element : " +mapCopy.get(mapElement.getKey())+" key: " + mapElement.getKey() );
+		}
+		
+		Set<Location> enterPointSet = enterDoor.keySet();
+		Location enterPoint =(Location)enterPointSet.toArray()[0];
+		
+		
+		return exploreAlgorithm(mapCopy,enterPoint);
+
 	}
+	
+	/**
+	 * recursive Algorithm that we use to explore map 
+	 * @param map copy of the original map
+	 * @param enterPoint the enter door
+	 * @return return if map is valid or not
+	 */
+	private boolean exploreAlgorithm(Map<Location, GameObject> map,Location enterPoint){
+		
+		map.get(enterPoint).setTag("Wall");
+		Location currentLocation = new Location(enterPoint.getX(),enterPoint.getY());
+		Location finderUp = new Location(enterPoint.getX(),enterPoint.getY());
+		Location finderDown = new Location(enterPoint.getX(),enterPoint.getY());
+		Location finderRight = new Location(enterPoint.getX(),enterPoint.getY());
+		Location finderLeft = new Location(enterPoint.getX(),enterPoint.getY());
+		List<Location> conditionList = new ArrayList<Location>();
+		boolean valid = false;
+		
+		return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,(ArrayList<Location>)conditionList,valid);	
+	}
+	
+	/**
+	 * function which use by explore algorithm to find out if there is a way between enteryPoint to exitPoint or not
+	 * @param finderUp move currentPositoion to up in map
+	 * @param finderDown move currentPositoion to down in map
+	 * @param finderRight move currentPositoion to right in map
+	 * @param finderLeft move currentPositoion to left in map
+	 * @param currentLocation current Position in map start from entry point
+	 * @param map copy of the main map
+	 * @param conditionList list of the positions that represent more than one patch. function will check each patch recursively .
+	 * @param valid map is valid or not
+	 * @return if map is valid or not
+	 */
+	public boolean explore(Location finderUp,Location finderDown,Location finderRight,Location finderLeft, Location currentLocation,Map<Location,GameObject> map,ArrayList<Location> conditionList,boolean valid){
+
+		if(valid)
+			return true;
+
+		finderUp.setY(currentLocation.getY() - 1);
+		finderUp.setX(currentLocation.getX());
+
+		finderDown.setY(currentLocation.getY() + 1);
+		finderUp.setX(currentLocation.getX());
+
+		finderRight.setX(currentLocation.getX() + 1);
+		finderRight.setY(currentLocation.getY());
+
+		finderLeft.setX(currentLocation.getX() - 1);
+		finderRight.setY(currentLocation.getY());
+
+		int conditon = 0;
+		boolean up = false;
+		boolean down = false;
+		boolean right = false;
+		boolean left = false;
+
+		if(finderUp.getY() >= 0){
+			if(map.get(finderUp).getTag().equals("Exit")){
+				valid = true;
+			}else if(map.get(finderUp).getTag().equals("Ground")){
+				conditon ++ ;
+				up =true;
+			}
+
+		}
+		if(finderDown.getY() < getHeight()){
+			if(map.get(finderDown).getTag().equals("Exit")){
+				valid = true;
+			}else if(map.get(finderDown).getTag().equals("Ground")){
+				conditon ++ ;
+				down = true;
+			}
+		}
+		if(finderRight.getX() < getWidth()){
+			if(map.get(finderRight).getTag().equals("Exit")){
+				valid = true;
+			}else if(map.get(finderRight).getTag().equals("Ground")){
+				conditon ++ ;
+				right = true;
+			}
+		}
+		if(finderLeft.getX() >= 0){
+			if(map.get(finderLeft).getTag().equals("Exit")){
+				valid = true;
+			}else if(map.get(finderLeft).getTag().equals("Ground")){
+				conditon ++ ;
+				left = true;
+			}
+		}
+		
+//		System.out.println("Conditon: " + conditon);
+		if(!valid){
+			if(conditon == 0 ){
+				map.get(currentLocation).setTag("Wall");
+				if(conditionList.size() != 0){
+					currentLocation = conditionList.get(0);
+					conditionList.remove(0);
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);	
+				}else{
+//					System.out.println("false");
+					return false;
+				}
+
+
+			}else if (conditon == 1){
+				map.get(currentLocation).setTag("Wall");
+				if(up){
+					currentLocation.setY(finderUp.getY());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}else if(down){
+					currentLocation.setY(finderDown.getY());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}else if(right){
+					currentLocation.setX(finderRight.getX());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}else if (left){
+					currentLocation.setX(finderLeft.getX());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}
+
+			}else if (conditon >=2){
+				conditionList.add(currentLocation);
+				map.get(currentLocation).setTag("Condition");
+				if(up){
+					currentLocation.setY(finderUp.getY());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}else if(down){
+					currentLocation.setY(finderDown.getY());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}else if(right){
+					currentLocation.setX(finderRight.getX());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}else if (left){
+					currentLocation.setX(finderLeft.getX());
+					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
+				}
+			}
+		}
+		return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map, conditionList, valid);
+
+	}
+	
 }
