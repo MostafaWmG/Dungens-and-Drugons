@@ -11,8 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
 import ca.concordia.soen6441.constants.Constants;
+import ca.concordia.soen6441.d20.character.factory.ItemFactory;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
@@ -21,7 +21,12 @@ import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
+import ca.concordia.soen6441.d20.item.AbilityEnum;
+import ca.concordia.soen6441.d20.item.Item;
+import ca.concordia.soen6441.d20.item.ItemEnum;
+import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
+
 /**
  * this is mapEditor View 
  * @author wmg
@@ -39,11 +44,16 @@ public class MapEditor  extends JFrame implements ActionListener{
 	private GameMap map;
 	private Constants constants;
 	private Dimension dimension;
-	private JButton[] iconButtons;
-	private ImageIcon[] images;
 	private ImageIcon currentPointer;
 	private String tag;
 	private PlayerFactory playerFactory ;
+	private ItemFactory itemFactory;
+	private Character character;
+	private Item item;
+	
+	public ImageIcon[] images;
+	public JButton[] iconButtons;
+
 	/**
 	 * constructor
 	 * @param row row of the mapView
@@ -53,12 +63,13 @@ public class MapEditor  extends JFrame implements ActionListener{
 		
 		//initializing
 		playerFactory = new PlayerFactory();
+		itemFactory = new ItemFactory();
 		this.row = row;
 		this.column = column;
 		viewElements = new Grid[row][column];
-		iconButtons = new JButton[5];
+		iconButtons = new JButton[7];
 		setCurrentPointer(new ImageIcon());
-		images = new ImageIcon[5];
+		images = new ImageIcon[7];
 		//enable absolute positioning mode 
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -78,6 +89,12 @@ public class MapEditor  extends JFrame implements ActionListener{
 		
 		JButton loadButton = new JButton("Load");
 		initializeButton(loadButton, "Load",0,0,-100,0,0 ,2);
+		
+		JButton loadCharacterButton = new JButton("LoadCharacter");
+		initializeButton(loadCharacterButton, "LoadCharacter",10,0,-100,0,0 ,4);
+		
+		JButton loadItemButton = new JButton("LoadItem");
+		initializeButton(loadItemButton, "LoadItem",0,0,-100,0,0 ,-2);
 		//show the JFrame
 		setVisible(true);
 	}
@@ -151,6 +168,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 				getContentPane().add(iconButtons[i]);
 				iconButtons[i].addActionListener(this);
 			}
+			iconButtons[5].setVisible(false);
+			iconButtons[6].setVisible(false);
 		}
 
 	@Override
@@ -183,6 +202,16 @@ public class MapEditor  extends JFrame implements ActionListener{
 				setTag("Exit");
 			}
 			
+			if(e.getActionCommand().equals ("image5")){
+				setCurrentPointer((ImageIcon) iconButtons[5].getIcon());
+				setTag("Item");
+			}
+			
+			if(e.getActionCommand().equals ("image6")){
+				setCurrentPointer((ImageIcon) iconButtons[6].getIcon());
+				setTag("Player");
+			}
+			
 			if(e.getActionCommand().equals("Save"))
 			{
 				
@@ -193,9 +222,31 @@ public class MapEditor  extends JFrame implements ActionListener{
 			{
 				 load(JOptionPane.showInputDialog(this, "Load"));
 			}
+			
+			if(e.getActionCommand().equals("LoadCharacter"))
+			{
+				 loadCharacter(JOptionPane.showInputDialog(this, "LoadCharacter"));
+			}
+			
+			
+			if(e.getActionCommand().equals("LoadItem"))
+			{
+				 loadItem(JOptionPane.showInputDialog(this, "LoadItem"));
+			}
 		}
 	}
 	
+	public void loadCharacter(String name){
+		// load character here
+		setCharacter(playerFactory.create(name,"Player"));
+		iconButtons[6].setVisible(true);
+	}
+	
+	public void loadItem(String name){
+		// load item
+		setItem(itemFactory.createItem(name, ItemEnum.HELMET, AbilityEnum.CHARISMA));
+		iconButtons[5].setVisible(true);
+	}
 	/**
 	 * this a method for saving a map
 	 * @param mapName primary key
@@ -221,6 +272,12 @@ public class MapEditor  extends JFrame implements ActionListener{
 				}else if (viewElements[i][j].getTag().equals("Exit")){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,new Exit(mapName+i+j,location));
+				}else if (viewElements[i][j].getTag().equals("Player")){
+					Location location = new Location(j, i);
+					map.setGameObjectAtLocation(location,viewElements[i][j].getCharacter());
+				}else if (viewElements[i][j].getTag().equals("Item")){
+					Location location = new Location(j, i);
+					map.setGameObjectAtLocation(location,viewElements[i][j].getItem());
 				}
 			}
 		}
@@ -290,6 +347,14 @@ public class MapEditor  extends JFrame implements ActionListener{
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Exit")){
 					viewElements[i][j].setTag("Exit");
 					viewElements[i][j].iconHandler();
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Player")){
+					viewElements[i][j].setTag("Player");
+					viewElements[i][j].setCharacter(viewElements[i][j].getCharacter());
+					viewElements[i][j].iconHandler();
+				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Item")){
+					viewElements[i][j].setTag("Item");
+					viewElements[i][j].setItem(viewElements[i][j].getItem());
+					viewElements[i][j].iconHandler();
 				}
 			}
 		}
@@ -332,5 +397,33 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+
+	/**
+	 * @return the character
+	 */
+	public Character getCharacter() {
+		return character;
+	}
+
+	/**
+	 * @param character the character to set
+	 */
+	public void setCharacter(Character character) {
+		this.character = character;
+	}
+
+	/**
+	 * @return the item
+	 */
+	public Item getItem() {
+		return item;
+	}
+
+	/**
+	 * @param item the item to set
+	 */
+	public void setItem(Item item) {
+		this.item = item;
 	}
 }
