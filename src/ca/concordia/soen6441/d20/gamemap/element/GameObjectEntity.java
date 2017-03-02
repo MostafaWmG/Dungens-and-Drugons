@@ -41,6 +41,7 @@ public abstract class GameObjectEntity implements Serializable {
 
 	public GameObjectEntity() {
 		super();
+		location = new Location();
 	}
 	
 	/**

@@ -8,6 +8,7 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Ability;
+import ca.concordia.soen6441.d20.item.AbilityEntity;
 import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.ArmorClass;
 import ca.concordia.soen6441.d20.item.AttackBonus;
@@ -110,10 +111,19 @@ public class Character extends GameObject {
 	public Character(CharacterEntity entity)
 	{
 		setCharacterEntity(entity);
-		//TODO support backpack loading
 		for (ItemEntity item : entity.getWearItems())
-			addItem(item.createItemModel());
-		//TODO
+			addItem(item.createItemModel(), false);
+		for (AbilityEntity ability : entity.getAbilities())
+			addAbility(ability.createAbility(), false);
+		for (ItemEntity item : entity.getBackpack())
+			addBackPack(item.createItemModel(), false);
+		setArmor(entity.getArmorClass().createArmorModel());
+		setAttack(entity.getAttackBonus().createAttackBonus());
+		setDamage(entity.getDamageBonus().createDamageBonus());
+		setHitPoint(entity.getHitPoint().createHitPoint());
+		setAbilitiesListener();
+		showAttributes();
+		testWearItems();
 	}
 	
 	/**
@@ -169,8 +179,8 @@ public class Character extends GameObject {
 			 System.out.println("Character already has this item");
 			 return true;
 		}else {
-			//TODO
 			getWearItems().set(item.getItemEnum().getValue(), item);
+			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), item.getItemEntity());
 			wearItem(item, item.getEnchantmentPoint());
 //			System.out.println("characted wore the item");
 			return false;
@@ -178,6 +188,7 @@ public class Character extends GameObject {
 	}
 	
 	// need to  re factor
+	//TODO Is there any part of this function related to persistence?
 	/**
 	 * this method updates the character statistics that character gains by wearing or removing the item
 	 * @param item the item that character wears
@@ -208,8 +219,9 @@ public class Character extends GameObject {
 	public void removeItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
-			//TODO the line of code is not easy to persist
-			getWearItems().set(item.getItemEnum().getValue(),new Item(item.getItemEnum().getValue()+"", item.getItemEnum()));
+			Item tmp = new Item(item.getItemEnum().getValue()+"", item.getItemEnum());
+			getWearItems().set(item.getItemEnum().getValue(), tmp);			
+			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), tmp.getItemEntity());
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
 		}else {
@@ -346,8 +358,15 @@ public class Character extends GameObject {
 	 * @param ability the ability we are adding .
 	 */
 	public void addAbility(Ability ability) {
+		addAbility(ability, true);
+
+	}
+	
+	public void addAbility(Ability ability, boolean saveEntity)
+	{
 		abilities.add(ability.getAbilityEnum().getValue(), ability);
-		getCharacterEntity().getAbilities().add(ability.getAbilityEnum().getValue(), ability.getAbilityEntity());
+		if (saveEntity)
+			getCharacterEntity().getAbilities().add(ability.getAbilityEnum().getValue(), ability.getAbilityEntity());		
 	}
 	
 	/**
@@ -381,15 +400,22 @@ public class Character extends GameObject {
 	 * @param item which is going to be wear.
 	 */
 	public void addItem(Item item) {
+		
+		addItem(item, true);
+	}
+	
+	private void addItem(Item item, boolean saveEntity)
+	{
 		if(item.getEnchantmentType() == null && item.getAttributeType() == null){
 			Item newItem = new Item(item.getName(),item.getItemEnum());
 			getWearItems().add(newItem);
-			getCharacterEntity().getWearItems().add(newItem.getItemEntity());
+			if (saveEntity)
+				getCharacterEntity().getWearItems().add(newItem.getItemEntity());
 		}else{
 			getWearItems().add(item.getItemEnum().getValue(),item);
-			getCharacterEntity().getWearItems().add(item.getItemEnum().getValue(),item.getItemEntity());
+			if (saveEntity)
+				getCharacterEntity().getWearItems().add(item.getItemEnum().getValue(),item.getItemEntity());
 		}
-
 	}
 	/**
 	 * 
@@ -464,12 +490,19 @@ public class Character extends GameObject {
 	 * @return if backpack is full or not
 	 */
 	public boolean addBackPack(Item item){
+		return addBackPack(item, true);
+	}
+	
+	private boolean addBackPack(Item item, boolean saveEntity)
+	{
 		if(findEmptyPositionInBackPack() == -1){
 			System.out.println("Back Pack Is Full");
 			return false;
 		}else {
 			int index = findEmptyPositionInBackPack();
 			getBackPack().add(index, item);
+			if (saveEntity)
+				getCharacterEntity().getBackpack().add(index, item.getItemEntity());
 			return true;
 		}
 	}

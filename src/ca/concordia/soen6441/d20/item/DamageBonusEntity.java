@@ -55,7 +55,7 @@ public class DamageBonusEntity implements Serializable {
 		this.modifier = modifier;
 	}
 	
-	DamageBonus createDamageBonus()
+	public DamageBonus createDamageBonus()
 	{
 		return new DamageBonus(this);
 	}

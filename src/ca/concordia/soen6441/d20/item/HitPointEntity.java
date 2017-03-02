@@ -24,7 +24,13 @@ public class HitPointEntity implements Serializable {
 
 	public HitPointEntity() {
 		super();
-	}   
+	}
+	
+	public HitPoint createHitPoint()
+	{
+		return new HitPoint(this);
+	}
+	
 	public long getId() {
 		return this.id;
 	}

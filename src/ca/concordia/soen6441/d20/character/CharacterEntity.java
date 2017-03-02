@@ -36,6 +36,9 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="ID", referencedColumnName="ID")
 	private List <ItemEntity> wearItems;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="ID", referencedColumnName="ID")
+	private List<ItemEntity> backpack;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ARMOR_ID")
 	private ArmorClassEntity armorClass;
@@ -54,6 +57,7 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 		level = 1;		
 		abilities = new ArrayList<AbilityEntity>();
 		wearItems = new ArrayList<ItemEntity>();
+		backpack = new ArrayList<ItemEntity>();
 		armorClass = new ArmorClassEntity();
 		attackBonus = new AttackBonusEntity();
 		hitPoint = new HitPointEntity();
@@ -145,5 +149,18 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	@Override
 	public GameObject createModel() {
 		return new Character(this);
-	}		
+	}
+	/**
+	 * @return the backpack
+	 */
+	public List<ItemEntity> getBackpack() {
+		return backpack;
+	}
+	/**
+	 * @param backpack the backpack to set
+	 */
+	public void setBackpack(List<ItemEntity> backpack) {
+		this.backpack = backpack;
+	}
+	
 }
