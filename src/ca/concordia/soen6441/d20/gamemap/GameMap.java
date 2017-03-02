@@ -254,7 +254,7 @@ public class GameMap {
 		Map<Location,GameObject> mapCopy = new HashMap<Location, GameObject>();
 		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
 			mapCopy.put(mapElement.getKey(), mapElement.getValue());
-//			System.out.println("map element : " +mapCopy.get(mapElement.getKey())+" key: " + mapElement.getKey() );
+			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
 		}
 		
 		Set<Location> enterPointSet = enterDoor.keySet();
@@ -332,7 +332,7 @@ public class GameMap {
 		if(finderDown.getY() < getHeight()){
 			if(map.get(finderDown).getTag().equals("Exit")){
 				valid = true;
-			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
+			}else if(map.get(finderDown).getTag().equals("Ground") ||map.get(finderDown).getTag().equals("Enemy") || map.get(finderDown).getTag().equals("Item") || map.get(finderDown).getTag().equals("Player")){
 				conditon ++ ;
 				down = true;
 			}
@@ -340,7 +340,7 @@ public class GameMap {
 		if(finderRight.getX() < getWidth()){
 			if(map.get(finderRight).getTag().equals("Exit")){
 				valid = true;
-			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
+			}else if(map.get(finderRight).getTag().equals("Ground") ||map.get(finderRight).getTag().equals("Enemy") || map.get(finderRight).getTag().equals("Item") || map.get(finderRight).getTag().equals("Player")){
 				conditon ++ ;
 				right = true;
 			}
@@ -348,7 +348,7 @@ public class GameMap {
 		if(finderLeft.getX() >= 0){
 			if(map.get(finderLeft).getTag().equals("Exit")){
 				valid = true;
-			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
+			}else if(map.get(finderLeft).getTag().equals("Ground") ||map.get(finderLeft).getTag().equals("Enemy") || map.get(finderLeft).getTag().equals("Item") || map.get(finderLeft).getTag().equals("Player")){
 				conditon ++ ;
 				left = true;
 			}

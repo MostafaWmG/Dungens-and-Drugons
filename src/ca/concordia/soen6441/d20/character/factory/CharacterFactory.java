@@ -15,4 +15,5 @@ public interface CharacterFactory {
 	 * @return
 	 */
 	public Character create(String tag,String name);
+	public Character create(String tag,String name,int x ,int y);
 }

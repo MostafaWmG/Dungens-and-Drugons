@@ -50,4 +50,17 @@ public class PlayerFactory implements CharacterFactory {
 //		character.showAll();
 		return character;
 	}
+
+	@Override
+	public Character create(String tag, String name, int x, int y) {
+		if(tag.equals("Enemy")){
+			return  new Character(tag,name,x,y);
+		}else if(tag.equals("Player")){
+			return new Character(tag,name,x,y);
+		}else {
+			return null;
+		}
+
+		
+	}
 }
