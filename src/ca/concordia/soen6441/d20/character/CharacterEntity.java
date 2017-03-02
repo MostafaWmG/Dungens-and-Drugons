@@ -30,25 +30,34 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	//TODO Fighters, armors and some other game objects have level. So I don't think we should put level here
 	//Maybe we need to put it in GameObject
 	private int level;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="ABILITY_ID", referencedColumnName="ID")
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinTable(
+			name="FIGHTER_ABILITIES",
+			joinColumns=@JoinColumn(name="FIGHTER_ID", referencedColumnName="ID"),
+			inverseJoinColumns=@JoinColumn(name="ABILITY_ID", referencedColumnName="ABILITY_ID", unique=true))
 	private List <AbilityEntity> abilities;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="ID", referencedColumnName="ID")
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinTable(
+			name="WEAR_ITEMS",
+			joinColumns=@JoinColumn(name="FIGHTER_ID", referencedColumnName="ID"),
+			inverseJoinColumns=@JoinColumn(name="WEAR_ITEM_ID", referencedColumnName="ID", unique=true))
 	private List <ItemEntity> wearItems;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="ID", referencedColumnName="ID")
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinTable(
+			name="BACKPACK",
+			joinColumns=@JoinColumn(name="FIGHTER_ID", referencedColumnName="ID"),
+			inverseJoinColumns=@JoinColumn(name="BACKPACK_ID", referencedColumnName="ID", unique=true))
 	private List<ItemEntity> backpack;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="ARMOR_ID")
 	private ArmorClassEntity armorClass;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="ATTACK_ID")
 	private AttackBonusEntity attackBonus;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="DAMAGE_ID")
 	private DamageBonusEntity damageBonus;
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="HITPOINT_ID")
 	private HitPointEntity hitPoint;	
 
