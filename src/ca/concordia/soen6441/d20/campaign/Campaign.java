@@ -15,7 +15,12 @@ public class Campaign {
 		setCampaign(new LinkedList<GameMap>());
 	}
 
-
+	
+	public void show(){
+		for(int i = 0 ; i < getCampaign().size(); i ++){
+			System.out.println("Map" + i+" : "+ getCampaign().get(i).getMapName());
+		}
+	}
 	/**
 	 * @return the campaign
 	 */
