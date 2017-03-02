@@ -10,8 +10,18 @@ import javax.persistence.*;
  * @author Saman Saadi
  *
  */
-@Entity
 
+@NamedQueries({
+	@NamedQuery(
+			name="findItemEntityByName",
+			query="SELECT item FROM ItemEntity item WHERE item.name = :name"
+			),
+	@NamedQuery(
+			name="findItemEntityAll",
+			query="SELECT item FROM ItemEntity item")
+})
+
+@Entity
 public class ItemEntity extends GameObjectEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
