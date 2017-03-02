@@ -8,9 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ca.concordia.soen6441.constants.Constants;
+import ca.concordia.soen6441.d20.editors.CampaignEditor;
 import ca.concordia.soen6441.d20.editors.CharacterEditor;
 import ca.concordia.soen6441.d20.editors.ItemEditor;
-
 import ca.concordia.soen6441.view.map.MapEditor;
 /**
  * this a Main class 
@@ -50,6 +50,10 @@ public class Main extends JFrame implements ActionListener{
 		//setting up playButton
 		JButton playButton = new JButton("Play");
 		initializeButton(playButton,"Play",0,0,0,constants.LOCATION_HEIGHT_OFFSET,3);
+		
+		//setting up CampaignButton
+		JButton CampaignButton = new JButton("CampaignEditor");
+		initializeButton(CampaignButton,"CampaignEditor",20,0,0,constants.LOCATION_HEIGHT_OFFSET,-1);
 
 		//show the JFrame
 		setVisible(true);
@@ -115,6 +119,8 @@ public class Main extends JFrame implements ActionListener{
 				 new CharacterEditor();
 			}else if (e.getActionCommand().equals("ItemBuilder") ) {
 				 new ItemEditor();
+			}else if (e.getActionCommand().equals("CampaignEditor")){
+				new CampaignEditor();
 			}
 			
 		}
