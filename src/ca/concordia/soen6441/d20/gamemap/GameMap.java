@@ -34,8 +34,21 @@ public class GameMap {
 	 * used to store the map element by location
 	 */
 	private Map<Location, GameObject> elements;		
+	/**
+	 * @return the elements
+	 */
+	public Map<Location, GameObject> getElements() {
+		return elements;
+	}
+
+	/**
+	 * @param elements the elements to set
+	 */
+	public void setElements(Map<Location, GameObject> elements) {
+		this.elements = elements;
+	}
+
 	private GameMapEntity gameMapEntity;
-	
 	/**
 	 * creates a map of the dimension required
 	 * @param width the width of the map
@@ -225,8 +238,8 @@ public class GameMap {
 		Map<Location, Exit> exitDoor = new HashMap<Location, Exit>();
 		
 		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
-			System.out.println("valid : " + mapElement.getValue().getTag());
-			System.out.println("valid obj : " + mapElement.getValue());
+//			System.out.println("valid : " + mapElement.getValue().getTag());
+//			System.out.println("valid obj : " + mapElement.getValue());
 			if(mapElement.getValue().getTag().equals("Wall")){
 				walls.put(mapElement.getKey(),(Wall) mapElement.getValue());
 			}else if (mapElement.getValue().getTag().equals("Enter") ) {
@@ -254,6 +267,7 @@ public class GameMap {
 		
 		//copy map
 		Map<Location,GameObject> mapCopy = new HashMap<Location, GameObject>();
+//		mapCopy = new HashMap<Location, GameObject>();
 		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
 			mapCopy.put(mapElement.getKey(), mapElement.getValue());
 //			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
@@ -319,13 +333,13 @@ public class GameMap {
 		finderUp.setX(currentLocation.getX());
 
 		finderDown.setY(currentLocation.getY() + 1);
-		finderUp.setX(currentLocation.getX());
+		finderDown.setX(currentLocation.getX());
 
 		finderRight.setX(currentLocation.getX() + 1);
 		finderRight.setY(currentLocation.getY());
 
 		finderLeft.setX(currentLocation.getX() - 1);
-		finderRight.setY(currentLocation.getY());
+		finderLeft.setY(currentLocation.getY());
 
 		int conditon = 0;
 		boolean up = false;
@@ -367,12 +381,20 @@ public class GameMap {
 			}
 		}
 		
-		System.out.println("Conditon: " + conditon);
+//		System.out.println("Conditon: " + conditon);
 		if(!valid){
 			if(conditon == 0 ){
 				map.get(currentLocation).setTag("Wall");
 				if(conditionList.size() != 0){
 					currentLocation = conditionList.get(0);
+//					for(int i = 0 ; i < conditionList.size(); i ++){
+//						System.out.println("element i : "+" X: "+ conditionList.get(i).getX()+" Y: "+ conditionList.get(i).getY());
+//					}
+//					System.out.println("UP : " + finderUp.getX() +" : "+ finderUp.getY());
+//					System.out.println("Down :" + finderDown.getX() +" : "+ finderDown.getY());
+//					System.out.println("Right : " + finderRight.getX() +" : "+ finderRight.getY());
+//					System.out.println("Left : " + finderLeft.getX() +" : "+ finderLeft.getY());
+//					System.out.println("x: "+ currentLocation.getX() +"Y :" + currentLocation.getY());
 					conditionList.remove(0);
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);	
 				}else{
@@ -384,21 +406,25 @@ public class GameMap {
 			}else if (conditon == 1){
 				map.get(currentLocation).setTag("Wall");
 				if(up){
+//					System.out.println("UP 1");
 					currentLocation.setY(finderUp.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(down){
+//					System.out.println("down 1");
 					currentLocation.setY(finderDown.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(right){
+//					System.out.println("right 1");
 					currentLocation.setX(finderRight.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if (left){
+//					System.out.println("left 1");
 					currentLocation.setX(finderLeft.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}
 
 			}else if (conditon >=2){
-				conditionList.add(currentLocation);
+				conditionList.add( new Location(currentLocation.getX(), currentLocation.getY()));
 				map.get(currentLocation).setTag("Condition");
 				if(up){
 //					System.out.println("UP");
