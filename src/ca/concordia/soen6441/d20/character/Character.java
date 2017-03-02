@@ -422,7 +422,7 @@ public class Character extends GameObject {
 	private void addItem(Item item, boolean saveEntity)
 	{
 		if(item.getEnchantmentType() == null && item.getAttributeType() == null){
-			Item newItem = new Item(item.getName(),item.getItemEnum());
+			Item newItem = new Item(item.getName()+getWearItems().size(),item.getItemEnum());
 			getWearItems().add(newItem);
 			if (saveEntity)
 				getCharacterEntity().getWearItems().add(newItem.getItemEntity());
