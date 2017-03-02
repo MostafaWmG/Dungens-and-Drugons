@@ -15,6 +15,7 @@ public class Item extends GameObject implements LevelUp{
 	public Item(String name,ItemEnum item,AbilityEnum enchantmentType, int point) {
 		initEmptyEntity();
 		setName(name);
+		setTag("Item");
 		getItemEntity().setItemEnum(item);
 		getItemEntity().setEnchantmentType(enchantmentType);
 		getItemEntity().setAttributeType(null);
@@ -23,6 +24,7 @@ public class Item extends GameObject implements LevelUp{
 	
 	public Item(String name,ItemEnum item,AttributeEnum attributeType, int point){
 		initEmptyEntity();
+		setTag("Item");
 		setName(name);
 		getItemEntity().setItemEnum(item);
 		getItemEntity().setAttributeType(attributeType);
@@ -36,6 +38,7 @@ public class Item extends GameObject implements LevelUp{
 	 */
 	public Item(String name,ItemEnum itemEnum){
 		initEmptyEntity();
+		setTag("Item");
 		setName(name);
 		getItemEntity().setItemEnum(itemEnum);
 		getItemEntity().setEnchantmentType(null);
@@ -49,6 +52,7 @@ public class Item extends GameObject implements LevelUp{
 	 */
 	public Item(Item item){
 		initEmptyEntity();
+		setTag("Item");
 		getItemEntity().setName(item.getName());
 		getItemEntity().setItemEnum(item.getItemEnum() );
 		getItemEntity().setAttributeType(item.getAttributeType());

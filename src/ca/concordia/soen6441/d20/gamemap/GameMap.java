@@ -1,14 +1,14 @@
 package ca.concordia.soen6441.d20.gamemap;
 
-import java.security.KeyStore.Entry;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+
 import java.util.Set;
 
-import javax.print.attribute.standard.Finishings;
+
 
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
@@ -323,7 +323,7 @@ public class GameMap {
 		if(finderUp.getY() >= 0){
 			if(map.get(finderUp).getTag().equals("Exit")){
 				valid = true;
-			}else if(map.get(finderUp).getTag().equals("Ground")){
+			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
 				conditon ++ ;
 				up =true;
 			}
@@ -332,7 +332,7 @@ public class GameMap {
 		if(finderDown.getY() < getHeight()){
 			if(map.get(finderDown).getTag().equals("Exit")){
 				valid = true;
-			}else if(map.get(finderDown).getTag().equals("Ground")){
+			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
 				conditon ++ ;
 				down = true;
 			}
@@ -340,7 +340,7 @@ public class GameMap {
 		if(finderRight.getX() < getWidth()){
 			if(map.get(finderRight).getTag().equals("Exit")){
 				valid = true;
-			}else if(map.get(finderRight).getTag().equals("Ground")){
+			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
 				conditon ++ ;
 				right = true;
 			}
@@ -348,7 +348,7 @@ public class GameMap {
 		if(finderLeft.getX() >= 0){
 			if(map.get(finderLeft).getTag().equals("Exit")){
 				valid = true;
-			}else if(map.get(finderLeft).getTag().equals("Ground")){
+			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
 				conditon ++ ;
 				left = true;
 			}
