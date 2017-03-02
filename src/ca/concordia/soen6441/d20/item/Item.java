@@ -228,4 +228,14 @@ public class Item extends GameObject implements LevelUp{
 			return false;
 		}
 	}
+	
+	@Override
+	public void setTag(String tag){
+		getItemEntity().setItemTag(tag);
+	}
+	
+	@Override
+	public String getTag(){
+		return getItemEntity().getItemTag();
+	}
 }

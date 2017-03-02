@@ -225,6 +225,8 @@ public class GameMap {
 		Map<Location, Exit> exitDoor = new HashMap<Location, Exit>();
 		
 		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
+			System.out.println("valid : " + mapElement.getValue().getTag());
+			System.out.println("valid obj : " + mapElement.getValue());
 			if(mapElement.getValue().getTag().equals("Wall")){
 				walls.put(mapElement.getKey(),(Wall) mapElement.getValue());
 			}else if (mapElement.getValue().getTag().equals("Enter") ) {
@@ -260,8 +262,10 @@ public class GameMap {
 		Set<Location> enterPointSet = enterDoor.keySet();
 		Location enterPoint =(Location)enterPointSet.toArray()[0];
 		
+		Set<Location> exitPointSet = exitDoor.keySet();
+		Location exitPoint =(Location)exitPointSet.toArray()[0];
 		
-		return exploreAlgorithm(mapCopy,enterPoint);
+		return exploreAlgorithm(mapCopy,enterPoint,exitPoint);
 
 	}
 	
@@ -271,14 +275,23 @@ public class GameMap {
 	 * @param enterPoint the enter door
 	 * @return return if map is valid or not
 	 */
-	private boolean exploreAlgorithm(Map<Location, GameObject> map,Location enterPoint){
+	private boolean exploreAlgorithm(Map<Location, GameObject> map,Location enterPoint,Location exitPoint){
 		
-		map.get(enterPoint).setTag("Wall");
-		Location currentLocation = new Location(enterPoint.getX(),enterPoint.getY());
-		Location finderUp = new Location(enterPoint.getX(),enterPoint.getY());
-		Location finderDown = new Location(enterPoint.getX(),enterPoint.getY());
-		Location finderRight = new Location(enterPoint.getX(),enterPoint.getY());
-		Location finderLeft = new Location(enterPoint.getX(),enterPoint.getY());
+		Location currentLocation;
+		
+		if(enterPoint.getX() > exitPoint.getX() && enterPoint.getY() < exitPoint.getY()){
+			map.get(enterPoint).setTag("Exit");
+			map.get(exitPoint).setTag("Wall");
+			currentLocation = new Location(exitPoint.getX(),exitPoint.getY());
+		}else{
+			map.get(enterPoint).setTag("Wall");
+			currentLocation = new Location(enterPoint.getX(),enterPoint.getY());
+		}
+		
+		Location finderUp = new Location(currentLocation.getX(),currentLocation.getY());
+		Location finderDown = new Location(currentLocation.getX(),currentLocation.getY());
+		Location finderRight = new Location(currentLocation.getX(),currentLocation.getY());
+		Location finderLeft = new Location(currentLocation.getX(),currentLocation.getY());
 		List<Location> conditionList = new ArrayList<Location>();
 		boolean valid = false;
 		

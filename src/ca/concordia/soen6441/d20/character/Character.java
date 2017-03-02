@@ -89,6 +89,7 @@ public class Character extends GameObject {
 		init();
 		setName(name);
 		setTag(tag);
+		setLocation(new Location(0,0));
 		setBackPack(new ArrayList<Item>());
 		initializeBackPack();
 		setWearItems(new ArrayList<Item>());

@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ca.concordia.soen6441.constants.Constants;
-import ca.concordia.soen6441.d20.character.factory.ItemFactory;
 import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
@@ -21,10 +20,10 @@ import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
-import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.Item;
-import ca.concordia.soen6441.d20.item.ItemEnum;
+import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.character.Character;
+import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 
 /**
@@ -47,7 +46,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	private ImageIcon currentPointer;
 	private String tag;
 	private PlayerFactory playerFactory ;
-	private ItemFactory itemFactory;
+
 	private Character character;
 	private Item item;
 	
@@ -63,7 +62,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 		
 		//initializing
 		playerFactory = new PlayerFactory();
-		itemFactory = new ItemFactory();
 		this.row = row;
 		this.column = column;
 		viewElements = new Grid[row][column];
@@ -237,14 +235,28 @@ public class MapEditor  extends JFrame implements ActionListener{
 	}
 	
 	public void loadCharacter(String name){
-		// load character here
-		setCharacter(playerFactory.create(name,"Player"));
+		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(name);
+		if (list.isEmpty())
+		{
+			//TODO use appropriate procedure
+			System.out.println("Invalid Character name");
+			return;
+		}
+		Character character = (Character) list.get(0).createModel();
+		setCharacter(character);
 		iconButtons[6].setVisible(true);
 	}
 	
 	public void loadItem(String name){
-		// load item
-		setItem(itemFactory.createItem(name, ItemEnum.HELMET, AbilityEnum.CHARISMA));
+		List<ItemEntity> list = DaoFactory.getItemDao().findByName(name);
+		if (list.isEmpty())
+		{
+			//TODO use appropriate procedure
+			System.out.println("Invalid Item name");
+			return;
+		}
+		Item item = (Item) list.get(0).createModel();
+		setItem(item);
 		iconButtons[5].setVisible(true);
 	}
 	/**
@@ -277,6 +289,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 					map.setGameObjectAtLocation(location,viewElements[i][j].getCharacter());
 				}else if (viewElements[i][j].getTag().equals("Item")){
 					Location location = new Location(j, i);
+					viewElements[i][j].getItem().setTag("Item");
+					viewElements[i][j].getItem().setLocation(location);
 					map.setGameObjectAtLocation(location,viewElements[i][j].getItem());
 				}
 			}
@@ -331,7 +345,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-//				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getName());
+//				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
 				if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Ground")){
 					viewElements[i][j].setTag("Ground");
 					viewElements[i][j].iconHandler();
@@ -349,11 +363,11 @@ public class MapEditor  extends JFrame implements ActionListener{
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Player")){
 					viewElements[i][j].setTag("Player");
-//					viewElements[i][j].setCharacter(viewElements[i][j].getCharacter().getEntity());
+					viewElements[i][j].setCharacter(viewElements[i][j].getCharacter());
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Item")){
 					viewElements[i][j].setTag("Item");
-//					viewElements[i][j].setItem(viewElements[i][j].getItem());
+					viewElements[i][j].setItem(viewElements[i][j].getItem());
 					viewElements[i][j].iconHandler();
 				}
 			}

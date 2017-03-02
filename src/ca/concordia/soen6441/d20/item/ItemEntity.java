@@ -30,6 +30,7 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 	 * the attribute that represent the enchantment point.
 	 */
 	private int point;
+	private String itemTag;
 	/**
 	 * the attribute that that represent item's name. If you change enum values, you need to update database
 	 */
@@ -106,5 +107,19 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 	 */
 	public void setAttributeType(AttributeEnum attributeType) {
 		this.attributeType = attributeType;
+	}
+
+	/**
+	 * @return the itemTag
+	 */
+	public String getItemTag() {
+		return itemTag;
+	}
+
+	/**
+	 * @param itemTag the itemTag to set
+	 */
+	public void setItemTag(String itemTag) {
+		this.itemTag = itemTag;
 	}	   
 }
