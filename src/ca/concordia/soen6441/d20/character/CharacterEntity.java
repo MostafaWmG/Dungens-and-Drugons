@@ -46,17 +46,17 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 			joinColumns=@JoinColumn(name="FIGHTER_ID", referencedColumnName="ID"),
 			inverseJoinColumns=@JoinColumn(name="ABILITY_ID", referencedColumnName="ABILITY_ID", unique=true))
 	private List <AbilityEntity> abilities;
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			name="WEAR_ITEMS",
 			joinColumns=@JoinColumn(name="FIGHTER_ID", referencedColumnName="ID"),
-			inverseJoinColumns=@JoinColumn(name="WEAR_ITEM_ID", referencedColumnName="ID", unique=true))
+			inverseJoinColumns=@JoinColumn(name="WEAR_ITEM_ID", referencedColumnName="ID"))
 	private List <ItemEntity> wearItems;
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			name="BACKPACK",
 			joinColumns=@JoinColumn(name="FIGHTER_ID", referencedColumnName="ID"),
-			inverseJoinColumns=@JoinColumn(name="BACKPACK_ID", referencedColumnName="ID", unique=true))
+			inverseJoinColumns=@JoinColumn(name="BACKPACK_ID", referencedColumnName="ID"))
 	private List<ItemEntity> backpack;
 	@OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="ARMOR_ID")
