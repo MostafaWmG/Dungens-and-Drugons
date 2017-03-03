@@ -493,6 +493,7 @@ public class Character extends GameObject {
 	 * @return empty slot
 	 */
 	public int findEmptyPositionInBackPack(){
+		System.out.println("index: " +getBackPack().size());
 		for (int i = 0 ; i < BACKPACK_SIZE; i ++ ){
 			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
 				return i ;
@@ -507,8 +508,8 @@ public class Character extends GameObject {
 	 * @param item item 
 	 * @return if backpack is full or not
 	 */
-	public boolean addBackPack(Item item){
-		return addBackPack(item, true);
+	public void addBackPack(Item item){
+		 addBackPack(item, true);
 	}
 	
 	/**
@@ -517,9 +518,15 @@ public class Character extends GameObject {
 	 * @param saveEntity true if we want the item to be saved for character on database
 	 * @return true if the backpack has empty space
 	 */
-	private boolean addBackPack(Item item, boolean saveEntity)
+	private void addBackPack(Item item, boolean saveEntity)
 	{
-		if(getBackPack().isEmpty()){
+		if(getBackPack().size() >= BACKPACK_SIZE){
+			int index = findEmptyPositionInBackPack();
+
+			getBackPack().add(index, item);
+			if (saveEntity)
+				getCharacterEntity().getBackpack().add(index, item.getItemEntity());
+		}else{
 			if(item.getEnchantmentType() == null && item.getAttributeType() == null){
 				Item newItem = new Item(item.getName(),item.getItemEnum());
 				getBackPack().add(newItem);
@@ -529,19 +536,6 @@ public class Character extends GameObject {
 				getBackPack().add(item);
 				if (saveEntity)
 					getCharacterEntity().getBackpack().add(item.getItemEntity());
-			}
-
-			return true;
-		}else {
-			if(findEmptyPositionInBackPack() == -1){
-				System.out.println("Back Pack Is Full");
-				return false;
-			}else {
-				int index = findEmptyPositionInBackPack();
-				getBackPack().add(index, item);
-				if (saveEntity)
-					getCharacterEntity().getBackpack().add(index, item.getItemEntity());
-				return true;
 			}
 		}
 
