@@ -61,7 +61,7 @@ public class CharacterTest {
 		assertTrue(fighter2.getTag() == "Player");
 		DaoFactory.getCharacterDao().create(fighter1.getCharacterEntity());
 		DaoFactory.getCharacterDao().create(fighter2.getCharacterEntity());
-//		testCharacterCharacterEntity();
+		testCharacterCharacterEntity();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class CharacterTest {
 		assertTrue(fighter2.getTag() == "Player");
 		DaoFactory.getCharacterDao().create(fighter1.getCharacterEntity());
 		DaoFactory.getCharacterDao().create(fighter2.getCharacterEntity());
-//		testCharacterCharacterEntity();
+		testCharacterCharacterEntity();
 	}
 
 	/**
