@@ -5,7 +5,7 @@ import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.d20.dice.Dice;
 
 /**
- * this a Factory class for creating character and items of the character.
+ * This is a Factory class for creating character and items of the character.
  * @author wmg
  * @author alvaro
  */

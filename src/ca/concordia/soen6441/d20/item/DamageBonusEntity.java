@@ -23,10 +23,18 @@ public class DamageBonusEntity implements Serializable {
 	public DamageBonusEntity() {
 		super();
 	}   
+	/**
+	 * 
+	 * @return id of the object in database tables
+	 */
 	public long getId() {
 		return this.id;
 	}
 
+	/**
+	 * 
+	 * @param id to set in order to use in database queries
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -37,7 +45,7 @@ public class DamageBonusEntity implements Serializable {
 		return base;
 	}
 	/**
-	 * @param base the base to set
+	 * @param base to set
 	 */
 	public void setBase(int base) {
 		this.base = base;
@@ -55,6 +63,10 @@ public class DamageBonusEntity implements Serializable {
 		this.modifier = modifier;
 	}
 	
+	/**
+	 * 
+	 * @return DamageBonus object that is used to interact between DamageBonus and DamageBonuseEntity classes.
+	 */
 	public DamageBonus createDamageBonus()
 	{
 		return new DamageBonus(this);
