@@ -26,6 +26,8 @@
 		<validation-mode>AUTO</validation-mode>
 		<properties>
 			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<!-- <property name="hibernate.use_sql_comments" value="true"/> -->
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:derby:dungeonsdb;create=true"/>
 			<property name="javax.persistence.jdbc.user" value=""/>
