@@ -166,6 +166,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 				getContentPane().add(iconButtons[i]);
 				iconButtons[i].addActionListener(this);
 			}
+			iconButtons[1].setVisible(false);
 			iconButtons[5].setVisible(false);
 			iconButtons[6].setVisible(false);
 		}
@@ -183,6 +184,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 			if(e.getActionCommand().equals ("image1")){
 				setCurrentPointer((ImageIcon) iconButtons[1].getIcon());
 				setTag("Enemy");
+				setTag(getCharacter().getTag());
 			}
 
 			if(e.getActionCommand().equals ("image2")){
@@ -207,7 +209,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 			
 			if(e.getActionCommand().equals ("image6")){
 				setCurrentPointer((ImageIcon) iconButtons[6].getIcon());
-				setTag("Player");
+				setTag(getCharacter().getTag());
 			}
 			
 			if(e.getActionCommand().equals("Save"))
@@ -244,7 +246,12 @@ public class MapEditor  extends JFrame implements ActionListener{
 		}
 		Character character = (Character) list.get(0).createModel();
 		setCharacter(character);
-		iconButtons[6].setVisible(true);
+		if(character.getTag().equals("Player")){
+			iconButtons[6].setVisible(true);
+		}else{
+			iconButtons[1].setVisible(true);
+		}
+		
 	}
 	
 	public void loadItem(String name){
@@ -268,7 +275,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 		map = new GameMap(mapName,column, row);
 
 		for(int i = 0; i < row ; i++){
-			for(int j = 0; j < column ; j++){				
+			for(int j = 0; j < column ; j++){	
+				System.out.println("i:"+ i + " j: " +j+ " : "+ viewElements[i][j]);
 				if(viewElements[i][j].getTag().equals("Ground")){
 					Location location = new Location(j, i);
 					map.setGameObjectAtLocation(location,new Ground(mapName+i+j,location));
@@ -345,7 +353,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
+//				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
 				if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Ground")){
 					viewElements[i][j].setTag("Ground");
 					viewElements[i][j].iconHandler();
@@ -363,11 +371,11 @@ public class MapEditor  extends JFrame implements ActionListener{
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Player")){
 					viewElements[i][j].setTag("Player");
-					viewElements[i][j].setCharacter(viewElements[i][j].getCharacter());
+					viewElements[i][j].setCharacter((Character)map.getGameObjectAtLocation(new Location(j,i)));
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Item")){
 					viewElements[i][j].setTag("Item");
-					viewElements[i][j].setItem(viewElements[i][j].getItem());
+					viewElements[i][j].setItem((Item)map.getGameObjectAtLocation(new Location(j,i)));
 					viewElements[i][j].iconHandler();
 				}
 			}
