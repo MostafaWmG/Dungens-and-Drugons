@@ -82,9 +82,9 @@ public class MapEditor  extends JFrame implements ActionListener{
 		this.row = row;
 		this.column = column;
 		viewElements = new Grid[row][column];
-		iconButtons = new JButton[7];
+		iconButtons = new JButton[8];
 		setCurrentPointer(new ImageIcon());
-		images = new ImageIcon[7];
+		images = new ImageIcon[8];
 		//enable absolute positioning mode 
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -186,6 +186,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 //			iconButtons[1].setVisible(false);
 			iconButtons[5].setVisible(false);
 			iconButtons[6].setVisible(false);
+			iconButtons[7].setVisible(false);
 		}
 
 	@Override
@@ -229,6 +230,11 @@ public class MapEditor  extends JFrame implements ActionListener{
 				setTag(getCharacter().getTag());
 			}
 			
+			if(e.getActionCommand().equals ("image7")){
+				setCurrentPointer((ImageIcon) iconButtons[7].getIcon());
+				setTag("Enemy");
+			}
+			
 			if(e.getActionCommand().equals("Save"))
 			{
 				
@@ -267,11 +273,16 @@ public class MapEditor  extends JFrame implements ActionListener{
 		Character character = (Character) list.get(0).createModel();
 		setCharacter(character);
 //		if(character.getTag().equals("Player")){
-			iconButtons[6].setVisible(true);
+//			iconButtons[6].setVisible(true);
 //		}else{
 //			iconButtons[1].setVisible(true);
 //		}
 //		
+		if(character.getTag().equals("Player")){
+			iconButtons[6].setVisible(true);
+		}else{
+			iconButtons[7].setVisible(true);
+		}
 	}
 	/**
 	 * 

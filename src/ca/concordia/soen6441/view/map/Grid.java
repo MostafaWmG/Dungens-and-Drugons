@@ -94,6 +94,10 @@ public class Grid extends JButton implements ActionListener{
 				mapEditor.setCurrentPointer(mapEditor.images[2]);
 				mapEditor.setTag("Ground");
 			}
+			
+			if(mapEditor.getTag().equals("Enemy")){
+				mapEditor.iconButtons[7].setVisible(false);
+			}
 		}
 	}
 
