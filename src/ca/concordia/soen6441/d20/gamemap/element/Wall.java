@@ -20,12 +20,22 @@ public class Wall extends GameObject {
 		setLocation(new Location(x, y));
 	}
 	
+	/**
+	 * This constructor creates a wall object and assigns its name and location.
+	 * @param name to set for the wall
+	 * @param location which the wall will be located
+	 */
 	public Wall(String name,Location location){
 		initEmptyWallEntity();
 		setName(name);
 		setLocation(location);
 	}
 	
+	/**
+	 * This consturctor creates a wall and assigns only name of it.
+	 * The relative location will be set to (0,0)
+	 * @param name
+	 */
 	public Wall(String name){		
 		initEmptyWallEntity();
 		setName(name);
@@ -41,18 +51,26 @@ public class Wall extends GameObject {
 		setWallEntity(entity);
 		init();
 	}
-	
+	/**
+	 * This method creates an emtpy wall entity
+	 */
 	private void initEmptyWallEntity()
 	{
 		setWallEntity(new WallEntity());
 		init();
 	}
 	
+	/**
+	 * Sets the tag for the wall
+	 */
 	private void init()
 	{
 		setTag("Wall");
 	}
 
+	/**
+	 * This method is used to get the value stored in database
+	 */
 	@Override
 	public GameObjectEntity getEntity() {
 		// TODO Auto-generated method stub

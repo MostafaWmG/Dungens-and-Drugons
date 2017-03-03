@@ -45,12 +45,18 @@ public class Ground extends GameObject {
 		init();
 	}
 	
+	/**
+	 * creates an empty entity for the ground object
+	 */
 	private void initEmptyEntity()
 	{
 		setGroundEntity(new GroundEntity());
 		init();
 	}
 	
+	/**
+	 * sets the tag for the ground object
+	 */
 	private void init()
 	{
 		setTag("Ground");
