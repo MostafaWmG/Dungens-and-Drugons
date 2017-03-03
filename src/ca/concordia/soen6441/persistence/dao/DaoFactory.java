@@ -63,7 +63,7 @@ public class DaoFactory {
 	 * 
 	 * @return A DAO for CRUD operation for CampaignEntity
 	 */
-	public INamedEntityDao<CampaignEntity, Long> getCampaignDao()
+	public static INamedEntityDao<CampaignEntity, Long> getCampaignDao()
 	{
 		return DaoHolder.jpaCampaignDao;
 	}

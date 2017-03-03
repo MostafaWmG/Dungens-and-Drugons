@@ -6,6 +6,11 @@ import java.util.List;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 
+/**
+ * graph of maps that connect the together.
+ * @author wmg
+ *
+ */
 public class Campaign {
 	
 	CampaignEntity campaignEntity;	
@@ -20,20 +25,33 @@ public class Campaign {
 	public Campaign(CampaignEntity e)
 	{
 		setCampaignEntity(e);
+		campaign = new LinkedList<GameMap>();
 		for (GameMapEntity gameMapEntity : e.getCampaign())
 			addMap(gameMapEntity.createModel(), false);
 	}
-			
+	
+	/**
+	 * Initialize a model entity
+	 */
 	private void initEmptyEntity()
 	{
 		setCampaignEntity(new CampaignEntity());
 	}
 	
+	/**
+	 * add map to Campaign
+	 * @param map selected map to be added
+	 */
 	public void addMap(GameMap map)
 	{
 		addMap(map, true);
 	}
 	
+	/**
+	 * add map to Campaign
+	 * @param map selected map to be added
+	 * @param saveEntity if we are loading or saving
+	 */
 	private void addMap(GameMap map, boolean saveEntity)
 	{
 		getCampaign().add(map);
@@ -41,7 +59,12 @@ public class Campaign {
 			getCampaignEntity().getCampaign().add(map.getEntity());
 	}
 	
+	/**
+	 * show maps inside Campaign
+	 */
 	public void show(){
+		
+		System.out.println("<<Campaign>>");
 		for(int i = 0 ; i < getCampaign().size(); i ++){
 			System.out.println("Map" + i+" : "+ getCampaign().get(i).getMapName());
 		}

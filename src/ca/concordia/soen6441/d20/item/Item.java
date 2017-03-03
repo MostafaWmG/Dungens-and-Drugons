@@ -128,7 +128,10 @@ public class Item extends GameObject implements LevelUp{
 	public void setAttributeType(AttributeEnum attributeEnum) {
 		getItemEntity().setAttributeType(attributeEnum);
 	}
-
+	
+	/**
+	 * this function will update the items if some of related attributes changes. using LevelUp interface
+	 */
 	@Override
 	public void update(int modifier) {
 		setEnchantmentPoint(getEnchantmentPoint() +  (int)(modifier/5));
@@ -139,6 +142,9 @@ public class Item extends GameObject implements LevelUp{
 		return getItemEntity();
 	}
 	
+	/**
+	 * show item
+	 */
 	public void show(){
 		if(getItemEntity().getAttributeType() !=null){
 		 System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint());
@@ -147,6 +153,11 @@ public class Item extends GameObject implements LevelUp{
 		}
 	}
 	
+	/**
+	 * check if item is valid or not
+	 * @param item selected item
+	 * @return if item is valid or not
+	 */
 	public boolean validate(Item item){
 		if(item.getItemEnum() == ItemEnum.HELMET){
 			if(item.getEnchantmentType() == null){
@@ -235,11 +246,17 @@ public class Item extends GameObject implements LevelUp{
 		}
 	}
 	
+	/**
+	 * set the tag
+	 */
 	@Override
 	public void setTag(String tag){
 		getItemEntity().setItemTag(tag);
 	}
 	
+	/**
+	 * return the tag
+	 */
 	@Override
 	public String getTag(){
 		return getItemEntity().getItemTag();

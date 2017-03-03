@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import ca.concordia.soen6441.d20.campaign.Campaign;
+import ca.concordia.soen6441.d20.campaign.CampaignEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
@@ -41,30 +42,17 @@ public class CampaignEditor {
 		// here we need to call the load function to load character from file 
 		// Campaign Campaign = load(CampaignLoaded);
 		
-		//test
-		Campaign test = new Campaign(CampaignLoaded);
-		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName("mapa");
+		List<CampaignEntity> list = DaoFactory.getCampaignDao().findByName(CampaignLoaded);
 		if (list.isEmpty())
 		{
 			//TODO use appropriate procedure
 			System.out.println("Invalid map name");
 			return;
 		}
-		GameMap map = list.get(0).createModel();
-		test.getCampaign().add(map);
+		Campaign campaign = list.get(0).createModel();
+
 		
-		list = DaoFactory.getGameMapDao().findByName("mapb");
-		if (list.isEmpty())
-		{
-			//TODO use appropriate procedure
-			System.out.println("Invalid map name");
-			return;
-		}
-		map = list.get(0).createModel();
-		test.getCampaign().add(map);
-		//
-		
-		editCampaign(test);
+		editCampaign(campaign);
 	}
 	
 	/**
@@ -72,35 +60,34 @@ public class CampaignEditor {
 	 * @param campaign selected campaign
 	 */
 	private void editCampaign(Campaign campaign){
-		System.out.println("Add maps :(Type a), Remove maps:(Type r) ");
+		campaign.show();
+		System.out.println("Add maps :(Type a) ");
 		String hitButton = scanner.nextLine();
 	
 		// we need to create all this characters throw character factory;
 		if(hitButton.equals("a")){
 			addMap(campaign);
-		}else if (hitButton.equals("r")){
-			removeMap(campaign);
 		}else{
 			System.out.println("Error");
 		}
 	}
 	
-	private void removeMap(Campaign campaign){
-		campaign.show();
-		System.out.println("Enter your map index to remove from Campaign: ");
-		String mapName = scanner.nextLine();
-		
-		try {
-			int index = Integer.parseInt(mapName);
-			campaign.getCampaign().remove(index);
-			campaign.show();
-			saveCampaignChanges(campaign, "edit");
-		} catch (Exception e) {
-			System.out.println("Wrong Input");
-		}
-
-
-	}
+//	private void removeMap(Campaign campaign){
+//		campaign.show();
+//		System.out.println("Enter your map index to remove from Campaign: ");
+//		String mapName = scanner.nextLine();
+//		
+//		try {
+//			int index = Integer.parseInt(mapName);
+//			campaign.getCampaign().remove(index);
+//			campaign.show();
+//			saveCampaignChanges(campaign, "edit");
+//		} catch (Exception e) {
+//			System.out.println("Wrong Input");
+//		}
+//
+//
+//	}
 	
 	/**
 	 * method for createCampaign
@@ -134,7 +121,7 @@ public class CampaignEditor {
 		
 		GameMap map = list.get(0).createModel();
 		
-		campaign.getCampaign().add(map);
+		campaign.addMap(map);
 		campaign.show();
 		saveCampaignChanges(campaign,"add");
 	}
@@ -160,10 +147,10 @@ public class CampaignEditor {
 				editCampaign(campaign);
 			}
 		}else if (answer.equals("no")){
-			System.out.println("Do you want to save character changes:(yes or no)");
+			System.out.println("Do you want to save Campaign changes:(yes or no)");
 			answer = scanner.nextLine();
 			if(answer.equals("yes")){
-				// save(character.name);
+				DaoFactory.getCampaignDao().create(campaign.getCampaignEntity());
 			}else {
 				
 			}
