@@ -313,10 +313,10 @@ public class GameMap {
 		}
 		
 		//copy map
-		Map<Location,GameObject> mapCopy = new HashMap<Location, GameObject>();
+		Map<Location,String> mapCopy = new HashMap<Location, String>();
 //		mapCopy = new HashMap<Location, GameObject>();
 		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
-			mapCopy.put(mapElement.getKey(), mapElement.getValue());
+			mapCopy.put(mapElement.getKey(), mapElement.getValue().getTag());
 //			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
 		}
 		
@@ -336,16 +336,16 @@ public class GameMap {
 	 * @param enterPoint the enter door
 	 * @return return if map is valid or not
 	 */
-	private boolean exploreAlgorithm(Map<Location, GameObject> map,Location enterPoint,Location exitPoint){
+	private boolean exploreAlgorithm(Map<Location, String> map,Location enterPoint,Location exitPoint){
 		
 		Location currentLocation;
 		
 		if(enterPoint.getX() > exitPoint.getX() && enterPoint.getY() < exitPoint.getY()){
-			map.get(enterPoint).setTag("Exit");
-			map.get(exitPoint).setTag("Wall");
+			map.put(enterPoint, "Exit");
+			map.put(exitPoint, "Wall");
 			currentLocation = new Location(exitPoint.getX(),exitPoint.getY());
 		}else{
-			map.get(enterPoint).setTag("Wall");
+			map.put(enterPoint, "Wall");
 			currentLocation = new Location(enterPoint.getX(),enterPoint.getY());
 		}
 		
@@ -371,7 +371,7 @@ public class GameMap {
 	 * @param valid map is valid or not
 	 * @return if map is valid or not
 	 */
-	public boolean explore(Location finderUp,Location finderDown,Location finderRight,Location finderLeft, Location currentLocation,Map<Location,GameObject> map,ArrayList<Location> conditionList,boolean valid){
+	public boolean explore(Location finderUp,Location finderDown,Location finderRight,Location finderLeft, Location currentLocation,Map<Location,String> map,ArrayList<Location> conditionList,boolean valid){
 
 		if(valid)
 			return true;
@@ -395,34 +395,34 @@ public class GameMap {
 		boolean left = false;
 
 		if(finderUp.getY() >= 0){
-			if(map.get(finderUp).getTag().equals("Exit")){
+			if(map.get(finderUp).equals("Exit")){
 				valid = true;
-			}else if(map.get(finderUp).getTag().equals("Ground") ||map.get(finderUp).getTag().equals("Enemy") || map.get(finderUp).getTag().equals("Item") || map.get(finderUp).getTag().equals("Player")){
+			}else if(map.get(finderUp).equals("Ground") ||map.get(finderUp).equals("Enemy") || map.get(finderUp).equals("Item") || map.get(finderUp).equals("Player")){
 				conditon ++ ;
 				up =true;
 			}
 
 		}
 		if(finderDown.getY() < getHeight()){
-			if(map.get(finderDown).getTag().equals("Exit")){
+			if(map.get(finderDown).equals("Exit")){
 				valid = true;
-			}else if(map.get(finderDown).getTag().equals("Ground") ||map.get(finderDown).getTag().equals("Enemy") || map.get(finderDown).getTag().equals("Item") || map.get(finderDown).getTag().equals("Player")){
+			}else if(map.get(finderDown).equals("Ground") ||map.get(finderDown).equals("Enemy") || map.get(finderDown).equals("Item") || map.get(finderDown).equals("Player")){
 				conditon ++ ;
 				down = true;
 			}
 		}
 		if(finderRight.getX() < getWidth()){
-			if(map.get(finderRight).getTag().equals("Exit")){
+			if(map.get(finderRight).equals("Exit")){
 				valid = true;
-			}else if(map.get(finderRight).getTag().equals("Ground") ||map.get(finderRight).getTag().equals("Enemy") || map.get(finderRight).getTag().equals("Item") || map.get(finderRight).getTag().equals("Player")){
+			}else if(map.get(finderRight).equals("Ground") ||map.get(finderRight).equals("Enemy") || map.get(finderRight).equals("Item") || map.get(finderRight).equals("Player")){
 				conditon ++ ;
 				right = true;
 			}
 		}
 		if(finderLeft.getX() >= 0){
-			if(map.get(finderLeft).getTag().equals("Exit")){
+			if(map.get(finderLeft).equals("Exit")){
 				valid = true;
-			}else if(map.get(finderLeft).getTag().equals("Ground") ||map.get(finderLeft).getTag().equals("Enemy") || map.get(finderLeft).getTag().equals("Item") || map.get(finderLeft).getTag().equals("Player")){
+			}else if(map.get(finderLeft).equals("Ground") ||map.get(finderLeft).equals("Enemy") || map.get(finderLeft).equals("Item") || map.get(finderLeft).equals("Player")){
 				conditon ++ ;
 				left = true;
 			}
@@ -431,7 +431,7 @@ public class GameMap {
 //		System.out.println("Conditon: " + conditon);
 		if(!valid){
 			if(conditon == 0 ){
-				map.get(currentLocation).setTag("Wall");
+				map.put(currentLocation, "Wall");
 				if(conditionList.size() != 0){
 					currentLocation = conditionList.get(0);
 //					for(int i = 0 ; i < conditionList.size(); i ++){
@@ -451,7 +451,7 @@ public class GameMap {
 
 
 			}else if (conditon == 1){
-				map.get(currentLocation).setTag("Wall");
+				map.put(currentLocation, "Wall");
 				if(up){
 //					System.out.println("UP 1");
 					currentLocation.setY(finderUp.getY());
@@ -472,7 +472,7 @@ public class GameMap {
 
 			}else if (conditon >=2){
 				conditionList.add( new Location(currentLocation.getX(), currentLocation.getY()));
-				map.get(currentLocation).setTag("Condition");
+				map.put(currentLocation, "Condition");
 				if(up){
 //					System.out.println("UP");
 					currentLocation.setY(finderUp.getY());

@@ -33,7 +33,7 @@ public class ArmorClassEntity implements Serializable {
 	}
 
 	/**
-	 * @param base the base to set
+	 * @param base to set for armor object
 	 */
 	public void setBase(int base) {
 		this.base = base;
@@ -67,6 +67,10 @@ public class ArmorClassEntity implements Serializable {
 		this.id = id;
 	}
 
+	/**
+	 * 
+	 * @return declares ArmorClass properties for this ArmorClassEntity object
+	 */
 	public ArmorClass createArmorModel()
 	{
 		return new ArmorClass(this);
