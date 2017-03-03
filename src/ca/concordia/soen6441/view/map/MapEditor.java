@@ -345,7 +345,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-//				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
+				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
 				if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Ground")){
 					viewElements[i][j].setTag("Ground");
 					viewElements[i][j].iconHandler();
