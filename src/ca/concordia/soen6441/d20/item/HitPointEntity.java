@@ -25,16 +25,27 @@ public class HitPointEntity implements Serializable {
 	public HitPointEntity() {
 		super();
 	}
-	
+	/**
+	 * 
+	 * @return HitPoint object for storing data retrieved from database.
+	 */
 	public HitPoint createHitPoint()
 	{
 		return new HitPoint(this);
 	}
 	
+	/**
+	 * 
+	 * @return id of object
+	 */
 	public long getId() {
 		return this.id;
 	}
-
+	
+	/**
+	 * 
+	 * @param id for this entity to use it in database queries
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
