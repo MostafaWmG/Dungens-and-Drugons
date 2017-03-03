@@ -10,19 +10,31 @@ import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.character.Character;
 
 /**
- * this a Grid class for elements in mapView
+ * This is a Grid class for elements on mapView
  * @author wmg
  *
  */
 @SuppressWarnings("serial")
 public class Grid extends JButton implements ActionListener{
-	
+	/**
+	 * icon: to display an icon picture
+	 * mapEditor: game map
+	 * tag: to set the tag for map
+	 * character: character that is placed on the map
+	 * item: item that is on the map.
+	 */
 	private ImageIcon icon;
 	private MapEditor mapEditor;
 	private String tag;
 	private Character character;
 	private Item item;
 	
+	
+	/**
+	 * 
+	 * @param mapEditor the map to put elements on it
+	 * @param tag to set the tag.
+	 */
 	public Grid(MapEditor mapEditor,String tag)
 	{
 		this.mapEditor = mapEditor;
@@ -31,7 +43,12 @@ public class Grid extends JButton implements ActionListener{
 		setItem(null);
 		iconHandler();
 	}
-	
+	/**
+	 * Puts given character with the given on the map
+	 * @param character to set on map
+	 * @param mapEditor the map to put elements on it
+	 * @param tag to set the tag.
+	 */
 	public Grid(Character character,MapEditor mapEditor,String tag) {
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
@@ -39,7 +56,12 @@ public class Grid extends JButton implements ActionListener{
 		this.setItem(null);
 		iconHandler();
 	}
-	
+	/**
+	 * Puts given character with the given on the map
+	 * @param character items to set on map
+	 * @param mapEditor the map to put elements on it
+	 * @param tag to set the tag.
+	 */
 	public Grid(Item character,MapEditor mapEditor,String tag) {
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
@@ -75,24 +97,37 @@ public class Grid extends JButton implements ActionListener{
 		}
 	}
 
+	/**
+	 * 
+	 * @return the tag
+	 */
 	public String getTag() {
 		return tag;
 	}
 
+	/**
+	 * 
+	 * @param tag the tag to set.
+	 */
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
+	/**
+	 * 
+	 * @param icon the icon that will be displayed on the map
+	 */
 	public void setIcon(ImageIcon icon){
 		this.icon = icon;
 	}
-	
+	/**
+	 * @return the icon that will displayed on the
+	 */
 	public ImageIcon getIcon(){
 		return icon;
 	}
 	
 	/**
-	 * this a method for showing icons by tag
+	 * This is a method for showing icons by tag
 	 */
 	public void iconHandler(){
 		if(tag == "Ground"){
@@ -127,7 +162,7 @@ public class Grid extends JButton implements ActionListener{
 	}
 
 	/**
-	 * @param character the character to set
+	 * @param character to set on mapView
 	 */
 	public void setCharacter(Character character) {
 		this.character = character;
@@ -141,7 +176,7 @@ public class Grid extends JButton implements ActionListener{
 	}
 
 	/**
-	 * @param item the item to set
+	 * @param item the item to set on the mapView
 	 */
 	public void setItem(Item item) {
 		this.item = item;

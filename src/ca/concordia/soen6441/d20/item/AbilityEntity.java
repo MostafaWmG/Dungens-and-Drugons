@@ -34,10 +34,18 @@ public class AbilityEntity implements Serializable {
 	public AbilityEntity() {
 		super();
 	}   
+	/**
+	 * 
+	 * @return id which is used for database queries
+	 */
 	public long getId() {
 		return this.id;
 	}
 
+	/**
+	 * 
+	 * @param id to set for using in database queries
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -60,13 +68,13 @@ public class AbilityEntity implements Serializable {
 		return modifier;
 	}
 	/**
-	 * @param modifier the modifier to set
+	 * @param modifier the ability modifier to set
 	 */
 	public void setModifier(int modifier) {
 		this.modifier = modifier;
 	}
 	/**
-	 * @return the ability
+	 * @return the ability of character
 	 */
 	public AbilityEnum getAbility() {
 		return ability;
@@ -78,6 +86,10 @@ public class AbilityEntity implements Serializable {
 		this.ability = ability;
 	}
 	
+	/**
+	 * 
+	 * @return declares Ability properties for this AbilityEntity object
+	 */
 	public Ability createAbility()
 	{
 		return new Ability(this);

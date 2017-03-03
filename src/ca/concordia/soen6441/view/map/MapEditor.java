@@ -27,7 +27,7 @@ import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 
 /**
- * this is mapEditor View 
+ * this class implements is mapEditor View of the architectural design. 
  * @author wmg
  *
  */
@@ -35,6 +35,23 @@ import ca.concordia.soen6441.persistence.dao.DaoFactory;
 @SuppressWarnings("serial")
 public class MapEditor  extends JFrame implements ActionListener{
 
+	/**
+	 * row: number of rows of the map
+	 * column: number of columns of the game map.
+	 * viewElements: elements that are on the map
+	 * elementSizeX: 
+	 * elementSizeY:
+	 * map: map of the game
+	 * constants: is used to constant properties of the game elements
+	 * dimension: 
+	 * currentPointer:
+	 * tag: to set the tag of elements on the map
+	 * playerFactory: to 
+	 * character: to place a character on the map
+	 * item: items of the character's on the map
+	 * images: to show images on the map
+	 * iconButton: to display button on the map
+	 */
 	private int row;
 	private int column;
 	private Grid[][] viewElements;
@@ -98,7 +115,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 *  it will create a button	
+	 *  This method will create a button	
 	 * @param button JButton object
 	 * @param name name of the button
 	 * @param sizeWidthOffset sizeWidthOffset
@@ -235,7 +252,10 @@ public class MapEditor  extends JFrame implements ActionListener{
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @param name is used to specify which character to load from data base.
+	 */
 	public void loadCharacter(String name){
 		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(name);
 		if (list.isEmpty())
@@ -253,7 +273,10 @@ public class MapEditor  extends JFrame implements ActionListener{
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @param name is used to load items related to that name
+	 */
 	public void loadItem(String name){
 		List<ItemEntity> list = DaoFactory.getItemDao().findByName(name);
 		if (list.isEmpty())
@@ -267,7 +290,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 		iconButtons[5].setVisible(true);
 	}
 	/**
-	 * this a method for saving a map
+	 * This the method used for saving a map
 	 * @param mapName primary key
 	 */
 	public void save(String mapName){
@@ -315,7 +338,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * this a method for loading map
+	 * This the method that is used for loading map
 	 * @param fileName primary key
 	 */
 	public void load(String fileName){
@@ -383,7 +406,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * this method will remove previous grid
+	 * This method will remove previous grid
 	 */
 	public void removeGrid(){
 		for(int i = 0; i < row ; i++){
@@ -396,7 +419,10 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 			viewElements = null;
 	}
-	
+	/**
+	 * 
+	 * @return 
+	 */
 	public ImageIcon getCurrentPointer() {
 		return currentPointer;
 	}
@@ -405,45 +431,60 @@ public class MapEditor  extends JFrame implements ActionListener{
 		this.currentPointer = currentPointer;
 	}
 
+	/**
+	 * 
+	 * @return the game map
+	 */
 	public GameMap getMap() {
 		return map;
 	}
-
+	/**
+	 * 
+	 * @param map to set as the game map.
+	 */
 	public void setMap(GameMap map) {
 		this.map = map;
 	}
 
+	/**
+	 * 
+	 * @return tag of element on the map
+	 */
 	public String getTag() {
 		return tag;
 	}
 
+	/**
+	 * 
+	 * @param tag to set for elements on the map
+	 */
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
 	/**
-	 * @return the character
+	 * @return the character that is on the map
 	 */
 	public Character getCharacter() {
 		return character;
 	}
 
 	/**
-	 * @param character the character to set
+	 * @param character to set on the map
 	 */
 	public void setCharacter(Character character) {
 		this.character = character;
 	}
 
 	/**
-	 * @return the item
+	 * @return the item on the map
 	 */
 	public Item getItem() {
 		return item;
 	}
 
 	/**
-	 * @param item the item to set
+	 * @param item to set on the map
 	 */
 	public void setItem(Item item) {
 		this.item = item;

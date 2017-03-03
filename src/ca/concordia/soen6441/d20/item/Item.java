@@ -68,7 +68,9 @@ public class Item extends GameObject implements LevelUp{
 	{
 		setItemEntity(entity);
 	}
-	
+	/**
+	 * sets given entity to the ItemEntity
+	 */
 	private void initEmptyEntity()
 	{
 		setItemEntity(new ItemEntity());
@@ -88,6 +90,10 @@ public class Item extends GameObject implements LevelUp{
 		this.itemEntity = itemEntity;
 	}
 
+	/**
+	 * 
+	 * @return point of the 
+	 */
 	public int getEnchantmentPoint() {
 		return getItemEntity().getPoint();
 	}

@@ -150,8 +150,8 @@ public class Character extends GameObject {
 			//changing keyword "this" to characterEntity
 			//adding characterEntity to the other lines
 			getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
-			getCharacterEntity().getLocation().setX(getLocation().getX()+dx);
-			getCharacterEntity().getLocation().setY(getLocation().getY()+dy);
+			//getCharacterEntity().getLocation().setX(getLocation().getX()+dx);
+			//getCharacterEntity().getLocation().setY(getLocation().getY()+dy);
 		
 		} catch(MoveNotValidException e) {
 			e.printStackTrace();
@@ -203,7 +203,8 @@ public class Character extends GameObject {
 	public void wearItem(Item item , int value){
 		if (item.getAttributeType() == null ){
 			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
-			getAbilities().get(item.getEnchantmentType().getValue()).update(value);
+			if(item.getEnchantmentType() != null)
+				getAbilities().get(item.getEnchantmentType().getValue()).update(value);
 		}else if (item.getEnchantmentType() == null){
 			System.out.println("debug1: "+ item.getAttributeType() + " value: " + value);
 			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){

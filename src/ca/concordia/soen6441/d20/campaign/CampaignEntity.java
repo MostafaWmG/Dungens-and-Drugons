@@ -10,8 +10,19 @@ import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 
 /**
  * Entity implementation class for Entity: CampaignEntity
+ * @author Saman Saadi
  *
  */
+
+@NamedQueries({
+	@NamedQuery(
+			name="findCampaignEntityByName",
+			query="SELECT ce FROM CampaignEntity ce WHERE ce.name = :name"
+			),
+	@NamedQuery(
+			name="findCampaignEntityAll",
+			query="SELECT ce FROM CampaignEntity ce")
+})
 
 @Entity
 public class CampaignEntity implements Serializable {

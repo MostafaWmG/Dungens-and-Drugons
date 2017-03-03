@@ -1,9 +1,20 @@
 package ca.concordia.soen6441.d20.item;
-
+/**
+ * 
+ * This class is used to compute attack bonus of the character in each combat.
+ *
+ */
 public class AttackBonus implements LevelUp{
 	
+	/**
+	 * attackBonusEntity: is used as way to save/load the attack bonus of the character
+	 */
 	AttackBonusEntity attackBonusEntity;
 	
+	/**
+	 * 
+	 * @param modifier is used for creating AttackBonus object
+	 */
 	public AttackBonus(int modifier){
 		initEmptyEntity();
 		setModifier(modifier);
@@ -19,15 +30,25 @@ public class AttackBonus implements LevelUp{
 		setAttackBonusEntity(entity);
 	}
 	
+	/**
+	 * Creating empty Entity for this AttackBonus object.
+	 */
 	private void initEmptyEntity()
 	{
 		setAttackBonusEntity(new AttackBonusEntity());
 	}
 	
+	/**
+	 * 
+	 * @return character's points
+	 */
 	public int getPoint(){
 		return (getBase() + getModifier());
 	}
 	
+	/**
+	 * Prints AttackBonusPoint of the character
+	 */
 	public void showPoint(){
 		System.out.println("AttackBonusPoint:" +getPoint());
 	}
@@ -45,21 +66,21 @@ public class AttackBonus implements LevelUp{
 	}
 
 	/**
-	 * @param modifier the modifier to set
+	 * @param modifier to set
 	 */
 	public void setModifier(int modifier) {
 		getAttackBonusEntity().setModifier(modifier);
 	}
 
 	/**
-	 * @return the base
+	 * @return the base attack bonus
 	 */
 	public int getBase() {
 		return getAttackBonusEntity().getBase();
 	}
 
 	/**
-	 * @param base the base to set
+	 * @param base set as base attack bonus
 	 */
 	public void setBase(int base) {
 		getAttackBonusEntity().setBase(base);

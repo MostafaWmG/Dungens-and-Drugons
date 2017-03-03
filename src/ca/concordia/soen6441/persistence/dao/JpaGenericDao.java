@@ -13,6 +13,7 @@ import ca.concordia.soen6441.persistence.dao.interfaces.IGenericDao;
 
 
 /**
+ * This class implements CRUD operations using JPA
  * @author Saman Saadi
  *
  */
@@ -60,7 +61,7 @@ public class JpaGenericDao<T, PK extends Serializable> implements IGenericDao<T,
 		em.getTransaction().begin();
 		em.merge(t);
 		em.getTransaction().commit();
-		em.flush();
+		//em.flush();
 		return t;
 	}
 

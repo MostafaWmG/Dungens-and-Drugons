@@ -1,12 +1,13 @@
 package ca.concordia.soen6441.persistence.dao;
 
+import ca.concordia.soen6441.d20.campaign.CampaignEntity;
 import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.persistence.dao.interfaces.INamedEntityDao;
 
 /**
- * 
+ * A factory class which returns DAOs for storing and loading entities
  * @author Saman Saadi
  *
  */
@@ -25,21 +26,45 @@ public class DaoFactory {
 				new JpaNamedEntityDao<>(CharacterEntity.class,
 										"findCharacterEntityByName",
 										"findCharacterEntityAll");
+		static final JpaNamedEntityDao<CampaignEntity, Long> jpaCampaignDao =
+				new JpaNamedEntityDao<>(CampaignEntity.class,
+										"findCampaignEntityByName", 
+										"findCampaignEntityAll");
 	}
 	
+	/**
+	 * 
+	 * @return  A DAO for CRUD operation for GameMapEntity
+	 */
 	public static INamedEntityDao<GameMapEntity, Long> getGameMapDao()
 	{
 		return DaoHolder.jpaGameMapDao;
 	}
 	
+	/**
+	 * 
+	 * @return A DAO for CRUD operation for ItemEntity
+	 */
 	public static INamedEntityDao<ItemEntity, Long> getItemDao()
 	{
 		return DaoHolder.jpaItemDao;
 	}
 	
+	/**
+	 * 
+	 * @return A DAO for CRUD operation for CharacterEntity
+	 */
 	public static INamedEntityDao<CharacterEntity, Long> getCharacterDao()
 	{
 		return DaoHolder.jpaCharacterDao;
 	}
-
+	
+	/**
+	 * 
+	 * @return A DAO for CRUD operation for CampaignEntity
+	 */
+	public INamedEntityDao<CampaignEntity, Long> getCampaignDao()
+	{
+		return DaoHolder.jpaCampaignDao;
+	}
 }
