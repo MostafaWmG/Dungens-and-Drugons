@@ -239,12 +239,13 @@ public class CharacterEditor {
 			saveCharacterChanges(character, "inventory");
 		}else if (hitButton.equals("b")){
 //			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
-			boolean result = character.addBackPack(item);
-			if(result){
+//			boolean result = character.addBackPack(item);
+			character.addBackPack(item);
+//			if(result){
 				character.showInvetory();
 				character.showAbilities();
 				character.showAttributes();
-			}
+//			}
 			saveCharacterChanges(character, "inventory");
 		}else{
 			System.out.println("Error");

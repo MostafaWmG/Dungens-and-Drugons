@@ -1,15 +1,25 @@
 package ca.concordia.soen6441.d20.item;
 
-
-
 import ca.concordia.soen6441.d20.dice.Dice;
-
+/**
+ * 
+ *Hit points measure how hard character is to kill. This class attempt to implement this concept. 
+ *
+ */
 public class HitPoint implements LevelUp {
 
+	/**
+	 * This object is used to read hit point from data base or store hit point to database.
+	 */
 	private HitPointEntity hitPointEntity;
 	//TODO we have Dice both in HitPoint and Character
 	private Dice dice ;
 		
+	/**
+	 * 
+	 * @param modifier to set for the character.
+	 * @param level to set the character's level. 
+	 */
 	public HitPoint(int modifier,int level){
 		initEmptyEntity();
 		setBase(10);
@@ -20,24 +30,31 @@ public class HitPoint implements LevelUp {
 	
 	/**
 	 * 
-	 * @param entity
+	 * @param entity used by this constructor to save/load from database
 	 */
 	public HitPoint(HitPointEntity entity)
 	{
 		setHitPointEntity(entity);
 		init();
 	}
-	
+	/**
+	 * declares Dice object.
+	 */
 	private void init()
 	{
 		dice = new Dice();
 	}
-	
+	/**
+	 * declares a new HitPointEntity object.
+	 */
 	private void initEmptyEntity()
 	{
 		setHitPointEntity(new HitPointEntity());
 	}
-	
+	/**
+	 * 
+	 * @return hit point of the character
+	 */
 	public int getPoint(){
 		return (getBase() + getModifier());
 	}

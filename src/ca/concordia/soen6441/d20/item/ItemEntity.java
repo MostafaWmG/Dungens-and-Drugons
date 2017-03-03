@@ -50,7 +50,10 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 	public ItemEntity() {
 		super();
 	}
-	
+	/**
+	 * 
+	 * @return Item object that will the value retrieved from the database will be used by it.
+	 */
 	public Item createItemModel()
 	{
 		return new Item(this);
