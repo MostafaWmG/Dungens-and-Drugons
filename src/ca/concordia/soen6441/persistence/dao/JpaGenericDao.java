@@ -13,6 +13,7 @@ import ca.concordia.soen6441.persistence.dao.interfaces.IGenericDao;
 
 
 /**
+ * This class implements CRUD operations using JPA
  * @author Saman Saadi
  *
  */
