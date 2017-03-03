@@ -183,7 +183,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 				getContentPane().add(iconButtons[i]);
 				iconButtons[i].addActionListener(this);
 			}
-			iconButtons[1].setVisible(false);
+//			iconButtons[1].setVisible(false);
 			iconButtons[5].setVisible(false);
 			iconButtons[6].setVisible(false);
 		}
@@ -201,7 +201,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 			if(e.getActionCommand().equals ("image1")){
 				setCurrentPointer((ImageIcon) iconButtons[1].getIcon());
 				setTag("Enemy");
-				setTag(getCharacter().getTag());
+//				setTag(getCharacter().getTag());
 			}
 
 			if(e.getActionCommand().equals ("image2")){
@@ -266,12 +266,12 @@ public class MapEditor  extends JFrame implements ActionListener{
 		}
 		Character character = (Character) list.get(0).createModel();
 		setCharacter(character);
-		if(character.getTag().equals("Player")){
+//		if(character.getTag().equals("Player")){
 			iconButtons[6].setVisible(true);
-		}else{
-			iconButtons[1].setVisible(true);
-		}
-		
+//		}else{
+//			iconButtons[1].setVisible(true);
+//		}
+//		
 	}
 	/**
 	 * 
