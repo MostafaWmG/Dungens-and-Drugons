@@ -55,7 +55,10 @@ public class AttackBonusEntity implements Serializable {
 	public void setBase(int base) {
 		this.base = base;
 	}
-	
+	/**
+	 * 
+	 * @return an attack bonus object.
+	 */
 	public AttackBonus createAttackBonus()
 	{
 		return new AttackBonus(this);

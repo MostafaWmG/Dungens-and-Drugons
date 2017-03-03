@@ -2,6 +2,7 @@ package ca.concordia.soen6441.d20.item;
 /**
  * Each character of the game can wear an armor for protection and to use it in fights.
  * This class represent this concept of the game.
+ * Your Armor Class represents how hard it is for opponents to land a solid, damaging blow on the character.
  * @author 
  *
  */

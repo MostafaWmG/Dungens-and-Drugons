@@ -1,9 +1,22 @@
 package ca.concordia.soen6441.d20.item;
+/**
+ * 
+ * This class represents damage bonus that character gets from his combats.
+ * When character's attack succeeds, it deals damage. The type of weapon used determines the amount of damage. 
+ *
+ */
 
 public class DamageBonus implements LevelUp{
 
+	/**
+	 * damageBonusEntity: this object is used to store data retrieved from database.
+	 */
 	private DamageBonusEntity damageBonusEntity;
 	
+	/**
+	 * This constructor creates object with damage modifier.
+	 * @param modifier
+	 */
 	public DamageBonus(int modifier){
 		initEmptyEntity();
 		setModifier(modifier);
@@ -23,10 +36,17 @@ public class DamageBonus implements LevelUp{
 		setDamageBonusEntity(new DamageBonusEntity());
 	}
 	
+	/**
+	 * 
+	 * @return points that character has gained
+	 */
 	public int getPoint(){
 		return (getModifier() + getBase());
 	}
 	
+	/**
+	 * prints damage bonus point
+	 */
 	public void showPoint(){
 		System.out.println("DamageBonusPoint:" + getPoint());
 	}
