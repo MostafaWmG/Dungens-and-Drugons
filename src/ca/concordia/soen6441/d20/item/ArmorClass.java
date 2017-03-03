@@ -1,9 +1,22 @@
 package ca.concordia.soen6441.d20.item;
+/**
+ * Each character of the game can wear an armor for protection and to use it in fights.
+ * This class represent this concept of the game.
+ * @author 
+ *
+ */
 
 public class ArmorClass implements LevelUp {
 	
+	/**
+	 * armorClassEntity is used for saving/loading armor characteristic of the character from database
+	 */
 	private ArmorClassEntity armorClassEntity;
 	
+	/**
+	 * This constructor is called when inly armor modifier is specified for the character.
+	 * @param modifier armor modifier to set for character
+	 */
 	public ArmorClass(int modifier){
 		initEmptyEntity();
 		setBase(10);
@@ -19,15 +32,24 @@ public class ArmorClass implements LevelUp {
 		setArmorClassEntity(entity);
 	}
 	
+	/**
+	 * A new ArmorClassEntity is created for database query use.
+	 */
 	private void initEmptyEntity()
 	{
 		setArmorClassEntity(new ArmorClassEntity());
 	}
 	
+	/**
+	 * @return points that character has earned
+	 */
 	public int getPoint(){
 		return (getBase() + getModfier());
 	}
 		
+	/**
+	 * Shows points of the character
+	 */
 	public void showPoint(){
 		System.out.println("ArmorPoint:" + getPoint());
 	}
@@ -38,7 +60,7 @@ public class ArmorClass implements LevelUp {
 	}
 
 	/**
-	 * @return the modfier
+	 * @return the Armor modifier
 	 */
 	public int getModfier() {
 		return getArmorClassEntity().getModfier();
@@ -80,6 +102,10 @@ public class ArmorClass implements LevelUp {
 		this.armorClassEntity = armorClassEntity;
 	}
 	
+	/**
+	 * This method is used to read Armor property of the character from database
+	 * @return ArmorClassEntity of this armor object
+	 */
 	public ArmorClassEntity getEntity()
 	{
 		return getArmorClassEntity();
