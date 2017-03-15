@@ -33,7 +33,7 @@ import ca.concordia.soen6441.d20.item.ItemEntity;
 })
 
 @Entity
-public class FighterEntity extends GameObjectEntity implements Serializable {
+public class CharacterEntity extends GameObjectEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -72,7 +72,7 @@ public class FighterEntity extends GameObjectEntity implements Serializable {
 	private HitPointEntity hitPoint;
 	String fighterType;
 
-	public FighterEntity() {
+	public CharacterEntity() {
 		super();
 		level = 1;		
 		abilities = new ArrayList<AbilityEntity>();

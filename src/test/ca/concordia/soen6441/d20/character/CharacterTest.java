@@ -3,7 +3,7 @@ import ca.concordia.soen6441.d20.ability.Ability;
 import ca.concordia.soen6441.d20.ability.AbilityEnum;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-import ca.concordia.soen6441.d20.fighter.FighterEntity;
+import ca.concordia.soen6441.d20.fighter.CharacterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -123,7 +123,7 @@ public class CharacterTest {
 		String[] array = {fighter1Name, fighter2Name};
 		for (String name : array)
 		{
-			List<FighterEntity> list = DaoFactory.getCharacterDao().findByName(name); 
+			List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(name); 
 			if (list.size() > 0)
 				DaoFactory.getCharacterDao().delete(list.get(0));
 		}
@@ -177,12 +177,12 @@ public class CharacterTest {
 	}
 
 	/**
-	 * Test method for {@link ca.concordia.soen6441.d20.fighter.Fighter#Character(ca.concordia.soen6441.d20.fighter.FighterEntity)}.
+	 * Test method for {@link ca.concordia.soen6441.d20.fighter.Fighter#Character(ca.concordia.soen6441.d20.fighter.CharacterEntity)}.
 	 */
 	@Test
 	public void testCharacterCharacterEntity() {
-		List<FighterEntity> list1 = DaoFactory.getCharacterDao().findByName(fighter1Name);
-		List<FighterEntity> list2 = DaoFactory.getCharacterDao().findByName(fighter2Name);
+		List<CharacterEntity> list1 = DaoFactory.getCharacterDao().findByName(fighter1Name);
+		List<CharacterEntity> list2 = DaoFactory.getCharacterDao().findByName(fighter2Name);
 		if (list1.isEmpty() || list2.isEmpty())
 			testCharacterStringStringIntInt();
 		Fighter dbFighter1 = (Fighter) list1.get(0).createModel();

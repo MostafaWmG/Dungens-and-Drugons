@@ -11,7 +11,7 @@ import ca.concordia.soen6441.d20.attribute.DamageBonus;
 import ca.concordia.soen6441.d20.attribute.HitPoint;
 import ca.concordia.soen6441.d20.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-import ca.concordia.soen6441.d20.fighter.FighterEntity;
+import ca.concordia.soen6441.d20.fighter.CharacterEntity;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -83,7 +83,7 @@ public class FighterEditor {
 		System.out.println("Name:");
 		String characterLoaded = scanner.nextLine();
 
-		List<FighterEntity> list = DaoFactory.getCharacterDao().findByName(characterLoaded);
+		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(characterLoaded);
 		if (list.isEmpty())
 		{
 			//TODO use appropriate procedure
