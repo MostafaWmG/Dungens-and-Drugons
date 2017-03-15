@@ -1,18 +1,16 @@
 package test.ca.concordia.soen6441.d20.character;
+import ca.concordia.soen6441.d20.ability.Ability;
+import ca.concordia.soen6441.d20.ability.AbilityEnum;
 import ca.concordia.soen6441.d20.character.Character;
 import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
-import ca.concordia.soen6441.d20.item.Ability;
-import ca.concordia.soen6441.d20.item.AbilityEnum;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
-
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.junit.Before;

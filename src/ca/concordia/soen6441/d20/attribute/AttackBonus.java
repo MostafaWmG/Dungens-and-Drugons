@@ -1,10 +1,13 @@
-package ca.concordia.soen6441.d20.item;
+package ca.concordia.soen6441.d20.attribute;
+
+import ca.concordia.soen6441.d20.item.ILevelUp;
+
 /**
  * 
  * This class is used to compute attack bonus of the character in each combat.
  *
  */
-public class AttackBonus implements LevelUp{
+public class AttackBonus implements ILevelUp{
 	
 	/**
 	 * attackBonusEntity: is used as way to save/load the attack bonus of the character

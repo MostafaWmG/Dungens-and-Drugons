@@ -6,13 +6,13 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import ca.concordia.soen6441.d20.ability.AbilityEntity;
+import ca.concordia.soen6441.d20.attribute.ArmorClassEntity;
+import ca.concordia.soen6441.d20.attribute.AttackBonusEntity;
+import ca.concordia.soen6441.d20.attribute.DamageBonusEntity;
+import ca.concordia.soen6441.d20.attribute.HitPointEntity;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
-import ca.concordia.soen6441.d20.item.AbilityEntity;
-import ca.concordia.soen6441.d20.item.ArmorClassEntity;
-import ca.concordia.soen6441.d20.item.AttackBonusEntity;
-import ca.concordia.soen6441.d20.item.DamageBonusEntity;
-import ca.concordia.soen6441.d20.item.HitPointEntity;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 
 

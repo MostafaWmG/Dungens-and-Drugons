@@ -1,8 +1,12 @@
 package ca.concordia.soen6441.d20.item;
 
+import ca.concordia.soen6441.d20.ability.AbilityEnum;
+import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 /**

@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.d20.item;
+package ca.concordia.soen6441.d20.ability;
 
 import java.io.Serializable;
 import javax.persistence.*;

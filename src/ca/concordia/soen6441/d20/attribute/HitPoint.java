@@ -1,12 +1,13 @@
-package ca.concordia.soen6441.d20.item;
+package ca.concordia.soen6441.d20.attribute;
 
 import ca.concordia.soen6441.d20.dice.Dice;
+import ca.concordia.soen6441.d20.item.ILevelUp;
 /**
  * 
  *Hit points measure how hard character is to kill. This class attempt to implement this concept. 
  *
  */
-public class HitPoint implements LevelUp {
+public class HitPoint implements ILevelUp {
 
 	/**
 	 * This object is used to read hit point from data base or store hit point to database.

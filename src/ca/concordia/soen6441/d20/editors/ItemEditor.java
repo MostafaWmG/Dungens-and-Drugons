@@ -3,9 +3,9 @@ package ca.concordia.soen6441.d20.editors;
 import java.util.List;
 import java.util.Scanner;
 
+import ca.concordia.soen6441.d20.ability.AbilityEnum;
+import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.character.factory.ItemFactory;
-import ca.concordia.soen6441.d20.item.AbilityEnum;
-import ca.concordia.soen6441.d20.item.AttributeEnum;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -114,9 +114,16 @@ public class ItemEditor {
 
 		String number = scanner.nextLine();
 		int numberScore = Integer.parseInt(number);
-		item.setEnchantmentPoint(numberScore);
-		item.show();
-		saveItemFactory(item, "edit");
+		if(numberScore <=5 && numberScore >= 1){
+			item.setEnchantmentPoint(numberScore);
+			item.show();
+			saveItemFactory(item, "edit");
+		}else{
+			System.out.println("Please Enter number between 1 t0 5!!");
+			changeItemPoint(item);
+		}
+		
+
 	}
 	
 	/**

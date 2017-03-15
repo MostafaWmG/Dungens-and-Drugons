@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.d20.item;
+package ca.concordia.soen6441.d20.attribute;
 /**
  * 
  * This class represents three different type of bonuses that character can gain.

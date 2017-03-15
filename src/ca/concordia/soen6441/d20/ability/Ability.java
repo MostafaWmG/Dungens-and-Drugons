@@ -1,20 +1,22 @@
-package ca.concordia.soen6441.d20.item;
+package ca.concordia.soen6441.d20.ability;
 
 import java.util.List;
 import java.util.Vector;
+
+import ca.concordia.soen6441.d20.item.ILevelUp;
 
 /**
  * This is the Ability class. It represents abilities of the game characters.
  * @author wmg
  * @author alvaro
  */
-public class Ability implements LevelUp{
+public class Ability implements ILevelUp{
 	/**
 	 * abilityEntity is used to load or save abilities from/to database
 	 * levelUpAction is useful for upgrading level of the characters in the game
 	 */
 	private AbilityEntity abilityEntity;
-	protected List<LevelUp> levelUpAction;
+	protected List<ILevelUp> levelUpAction;
 	
 	/**
 	 * This constructor creates an object with the following properties
@@ -59,7 +61,7 @@ public class Ability implements LevelUp{
 	 */
 	private void init()
 	{
-		levelUpAction = new Vector<LevelUp>();
+		levelUpAction = new Vector<ILevelUp>();
 	}
 	
 	/**
@@ -126,7 +128,7 @@ public class Ability implements LevelUp{
 	 * 
 	 * @param levelUp is the new level to set for character
 	 */
-	public void addListener(LevelUp levelUp) {
+	public void addListener(ILevelUp levelUp) {
 		levelUpAction.add(levelUp);
 	}
 	

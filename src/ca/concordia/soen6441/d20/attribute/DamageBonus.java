@@ -1,4 +1,7 @@
-package ca.concordia.soen6441.d20.item;
+package ca.concordia.soen6441.d20.attribute;
+
+import ca.concordia.soen6441.d20.item.ILevelUp;
+
 /**
  * 
  * This class represents damage bonus that character gets from his combats.
@@ -6,7 +9,7 @@ package ca.concordia.soen6441.d20.item;
  *
  */
 
-public class DamageBonus implements LevelUp{
+public class DamageBonus implements ILevelUp{
 
 	/**
 	 * damageBonusEntity: this object is used to store data retrieved from database.

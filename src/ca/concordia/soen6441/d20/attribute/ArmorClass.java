@@ -1,4 +1,7 @@
-package ca.concordia.soen6441.d20.item;
+package ca.concordia.soen6441.d20.attribute;
+
+import ca.concordia.soen6441.d20.item.ILevelUp;
+
 /**
  * Each character of the game can wear an armor for protection and to use it in fights.
  * This class represent this concept of the game.
@@ -7,7 +10,7 @@ package ca.concordia.soen6441.d20.item;
  *
  */
 
-public class ArmorClass implements LevelUp {
+public class ArmorClass implements ILevelUp {
 	
 	/**
 	 * armorClassEntity is used for saving/loading armor characteristic of the character from database

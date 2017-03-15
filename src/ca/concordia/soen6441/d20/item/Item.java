@@ -1,5 +1,7 @@
 package ca.concordia.soen6441.d20.item;
 
+import ca.concordia.soen6441.d20.ability.AbilityEnum;
+import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 
@@ -8,7 +10,7 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
  * @author wmg
  * @author alvaro
  */
-public class Item extends GameObject implements LevelUp{
+public class Item extends GameObject implements ILevelUp{
 	
 	private ItemEntity itemEntity;
 	
