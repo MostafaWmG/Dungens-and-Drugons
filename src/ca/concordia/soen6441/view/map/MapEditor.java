@@ -15,7 +15,7 @@ import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-import ca.concordia.soen6441.d20.fighter.CharacterEntity;
+import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
@@ -263,7 +263,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	 * @param name is used to specify which character to load from data base.
 	 */
 	public void loadCharacter(String name){
-		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(name);
+		List<FighterEntity> list = DaoFactory.getFighterDao().findByName(name);
 		if (list.isEmpty())
 		{
 			//TODO use appropriate procedure

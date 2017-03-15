@@ -24,16 +24,16 @@ import ca.concordia.soen6441.d20.item.ItemEntity;
 
 @NamedQueries({
 	@NamedQuery(
-			name="findCharacterEntityByName",
-			query="SELECT character FROM CharacterEntity character WHERE character.name = :name"
+			name="findFighterEntityByName",
+			query="SELECT fighter FROM FighterEntity fighter WHERE fighter.name = :name"
 			),
 	@NamedQuery(
-			name="findCharacterEntityAll",
-			query="SELECT character FROM CharacterEntity character")
+			name="findFighterEntityAll",
+			query="SELECT fighter FROM FighterEntity fighter")
 })
 
 @Entity
-public class CharacterEntity extends GameObjectEntity implements Serializable {
+public class FighterEntity extends GameObjectEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -72,7 +72,7 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	private HitPointEntity hitPoint;
 	String fighterType;
 
-	public CharacterEntity() {
+	public FighterEntity() {
 		super();
 		level = 1;		
 		abilities = new ArrayList<AbilityEntity>();

@@ -42,7 +42,7 @@ public class Fighter extends GameObject {
 	* hitPoint    : the hitPoint of the character
 	* dice  : the dice class for rolling a dice
 	 */	
-	private CharacterEntity characterEntity;
+	private FighterEntity characterEntity;
 	
 	protected List<Item> backPack;
 	protected List <Ability> abilities;
@@ -109,7 +109,7 @@ public class Fighter extends GameObject {
 	 * We usually use this constructor to load data
 	 * @param entity
 	 */
-	public Fighter(CharacterEntity entity)
+	public Fighter(FighterEntity entity)
 	{
 		setCharacterEntity(entity);
 		backPack = new ArrayList<>();
@@ -137,7 +137,7 @@ public class Fighter extends GameObject {
 	 */
 	private void init(){
 		
-		setCharacterEntity(new CharacterEntity());
+		setCharacterEntity(new FighterEntity());
 	}
 	
 	/**
@@ -757,14 +757,14 @@ public class Fighter extends GameObject {
 	/**
 	 * @return the character entity 
 	 */
-	public CharacterEntity getCharacterEntity(){
+	public FighterEntity getCharacterEntity(){
 		return characterEntity;
 	}
 	
 	/**
 	 * @param characterEntity to set
 	 */
-	public void setCharacterEntity(CharacterEntity characterEntity){
+	public void setCharacterEntity(FighterEntity characterEntity){
 		this.characterEntity = characterEntity;
 	}
 	

@@ -11,7 +11,7 @@ import ca.concordia.soen6441.d20.attribute.DamageBonus;
 import ca.concordia.soen6441.d20.attribute.HitPoint;
 import ca.concordia.soen6441.d20.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-import ca.concordia.soen6441.d20.fighter.CharacterEntity;
+import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -60,7 +60,7 @@ public class FighterEditor {
 			String result = scanner.nextLine();
 
 			if(result.equals("yes")){
-				DaoFactory.getCharacterDao().create(character.getCharacterEntity());
+				DaoFactory.getFighterDao().create(character.getCharacterEntity());
 				System.out.println("Character saved successfully");
 			}else if (result.equals("no")){
 				System.out.println("Character removed");
@@ -83,7 +83,7 @@ public class FighterEditor {
 		System.out.println("Name:");
 		String characterLoaded = scanner.nextLine();
 
-		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(characterLoaded);
+		List<FighterEntity> list = DaoFactory.getFighterDao().findByName(characterLoaded);
 		if (list.isEmpty())
 		{
 			//TODO use appropriate procedure
@@ -517,7 +517,7 @@ public class FighterEditor {
 			System.out.println("Do you want to save character changes:(yes or no)");
 			answer = scanner.nextLine();
 			if(answer.equals("yes")){
-				DaoFactory.getCharacterDao().create(character.getCharacterEntity());
+				DaoFactory.getFighterDao().create(character.getCharacterEntity());
 			}else {
 				
 			}

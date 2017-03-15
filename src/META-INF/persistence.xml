@@ -13,14 +13,15 @@
 		<class>ca.concordia.soen6441.d20.gamemap.element.EnteryEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.WallEntity</class>
 		<class>ca.concordia.soen6441.d20.gamemap.element.ExitEntity</class>
-		<class>ca.concordia.soen6441.d20.character.CharacterEntity</class>
+		<class>ca.concordia.soen6441.d20.fighter.FighterEntity</class>
 		<class>ca.concordia.soen6441.d20.common.Location</class>
 		<class>ca.concordia.soen6441.d20.item.ItemEntity</class>
-		<class>ca.concordia.soen6441.d20.item.AbilityEntity</class>
-		<class>ca.concordia.soen6441.d20.item.ArmorClassEntity</class>
-		<class>ca.concordia.soen6441.d20.item.AttackBonusEntity</class>
-		<class>ca.concordia.soen6441.d20.item.DamageBonusEntity</class>
-		<class>ca.concordia.soen6441.d20.item.HitPointEntity</class>
+		<class>ca.concordia.soen6441.d20.ability.AbilityEntity</class>
+		<class>ca.concordia.soen6441.d20.attribute.ArmorClassEntity</class>
+		<class>ca.concordia.soen6441.d20.attribute.AttackBonusEntity</class>
+		<class>ca.concordia.soen6441.d20.attribute.DamageBonusEntity</class>
+		<class>ca.concordia.soen6441.d20.attribute.HitPointEntity</class>
+		<class>ca.concordia.soen6441.d20.item.ChestEntity</class>
 		<class>ca.concordia.soen6441.d20.campaign.CampaignEntity</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
