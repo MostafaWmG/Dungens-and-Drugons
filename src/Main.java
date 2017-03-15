@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.editors.CampaignEditor;
-import ca.concordia.soen6441.d20.editors.CharacterEditor;
+import ca.concordia.soen6441.d20.editors.FighterEditor;
 import ca.concordia.soen6441.d20.editors.ItemEditor;
 import ca.concordia.soen6441.view.map.MapEditor;
 /**
@@ -116,7 +116,7 @@ public class Main extends JFrame implements ActionListener{
 					this.setVisible(true);
 				} 
 			}else if (e.getActionCommand().equals("CharacterEditor") ){
-				 new CharacterEditor();
+				 new FighterEditor();
 			}else if (e.getActionCommand().equals("ItemBuilder") ) {
 				 new ItemEditor();
 			}else if (e.getActionCommand().equals("CampaignEditor")){

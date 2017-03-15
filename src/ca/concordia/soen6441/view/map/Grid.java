@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.item.Item;
-import ca.concordia.soen6441.d20.character.Character;
 
 /**
  * This is a Grid class for elements on mapView
@@ -26,7 +26,7 @@ public class Grid extends JButton implements ActionListener{
 	private ImageIcon icon;
 	private MapEditor mapEditor;
 	private String tag;
-	private Character character;
+	private Fighter character;
 	private Item item;
 	
 	
@@ -49,7 +49,7 @@ public class Grid extends JButton implements ActionListener{
 	 * @param mapEditor the map to put elements on it
 	 * @param tag to set the tag.
 	 */
-	public Grid(Character character,MapEditor mapEditor,String tag) {
+	public Grid(Fighter character,MapEditor mapEditor,String tag) {
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
 		setCharacter(character);
@@ -161,14 +161,14 @@ public class Grid extends JButton implements ActionListener{
 	/**
 	 * @return the character
 	 */
-	public Character getCharacter() {
+	public Fighter getCharacter() {
 		return character;
 	}
 
 	/**
 	 * @param character to set on mapView
 	 */
-	public void setCharacter(Character character) {
+	public void setCharacter(Fighter character) {
 		this.character = character;
 	}
 

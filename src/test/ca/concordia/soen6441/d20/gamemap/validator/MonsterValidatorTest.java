@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.validator.MonsterValidator;
-import ca.concordia.soen6441.d20.character.Character;;
 
 public class MonsterValidatorTest {
 	private GameMap gameMap;
@@ -22,7 +22,7 @@ public class MonsterValidatorTest {
 
 	@Test
 	public void whenAGameMapHasAMonsterItShouldBeValid() {
-		Character monster = new Character("Enemy","n");
+		Fighter monster = new Fighter("Enemy","n");
 		gameMap.place(monster, monster.getLocation());
 		
 		boolean valid = this.validator.validate();
@@ -39,8 +39,8 @@ public class MonsterValidatorTest {
 	
 	@Test
 	public void whenGamemapHasMoreThanOneMonsterItShouldBeValid() {
-		GameObject monster = new Character("Enemy","n");
-		GameObject secondMonster = new Character("Enemy","m",9, 7);
+		GameObject monster = new Fighter("Enemy","n");
+		GameObject secondMonster = new Fighter("Enemy","m",9, 7);
 		gameMap.place(monster, monster.getLocation());
 		gameMap.place(secondMonster, secondMonster.getLocation());
 		

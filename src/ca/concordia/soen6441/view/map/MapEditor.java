@@ -12,8 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ca.concordia.soen6441.constants.Constants;
-import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
 import ca.concordia.soen6441.d20.common.Location;
+import ca.concordia.soen6441.d20.factory.PlayerFactory;
+import ca.concordia.soen6441.d20.fighter.Fighter;
+import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
@@ -22,8 +24,6 @@ import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
-import ca.concordia.soen6441.d20.character.Character;
-import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 
 /**
@@ -64,7 +64,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	private String tag;
 	private PlayerFactory playerFactory ;
 
-	private Character character;
+	private Fighter character;
 	private Item item;
 	
 	public ImageIcon[] images;
@@ -263,14 +263,14 @@ public class MapEditor  extends JFrame implements ActionListener{
 	 * @param name is used to specify which character to load from data base.
 	 */
 	public void loadCharacter(String name){
-		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(name);
+		List<FighterEntity> list = DaoFactory.getCharacterDao().findByName(name);
 		if (list.isEmpty())
 		{
 			//TODO use appropriate procedure
 			System.out.println("Invalid Character name");
 			return;
 		}
-		Character character = (Character) list.get(0).createModel();
+		Fighter character = (Fighter) list.get(0).createModel();
 		setCharacter(character);
 //		if(character.getTag().equals("Player")){
 //			iconButtons[6].setVisible(true);
@@ -405,7 +405,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Player")){
 					viewElements[i][j].setTag("Player");
-					viewElements[i][j].setCharacter((Character)map.getGameObjectAtLocation(new Location(j,i)));
+					viewElements[i][j].setCharacter((Fighter)map.getGameObjectAtLocation(new Location(j,i)));
 					viewElements[i][j].iconHandler();
 				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Item")){
 					viewElements[i][j].setTag("Item");
@@ -476,14 +476,14 @@ public class MapEditor  extends JFrame implements ActionListener{
 	/**
 	 * @return the character that is on the map
 	 */
-	public Character getCharacter() {
+	public Fighter getCharacter() {
 		return character;
 	}
 
 	/**
 	 * @param character to set on the map
 	 */
-	public void setCharacter(Character character) {
+	public void setCharacter(Fighter character) {
 		this.character = character;
 	}
 

@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.d20.character;
+package ca.concordia.soen6441.d20.fighter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ import ca.concordia.soen6441.d20.item.ItemEnum;
  * @author mostafa
  */
 // ArmorClass,HitPoint,DamageBonus,AttackBonus need to re factor and all of them can have same interface or inherits from attribute
-public class Character extends GameObject {
+public class Fighter extends GameObject {
 	private static final int BACKPACK_SIZE = 10;
 
 	private static final int BACK_PACK_FULL = -1;
@@ -42,7 +42,7 @@ public class Character extends GameObject {
 	* hitPoint    : the hitPoint of the character
 	* dice  : the dice class for rolling a dice
 	 */	
-	private CharacterEntity characterEntity;
+	private FighterEntity characterEntity;
 	
 	protected List<Item> backPack;
 	protected List <Ability> abilities;
@@ -60,7 +60,7 @@ public class Character extends GameObject {
 	 * @param initialPosistionX initial x-coordinate of the character
 	 * @param initialPositionY initial y-coordinate of the character
 	 */
-	public Character(String tag,String name,int initialPosistionX, int initialPositionY) {
+	public Fighter(String tag,String name,int initialPosistionX, int initialPositionY) {
 		init();
 		setName(name);
 		setTag(tag);
@@ -85,7 +85,7 @@ public class Character extends GameObject {
 	 * @param tag sets tag for the character
 	 * @param name sets the name of the character
 	 */
-	public Character(String tag,String name) {
+	public Fighter(String tag,String name) {
 		init();
 		setName(name);
 		setTag(tag);
@@ -109,7 +109,7 @@ public class Character extends GameObject {
 	 * We usually use this constructor to load data
 	 * @param entity
 	 */
-	public Character(CharacterEntity entity)
+	public Fighter(FighterEntity entity)
 	{
 		setCharacterEntity(entity);
 		backPack = new ArrayList<>();
@@ -137,7 +137,7 @@ public class Character extends GameObject {
 	 */
 	private void init(){
 		
-		setCharacterEntity(new CharacterEntity());
+		setCharacterEntity(new FighterEntity());
 	}
 	
 	/**
@@ -158,7 +158,7 @@ public class Character extends GameObject {
 		}
 	}
 	
-	public void attack(Character enemy) {
+	public void attack(Fighter enemy) {
 		
 	}
 	
@@ -757,14 +757,14 @@ public class Character extends GameObject {
 	/**
 	 * @return the character entity 
 	 */
-	public CharacterEntity getCharacterEntity(){
+	public FighterEntity getCharacterEntity(){
 		return characterEntity;
 	}
 	
 	/**
 	 * @param characterEntity to set
 	 */
-	public void setCharacterEntity(CharacterEntity characterEntity){
+	public void setCharacterEntity(FighterEntity characterEntity){
 		this.characterEntity = characterEntity;
 	}
 	

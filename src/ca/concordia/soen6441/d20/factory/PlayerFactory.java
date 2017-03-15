@@ -1,18 +1,18 @@
-package ca.concordia.soen6441.d20.character.factory;
+package ca.concordia.soen6441.d20.factory;
 
-import ca.concordia.soen6441.d20.character.Character;
 //import ca.concordia.soen6441.d20.character.Player;
 import ca.concordia.soen6441.d20.dice.Dice;
+import ca.concordia.soen6441.d20.fighter.Fighter;
 
 /**
  * This is a Factory class for creating character and items of the character.
  * @author wmg
  * @author alvaro
  */
-public class PlayerFactory implements CharacterFactory {
+public class PlayerFactory implements FighterFactory {
 	
 	Dice dice ;
-	Character character;
+	Fighter character;
 	
 	/**
 	 * constructor
@@ -28,7 +28,7 @@ public class PlayerFactory implements CharacterFactory {
 	 * @param tag  specify the type of the character
 	 */
 	@Override
-	public Character create(String tag,String name) {
+	public Fighter create(String tag,String name) {
 		if(tag.equals("Enemy")){
 			return createCharacter(tag, name);
 		}else if(tag.equals("Player")){
@@ -45,18 +45,18 @@ public class PlayerFactory implements CharacterFactory {
 	 * @param name set the name for the character.
 	 * @return character object.
 	 */
-	private Character createCharacter(String tag,String name){
-		character = new Character(tag,name);
+	private Fighter createCharacter(String tag,String name){
+		character = new Fighter(tag,name);
 //		character.showAll();
 		return character;
 	}
 
 	@Override
-	public Character create(String tag, String name, int x, int y) {
+	public Fighter create(String tag, String name, int x, int y) {
 		if(tag.equals("Enemy")){
-			return  new Character(tag,name,x,y);
+			return  new Fighter(tag,name,x,y);
 		}else if(tag.equals("Player")){
-			return new Character(tag,name,x,y);
+			return new Fighter(tag,name,x,y);
 		}else {
 			return null;
 		}

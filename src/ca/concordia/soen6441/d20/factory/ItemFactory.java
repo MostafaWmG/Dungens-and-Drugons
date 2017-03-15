@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.d20.character.factory;
+package ca.concordia.soen6441.d20.factory;
 
 import ca.concordia.soen6441.d20.ability.AbilityEnum;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;

@@ -1,3 +1,4 @@
+package ca.concordia.soen6441.d20.fighter;
 //package ca.concordia.soen6441.d20.character;
 //import java.util.ArrayList;
 //import java.util.List;

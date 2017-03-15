@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.d20.character;
+package ca.concordia.soen6441.d20.fighter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import ca.concordia.soen6441.d20.item.ItemEntity;
 })
 
 @Entity
-public class CharacterEntity extends GameObjectEntity implements Serializable {
+public class FighterEntity extends GameObjectEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -72,7 +72,7 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	private HitPointEntity hitPoint;
 	String fighterType;
 
-	public CharacterEntity() {
+	public FighterEntity() {
 		super();
 		level = 1;		
 		abilities = new ArrayList<AbilityEntity>();
@@ -168,7 +168,7 @@ public class CharacterEntity extends GameObjectEntity implements Serializable {
 	}
 	@Override
 	public GameObject createModel() {
-		return new Character(this);
+		return new Fighter(this);
 	}
 	/**
 	 * @return the backpack

@@ -1,9 +1,9 @@
 package test.ca.concordia.soen6441.d20.character;
 import ca.concordia.soen6441.d20.ability.Ability;
 import ca.concordia.soen6441.d20.ability.AbilityEnum;
-import ca.concordia.soen6441.d20.character.Character;
-import ca.concordia.soen6441.d20.character.CharacterEntity;
 import ca.concordia.soen6441.d20.common.Location;
+import ca.concordia.soen6441.d20.fighter.Fighter;
+import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -17,11 +17,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CharacterTest {
-	private Character characterWithInitialPosition;
+	private Fighter characterWithInitialPosition;
 
 	@Before
 	public void setUp() throws Exception {
-		characterWithInitialPosition = new Character("tag","name", 0, 0);
+		characterWithInitialPosition = new Fighter("tag","name", 0, 0);
 		characterWithInitialPosition.setField(new GameMap("mapName", 10, 5));
 		characterWithInitialPosition.getField().place(characterWithInitialPosition, characterWithInitialPosition.getLocation());
 	}
@@ -113,8 +113,8 @@ public class CharacterTest {
 		characterWithInitialPosition.initializeBackPack();
 		assertEquals(10, characterWithInitialPosition.getBackPack().size());
 	}
-	Character fighter1;
-	Character fighter2;
+	Fighter fighter1;
+	Fighter fighter2;
 	final String fighter1Name = "CharacterTest:testFighter1";
 	final String fighter2Name = "CharacterTest:testFighter2";
 	
@@ -123,7 +123,7 @@ public class CharacterTest {
 		String[] array = {fighter1Name, fighter2Name};
 		for (String name : array)
 		{
-			List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(name); 
+			List<FighterEntity> list = DaoFactory.getCharacterDao().findByName(name); 
 			if (list.size() > 0)
 				DaoFactory.getCharacterDao().delete(list.get(0));
 		}
@@ -132,18 +132,18 @@ public class CharacterTest {
 	@Before
 	public void initFighters()
 	{
-		fighter1 = new Character("Enemy", fighter1Name, 0, 7);
-		fighter2 = new Character("Player", fighter2Name, 17, 3);		
+		fighter1 = new Fighter("Enemy", fighter1Name, 0, 7);
+		fighter2 = new Fighter("Player", fighter2Name, 17, 3);		
 	}
 
 	/**
-	 * Test method for {@link ca.concordia.soen6441.d20.character.Character#Character(java.lang.String, java.lang.String, int, int)}.
+	 * Test method for {@link ca.concordia.soen6441.d20.fighter.Fighter#Character(java.lang.String, java.lang.String, int, int)}.
 	 */
 	@Test
 	public void testCharacterStringStringIntInt() {
 		deleteFightersFromDB();
-		fighter1 = new Character("Enemy", fighter1Name, 0, 7);
-		fighter2 = new Character("Player", fighter2Name, 17, 3);
+		fighter1 = new Fighter("Enemy", fighter1Name, 0, 7);
+		fighter2 = new Fighter("Player", fighter2Name, 17, 3);
 		assertTrue(fighter1.getLocation().getX() == 0 && fighter1.getLocation().getY() == 7);
 		assertTrue(fighter2.getLocation().getX() == 17 && fighter2.getLocation().getY() == 3);
 		assertTrue(fighter1.getName() == fighter1Name);
@@ -156,14 +156,14 @@ public class CharacterTest {
 	}
 
 	/**
-	 * Test method for {@link ca.concordia.soen6441.d20.character.Character#Character(java.lang.String, java.lang.String)}.
+	 * Test method for {@link ca.concordia.soen6441.d20.fighter.Fighter#Character(java.lang.String, java.lang.String)}.
 	 */
 	@Test
 	public void testCharacterStringString() {
 		deleteFightersFromDB();
-		fighter1 = new Character("Enemy", fighter1Name);
+		fighter1 = new Fighter("Enemy", fighter1Name);
 		fighter1.setLocation(new Location(0, 7));
-		fighter2 = new Character("Player", fighter2Name);
+		fighter2 = new Fighter("Player", fighter2Name);
 		fighter2.setLocation(new Location(17, 3));
 		assertTrue(fighter1.getLocation().getX() == 0 && fighter1.getLocation().getY() == 7);
 		assertTrue(fighter2.getLocation().getX() == 17 && fighter2.getLocation().getY() == 3);
@@ -177,16 +177,16 @@ public class CharacterTest {
 	}
 
 	/**
-	 * Test method for {@link ca.concordia.soen6441.d20.character.Character#Character(ca.concordia.soen6441.d20.character.CharacterEntity)}.
+	 * Test method for {@link ca.concordia.soen6441.d20.fighter.Fighter#Character(ca.concordia.soen6441.d20.fighter.FighterEntity)}.
 	 */
 	@Test
 	public void testCharacterCharacterEntity() {
-		List<CharacterEntity> list1 = DaoFactory.getCharacterDao().findByName(fighter1Name);
-		List<CharacterEntity> list2 = DaoFactory.getCharacterDao().findByName(fighter2Name);
+		List<FighterEntity> list1 = DaoFactory.getCharacterDao().findByName(fighter1Name);
+		List<FighterEntity> list2 = DaoFactory.getCharacterDao().findByName(fighter2Name);
 		if (list1.isEmpty() || list2.isEmpty())
 			testCharacterStringStringIntInt();
-		Character dbFighter1 = (Character) list1.get(0).createModel();
-		Character dbFighter2 = (Character) list2.get(0).createModel();
+		Fighter dbFighter1 = (Fighter) list1.get(0).createModel();
+		Fighter dbFighter2 = (Fighter) list2.get(0).createModel();
 		System.out.println(dbFighter1.getLocation());
 		System.out.println(fighter1.getLocation());
 		assertTrue(dbFighter1.getLocation().getX() == fighter1.getLocation().getX());

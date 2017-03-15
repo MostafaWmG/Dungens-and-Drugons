@@ -9,9 +9,9 @@ import ca.concordia.soen6441.d20.attribute.AttackBonus;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.attribute.DamageBonus;
 import ca.concordia.soen6441.d20.attribute.HitPoint;
-import ca.concordia.soen6441.d20.character.Character;
-import ca.concordia.soen6441.d20.character.CharacterEntity;
-import ca.concordia.soen6441.d20.character.factory.PlayerFactory;
+import ca.concordia.soen6441.d20.factory.PlayerFactory;
+import ca.concordia.soen6441.d20.fighter.Fighter;
+import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -19,7 +19,7 @@ import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
  * this is a characterEditor userInterface class
  */
-public class CharacterEditor {
+public class FighterEditor {
 
 	private Scanner scanner;
 	private ArmorClass armorClass;
@@ -28,7 +28,7 @@ public class CharacterEditor {
 	private HitPoint hitPoint;
 	private int level;
 	
-	public CharacterEditor() {
+	public FighterEditor() {
 		System.out.println("<<<Character Edtior Section>>>");
 		System.out.println("Choose Section : ");
 		System.out.println("EditCharacter:(Type e) , CreateCharacter : (Type C) " );
@@ -53,7 +53,7 @@ public class CharacterEditor {
 		System.out.println("Please Enter Your Character Type : ");
 		String charType = scanner.nextLine();
 		PlayerFactory PlayerFactory = new PlayerFactory();
-		Character character = PlayerFactory.create(charType,charName);
+		Fighter character = PlayerFactory.create(charType,charName);
 
 		if(character != null){
 			System.out.println("Do you want to save your character (yes or no )?");
@@ -83,14 +83,14 @@ public class CharacterEditor {
 		System.out.println("Name:");
 		String characterLoaded = scanner.nextLine();
 
-		List<CharacterEntity> list = DaoFactory.getCharacterDao().findByName(characterLoaded);
+		List<FighterEntity> list = DaoFactory.getCharacterDao().findByName(characterLoaded);
 		if (list.isEmpty())
 		{
 			//TODO use appropriate procedure
 			System.out.println("Invalid map name");
 			return;
 		}
-		Character character = (Character) list.get(0).createModel();
+		Fighter character = (Fighter) list.get(0).createModel();
 		System.out.println("Edit WornItems :(Type i) , Edit Abilities :(Type a) , Edit Attributes: (Type t) , Inventory:(Type: n)");
 		String hitButton = scanner.nextLine();
 	
@@ -115,7 +115,7 @@ public class CharacterEditor {
 	 * this is a method for showing inventory and editing it
 	 * @param character selected character
 	 */
-	private void inventory(Character character){
+	private void inventory(Fighter character){
 		character.showInvetory();
 		
 		System.out.println("Choose: move Item From Character To backPack(Type c)" );
@@ -141,7 +141,7 @@ public class CharacterEditor {
 	 * move item from character wearList to backPack
 	 * @param character loaded character
 	 */
-	private void characterToInventory(Character character){
+	private void characterToInventory(Fighter character){
 		System.out.println("Enter your Item Model from Character");
 		String itemModel = scanner.nextLine();
 		
@@ -163,7 +163,7 @@ public class CharacterEditor {
 	 * move item from character backPack to wearList
 	 * @param character loaded character
 	 */
-	private void inventoryToCharacter(Character character){
+	private void inventoryToCharacter(Fighter character){
 		System.out.println("Enter Slot Number Of Item In BackPack You Want To Wear: ");
 		String itemModelString = scanner.nextLine();
 		
@@ -186,7 +186,7 @@ public class CharacterEditor {
 	 * switch items between character and backPack
 	 * @param character selected character
 	 */
-	private void switchItems(Character character){
+	private void switchItems(Fighter character){
 		System.out.println("Enter Slot Number In backPack: ");
 		String itemNumberString = scanner.nextLine();
 		System.out.println("Enter your Item Model from Character: ");
@@ -211,7 +211,7 @@ public class CharacterEditor {
 	 * this is a method for adding items from file to character.
 	 * @param character character
 	 */
-	private void addItem(Character character){
+	private void addItem(Fighter character){
 		System.out.println("Load the Item:");
 		System.out.println("Name:");
 		String itemLoaded = scanner.nextLine();
@@ -258,7 +258,7 @@ public class CharacterEditor {
 	 * edit a specific item on a character 
 	 * @param character character
 	 */
-	private void editItem(Character character){
+	private void editItem(Fighter character){
 		character.showItems();
 		System.out.println("Enter Item Name:");
 		String itemName = scanner.nextLine();
@@ -285,7 +285,7 @@ public class CharacterEditor {
 	 * @param character character 
 	 * @param itemEnum	item that is changing
 	 */
-	public void changeItemType(Character character,ItemEnum itemEnum){
+	public void changeItemType(Fighter character,ItemEnum itemEnum){
 		boolean enumChecker = false;
 		
 		System.out.println("Enter new item type : ");
@@ -352,7 +352,7 @@ public class CharacterEditor {
 	 * @param character character
 	 * @param itemEnum item that is changing
 	 */
-	public void changeItemPoint(Character character,ItemEnum itemEnum){
+	public void changeItemPoint(Fighter character,ItemEnum itemEnum){
 		System.out.println("Enter number to change Point:");
 
 
@@ -373,7 +373,7 @@ public class CharacterEditor {
 	 * this method is for changing the ability of a character [intelligence,wisdom,etc..]
 	 * @param character
 	 */
-	private void editAbility(Character character){
+	private void editAbility(Fighter character){
 		character.showAbilities();
 		System.out.println("Enter Ability Name:");
 		String abilityName = scanner.nextLine();
@@ -401,7 +401,7 @@ public class CharacterEditor {
 	 * edit attribute of the character [ArmorClass,DamageBonus,AttackBonus,HitPoint,Level]
 	 * @param character character
 	 */
-	private void editAttribute(Character character){
+	private void editAttribute(Fighter character){
 		String armorCheck = "armorClassArmorClassarmorclass";
 		String attackCheck = "attackBonusAttackBonusattackbonus";
 		String damageCheck = "damageBonusDamageBonusdamagebonus";
@@ -442,7 +442,7 @@ public class CharacterEditor {
 	 * @param character character
 	 * @param i which attribute we are changing
 	 */
-	private void changeAttribute(Character character,int i ){
+	private void changeAttribute(Fighter character,int i ){
 		
 		String number;
 		int numberScore;
@@ -494,7 +494,7 @@ public class CharacterEditor {
 	 * @param character character
 	 * @param section which part of character is changing
 	 */
-	private void saveCharacterChanges(Character character , String section){
+	private void saveCharacterChanges(Fighter character , String section){
 		if (section.equals("inventory")){
 			System.out.println("Do you want to back to inventory :(yes or no)");
 		}else{

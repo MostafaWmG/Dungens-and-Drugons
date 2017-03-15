@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import ca.concordia.soen6441.d20.ability.AbilityEnum;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
-import ca.concordia.soen6441.d20.character.factory.ItemFactory;
+import ca.concordia.soen6441.d20.factory.ItemFactory;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
