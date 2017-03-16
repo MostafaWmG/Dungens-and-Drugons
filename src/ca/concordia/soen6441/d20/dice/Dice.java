@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class Dice {
 	
-	Random random;
+	private Random random;
 	
 	/**
 	 * Constructor:
@@ -33,5 +33,9 @@ public class Dice {
 	 */
 	public int roll10(){
 		return (random.nextInt(10) + 1 );
+	}
+	
+	public Random getRandom(){
+		return random;
 	}
 }

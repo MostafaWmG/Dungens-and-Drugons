@@ -21,7 +21,7 @@ public class CharacterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		characterWithInitialPosition = new Fighter("tag","name", 0, 0);
+		characterWithInitialPosition = new Fighter("tag","name");
 		characterWithInitialPosition.setField(new GameMap("mapName", 10, 5));
 		characterWithInitialPosition.getField().place(characterWithInitialPosition, characterWithInitialPosition.getLocation());
 	}
@@ -132,8 +132,8 @@ public class CharacterTest {
 	@Before
 	public void initFighters()
 	{
-		fighter1 = new Fighter("Enemy", fighter1Name, 0, 7);
-		fighter2 = new Fighter("Player", fighter2Name, 17, 3);		
+		fighter1 = new Fighter("Enemy", fighter1Name);
+		fighter2 = new Fighter("Player", fighter2Name);		
 	}
 
 	/**
@@ -142,8 +142,8 @@ public class CharacterTest {
 	@Test
 	public void testCharacterStringStringIntInt() {
 		deleteFightersFromDB();
-		fighter1 = new Fighter("Enemy", fighter1Name, 0, 7);
-		fighter2 = new Fighter("Player", fighter2Name, 17, 3);
+		fighter1 = new Fighter("Enemy", fighter1Name);
+		fighter2 = new Fighter("Player", fighter2Name);
 		assertTrue(fighter1.getLocation().getX() == 0 && fighter1.getLocation().getY() == 7);
 		assertTrue(fighter2.getLocation().getX() == 17 && fighter2.getLocation().getY() == 3);
 		assertTrue(fighter1.getName() == fighter1Name);

@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.common.Location;
-import ca.concordia.soen6441.d20.factory.PlayerFactory;
+import ca.concordia.soen6441.d20.factory.BullyFighterBuilder;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
@@ -63,7 +63,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	private Dimension dimension;
 	private ImageIcon currentPointer;
 	private String tag;
-	private PlayerFactory playerFactory ;
+	private BullyFighterBuilder playerFactory ;
 
 	private Fighter character;
 	private Item item;
@@ -79,7 +79,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	public MapEditor(int row, int column) {
 		
 		//initializing
-		playerFactory = new PlayerFactory();
+		playerFactory = new BullyFighterBuilder();
 		this.row = row;
 		this.column = column;
 		viewElements = new Grid[row][column];
@@ -323,7 +323,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 				}else if (viewElements[i][j].getTag().equals("Enemy")){
 					Location location = new Location(j, i);
 //					map.setGameObjectAtLocation(location,playerFactory.create("Enemy",mapName+i+j,location.getX(),location.getY()));
-					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(playerFactory.create("Enemy",mapName+i+j), map));
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(new Fighter("Enemy", mapName+i+j), map));
 				}else if (viewElements[i][j].getTag().equals("Enter")){
 					Location location = new Location(j, i);
 //					map.setGameObjectAtLocation(location,new Entery(mapName+i+j,location));
@@ -343,7 +343,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 //					map.setGameObjectAtLocation(location,viewElements[i][j].getItem());
 					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(viewElements[i][j].getItem(), map));
 				}
-				System.out.println("i:"+ i + " j: " +j+ " id : "+ map.getGameObjectInstanceAtLocation(new Location(j, i)).getGameMap().getGameMapEntity().getId());
+//				System.out.println("i:"+ i + " j: " +j+ " id : "+ map.getGameObjectInstanceAtLocation(new Location(j, i)).getGameMap().getGameMapEntity().getGameObjectInstances().get((i+1)*j).getLocation().hashCode());
 			}
 		}
 
@@ -354,7 +354,12 @@ public class MapEditor  extends JFrame implements ActionListener{
 		}else {
 			System.out.println("Map is not Valid !!!!");
 		}
-
+		
+//		for(int i = 0; i < row ; i++){
+//			for(int j = 0; j < column ; j++){	
+//				System.out.println("loop i:"+ i + " j: " +j+ " id : "+ map.getGameObjectInstanceAtLocation(new Location(j, i)).getGameMap().getGameMapEntity().getGameObjectInstances().get((i+1)*j).getLocation().hashCode());	
+//			}
+//		}
 	}
 	
 	/**

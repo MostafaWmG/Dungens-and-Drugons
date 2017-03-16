@@ -18,9 +18,10 @@ public class AttackBonus implements ILevelUp{
 	 * 
 	 * @param modifier is used for creating AttackBonus object
 	 */
-	public AttackBonus(int modifier){
+	public AttackBonus(int modifier,int level){
 		initEmptyEntity();
 		setModifier(modifier);
+		setLevel(level);
 		setBase(0);
 	}
 	
@@ -46,7 +47,7 @@ public class AttackBonus implements ILevelUp{
 	 * @return character's points
 	 */
 	public int getPoint(){
-		return (getBase() + getModifier());
+		return (getBase() + getModifier() + getLevel());
 	}
 	
 	/**
@@ -74,7 +75,21 @@ public class AttackBonus implements ILevelUp{
 	public void setModifier(int modifier) {
 		getAttackBonusEntity().setModifier(modifier);
 	}
+	
+	/**
+	 * @return the level
+	 */
+	public int getLevel() {
+		return getAttackBonusEntity().getLevel();
+	}
 
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(int level) {
+		getAttackBonusEntity().setLevel(level);
+	}
+	
 	/**
 	 * @return the base attack bonus
 	 */

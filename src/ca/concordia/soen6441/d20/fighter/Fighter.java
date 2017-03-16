@@ -1,6 +1,8 @@
 package ca.concordia.soen6441.d20.fighter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import ca.concordia.soen6441.d20.ability.Ability;
 import ca.concordia.soen6441.d20.ability.AbilityEntity;
@@ -52,34 +54,39 @@ public class Fighter extends GameObject {
 	protected DamageBonus damageBonus;
 	protected HitPoint hitPoint;
 	protected Dice dice;
+//	
+//	/**
+//	 * This constructor creates a character object with given tag,name,inistial x and y cooridnates.
+//	 * @param tag sets tag for the character
+//	 * @param name sets the name of the character
+//	 * @param initialPosistionX initial x-coordinate of the character
+//	 * @param initialPositionY initial y-coordinate of the character
+//	 */
+//	public Fighter(String tag,String name,int initialPosistionX, int initialPositionY) {
+//		init();
+//		setName(name);
+//		setTag(tag);
+////		setLocation(new Location(initialPosistionX,initialPositionY));
+//		setBackPack(new ArrayList<Item>());
+//		initializeBackPack();
+//		setWearItems(new ArrayList<Item>());
+//		setAbilities(new ArrayList<Ability>());
+//		setCharacterAbility();
+//		setArmor(new ArmorClass(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier()));
+//		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
+//		setAttack(new AttackBonus(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier(),getLevel())); 
+//		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
+//		setAbilitiesListener();
+//		showAttributes();
+//		emptyWearList();
+////		testWearItems();
+//
+//	}
 	
-	/**
-	 * This constructor creates a character object with given tag,name,inistial x and y cooridnates.
-	 * @param tag sets tag for the character
-	 * @param name sets the name of the character
-	 * @param initialPosistionX initial x-coordinate of the character
-	 * @param initialPositionY initial y-coordinate of the character
-	 */
-	public Fighter(String tag,String name,int initialPosistionX, int initialPositionY) {
+	public Fighter(){
 		init();
-		setName(name);
-		setTag(tag);
-//		setLocation(new Location(initialPosistionX,initialPositionY));
-		setBackPack(new ArrayList<Item>());
-		initializeBackPack();
-		setWearItems(new ArrayList<Item>());
-		setAbilities(new ArrayList<Ability>());
-		setCharacterAbility();
-		setArmor(new ArmorClass(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier()));
-		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
-		setAttack(new AttackBonus(getLevel())); 
-		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
-		setAbilitiesListener();
-		showAttributes();
-		emptyWearList();
-//		testWearItems();
-
 	}
+	
 	/**
 	 * This constructor creates a character object with given tag,name.
 	 * @param tag sets tag for the character
@@ -89,7 +96,6 @@ public class Fighter extends GameObject {
 		init();
 		setName(name);
 		setTag(tag);
-//		setLocation(new Location(0,0));
 		setBackPack(new ArrayList<Item>());
 		initializeBackPack();
 		setWearItems(new ArrayList<Item>());
@@ -97,12 +103,12 @@ public class Fighter extends GameObject {
 		setCharacterAbility();
 		setArmor(new ArmorClass(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier()));
 		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
-		setAttack(new AttackBonus(getLevel())); 
+		setAttack(new AttackBonus(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier(),getLevel())); 
 		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
 		setAbilitiesListener();	
+		showAbilities();
 		showAttributes();
 		emptyWearList();
-//		testWearItems();
 	}
 	
 	/**
@@ -237,19 +243,41 @@ public class Fighter extends GameObject {
 	}
 	
 	/**
+	 * randomly generating numbers using 4dice6 and d20 rules
+	 */
+	public List<Integer> rollDice(){
+		int roll = 0;
+		int[] rollTemp = new int[2];
+		rollTemp[0] = 0 ;
+		rollTemp[1] = 0 ;
+ 		dice  = new Dice();
+ 		List<Integer> numbers = new ArrayList<>();
+
+		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
+			roll = 0 ;
+			rollTemp[0] = dice.roll6();
+			rollTemp[1] = dice.roll6();
+			roll = dice.roll6() + dice.roll6() + rollTemp[dice.getRandom().nextInt(2)];
+			numbers.add(roll);
+		}
+ 		Collections.sort(numbers);
+ 		return numbers;
+	}
+		
+	/**
 	 * randomly determining the character abilities using dice6 and d20 rules
 	 */
-	private void setCharacterAbility(){
+	public void setCharacterAbility(){
 		
 		int roll = 0;
 		dice  = new Dice();
-		System.out.println("<<<CHARACTED CREATED RANDOMLY>>> ");
+
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
 			
 			roll = 0 ;
 			roll = dice.roll6() + dice.roll6() + dice.roll6() ;
 			
-			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
+//			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
 			// To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down).
 			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
@@ -268,6 +296,7 @@ public class Fighter extends GameObject {
 		getAbilities().get(AbilityEnum.DEXTERITY.getValue()).addListener(getArmor());
 		getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).addListener(getHitPoint());
 		getAbilities().get(AbilityEnum.STRENGTH.getValue()).addListener(getDamage());
+		getAbilities().get(AbilityEnum.DEXTERITY.getValue()).addListener(getAttack());
 	}
 	
 	/**
@@ -276,7 +305,8 @@ public class Fighter extends GameObject {
 	 */
 	public void levelUp(int point){
 		getCharacterEntity().setLevel(getCharacterEntity().getLevel() + 1);
-		getAttack().update(getCharacterEntity().getLevel());
+//		getAttack().update(getCharacterEntity().getLevel());
+		getAttack().setLevel(getCharacterEntity().getLevel());
 		getHitPoint().setLevel(getCharacterEntity().getLevel());
 		iterate(getAbilities(),getWearItems(), point);
 	}
@@ -380,6 +410,26 @@ public class Fighter extends GameObject {
 			getCharacterEntity().getAbilities().add(ability.getAbilityEnum().getValue(), ability.getAbilityEntity());		
 	}
 	
+	/**
+	 * replaceAbility 
+	 * @param ability the ability we are adding .
+	 */
+	public void replaceAbility(Ability ability) {
+		replaceAbility(ability, true);
+
+	}
+	
+	/**
+	 * 
+	 * @param ability to be replaced 
+	 * @param saveEntity true if we want to save the character object to database
+	 */
+	public void replaceAbility(Ability ability, boolean saveEntity)
+	{
+		abilities.set(ability.getAbilityEnum().getValue(), ability);
+		if (saveEntity)
+			getCharacterEntity().getAbilities().set(ability.getAbilityEnum().getValue(), ability.getAbilityEntity());		
+	}
 	/**
 	 * 
 	 * @param abilityEnum 
@@ -725,27 +775,12 @@ public class Fighter extends GameObject {
 	/**
 	 * empty the wearItems list
 	 */
-	private void emptyWearList(){
+	public void emptyWearList(){
 		for(int i = 0; i < getWearItems().size() ; i ++){
 			getWearItems().set(i, new Item(getName()+i+"",ItemEnum.values()[i]));
 		}
 	}
-	
-//	private void testWearItems(){
-//		//for test only
-//		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-//			if(i == ItemEnum.values().length -1){
-//			putOnItem(new Item("test"+i,ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
-////			getWearItems().set(i,new Item(ItemEnum.values()[i], AttributeEnum.ARMORCLASS, i));
-//			}else {
-//				putOnItem(new Item("test"+i,ItemEnum.values()[i], AbilityEnum.values()[i], i));
-////				getWearItems().set(i,new Item(ItemEnum.values()[i],AbilityEnum.values()[i], i));				
-//			}
-//		}
-//		System.out.println("<<<TEST PARAMETRS>>>");
-//		show();
-//	}
-	
+		
 	/**
 	 * @return GameObjectEntity for loading character from database
 	 */

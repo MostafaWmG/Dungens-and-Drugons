@@ -9,7 +9,10 @@ import ca.concordia.soen6441.d20.attribute.AttackBonus;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.attribute.DamageBonus;
 import ca.concordia.soen6441.d20.attribute.HitPoint;
-import ca.concordia.soen6441.d20.factory.PlayerFactory;
+import ca.concordia.soen6441.d20.factory.FighterDirector;
+import ca.concordia.soen6441.d20.factory.BullyFighterBuilder;
+import ca.concordia.soen6441.d20.factory.NimbleFighterBuilder;
+import ca.concordia.soen6441.d20.factory.TankFighterBuilder;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.item.Item;
@@ -48,12 +51,32 @@ public class FighterEditor {
 	 * this a method for creating character
 	 */
 	private void createCharacter(){
+		FighterDirector fighterDirector;
+		Fighter character = null;
+		fighterDirector = new FighterDirector();
 		System.out.println("Please Enter Your Character Name : ");
 		String charName = scanner.nextLine();
-		System.out.println("Please Enter Your Character Type : ");
+		System.out.println("Do you want to create Enemy or Player? : ");
+		String charEOP = scanner.nextLine();
+		System.out.println("Pleas Enter Your Character Type :(Bully,Nimble,Tank) ");
 		String charType = scanner.nextLine();
-		PlayerFactory PlayerFactory = new PlayerFactory();
-		Fighter character = PlayerFactory.create(charType,charName);
+
+		if(charType.equalsIgnoreCase("Bully")){
+			BullyFighterBuilder bullyFighterBuilder = new BullyFighterBuilder();
+			fighterDirector.setFighterBuilder(bullyFighterBuilder);
+			fighterDirector.constructFighter(charEOP, charName);
+			character = fighterDirector.getFighterBuilder();
+		}else if(charType.equalsIgnoreCase("Nimble")){
+			NimbleFighterBuilder nimbleFighterBuilder = new NimbleFighterBuilder();
+			fighterDirector.setFighterBuilder(nimbleFighterBuilder);
+			fighterDirector.constructFighter(charEOP, charName);
+			character = fighterDirector.getFighterBuilder();
+		}else if(charType.equalsIgnoreCase("Tank")){
+			TankFighterBuilder tankFighterBuilder = new TankFighterBuilder();
+			fighterDirector.setFighterBuilder(tankFighterBuilder);
+			fighterDirector.constructFighter(charEOP, charName);
+			character = fighterDirector.getFighterBuilder();
+		}
 
 		if(character != null){
 			System.out.println("Do you want to save your character (yes or no )?");

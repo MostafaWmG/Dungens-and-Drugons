@@ -85,6 +85,4 @@ public class Location {
 		return String.format("%d:%d", this.getX(), this.getY()).hashCode();
 	}
 	
-	
-
 }

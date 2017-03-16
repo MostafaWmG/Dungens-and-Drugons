@@ -71,6 +71,7 @@ public class GameMap {
 	 */
 	public GameMap(GameMapEntity gameMapEntity)
 	{
+//		System.out.println("ID LOADED:"+gameMapEntity.getId() +" "+ gameMapEntity.getGameObjectInstances().get(0));
 		setGameMapEntity(gameMapEntity);
 		initVolatileAttirubtes();
 	}
@@ -81,6 +82,8 @@ public class GameMap {
 	private void initVolatileAttirubtes()
 	{
 		init();
+//		for (GameObjectInstanceEntity entity : getGameMapEntity().getGameObjectInstances())
+//			System.out.print("loaded item :"+entity.getLocation());
 		for (GameObjectInstanceEntity entity : getGameMapEntity().getGameObjectInstances())
 			place(entity.createModel(), entity.getLocation(), false);
 	}

@@ -20,6 +20,7 @@ public class AttackBonusEntity implements Serializable {
 	
 	private int modifier;
 	private int base;
+	private int level;
 
 	public AttackBonusEntity() {
 		super();
@@ -62,5 +63,17 @@ public class AttackBonusEntity implements Serializable {
 	public AttackBonus createAttackBonus()
 	{
 		return new AttackBonus(this);
+	}
+	/**
+	 * @return the level
+	 */
+	public int getLevel() {
+		return level;
+	}
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

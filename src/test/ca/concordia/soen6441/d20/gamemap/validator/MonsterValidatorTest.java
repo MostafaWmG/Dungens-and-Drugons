@@ -40,7 +40,7 @@ public class MonsterValidatorTest {
 	@Test
 	public void whenGamemapHasMoreThanOneMonsterItShouldBeValid() {
 		GameObject monster = new Fighter("Enemy","n");
-		GameObject secondMonster = new Fighter("Enemy","m",9, 7);
+		GameObject secondMonster = new Fighter("Enemy","m");
 		gameMap.place(monster, monster.getLocation());
 		gameMap.place(secondMonster, secondMonster.getLocation());
 		
