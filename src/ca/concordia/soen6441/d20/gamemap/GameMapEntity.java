@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstanceEntity;
 
 
 /**
@@ -38,22 +39,19 @@ public class GameMapEntity implements Serializable {
 	private int height;
 	@Column(unique=true)
 	private String name;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(
-			name="MAP_OBJ",
-			joinColumns=@JoinColumn(name="MAP_ID", referencedColumnName="ID"),
-			inverseJoinColumns=@JoinColumn(name="OBJECT_ID", referencedColumnName="ID"))
-	private List<GameObjectEntity> objects;
+	
+	@OneToMany(mappedBy="gameMapEntity")
+	private List<GameObjectInstanceEntity> gameObjectInstances;
 
 	public GameMapEntity() {
 		super();
 	}
 	
-	public void addGameObjectEntity(GameObjectEntity entity)
+	public void addGameObjectInstanceEntity(GameObjectInstanceEntity entity)
 	{
-		if (getObjects() == null)
-			setObjects(new ArrayList<>());
-		getObjects().add(entity);
+		if (getGameObjectInstances() == null)
+			setGameObjectInstances(new ArrayList<>());
+		getGameObjectInstances().add(entity);
 	}
 	
 	public GameMap createModel()
@@ -91,17 +89,16 @@ public class GameMapEntity implements Serializable {
 	}
 
 	/**
-	 * @return the objects
+	 * @return the gameObjectInstances
 	 */
-	public List<GameObjectEntity> getObjects() {
-		return objects;
+	public List<GameObjectInstanceEntity> getGameObjectInstances() {
+		return gameObjectInstances;
 	}
 
 	/**
-	 * @param objects the objects to set
+	 * @param gameObjectInstances the gameObjectInstances to set
 	 */
-	public void setObjects(List<GameObjectEntity> objects) {
-		this.objects = objects;
-	}
-   
+	public void setGameObjectInstances(List<GameObjectInstanceEntity> gameObjectInstances) {
+		this.gameObjectInstances = gameObjectInstances;
+	}   
 }

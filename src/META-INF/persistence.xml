@@ -23,6 +23,7 @@
 		<class>ca.concordia.soen6441.d20.attribute.HitPointEntity</class>
 		<class>ca.concordia.soen6441.d20.item.ChestEntity</class>
 		<class>ca.concordia.soen6441.d20.campaign.CampaignEntity</class>
+		<class>ca.concordia.soen6441.d20.gamemap.element.GameObjectInstanceEntity</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<validation-mode>AUTO</validation-mode>
 		<properties>

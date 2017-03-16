@@ -14,7 +14,8 @@ import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
-import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstanceEntity;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 
@@ -25,27 +26,29 @@ import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
  *
  */
 public class GameMap {
-	public static final GameObject EMPTY = null;
+	public static final GameObjectInstance EMPTY = null;
 	/**
 	 * used to instantiate the map and easily position its elements
 	 */
-	private GameObject [][]field;
+	private GameObjectInstance [][]field;
 	/**
 	 * used to store the map element by location
 	 */
-	private Map<Location, GameObject> elements;		
+	private Map<Location, GameObjectInstance> elements;		
 	/**
 	 * @return the elements
 	 */
+	@Deprecated
 	public Map<Location, GameObject> getElements() {
-		return elements;
+		throw new RuntimeException("Don't use this function");
 	}
 
 	/**
 	 * @param elements the elements to set
 	 */
+	@Deprecated
 	public void setElements(Map<Location, GameObject> elements) {
-		this.elements = elements;
+		throw new RuntimeException("Don't use this function");
 	}
 
 	private GameMapEntity gameMapEntity;
@@ -78,14 +81,14 @@ public class GameMap {
 	private void initVolatileAttirubtes()
 	{
 		init();
-		for (GameObjectEntity entity : getGameMapEntity().getObjects())
+		for (GameObjectInstanceEntity entity : getGameMapEntity().getGameObjectInstances())
 			place(entity.createModel(), entity.getLocation(), false);
 	}
 	
 	private void init()
 	{
 		//TODO usually the first dimension is width		
-		field = new GameObject[getGameMapEntity().getHeight()][getGameMapEntity().getWidth()];		
+		field = new GameObjectInstance[getGameMapEntity().getHeight()][getGameMapEntity().getWidth()];		
 		elements = new HashMap<>();		
 		emptyMap();
 	}
@@ -98,12 +101,18 @@ public class GameMap {
 		return getGameMapEntity();
 	}
 	
+	@Deprecated
+	public GameObject getGameObjectAtLocation(Location location) {
+		throw new RuntimeException("Don't use this function");
+	}
+	
 	/**
 	 * 
 	 * @param location of objects on the map
 	 * @return elements that are on the given location
 	 */
-	public GameObject getGameObjectAtLocation(Location location) {
+	public GameObjectInstance getGameObjectInstanceAtLocation(Location location)
+	{
 		return elements.get(location);
 	}
 	
@@ -112,22 +121,33 @@ public class GameMap {
 	 * @param location to set the object
 	 * @param gameObject that is desired to locate on the specified location
 	 */
+	//TODO Remove this function
+	@Deprecated
 	public void setGameObjectAtLocation(Location location,GameObject gameObject) {
 		setGameObjectAtLocation(location, gameObject, true);
 	}
 	
+	public void setGameObjectInstanceAtLocation(Location location,GameObjectInstance instance) {
+		setGameObjectAtLocation(location, instance, true);
+	}
+	
+
+	//TODO Remove this
+	@Deprecated
+	public void setGameObjectAtLocation(Location location,GameObject gameObject, boolean saveEntity) {
+		throw new RuntimeException("Don't use this function");
+	}
 	/**
 	 * 
 	 * @param location location to set the object
-	 * @param gameObject that is desired to locate on the specified location
+	 * @param instance that is desired to locate on the specified location
 	 * @param saveEntity true if we want to save the object on database
 	 */
-	public void setGameObjectAtLocation(Location location,GameObject gameObject, boolean saveEntity) {
-		 elements.put(location, gameObject);
-		gameObject.setLocation(location);
-		gameObject.setField(this);
+	public void setGameObjectAtLocation(Location location,GameObjectInstance instance, boolean saveEntity) {
+		 elements.put(location, instance);
+		instance.setLocation(location);
 		if (saveEntity)
-			getGameMapEntity().addGameObjectEntity(gameObject.getEntity());		
+			getGameMapEntity().addGameObjectInstanceEntity(instance.getEntity());
 	}
 	/**
 	 * 
@@ -202,22 +222,29 @@ public class GameMap {
 	public void place(GameObject element, Location location) {
 		place(element, location, true);
 	}
+	//TODO Remove this
+	@Deprecated
+	private void place(GameObject element, Location location, boolean saveEntity) {
+		throw new RuntimeException("Don't use this function");
+	}
+	
 	/**
 	 * this class allows us to place a GameObject into the map
 	 * if the position is alredy used, no element is placed, 
 	 * the same hapens if the location is out the map boundaries.
-	 * @param element element to be add to the map
+	 * @param instance game object instance to be added to the map
 	 * @param location locaton where the element must be placed
 	 * @param saveEntity true if we want to save the object to database
 	 */
-	private void place(GameObject element, Location location, boolean saveEntity) {
+	private void place(GameObjectInstance instance, Location location, boolean saveEntity)
+	{
 		if(location.getX() < 0 || location.getX() >= getWidth()) return;
 		if(location.getY() < 0 || location.getY() >= getHeight()) return;
 		
 		if(field[location.getY()][location.getX()] != EMPTY) return;
 		
-		field[location.getY()][location.getX()] = element;
-		setGameObjectAtLocation(location, element, saveEntity);		
+		field[location.getY()][location.getX()] = instance;
+		setGameObjectAtLocation(location, instance, saveEntity);
 	}
 	
 	
@@ -236,11 +263,11 @@ public class GameMap {
 		
 		this.field[destinationY][destinationX] = this.field[originY][originX];
 		this.field[originY][originX] = EMPTY;
-		GameObject object = this.elements.remove(new Location(originX, originY));
-		if(object != null)
+		GameObjectInstance instance = this.elements.remove(new Location(originX, originY));
+		if(instance != null)
 		{
 			Location location = new Location(destinationX, destinationY);
-			setGameObjectAtLocation(location, object);
+			setGameObjectInstanceAtLocation(location, instance);
 		}
 		else
 			throw new NullPointerException("I cannot find the game object in elements");
@@ -284,15 +311,15 @@ public class GameMap {
 		Map<Location, Entery> enterDoor = new HashMap<Location, Entery>();
 		Map<Location, Exit> exitDoor = new HashMap<Location, Exit>();
 		
-		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
+		for(Map.Entry<Location,GameObjectInstance> mapElement : elements.entrySet()){
 //			System.out.println("valid : " + mapElement.getValue().getTag());
 //			System.out.println("valid obj : " + mapElement.getValue());
-			if(mapElement.getValue().getTag().equals("Wall")){
-				walls.put(mapElement.getKey(),(Wall) mapElement.getValue());
-			}else if (mapElement.getValue().getTag().equals("Enter") ) {
-				enterDoor.put(mapElement.getKey(),(Entery) mapElement.getValue());
-			}else if (mapElement.getValue().getTag().equals("Exit")){
-				exitDoor.put(mapElement.getKey(), (Exit)mapElement.getValue());	
+			if(mapElement.getValue().getGameObject().getTag().equals("Wall")){
+				walls.put(mapElement.getKey(),(Wall) mapElement.getValue().getGameObject());
+			}else if (mapElement.getValue().getGameObject().getTag().equals("Enter") ) {
+				enterDoor.put(mapElement.getKey(),(Entery) mapElement.getValue().getGameObject());
+			}else if (mapElement.getValue().getGameObject().getTag().equals("Exit")){
+				exitDoor.put(mapElement.getKey(), (Exit)mapElement.getValue().getGameObject());	
 			}
 		}
 		
@@ -315,8 +342,8 @@ public class GameMap {
 		//copy map
 		Map<Location,String> mapCopy = new HashMap<Location, String>();
 //		mapCopy = new HashMap<Location, GameObject>();
-		for(Map.Entry<Location,GameObject> mapElement : elements.entrySet()){
-			mapCopy.put(mapElement.getKey(), mapElement.getValue().getTag());
+		for(Map.Entry<Location,GameObjectInstance> mapElement : elements.entrySet()){
+			mapCopy.put(mapElement.getKey(), mapElement.getValue().getGameObject().getTag());
 //			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
 		}
 		
