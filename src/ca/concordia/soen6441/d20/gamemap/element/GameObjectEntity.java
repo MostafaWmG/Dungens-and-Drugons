@@ -32,16 +32,13 @@ public abstract class GameObjectEntity implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
-	private long Id;
-	
-	private Location location;
+	private long Id;	
 	
 	@Column(unique=true)
 	private String name;
 
 	public GameObjectEntity() {
 		super();
-		location = new Location();
 	}
 	
 	/**
@@ -61,15 +58,17 @@ public abstract class GameObjectEntity implements Serializable {
 	/**
 	 * @return the location
 	 */
+	@Deprecated
 	public Location getLocation() {
-		return location;
+		throw new RuntimeException("Don't use this function");
 	}
 
 	/**
 	 * @param location the location to set
 	 */
+	@Deprecated
 	public void setLocation(Location location) {
-		this.location = location;
+		throw new RuntimeException("Don't use this function");
 	}
 
 	/**

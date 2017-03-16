@@ -59,15 +59,18 @@ public abstract class GameObject {
 	/**
 	 * @return the location of the game element
 	 */
+	@Deprecated
 	public Location getLocation() {
-		return getEntity().getLocation();
+		throw new RuntimeException("Don't use this function");
 	}
 
 	/**
 	 * @param location of the element to be set
 	 */
+	//TODO Remove this function
+	@Deprecated
 	public void setLocation(Location location) {
-		getEntity().setLocation(location);
+		throw new RuntimeException("Don't use this function");
 	}
 	
 	/**
