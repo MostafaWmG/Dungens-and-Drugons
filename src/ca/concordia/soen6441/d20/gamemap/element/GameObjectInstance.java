@@ -15,6 +15,12 @@ public class GameObjectInstance
 	private GameObject gameObject;
 	private GameMap gameMap;
 	
+	
+	public GameObjectInstance(GameObject gameObject, GameMap gamMap) {
+		setEntity(new GameObjectInstanceEntity());
+		setGameObject(gameObject);
+		setGameMap(gamMap);
+	}
 	/**
 	 * 
 	 * @param entity

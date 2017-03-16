@@ -51,16 +51,16 @@ public class PlayerFactory implements FighterFactory {
 		return character;
 	}
 
-	@Override
-	public Fighter create(String tag, String name, int x, int y) {
-		if(tag.equals("Enemy")){
-			return  new Fighter(tag,name,x,y);
-		}else if(tag.equals("Player")){
-			return new Fighter(tag,name,x,y);
-		}else {
-			return null;
-		}
-
-		
-	}
+//	@Override
+//	public Fighter create(String tag, String name, int x, int y) {
+//		if(tag.equals("Enemy")){
+//			return  new Fighter(tag,name,x,y);
+//		}else if(tag.equals("Player")){
+//			return new Fighter(tag,name,x,y);
+//		}else {
+//			return null;
+//		}
+//
+//		
+//	}
 }

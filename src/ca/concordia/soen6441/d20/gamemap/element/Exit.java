@@ -10,30 +10,30 @@ import ca.concordia.soen6441.d20.common.Location;
 public class Exit extends GameObject{
 	
 	private ExitEntity exitEntity;
-	/**
-	 * creates exit object with given name and location
-	 * @param name to set for the element
-	 * @param x to set as x-coordinate of the exit element
-	 * @param y to set as y-coordinate of the exit element
-	 */
-	public Exit(String name,int x , int y){
-		setExitEntity(new ExitEntity());
-		init();
-		setName(name);
-		setLocation(new Location(x, y));
-	}
-	
-	/**
-	 *  creates exit object with given name and location
-	 * @param name to set for the element
-	 * @param location for the exit element
-	 */
-	public Exit(String name,Location location){
-		setExitEntity(new ExitEntity());
-		init();
-		setName(name);
-		setLocation(location);
-	}
+//	/**
+//	 * creates exit object with given name and location
+//	 * @param name to set for the element
+//	 * @param x to set as x-coordinate of the exit element
+//	 * @param y to set as y-coordinate of the exit element
+//	 */
+//	public Exit(String name,int x , int y){
+//		setExitEntity(new ExitEntity());
+//		init();
+//		setName(name);
+//		setLocation(new Location(x, y));
+//	}
+//	
+//	/**
+//	 *  creates exit object with given name and location
+//	 * @param name to set for the element
+//	 * @param location for the exit element
+//	 */
+//	public Exit(String name,Location location){
+//		setExitEntity(new ExitEntity());
+//		init();
+//		setName(name);
+//		setLocation(location);
+//	}
 	
 	/**
 	 * creates exit object with given name
@@ -43,7 +43,7 @@ public class Exit extends GameObject{
 		setExitEntity(new ExitEntity());
 		init();
 		setName(name);
-		setLocation(new Location(0,0));
+//		setLocation(new Location(0,0));
 	}
 	/**
 	 * create exit object from the ExitEntity

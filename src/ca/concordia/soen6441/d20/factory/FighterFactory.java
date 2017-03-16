@@ -15,5 +15,5 @@ public interface FighterFactory {
 	 * @return
 	 */
 	public Fighter create(String tag,String name);
-	public Fighter create(String tag,String name,int x ,int y);
+//	public Fighter create(String tag,String name,int x ,int y);
 }

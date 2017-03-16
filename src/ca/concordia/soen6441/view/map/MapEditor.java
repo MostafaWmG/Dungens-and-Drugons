@@ -20,6 +20,7 @@ import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Item;
@@ -310,31 +311,39 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){	
-				System.out.println("i:"+ i + " j: " +j+ " : "+ viewElements[i][j]);
+//				System.out.println("i:"+ i + " j: " +j+ " : "+ viewElements[i][j]);
 				if(viewElements[i][j].getTag().equals("Ground")){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,new Ground(mapName+i+j,location));
+//					map.setGameObjectAtLocation(location,new Ground(mapName+i+j,location));
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(new Ground(mapName+i+j), map));
 				}else if(viewElements[i][j].getTag().equals("Wall")){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,new Wall(mapName+i+j,location));
+//					map.setGameObjectAtLocation(location,new Wall(mapName+i+j,location));
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(new Wall(mapName+i+j), map));
 				}else if (viewElements[i][j].getTag().equals("Enemy")){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,playerFactory.create("Enemy",mapName+i+j,location.getX(),location.getY()));
+//					map.setGameObjectAtLocation(location,playerFactory.create("Enemy",mapName+i+j,location.getX(),location.getY()));
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(playerFactory.create("Enemy",mapName+i+j), map));
 				}else if (viewElements[i][j].getTag().equals("Enter")){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,new Entery(mapName+i+j,location));
+//					map.setGameObjectAtLocation(location,new Entery(mapName+i+j,location));
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(new Entery(mapName+i+j), map));
 				}else if (viewElements[i][j].getTag().equals("Exit")){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,new Exit(mapName+i+j,location));
+//					map.setGameObjectAtLocation(location,new Exit(mapName+i+j,location));
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(new Exit(mapName+i+j), map));
 				}else if (viewElements[i][j].getTag().equals("Player")){
 					Location location = new Location(j, i);
-					map.setGameObjectAtLocation(location,viewElements[i][j].getCharacter());
+//					map.setGameObjectAtLocation(location,viewElements[i][j].getCharacter());
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(viewElements[i][j].getCharacter(), map));
 				}else if (viewElements[i][j].getTag().equals("Item")){
 					Location location = new Location(j, i);
 					viewElements[i][j].getItem().setTag("Item");
-					viewElements[i][j].getItem().setLocation(location);
-					map.setGameObjectAtLocation(location,viewElements[i][j].getItem());
+//					viewElements[i][j].getItem().setLocation(location);
+//					map.setGameObjectAtLocation(location,viewElements[i][j].getItem());
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(viewElements[i][j].getItem(), map));
 				}
+				System.out.println("i:"+ i + " j: " +j+ " id : "+ map.getGameObjectInstanceAtLocation(new Location(j, i)).getGameMap().getGameMapEntity().getId());
 			}
 		}
 
@@ -388,28 +397,29 @@ public class MapEditor  extends JFrame implements ActionListener{
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
 //				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
-				if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Ground")){
+				System.out.println("Show:" + map.getGameObjectInstanceAtLocation(new Location(j,i)));
+				if(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Ground")){
 					viewElements[i][j].setTag("Ground");
 					viewElements[i][j].iconHandler();
-				}else if(map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Wall")){
+				}else if(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Wall")){
 					viewElements[i][j].setTag("Wall");
 					viewElements[i][j].iconHandler();
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Enemy")){
+				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Enemy")){
 					viewElements[i][j].setTag("Enemy");
 					viewElements[i][j].iconHandler();
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Enter")){
+				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Enter")){
 					viewElements[i][j].setTag("Enter");
 					viewElements[i][j].iconHandler();
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Exit")){
+				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Exit")){
 					viewElements[i][j].setTag("Exit");
 					viewElements[i][j].iconHandler();
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Player")){
+				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Player")){
 					viewElements[i][j].setTag("Player");
-					viewElements[i][j].setCharacter((Fighter)map.getGameObjectAtLocation(new Location(j,i)));
+					viewElements[i][j].setCharacter((Fighter) (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
 					viewElements[i][j].iconHandler();
-				}else if (map.getGameObjectAtLocation(new Location(j,i)).getTag().equals("Item")){
+				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Item")){
 					viewElements[i][j].setTag("Item");
-					viewElements[i][j].setItem((Item)map.getGameObjectAtLocation(new Location(j,i)));
+					viewElements[i][j].setItem((Item)(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
 					viewElements[i][j].iconHandler();
 				}
 			}

@@ -64,7 +64,7 @@ public class Fighter extends GameObject {
 		init();
 		setName(name);
 		setTag(tag);
-		setLocation(new Location(initialPosistionX,initialPositionY));
+//		setLocation(new Location(initialPosistionX,initialPositionY));
 		setBackPack(new ArrayList<Item>());
 		initializeBackPack();
 		setWearItems(new ArrayList<Item>());
@@ -89,7 +89,7 @@ public class Fighter extends GameObject {
 		init();
 		setName(name);
 		setTag(tag);
-		setLocation(new Location(0,0));
+//		setLocation(new Location(0,0));
 		setBackPack(new ArrayList<Item>());
 		initializeBackPack();
 		setWearItems(new ArrayList<Item>());
