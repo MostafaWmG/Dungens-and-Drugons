@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstanceEntity;
 
 

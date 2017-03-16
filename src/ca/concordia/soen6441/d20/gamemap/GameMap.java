@@ -116,17 +116,17 @@ public class GameMap {
 		return elements.get(location);
 	}
 	
-	/**
-	 * 
-	 * @param location to set the object
-	 * @param gameObject that is desired to locate on the specified location
-	 */
 	//TODO Remove this function
 	@Deprecated
 	public void setGameObjectAtLocation(Location location,GameObject gameObject) {
 		setGameObjectAtLocation(location, gameObject, true);
 	}
 	
+	/**
+	 * 
+	 * @param location to set the object
+	 * @param GameObjectInstance that is desired to locate on the specified location
+	 */
 	public void setGameObjectInstanceAtLocation(Location location,GameObjectInstance instance) {
 		setGameObjectAtLocation(location, instance, true);
 	}
@@ -212,16 +212,24 @@ public class GameMap {
 		this.gameMapEntity = gameMapEntity;
 	}
 
+	//TODO Remove this
+	@Deprecated
+	public void place(GameObject element, Location location) {
+		place(element, location, true);
+	}
+	
 	/**
 	 * this class allows us to place a GameObject into the map
 	 * if the position is alredy used, no element is placed, 
 	 * the same hapens if the location is out the map boundaries.
-	 * @param element element to be add to the map
+	 * @param GameObjectInstance instance to be add to the map
 	 * @param location locaton where the element must be placed
 	 */
-	public void place(GameObject element, Location location) {
-		place(element, location, true);
+	public void place(GameObjectInstance instance, Location location)
+	{
+		place(instance, location, true);
 	}
+	
 	//TODO Remove this
 	@Deprecated
 	private void place(GameObject element, Location location, boolean saveEntity) {
