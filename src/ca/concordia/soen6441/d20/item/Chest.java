@@ -22,9 +22,10 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	
 	protected List<Item> chestItems;
 	
-	public Chest(String name) {
+	public Chest(String name,String tag) {
 		init();
 		setName(name);
+		setTag(tag);
 		setChestItems(new ArrayList<Item>());
 		initializeChest();
 	}

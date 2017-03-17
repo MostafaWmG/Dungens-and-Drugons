@@ -28,8 +28,7 @@ public class Grid extends JButton implements ActionListener{
 	private String tag;
 	private Fighter character;
 	private Item item;
-	
-	
+		
 	/**
 	 * 
 	 * @param mapEditor the map to put elements on it
@@ -43,6 +42,7 @@ public class Grid extends JButton implements ActionListener{
 		setItem(null);
 		iconHandler();
 	}
+	
 	/**
 	 * Puts given character with the given on the map
 	 * @param character to set on map
@@ -69,6 +69,8 @@ public class Grid extends JButton implements ActionListener{
 		setCharacter(null);
 		iconHandler();
 	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
