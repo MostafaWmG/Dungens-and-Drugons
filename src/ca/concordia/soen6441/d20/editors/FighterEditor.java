@@ -168,7 +168,7 @@ public class FighterEditor {
 		System.out.println("Enter your Item Model from Character");
 		String itemModel = scanner.nextLine();
 		
-		try {
+//		try {
 			boolean reulst  = character.putWearItemIntoBackPack(character.getItem(ItemEnum.valueOf(itemModel.toUpperCase())));
 			if(reulst){
 				character.showInvetory();
@@ -177,9 +177,9 @@ public class FighterEditor {
 			}
 
 			saveCharacterChanges(character, "inventory");
-		} catch (Exception e) {
-			System.out.println("Wrong Info");
-		}
+//		} catch (Exception e) {
+//			System.out.println("Wrong Info");
+//		}
 	}
 	
 	/**
@@ -192,7 +192,7 @@ public class FighterEditor {
 		
 //		try {
 			int itemModel = Integer.parseInt(itemModelString);
-			boolean result =character.putBackPackIntoWearList(character.getBackPack().get(itemModel));
+			boolean result =character.putBackPackIntoWearList(character.getBackPack().get(itemModel),itemModel);
 			if(result){
 				character.showInvetory();
 				character.showAbilities();
@@ -217,7 +217,7 @@ public class FighterEditor {
 		
 		try {
 			int itemNumber = Integer.parseInt(itemNumberString);
-			boolean result =character.switchWearItemWithBackPack(character.getItem(ItemEnum.valueOf(itemModel.toUpperCase())), character.getBackPack().get(itemNumber));
+			boolean result =character.switchWearItemWithBackPack(character.getItem(ItemEnum.valueOf(itemModel.toUpperCase())), character.getBackPack().get(itemNumber),itemNumber);
 			if(result){
 				character.showInvetory();
 				character.showAbilities();

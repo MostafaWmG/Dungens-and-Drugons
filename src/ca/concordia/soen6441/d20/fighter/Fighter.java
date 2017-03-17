@@ -232,8 +232,9 @@ public class Fighter extends GameObject {
 	public void removeItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
-			Item tmp = new Item(getName()+item.getItemEnum().getValue()+"", item.getItemEnum());
-			getWearItems().set(item.getItemEnum().getValue(), tmp);			
+			Item tmp = new Item(getName()+item.getItemEnum().getValue()+"dontduplicate", item.getItemEnum());
+			getWearItems().set(item.getItemEnum().getValue(), tmp);		
+			System.out.println("item name :" + tmp.getName());
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), tmp.getItemEntity());
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
@@ -283,7 +284,7 @@ public class Fighter extends GameObject {
 		}
 		
 		for(int i = 0 ; i < ItemEnum.values().length; i ++){
-			addItem(new Item(getName()+i+"",ItemEnum.values()[i]));
+			addItem(new Item(getName()+i+"dontduplicate",ItemEnum.values()[i]));
 		}
 		
 	}
@@ -535,7 +536,7 @@ public class Fighter extends GameObject {
 	 */
 	public void initializeBackPack(){
 		for(int i = 0; i < BACKPACK_SIZE ; i ++){
-			addBackPack(new Item(getName()+i+7+"", ItemEnum.HELMET));
+			addBackPack(new Item(getName()+i+7+"dontduplicate", ItemEnum.HELMET));
 		}
 	}
 	
@@ -572,11 +573,12 @@ public class Fighter extends GameObject {
 	private void addBackPack(Item item, boolean saveEntity)
 	{
 		if(getBackPack().size() >= BACKPACK_SIZE){
+			System.out.println("dast dast");
 			int index = findEmptyPositionInBackPack();
 
-			getBackPack().add(index, item);
+			getBackPack().set(index, item);
 			if (saveEntity)
-				getCharacterEntity().getBackpack().add(index, item.getItemEntity());
+				getCharacterEntity().getBackpack().set(index, item.getItemEntity());
 		}else{
 			if(item.getEnchantmentType() == null && item.getAttributeType() == null){
 				Item newItem = new Item(item.getName(),item.getItemEnum());
@@ -615,10 +617,9 @@ public class Fighter extends GameObject {
 			System.out.println("Back Pack Is Full");
 			return false;
 		}
-
-		Item newItem = new Item(itemWear); 
+		
+		addBackPack(itemWear); 
 		removeItem(itemWear);
-		addBackPack(newItem);
 		return true;
 	}
 	
@@ -627,7 +628,7 @@ public class Fighter extends GameObject {
 	 * @param itemWear the item selected from wearList
 	 * @param itemBp the item selected from backPack
 	 */
-	public boolean switchWearItemWithBackPack(Item itemWear,Item itemBp){
+	public boolean switchWearItemWithBackPack(Item itemWear,Item itemBp,int slot){
 		if(itemBp.getAttributeType() == null && itemBp.getEnchantmentType() == null){
 			System.out.println("Slot is Empty");
 			return false;
@@ -639,21 +640,24 @@ public class Fighter extends GameObject {
 				return false;
 			}
 		}
-		Item newItemWear = new Item(itemWear);
+
 		removeItem(itemWear);
 		putOnItem(itemBp);
 		getBackPack().remove(itemBp);
+		// messy code need to be reFactored!!!
+	    getCharacterEntity().getBackpack().set(slot, new Item(itemBp.getName()+slot+7+"dontduplicate", ItemEnum.HELMET).getItemEntity());
 		ArrayList<Item> backPack = (ArrayList<Item>) getBackPack();
 		backPack.trimToSize();
-		getBackPack().add(newItemWear);
+		addBackPack(itemWear);
 		return true;
+
 	}
 	
 	/**
 	 * move item from backPack into wearList if character does not have the same model already.
 	 * @param itemBp selected item from backPack
 	 */
-	public boolean putBackPackIntoWearList(Item itemBp){
+	public boolean putBackPackIntoWearList(Item itemBp, int slot){
 		if(itemBp.getAttributeType() == null && itemBp.getEnchantmentType() == null){
 			System.out.println("Slot is Empty");
 			return false;
@@ -665,8 +669,11 @@ public class Fighter extends GameObject {
 		}
 		putOnItem(itemBp);
 		getBackPack().remove(itemBp);
+		// messy code need to be reFactored!!!
+	    getCharacterEntity().getBackpack().set(slot, new Item(itemBp.getName()+slot+7+"dontduplicate", ItemEnum.HELMET).getItemEntity());
 		ArrayList<Item> backPack = (ArrayList<Item>) getBackPack();
 		backPack.trimToSize();
+		addBackPack(new Item(itemBp.getName()+9+7+"dontduplicate", ItemEnum.HELMET));
 		return true;
 	}
 
