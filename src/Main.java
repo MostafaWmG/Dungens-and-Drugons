@@ -11,6 +11,7 @@ import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.editors.CampaignEditor;
 import ca.concordia.soen6441.d20.editors.FighterEditor;
 import ca.concordia.soen6441.d20.editors.ItemEditor;
+import ca.concordia.soen6441.d20.editors.StartGameUserInterFace;
 import ca.concordia.soen6441.view.map.MapEditor;
 /**
  * this a Main class 
@@ -121,6 +122,8 @@ public class Main extends JFrame implements ActionListener{
 				 new ItemEditor();
 			}else if (e.getActionCommand().equals("CampaignEditor")){
 				new CampaignEditor();
+			}else if (e.getActionCommand().equals("Play")) {
+				new StartGameUserInterFace();
 			}
 			
 		}
