@@ -4,32 +4,11 @@ package ca.concordia.soen6441.d20.gamemap.element;
  * They are considered as obstacles for player to go to certain coordinations.
  */
 
-import ca.concordia.soen6441.d20.common.Location;
+
 
 public class Wall extends GameObject {
 
 	private WallEntity wallEntity;
-//	/**
-//	 * This constructor creates a wall object with specified x and y coordinates
-//	 * @param x x-coordinate of the wall
-//	 * @param y y-coordinate of the wall
-//	 */
-//	public Wall(String name,int x , int y){
-//		initEmptyWallEntity();
-//		setName(name);
-////		setLocation(new Location(x, y));
-//	}
-//	
-//	/**
-//	 * This constructor creates a wall object and assigns its name and location.
-//	 * @param name to set for the wall
-//	 * @param location which the wall will be located
-//	 */
-//	public Wall(String name,Location location){
-//		initEmptyWallEntity();
-//		setName(name);
-////		setLocation(location);
-//	}
 	
 	/**
 	 * This consturctor creates a wall and assigns only name of it.

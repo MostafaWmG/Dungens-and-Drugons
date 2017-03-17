@@ -82,12 +82,12 @@ public class Grid extends JButton implements ActionListener{
 				mapEditor.setCurrentPointer(mapEditor.images[2]);
 				mapEditor.setTag("Ground");
 			}
-//			if(mapEditor.getTag().equals("Enemy")){
-//				setCharacter(mapEditor.getCharacter());
-//				mapEditor.iconButtons[1].setVisible(false);
-//				mapEditor.setCurrentPointer(mapEditor.images[2]);
-//				mapEditor.setTag("Ground");
-//			}
+			if(mapEditor.getTag().equals("Enemy")){
+				setCharacter(mapEditor.getCharacter());
+				mapEditor.iconButtons[1].setVisible(false);
+				mapEditor.setCurrentPointer(mapEditor.images[2]);
+				mapEditor.setTag("Ground");
+			}
 			if(mapEditor.getTag().equals("Item")){
 				setItem(mapEditor.getItem());
 				mapEditor.iconButtons[5].setVisible(false);
@@ -95,9 +95,9 @@ public class Grid extends JButton implements ActionListener{
 				mapEditor.setTag("Ground");
 			}
 			
-			if(mapEditor.getTag().equals("Enemy")){
-				mapEditor.iconButtons[7].setVisible(false);
-			}
+//			if(mapEditor.getTag().equals("Enemy")){
+//				mapEditor.iconButtons[7].setVisible(false);
+//			}
 		}
 	}
 

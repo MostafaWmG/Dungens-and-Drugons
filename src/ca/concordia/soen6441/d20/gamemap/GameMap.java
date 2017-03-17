@@ -71,7 +71,6 @@ public class GameMap {
 	 */
 	public GameMap(GameMapEntity gameMapEntity)
 	{
-//		System.out.println("ID LOADED:"+gameMapEntity.getId() +" "+ gameMapEntity.getGameObjectInstances().get(0));
 		setGameMapEntity(gameMapEntity);
 		initVolatileAttirubtes();
 	}
@@ -82,8 +81,6 @@ public class GameMap {
 	private void initVolatileAttirubtes()
 	{
 		init();
-//		for (GameObjectInstanceEntity entity : getGameMapEntity().getGameObjectInstances())
-//			System.out.print("loaded item :"+entity.getLocation());
 		for (GameObjectInstanceEntity entity : getGameMapEntity().getGameObjectInstances())
 			place(entity.createModel(this), entity.getLocation(), false);
 	}
@@ -323,8 +320,6 @@ public class GameMap {
 		Map<Location, Exit> exitDoor = new HashMap<Location, Exit>();
 		
 		for(Map.Entry<Location,GameObjectInstance> mapElement : elements.entrySet()){
-//			System.out.println("valid : " + mapElement.getValue().getTag());
-//			System.out.println("valid obj : " + mapElement.getValue());
 			if(mapElement.getValue().getGameObject().getTag().equals("Wall")){
 				walls.put(mapElement.getKey(),(Wall) mapElement.getValue().getGameObject());
 			}else if (mapElement.getValue().getGameObject().getTag().equals("Enter") ) {
@@ -352,7 +347,6 @@ public class GameMap {
 		
 		//copy map
 		Map<Location,String> mapCopy = new HashMap<Location, String>();
-//		mapCopy = new HashMap<Location, GameObject>();
 		for(Map.Entry<Location,GameObjectInstance> mapElement : elements.entrySet()){
 			mapCopy.put(mapElement.getKey(), mapElement.getValue().getGameObject().getTag());
 //			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
@@ -466,24 +460,14 @@ public class GameMap {
 			}
 		}
 		
-//		System.out.println("Conditon: " + conditon);
 		if(!valid){
 			if(conditon == 0 ){
 				map.put(currentLocation, "Wall");
 				if(conditionList.size() != 0){
 					currentLocation = conditionList.get(0);
-//					for(int i = 0 ; i < conditionList.size(); i ++){
-//						System.out.println("element i : "+" X: "+ conditionList.get(i).getX()+" Y: "+ conditionList.get(i).getY());
-//					}
-//					System.out.println("UP : " + finderUp.getX() +" : "+ finderUp.getY());
-//					System.out.println("Down :" + finderDown.getX() +" : "+ finderDown.getY());
-//					System.out.println("Right : " + finderRight.getX() +" : "+ finderRight.getY());
-//					System.out.println("Left : " + finderLeft.getX() +" : "+ finderLeft.getY());
-//					System.out.println("x: "+ currentLocation.getX() +"Y :" + currentLocation.getY());
 					conditionList.remove(0);
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);	
 				}else{
-//					System.out.println("false");
 					return false;
 				}
 

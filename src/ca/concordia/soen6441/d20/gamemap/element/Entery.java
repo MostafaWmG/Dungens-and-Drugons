@@ -1,6 +1,6 @@
 package ca.concordia.soen6441.d20.gamemap.element;
 
-import ca.concordia.soen6441.d20.common.Location;
+
 /**
  * This class implements Entry of the game map
  * @author Saman Saadi
@@ -10,31 +10,6 @@ import ca.concordia.soen6441.d20.common.Location;
 public class Entery extends GameObject{
 	
 	private EnteryEntity enteryEntity;
-
-//	/**
-//	 * 
-//	 * @param name to set for the game element
-//	 * @param x to set as x-coordinate of the entry object
-//	 * @param y to set as y-coordinate of the entry object
-//	 */
-//	public  Entery(String name,int x , int y){
-//		setEnteryEntity(new EnteryEntity());
-//		init();
-//		setName(name);
-//		setLocation(new Location(x, y));
-//	}
-//	
-//	/**
-//	 * 
-//	 * @param name to set for the game element
-//	 * @param location to set for the entry object
-//	 */
-//	public  Entery(String name ,Location location){
-//		setEnteryEntity(new EnteryEntity());
-//		init();
-//		setName(name);
-//		setLocation(location);
-//	}
 
 	/**
 	 * 

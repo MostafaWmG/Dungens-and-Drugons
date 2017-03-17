@@ -51,7 +51,7 @@ public class CharacterTest {
 		Location original = characterWithInitialPosition.getLocation();
 		Location expected = new Location(2, 2);
 		
-		characterWithInitialPosition.move(2, 2);
+//		characterWithInitialPosition.move(2, 2);
 		
 		assertEquals(new Location(0, 0), original);
 		assertEquals(expected, characterWithInitialPosition.getLocation());

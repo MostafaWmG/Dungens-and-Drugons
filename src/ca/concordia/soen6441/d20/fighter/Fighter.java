@@ -2,7 +2,6 @@ package ca.concordia.soen6441.d20.fighter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import ca.concordia.soen6441.d20.ability.Ability;
 import ca.concordia.soen6441.d20.ability.AbilityEntity;
@@ -12,11 +11,9 @@ import ca.concordia.soen6441.d20.attribute.AttackBonus;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.attribute.DamageBonus;
 import ca.concordia.soen6441.d20.attribute.HitPoint;
-import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
-import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -54,34 +51,6 @@ public class Fighter extends GameObject {
 	protected DamageBonus damageBonus;
 	protected HitPoint hitPoint;
 	protected Dice dice;
-//	
-//	/**
-//	 * This constructor creates a character object with given tag,name,inistial x and y cooridnates.
-//	 * @param tag sets tag for the character
-//	 * @param name sets the name of the character
-//	 * @param initialPosistionX initial x-coordinate of the character
-//	 * @param initialPositionY initial y-coordinate of the character
-//	 */
-//	public Fighter(String tag,String name,int initialPosistionX, int initialPositionY) {
-//		init();
-//		setName(name);
-//		setTag(tag);
-////		setLocation(new Location(initialPosistionX,initialPositionY));
-//		setBackPack(new ArrayList<Item>());
-//		initializeBackPack();
-//		setWearItems(new ArrayList<Item>());
-//		setAbilities(new ArrayList<Ability>());
-//		setCharacterAbility();
-//		setArmor(new ArmorClass(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier()));
-//		setDamage(new DamageBonus(getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
-//		setAttack(new AttackBonus(getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier(),getLevel())); 
-//		setHitPoint(new HitPoint(getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),getLevel()));
-//		setAbilitiesListener();
-//		showAttributes();
-//		emptyWearList();
-////		testWearItems();
-//
-//	}
 	
 	public Fighter(){
 		init();
@@ -132,8 +101,6 @@ public class Fighter extends GameObject {
 		setDamage(entity.getDamageBonus().createDamageBonus());
 		setHitPoint(entity.getHitPoint().createHitPoint());
 		setAbilitiesListener();
-//		emptyWearList();
-//		initializeBackPack();
 		showAll();
 		showBackPack();
 	}
@@ -145,25 +112,7 @@ public class Fighter extends GameObject {
 		
 		setCharacterEntity(new FighterEntity());
 	}
-	
-	/**
-	 * move the character around 
-	 * @param dx x delta of the movement, relative to the character current position
-	 * @param dy y delta of the movement, relative to the character current position
-	 */
-	public void move(int dx, int dy) {
-		try {
-			//changing keyword "this" to characterEntity
-			//adding characterEntity to the other lines
-			getField().move(getLocation().getX(), getLocation().getY(), getLocation().getX()+dx, getLocation().getY()+dy);
-			//getCharacterEntity().getLocation().setX(getLocation().getX()+dx);
-			//getCharacterEntity().getLocation().setY(getLocation().getY()+dy);
 		
-		} catch(MoveNotValidException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void attack(Fighter enemy) {
 		
 	}
