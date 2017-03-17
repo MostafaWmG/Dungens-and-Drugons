@@ -136,7 +136,12 @@ public class Item extends GameObject implements ILevelUp{
 	 */
 	@Override
 	public void update(int modifier) {
-		setEnchantmentPoint(getEnchantmentPoint() +  (int)(modifier/5));
+		if(modifier >= 17){
+			setEnchantmentPoint(5);
+		}else {
+			setEnchantmentPoint((int)Math.ceil(modifier/4));
+		}
+		
 	}
 
 	@Override

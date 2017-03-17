@@ -12,6 +12,7 @@ import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Chest;
+import ca.concordia.soen6441.d20.item.IRoot;
 
 public class Game {
 	private Campaign campaign;
@@ -24,8 +25,8 @@ public class Game {
 	private Entery entery;
 	
 	public Game(Campaign campaign, Fighter fighter) {
-		this.campaign = campaign;
-		this.setFighter(fighter);
+		setCampaign(campaign);
+		setFighter(fighter);
 		setEnemies(new ArrayList<>());
 		setFriends(new ArrayList<>());
 		setChests(new ArrayList<>());
@@ -33,8 +34,15 @@ public class Game {
 		initializeAndShow();
 	}
 	
+	public void gameLoop(){
+
+		while(true){
+			
+		}
+	}
+	
 	public void initializeAndShow(){
-		GameMap map = campaign.getCampaign().get(0);
+		GameMap map = getCampaign().getMaps().get(0);
 		
 		System.out.println("   ");
 		
@@ -72,7 +80,29 @@ public class Game {
 		}
 	}
 	
-
+	public void adaptToCharacter(){
+		int level = fighter.getLevel();
+		
+		for(int i = 0 ; i < getEnemies().size() ; i ++){
+			getEnemies().get(i).levelUp(level - getEnemies().get(i).getLevel());
+		}
+		
+		for(int i = 0 ; i < getFriends().size() ; i ++){
+			getFriends().get(i).levelUp(level - getFriends().get(i).getLevel());
+		}
+		
+		for(int i = 0 ; i < getChests().size() ; i ++){
+			getChests().get(i).update(level);
+		}
+	}
+	
+	public void showCharacteristics(Fighter fighter){
+		
+	}
+	
+	public void root(IRoot root){
+		
+	}
 	/**
 	 * @return the fighter
 	 */
@@ -169,5 +199,19 @@ public class Game {
 	 */
 	public void setFriends(List<Fighter> friends) {
 		this.friends = friends;
+	}
+
+	/**
+	 * @return the campaign
+	 */
+	public Campaign getCampaign() {
+		return campaign;
+	}
+
+	/**
+	 * @param campaign the campaign to set
+	 */
+	public void setCampaign(Campaign campaign) {
+		this.campaign = campaign;
 	}
 }

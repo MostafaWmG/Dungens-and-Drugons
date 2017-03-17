@@ -8,7 +8,6 @@ import ca.concordia.soen6441.d20.campaign.CampaignEntity;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.gamePlay.Game;
-import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 
 public class StartGameUserInterFace {

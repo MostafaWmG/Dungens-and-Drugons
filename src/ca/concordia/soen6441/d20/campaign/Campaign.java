@@ -54,7 +54,7 @@ public class Campaign {
 	 */
 	private void addMap(GameMap map, boolean saveEntity)
 	{
-		getCampaign().add(map);
+		getMaps().add(map);
 		if (saveEntity)
 			getCampaignEntity().getCampaign().add(map.getEntity());
 	}
@@ -65,14 +65,14 @@ public class Campaign {
 	public void show(){
 		
 		System.out.println("<<Campaign>>");
-		for(int i = 0 ; i < getCampaign().size(); i ++){
-			System.out.println("Map" + i+" : "+ getCampaign().get(i).getMapName());
+		for(int i = 0 ; i < getMaps().size(); i ++){
+			System.out.println("Map" + i+" : "+ getMaps().get(i).getMapName());
 		}
 	}
 	/**
 	 * @return the campaign
 	 */
-	public List<GameMap> getCampaign() {
+	public List<GameMap> getMaps() {
 		return campaign;
 	}
 

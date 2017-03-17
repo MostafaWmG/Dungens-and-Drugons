@@ -254,10 +254,9 @@ public class Fighter extends GameObject {
 	 * @param point the amount of level that our character gain in level up action
 	 */
 	public void levelUp(int point){
-		getCharacterEntity().setLevel(getCharacterEntity().getLevel() + 1);
-//		getAttack().update(getCharacterEntity().getLevel());
-		getAttack().setLevel(getCharacterEntity().getLevel());
-		getHitPoint().setLevel(getCharacterEntity().getLevel());
+		getCharacterEntity().setLevel(getLevel() + point);
+		getAttack().setLevel(getLevel());
+		getHitPoint().setLevel(getLevel());
 		iterate(getAbilities(),getWearItems(), point);
 	}
 	
@@ -509,8 +508,8 @@ public class Fighter extends GameObject {
 	 * @param item item 
 	 * @return if backpack is full or not
 	 */
-	public void addBackPack(Item item){
-		 addBackPack(item, true);
+	public boolean addBackPack(Item item){
+		 return addBackPack(item, true);
 	}
 	
 	/**
@@ -519,12 +518,15 @@ public class Fighter extends GameObject {
 	 * @param saveEntity true if we want the item to be saved for character on database
 	 * @return true if the backpack has empty space
 	 */
-	private void addBackPack(Item item, boolean saveEntity)
+	private boolean addBackPack(Item item, boolean saveEntity)
 	{
 		if(getBackPack().size() >= BACKPACK_SIZE){
-			System.out.println("dast dast");
+			
 			int index = findEmptyPositionInBackPack();
-
+			
+			if(index == -1)
+				return false;
+			
 			getBackPack().set(index, item);
 			if (saveEntity)
 				getCharacterEntity().getBackpack().set(index, item.getItemEntity());
@@ -540,7 +542,7 @@ public class Fighter extends GameObject {
 					getCharacterEntity().getBackpack().add(item.getItemEntity());
 			}
 		}
-
+		return true;
 	}
 	
 	/**
@@ -720,7 +722,7 @@ public class Fighter extends GameObject {
 		
 		for(int i =0 ; i < list2.size() ; i ++){
 			if(list2.get(i) != null)
-				list2.get(i).update(value);
+				list2.get(i).update(getLevel());
 		}		
 		
 		for(int i =0 ; i < list.size() ; i ++){
