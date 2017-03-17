@@ -25,11 +25,11 @@ public class GameObjectInstance
 	 * 
 	 * @param entity
 	 */
-	public GameObjectInstance(GameObjectInstanceEntity entity)
+	public GameObjectInstance(GameObjectInstanceEntity entity, GameMap gameMap)
 	{
 		setEntity(entity);
 		setGameObject(entity.getGameObjectEntity().createModel());
-		setGameMap(entity.getGameMapEntity().createModel());
+		setGameMap(gameMap);
 	}
 	/**
 	 * @return the gameObjectInstanceEntity

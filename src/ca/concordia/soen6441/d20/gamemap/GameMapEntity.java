@@ -39,7 +39,7 @@ public class GameMapEntity implements Serializable {
 	@Column(unique=true)
 	private String name;
 	
-	@OneToMany(mappedBy="gameMapEntity")
+	@OneToMany(mappedBy="gameMapEntity", cascade = CascadeType.PERSIST)
 	private List<GameObjectInstanceEntity> gameObjectInstances;
 
 	public GameMapEntity() {

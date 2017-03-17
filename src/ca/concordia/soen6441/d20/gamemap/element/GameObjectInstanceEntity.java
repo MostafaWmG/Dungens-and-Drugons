@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import ca.concordia.soen6441.d20.common.Location;
+import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 
 /**
@@ -20,10 +21,10 @@ public class GameObjectInstanceEntity implements Serializable {
 	@Column(name="ID")
 	private long id;
 	private Location location;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@JoinColumn(name="GAME_MAP_ID")
 	private GameMapEntity gameMapEntity;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@JoinColumn(name="GAME_OBJECT_ID")
 	private GameObjectEntity gameObjectEntity;
 
@@ -31,9 +32,9 @@ public class GameObjectInstanceEntity implements Serializable {
 		super();
 	}
 	
-	public GameObjectInstance createModel()
+	public GameObjectInstance createModel(GameMap gameMap)
 	{
-		return new GameObjectInstance(this);
+		return new GameObjectInstance(this, gameMap);
 	}
 
 	/**

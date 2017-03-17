@@ -85,12 +85,12 @@ public class GameMap {
 //		for (GameObjectInstanceEntity entity : getGameMapEntity().getGameObjectInstances())
 //			System.out.print("loaded item :"+entity.getLocation());
 		for (GameObjectInstanceEntity entity : getGameMapEntity().getGameObjectInstances())
-			place(entity.createModel(), entity.getLocation(), false);
+			place(entity.createModel(this), entity.getLocation(), false);
 	}
 	
 	private void init()
 	{
-		//TODO usually the first dimension is width		
+		//TODO usually the first dimension is width
 		field = new GameObjectInstance[getGameMapEntity().getHeight()][getGameMapEntity().getWidth()];		
 		elements = new HashMap<>();		
 		emptyMap();
