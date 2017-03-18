@@ -64,6 +64,7 @@ public class Campaign {
 		if (index < 0 || index >= getMaps().size())
 			throw new IllegalArgumentException("0 <= index < " + getMaps().size());
 		getMaps().remove(index);
+		getCampaignEntity().getCampaign().remove(index);
 	}
 	
 	/**
