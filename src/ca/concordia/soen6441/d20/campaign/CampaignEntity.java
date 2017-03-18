@@ -51,10 +51,17 @@ public class CampaignEntity implements Serializable {
 		return new Campaign(this);
 	}
 	
+	/**
+	 * This method returns id for the campaign entity object
+	 * @return id of the campaign entity object
+	 */
 	public long getId() {
 		return this.id;
 	}
-
+	/**
+	 * This method sets the id for the row in the database table
+	 * @param id the id for the row
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
