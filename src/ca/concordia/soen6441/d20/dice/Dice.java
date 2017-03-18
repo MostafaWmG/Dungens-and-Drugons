@@ -34,7 +34,10 @@ public class Dice {
 	public int roll10(){
 		return (random.nextInt(10) + 1 );
 	}
-	
+	/**
+	 * This method returns a Random object
+	 * @return random object
+	 */
 	public Random getRandom(){
 		return random;
 	}

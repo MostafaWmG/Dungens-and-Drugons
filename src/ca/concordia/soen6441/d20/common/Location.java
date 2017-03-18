@@ -3,7 +3,7 @@ package ca.concordia.soen6441.d20.common;
 import javax.persistence.*;
 
 /**
- * this class represents the location in the map where an element is situated.
+ * this class represents the location in the map where an element is located.
  * @author alvaro
  * Each element of the game has a coordination on the map
  * x: is the x-coordination of the element

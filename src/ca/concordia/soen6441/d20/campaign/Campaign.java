@@ -15,13 +15,19 @@ public class Campaign {
 	
 	CampaignEntity campaignEntity;	
 	private List<GameMap> campaign;
-	
+	/**
+	 * Creating a campaign object with the name specified
+	 * @param name of the campaign
+	 */
 	public Campaign(String name) {
 		initEmptyEntity();
 		setName(name);
 		setCampaign(new LinkedList<GameMap>());
 	}
-	
+	/**
+	 * This constructor is used to save/load the campaign
+	 * @param e a CampaingEntity object to help saving or loading the campaign object
+	 */
 	public Campaign(CampaignEntity e)
 	{
 		setCampaignEntity(e);
@@ -58,7 +64,10 @@ public class Campaign {
 		if (saveEntity)
 			getCampaignEntity().getCampaign().add(map.getEntity());
 	}
-	
+	/**
+	 * This method handles removing a game map
+	 * @param index of the map that is going to be removed
+	 */
 	public void removeMap(int index)
 	{
 		if (index < 0 || index >= getMaps().size())

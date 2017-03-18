@@ -4,6 +4,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 /**
  * This class implements test suite for the game map classes.
+ * This suite uses GameMaTest test cases.
  * @author negar
  *
  */
