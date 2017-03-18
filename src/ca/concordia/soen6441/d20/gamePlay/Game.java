@@ -1,5 +1,7 @@
 package ca.concordia.soen6441.d20.gamePlay;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import ca.concordia.soen6441.d20.item.Chest;
 import ca.concordia.soen6441.d20.item.IRoot;
 import ca.concordia.soen6441.view.map.GameView;
 
-public class Game {
+public class Game implements KeyListener {
 	private Campaign campaign;
 	private Fighter fighter;
 	private List<Fighter> enemies;
@@ -218,4 +220,23 @@ public class Game {
 	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
 	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("keyID: " +e.getID());
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

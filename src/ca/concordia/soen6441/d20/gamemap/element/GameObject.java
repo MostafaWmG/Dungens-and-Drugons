@@ -6,10 +6,12 @@ package ca.concordia.soen6441.d20.gamemap.element;
  * @author Saman Saadi
  */
 
+import java.util.Observable;
+
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
-public abstract class GameObject {
+public abstract class GameObject extends Observable {
 
 	/**
 	 * current selected field. Note that it is not stored in database.

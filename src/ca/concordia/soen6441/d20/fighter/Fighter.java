@@ -144,6 +144,8 @@ public class Fighter extends GameObject {
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), item.getItemEntity());
 			wearItem(item, item.getEnchantmentPoint());
 //			System.out.println("characted wore the item");
+			setChanged();
+			notifyObservers(this);
 			return false;
 		}
 	}
@@ -187,9 +189,13 @@ public class Fighter extends GameObject {
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), tmp.getItemEntity());
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
+			setChanged();
+			notifyObservers(this);
 		}else {
 			 System.out.println("Character dont have this item");
 		}
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**
@@ -263,33 +269,70 @@ public class Fighter extends GameObject {
 	/**
 	 * print all statistics of the characters
 	 */
-	public void showAbilities(){
-		System.out.println("<<<ABILITIES>>>");
-		
-		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
-			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
+	public String showAbilities(){
+		 return showAbilities(true);
+	}
+	
+	/**
+	 * print all statistics of the characters
+	 */
+	public String showAbilities(boolean consolEn){
+		if(consolEn);
+			System.out.println("<<<ABILITIES>>>");
+		String s = "<<<ABILITIES>>>"+ "\n";
+		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
+			if(consolEn)
+				System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
+			s = s.concat("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() +"\n");
 		}
+		return s;
 	}
 	
 	/**
 	 * print all attributes of character
 	 */
-	public void showAttributes(){
-		System.out.println("<<<ATTRIBUITES>>>");
-		getArmor().showPoint();
-		getDamage().showPoint();
-		getAttack().showPoint();
-		getHitPoint().showPoint();
+	public String showAttributes(){
+		return showAttributes(true);
+	}
+	
+	/**
+	 * print all attributes of character
+	 */
+	public String showAttributes(boolean consol){
+		String s ="<<<ATTRIBUITES>>>" + "\n";
+		
+		if(consol){
+			System.out.println("<<<ATTRIBUITES>>>");
+			getArmor().showPoint();
+			getDamage().showPoint();
+			getAttack().showPoint();
+			getHitPoint().showPoint();
+		}else{
+			s = s.concat(getArmor().showPoint(consol) );
+			s = s.concat( getDamage().showPoint(consol));
+			s = s.concat(getAttack().showPoint(consol));
+			s = s.concat(getHitPoint().showPoint(consol));
+		}
+		return s;
+	}
+	
+	/**
+	 * show both attributes and abilities
+	 */
+	public String show(boolean consol){
+		String s = getName().toUpperCase() + "\n";
+		s = s.concat(showAbilities(consol) + "\n");
+		s = s.concat(showAttributes(consol) + "\n");
+		return s;
 	}
 	
 	/**
 	 * show both attributes and abilities
 	 */
 	public void show(){
-		showAbilities();
-		showAttributes();
+		showAbilities(true);
+		showAttributes(true);
 	}
-	
 	/**
 	 * show all :attributes and abilities and items
 	 */
@@ -303,40 +346,101 @@ public class Fighter extends GameObject {
 	 * show all items of the character
 	 * getWearItems().get(i).show();
 	 */
-	public void showItems(){
-		System.out.println("<<<ITEMS>>>");
-		for(int i = 0 ; i < getWearItems().size() ; i ++){
-			if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
-				System.out.println(ItemEnum.values()[i] + " empty slot");
-			}else {
-				getWearItems().get(i).show();
+	public String showItems(){
+		return showItems(true);
+	}
+	
+	/**
+	 * show all items of the character
+	 * getWearItems().get(i).show();
+	 */
+	public String showItems(boolean consol){
+		String s = "<<<ITEMS>>>" + "\n";
+		if(consol){
+			System.out.println("<<<ITEMS>>>");
+			for(int i = 0 ; i < getWearItems().size() ; i ++){
+				if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
+					System.out.println(ItemEnum.values()[i] + " empty slot");
+				}else {
+					getWearItems().get(i).show(consol);
+				}
+			}
+			
+		}else{
+			for(int i = 0 ; i < getWearItems().size() ; i ++){
+				if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
+					s = s.concat(ItemEnum.values()[i] + " empty slot"+"\n");
+				}else {
+					s = s.concat(getWearItems().get(i).show(consol));
+				}
 			}
 		}
+		return s;
 	}
 	
 	/**
 	 * show items in the backpack
 	 */
-	public void showBackPack(){
-		System.out.println("<<<BACK PACK>>> ");
-		for(int i = 0 ; i < BACKPACK_SIZE; i ++){
-			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
-				System.out.println("Slot " + i + " : "+ "Empty");	
-			}else{
-				System.out.print("Slot " + i+" ");	
-				getBackPack().get(i).show();
+	public String showBackPack(){
+		return showBackPack(true);
+	}
+	
+	/**
+	 * show items in the backpack
+	 */
+	public String showBackPack(boolean consol){
+		String s = "";
+		if(consol){
+			System.out.println("<<<BACK PACK>>> ");
+			for(int i = 0 ; i < BACKPACK_SIZE; i ++){
+				if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
+					System.out.println("Slot " + i + " : "+ "Empty");	
+				}else{
+					System.out.print("Slot " + i+" ");	
+					getBackPack().get(i).show(consol);
+				}
+				
+			}	
+		}else{
+			s = s.concat("<<<BACK PACK>>> "+ "\n");
+			for(int i = 0 ; i < BACKPACK_SIZE; i ++){
+				if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
+					s = s.concat("Slot " + i + " : "+ "Empty" + "\n");
+				}else{
+					s = s.concat("Slot " + i+" ");
+					s = s.concat(getBackPack().get(i).show(consol));
+				}
+				
 			}
-			
 		}
+		
+		return s;
 	}
 	
 	/**
 	 * show items in your backpack and show your worn items
 	 */
-	public void showInvetory(){
-		System.out.println("<<<INVENTORY>>>");
-		showItems();
-		showBackPack();
+	public String showInvetory(boolean consol){
+		String s = getName().toUpperCase() + "\n";
+		if(consol){
+			System.out.println("<<<INVENTORY>>>");
+			showItems(consol);
+			showBackPack(consol);
+				
+		}else{
+			s = s.concat("<<<INVENTORY>>>"+"\n");
+			s = s.concat(showItems(consol));
+			s = s.concat(showBackPack(consol));
+		}
+		
+		return s;
+	}
+	
+	/**
+	 * show items in your backpack and show your worn items
+	 */
+	public String showInvetory(){
+		return showInvetory(true);
 	}
 	
 	/**
@@ -431,6 +535,8 @@ public class Fighter extends GameObject {
 			if (saveEntity)
 				getCharacterEntity().getWearItems().add(item.getItemEnum().getValue(),item.getItemEntity());
 		}
+		setChanged();
+		notifyObservers(this);
 	}
 	/**
 	 * 
@@ -542,6 +648,8 @@ public class Fighter extends GameObject {
 					getCharacterEntity().getBackpack().add(item.getItemEntity());
 			}
 		}
+		setChanged();
+		notifyObservers(this);
 		return true;
 	}
 	
@@ -551,6 +659,8 @@ public class Fighter extends GameObject {
 	 */
 	public void removeBackPack(int index){
 		getBackPack().add(index,new Item(index+7+"", ItemEnum.HELMET));
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**

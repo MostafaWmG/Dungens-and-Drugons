@@ -48,12 +48,22 @@ public class DamageBonus implements ILevelUp{
 	}
 	
 	/**
-	 * prints damage bonus point
+	 * Shows damage bonus point
 	 */
-	public void showPoint(){
-		System.out.println("DamageBonusPoint:" + getPoint());
+	public String showPoint(boolean console){
+		String s ="DamageBonusPoint:" + getPoint() + "\n";  
+		if(console)
+			System.out.println("DamageBonusPoint:" + getPoint());
+		return s;
 	}
 
+	/**
+	 * Shows points of the character
+	 */
+	public String showPoint(){
+		return showPoint(true);
+	}
+	
 	@Override
 	public void update(int modifier) {
 		setModifier(modifier);

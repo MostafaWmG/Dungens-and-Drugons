@@ -60,10 +60,24 @@ public class HitPoint implements ILevelUp {
 		return (getBase() + getModifier());
 	}
 		
-	public void showPoint(){
-		System.out.println("HitPoint:" + getPoint());
+
+	/**
+	 * Prints hit point of the character
+	 */
+	public String showPoint(boolean console){
+		String s ="HitPoint:" + getPoint() + "\n";  
+		if(console)
+			System.out.println("HitPoint:" + getPoint());
+		return s;
 	}
 
+	/**
+	 * Shows points of the character
+	 */
+	public String showPoint(){
+		return showPoint(true);
+	}
+	
 	@Override
 	public void update(int modfier) {
 		setBase(dice.roll10() * getLevel());
