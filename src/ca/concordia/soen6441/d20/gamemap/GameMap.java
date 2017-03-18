@@ -219,7 +219,7 @@ public class GameMap {
 	}
 	
 	/**
-	 * this class allows us to place a GameObject into the map
+	 * this method allows us to place a GameObject into the map
 	 * if the position is alredy used, no element is placed, 
 	 * the same hapens if the location is out the map boundaries.
 	 * @param GameObjectInstance instance to be add to the map
@@ -237,7 +237,7 @@ public class GameMap {
 	}
 	
 	/**
-	 * this class allows us to place a GameObject into the map
+	 * this method allows us to place a GameObject into the map
 	 * if the position is alredy used, no element is placed, 
 	 * the same hapens if the location is out the map boundaries.
 	 * @param instance game object instance to be added to the map
@@ -311,7 +311,7 @@ public class GameMap {
 	}
 	
 	/**
-	 * check if map is valid or not 
+	 * this method checks if map is valid or not 
 	 * @return if map is valid or not
 	 */
 	public boolean mapValidator(){
