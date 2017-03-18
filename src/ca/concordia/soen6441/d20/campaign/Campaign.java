@@ -59,6 +59,13 @@ public class Campaign {
 			getCampaignEntity().getCampaign().add(map.getEntity());
 	}
 	
+	public void removeMap(int index)
+	{
+		if (index < 0 || index >= getMaps().size())
+			throw new IllegalArgumentException("0 <= index < " + getMaps().size());
+		getMaps().remove(index);
+	}
+	
 	/**
 	 * show maps inside Campaign
 	 */

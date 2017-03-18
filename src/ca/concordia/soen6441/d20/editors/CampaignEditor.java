@@ -61,33 +61,34 @@ public class CampaignEditor {
 	 */
 	private void editCampaign(Campaign campaign){
 		campaign.show();
-		System.out.println("Add maps :(Type a) ");
+		System.out.println("Add map :(Type a), remove map(type r) ");
 		String hitButton = scanner.nextLine();
 	
 		// we need to create all this characters throw character factory;
 		if(hitButton.equals("a")){
-			addMap(campaign);
-		}else{
+			addMap(campaign);			
+		}
+		else if (hitButton.equals("r"))
+			removeMap(campaign);
+		else{
 			System.out.println("Error");
 		}
 	}
 	
-//	private void removeMap(Campaign campaign){
-//		campaign.show();
-//		System.out.println("Enter your map index to remove from Campaign: ");
-//		String mapName = scanner.nextLine();
-//		
-//		try {
-//			int index = Integer.parseInt(mapName);
-//			campaign.getCampaign().remove(index);
-//			campaign.show();
-//			saveCampaignChanges(campaign, "edit");
-//		} catch (Exception e) {
-//			System.out.println("Wrong Input");
-//		}
-//
-//
-//	}
+	private void removeMap(Campaign campaign){
+		campaign.show();
+		System.out.println("Enter your map index to remove from Campaign: ");
+		String mapName = scanner.nextLine();
+		
+		try {
+			int index = Integer.parseInt(mapName);
+			campaign.removeMap(index);
+			campaign.show();
+			saveCampaignChanges(campaign, "edit");
+		} catch (Exception e) {
+			System.out.println("Wrong Input");
+		}
+	}
 	
 	/**
 	 * method for createCampaign
