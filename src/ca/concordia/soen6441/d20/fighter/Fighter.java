@@ -144,6 +144,8 @@ public class Fighter extends GameObject {
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), item.getItemEntity());
 			wearItem(item, item.getEnchantmentPoint());
 //			System.out.println("characted wore the item");
+			setChanged();
+			notifyObservers(this);
 			return false;
 		}
 	}
@@ -187,6 +189,8 @@ public class Fighter extends GameObject {
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), tmp.getItemEntity());
 			wearItem(item, -1 * item.getEnchantmentPoint());
 			System.out.println("item Removed");
+			setChanged();
+			notifyObservers(this);
 		}else {
 			 System.out.println("Character dont have this item");
 		}
@@ -263,33 +267,70 @@ public class Fighter extends GameObject {
 	/**
 	 * print all statistics of the characters
 	 */
-	public void showAbilities(){
-		System.out.println("<<<ABILITIES>>>");
-		
-		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){			
-			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
+	public String showAbilities(){
+		 return showAbilities(true);
+	}
+	
+	/**
+	 * print all statistics of the characters
+	 */
+	public String showAbilities(boolean consolEn){
+		if(consolEn);
+			System.out.println("<<<ABILITIES>>>");
+		String s = "<<<ABILITIES>>>"+ "\n";
+		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
+			if(consolEn)
+				System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() );
+			s = s.concat("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + getAbilities().get(AbilityEnum.values()[i].getValue()).getScore() + " ,modifier : " + getAbilities().get(AbilityEnum.values()[i].getValue()).getModifier() +"\n");
 		}
+		return s;
 	}
 	
 	/**
 	 * print all attributes of character
 	 */
-	public void showAttributes(){
-		System.out.println("<<<ATTRIBUITES>>>");
-		getArmor().showPoint();
-		getDamage().showPoint();
-		getAttack().showPoint();
-		getHitPoint().showPoint();
+	public String showAttributes(){
+		return showAttributes(true);
+	}
+	
+	/**
+	 * print all attributes of character
+	 */
+	public String showAttributes(boolean consol){
+		String s ="<<<ATTRIBUITES>>>" + "\n";
+		
+		if(consol){
+			System.out.println("<<<ATTRIBUITES>>>");
+			getArmor().showPoint();
+			getDamage().showPoint();
+			getAttack().showPoint();
+			getHitPoint().showPoint();
+		}else{
+			s = s.concat(getArmor().showPoint(consol) );
+			s = s.concat( getDamage().showPoint(consol));
+			s = s.concat(getAttack().showPoint(consol));
+			s = s.concat(getHitPoint().showPoint(consol));
+		}
+		return s;
+	}
+	
+	/**
+	 * show both attributes and abilities
+	 */
+	public String show(boolean consol){
+		String s = getName().toUpperCase() + "\n";
+		s = s.concat(showAbilities(consol) + "\n");
+		s = s.concat(showAttributes(consol) + "\n");
+		return s;
 	}
 	
 	/**
 	 * show both attributes and abilities
 	 */
 	public void show(){
-		showAbilities();
-		showAttributes();
+		showAbilities(true);
+		showAttributes(true);
 	}
-	
 	/**
 	 * show all :attributes and abilities and items
 	 */

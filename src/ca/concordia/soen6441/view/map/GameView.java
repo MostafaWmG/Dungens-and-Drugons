@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -35,11 +35,8 @@ public class GameView  extends JFrame implements ActionListener{
 	private int elementSizeX = 29;
 	private int elementSizeY = 29;
 	private Dimension dimension;
+	private GameMap map;
 
-	
-	public ImageIcon[] images;
-	public JButton[] iconButtons;
-	
 	public GameView(int row , int column) {
 		//initializing
 		this.row = row;
@@ -53,7 +50,7 @@ public class GameView  extends JFrame implements ActionListener{
 		dimension = Toolkit.getDefaultToolkit().getScreenSize(); 
 		setSize(dimension.width,dimension.height);
 		setLocation((dimension.width - row ) / 2  , (dimension.height - column ) / 2 );
-		
+				
 		initializeDimension();
 		setVisible(true);
 	}
@@ -79,7 +76,7 @@ public class GameView  extends JFrame implements ActionListener{
 			System.out.println("Invalid map name");
 			return;
 		}
-		GameMap map = list.get(0).createModel();
+		map = list.get(0).createModel();
 		
 		column = map.getWidth();
 		row = map.getHeight();
@@ -163,6 +160,19 @@ public class GameView  extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+	}
+
+	/**
+	 * @return the map
+	 */
+	public GameMap getMap() {
+		return map;
+	}
+
+	/**
+	 * @param map the map to set
+	 */
+	public void setMap(GameMap map) {
+		this.map = map;
 	}
 }

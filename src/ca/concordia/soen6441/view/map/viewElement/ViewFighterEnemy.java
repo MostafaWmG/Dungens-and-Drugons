@@ -22,7 +22,9 @@ public class ViewFighterEnemy extends ViewObject{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getID() == 1001){
+			getFighter().addObserver(new ViewCharacteristics(getFighter()));
+		}
 		
 	}
 	/**

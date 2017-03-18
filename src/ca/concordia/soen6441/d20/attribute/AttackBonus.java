@@ -53,10 +53,20 @@ public class AttackBonus implements ILevelUp{
 	/**
 	 * Prints AttackBonusPoint of the character
 	 */
-	public void showPoint(){
-		System.out.println("AttackBonusPoint:" +getPoint());
+	public String showPoint(boolean console){
+		String s ="AttackBonusPoint:" + getPoint() + "\n";  
+		if(console)
+			System.out.println("AttackBonusPoint:" + getPoint());
+		return s;
 	}
 
+	/**
+	 * Shows points of the character
+	 */
+	public String showPoint(){
+		return showPoint(true);
+	}
+	
 	@Override
 	public void update(int modifier) {
 		setModifier(modifier);

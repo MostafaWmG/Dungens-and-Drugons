@@ -54,10 +54,20 @@ public class ArmorClass implements ILevelUp {
 	/**
 	 * Shows points of the character
 	 */
-	public void showPoint(){
-		System.out.println("ArmorPoint:" + getPoint());
+	public String showPoint(boolean console){
+		String s ="ArmorPoint:" + getPoint() + "\n";  
+		if(console)
+			System.out.println("ArmorPoint:" + getPoint());
+		return s;
 	}
 
+	/**
+	 * Shows points of the character
+	 */
+	public String showPoint(){
+		return showPoint(true);
+	}
+	
 	@Override
 	public void update(int modifier) {
 		setModifier(modifier);		
