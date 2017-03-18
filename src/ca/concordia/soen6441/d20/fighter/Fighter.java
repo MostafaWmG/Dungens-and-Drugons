@@ -194,6 +194,8 @@ public class Fighter extends GameObject {
 		}else {
 			 System.out.println("Character dont have this item");
 		}
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**
@@ -533,6 +535,8 @@ public class Fighter extends GameObject {
 			if (saveEntity)
 				getCharacterEntity().getWearItems().add(item.getItemEnum().getValue(),item.getItemEntity());
 		}
+		setChanged();
+		notifyObservers(this);
 	}
 	/**
 	 * 
@@ -644,6 +648,8 @@ public class Fighter extends GameObject {
 					getCharacterEntity().getBackpack().add(item.getItemEntity());
 			}
 		}
+		setChanged();
+		notifyObservers(this);
 		return true;
 	}
 	
@@ -653,6 +659,8 @@ public class Fighter extends GameObject {
 	 */
 	public void removeBackPack(int index){
 		getBackPack().add(index,new Item(index+7+"", ItemEnum.HELMET));
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**
