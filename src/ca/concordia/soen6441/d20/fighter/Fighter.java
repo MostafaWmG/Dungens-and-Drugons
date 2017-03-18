@@ -344,40 +344,101 @@ public class Fighter extends GameObject {
 	 * show all items of the character
 	 * getWearItems().get(i).show();
 	 */
-	public void showItems(){
-		System.out.println("<<<ITEMS>>>");
-		for(int i = 0 ; i < getWearItems().size() ; i ++){
-			if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
-				System.out.println(ItemEnum.values()[i] + " empty slot");
-			}else {
-				getWearItems().get(i).show();
+	public String showItems(){
+		return showItems(true);
+	}
+	
+	/**
+	 * show all items of the character
+	 * getWearItems().get(i).show();
+	 */
+	public String showItems(boolean consol){
+		String s = "<<<ITEMS>>>" + "\n";
+		if(consol){
+			System.out.println("<<<ITEMS>>>");
+			for(int i = 0 ; i < getWearItems().size() ; i ++){
+				if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
+					System.out.println(ItemEnum.values()[i] + " empty slot");
+				}else {
+					getWearItems().get(i).show(consol);
+				}
+			}
+			
+		}else{
+			for(int i = 0 ; i < getWearItems().size() ; i ++){
+				if(getWearItems().get(i).getEnchantmentType() ==null && getWearItems().get(i).getAttributeType() ==null){
+					s = s.concat(ItemEnum.values()[i] + " empty slot"+"\n");
+				}else {
+					s = s.concat(getWearItems().get(i).show(consol));
+				}
 			}
 		}
+		return s;
 	}
 	
 	/**
 	 * show items in the backpack
 	 */
-	public void showBackPack(){
-		System.out.println("<<<BACK PACK>>> ");
-		for(int i = 0 ; i < BACKPACK_SIZE; i ++){
-			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
-				System.out.println("Slot " + i + " : "+ "Empty");	
-			}else{
-				System.out.print("Slot " + i+" ");	
-				getBackPack().get(i).show();
+	public String showBackPack(){
+		return showBackPack(true);
+	}
+	
+	/**
+	 * show items in the backpack
+	 */
+	public String showBackPack(boolean consol){
+		String s = "";
+		if(consol){
+			System.out.println("<<<BACK PACK>>> ");
+			for(int i = 0 ; i < BACKPACK_SIZE; i ++){
+				if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
+					System.out.println("Slot " + i + " : "+ "Empty");	
+				}else{
+					System.out.print("Slot " + i+" ");	
+					getBackPack().get(i).show(consol);
+				}
+				
+			}	
+		}else{
+			s = s.concat("<<<BACK PACK>>> "+ "\n");
+			for(int i = 0 ; i < BACKPACK_SIZE; i ++){
+				if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
+					s = s.concat("Slot " + i + " : "+ "Empty" + "\n");
+				}else{
+					s = s.concat("Slot " + i+" ");
+					s = s.concat(getBackPack().get(i).show(consol));
+				}
+				
 			}
-			
 		}
+		
+		return s;
 	}
 	
 	/**
 	 * show items in your backpack and show your worn items
 	 */
-	public void showInvetory(){
-		System.out.println("<<<INVENTORY>>>");
-		showItems();
-		showBackPack();
+	public String showInvetory(boolean consol){
+		String s = getName().toUpperCase() + "\n";
+		if(consol){
+			System.out.println("<<<INVENTORY>>>");
+			showItems(consol);
+			showBackPack(consol);
+				
+		}else{
+			s = s.concat("<<<INVENTORY>>>"+"\n");
+			s = s.concat(showItems(consol));
+			s = s.concat(showBackPack(consol));
+		}
+		
+		return s;
+	}
+	
+	/**
+	 * show items in your backpack and show your worn items
+	 */
+	public String showInvetory(){
+		return showInvetory(true);
 	}
 	
 	/**

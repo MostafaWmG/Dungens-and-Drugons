@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 import ca.concordia.soen6441.d20.fighter.Fighter;
+import ca.concordia.soen6441.view.map.GameView;
 
 public class ViewFighterEnemy extends ViewObject{
 
@@ -13,17 +14,25 @@ public class ViewFighterEnemy extends ViewObject{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Fighter fighter;
+	//need re factor
+	private GameView gameView;
 	
-	public ViewFighterEnemy(String tag,Fighter fighter) {
+	public ViewFighterEnemy(String tag,Fighter fighter,GameView gameView) {
 		setImageIcon(new ImageIcon("2.png"));
 		setIcon(getImageIcon());
 		setFighter(fighter);
+		setGameView(gameView);
 		setTag(tag);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getID() == 1001){
-			getFighter().addObserver(new ViewCharacteristics(getFighter()));
+			if(gameView.isInventoryEn()){
+				getFighter().addObserver(new ViewInventory(getFighter()));
+			}else{
+				getFighter().addObserver(new ViewCharacteristics(getFighter()));
+			}
+
 		}
 		
 	}
@@ -38,5 +47,17 @@ public class ViewFighterEnemy extends ViewObject{
 	 */
 	public void setFighter(Fighter fighter) {
 		this.fighter = fighter;
+	}
+	/**
+	 * @return the gameView
+	 */
+	public GameView getGameView() {
+		return gameView;
+	}
+	/**
+	 * @param gameView the gameView to set
+	 */
+	public void setGameView(GameView gameView) {
+		this.gameView = gameView;
 	}
 }
