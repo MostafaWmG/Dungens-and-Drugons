@@ -10,15 +10,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
-import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
+import ca.concordia.soen6441.view.map.viewElement.ViewEnter;
+import ca.concordia.soen6441.view.map.viewElement.ViewExit;
+import ca.concordia.soen6441.view.map.viewElement.ViewFighterEnemy;
 import ca.concordia.soen6441.view.map.viewElement.ViewGround;
 import ca.concordia.soen6441.view.map.viewElement.ViewObject;
+import ca.concordia.soen6441.view.map.viewElement.ViewWall;
 
 
 public class GameView  extends JFrame implements ActionListener{
@@ -32,13 +34,8 @@ public class GameView  extends JFrame implements ActionListener{
 	private ViewObject[][] viewElements;
 	private int elementSizeX = 29;
 	private int elementSizeY = 29;
-	private GameMap map;
-	private Constants constants;
 	private Dimension dimension;
-	private ImageIcon currentPointer;
-	private String tag;
-	private Fighter character;
-	private Item item;
+
 	
 	public ImageIcon[] images;
 	public JButton[] iconButtons;
@@ -48,20 +45,17 @@ public class GameView  extends JFrame implements ActionListener{
 		this.row = row;
 		this.column = column;
 		viewElements = new ViewObject[row][column];
-		iconButtons = new JButton[8];
-//		setCurrentPointer(new ImageIcon());
-		images = new ImageIcon[8];
 		//enable absolute positioning mode 
 		setLayout(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-//		setSize(row,column);
+//		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		//setting up location
 		dimension = Toolkit.getDefaultToolkit().getScreenSize(); 
 		setSize(dimension.width,dimension.height);
 		setLocation((dimension.width - row ) / 2  , (dimension.height - column ) / 2 );
 		
-		initializeGrid();
+		initializeDimension();
+		setVisible(true);
 	}
 
 	/**
@@ -74,7 +68,10 @@ public class GameView  extends JFrame implements ActionListener{
 		{
 		    return;
 		}
-		removeGrid();		
+		
+		if(viewElements !=null)
+			removeGrid();	
+		
 		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName(fileName);
 		if (list.isEmpty())
 		{
@@ -86,29 +83,31 @@ public class GameView  extends JFrame implements ActionListener{
 		
 		column = map.getWidth();
 		row = map.getHeight();
-		viewElements = new ViewGround[row][column];
-		initializeGrid();
+		viewElements = new ViewObject[row][column];
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-//				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
-				System.out.println("Show:" + map.getGameObjectInstanceAtLocation(new Location(j,i)));
 				if(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Ground")){
-					viewElements[i][j].setTag("Ground");
+					viewElements[i][j]= new ViewGround("Ground");
+					setButton(i, j);
 				}else if(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Wall")){
-					viewElements[i][j].setTag("Wall");
+					viewElements[i][j]= new ViewWall("Wall");
+					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Enemy")){
-					viewElements[i][j].setTag("Enemy");
-//					viewElements[i][j].setCharacter((Fighter) (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
+					viewElements[i][j]= new ViewFighterEnemy("Enemy",(Fighter)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject());
+					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Enter")){
-					viewElements[i][j].setTag("Enter");
+					viewElements[i][j]= new ViewEnter("Enter");
+					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Exit")){
-					viewElements[i][j].setTag("Exit");
+					viewElements[i][j]= new ViewExit("Exit");
+					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Player")){
-					viewElements[i][j].setTag("Player");
-//					viewElements[i][j].setCharacter((Fighter) (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
+					viewElements[i][j]= new ViewFighterEnemy("Player",(Fighter)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject());
+					setButton(i, j);					
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Item")){
 					viewElements[i][j].setTag("Item");
+					// TODO change int to chest 
 //					viewElements[i][j].setItem((Item)(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
 				}
 			}
@@ -121,19 +120,21 @@ public class GameView  extends JFrame implements ActionListener{
 	public void removeGrid(){
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-				getContentPane().remove(viewElements[i][j]);
-				getContentPane().revalidate();
-				getContentPane().repaint();
+				if(viewElements[i][j] != null){
+					getContentPane().remove(viewElements[i][j]);
+					getContentPane().revalidate();
+					getContentPane().repaint();
 				}
 			}
+		}
 
-			viewElements = null;
+		viewElements = null;
 	}
 	
 	/**
-	 * initializeGird
+	 * initializeDimension
 	 */
-	public void initializeGrid(){
+	public void initializeDimension(){
 		//setting up the grid
 		int x = (dimension.width )/ column ;
 		int y = (dimension.height) / row ;
@@ -148,19 +149,17 @@ public class GameView  extends JFrame implements ActionListener{
 		if ( elementSizeX <=3 )
 			elementSizeX = 3;
 		if ( elementSizeY <=3 )
-			elementSizeY = 3;
-		
-		for(int i = 0; i < row ; i++)
-			for(int j = 0; j < column ; j++){
-				viewElements[i][j]=new ViewGround("Ground");
-				viewElements[i][j].setSize(elementSizeX, elementSizeY);
-				viewElements[i][j].setLocation( (dimension.width - column * (elementSizeX +1 ) ) / 2 + j * (elementSizeX +1 ), 30 + i * (elementSizeY + 1));
-
-				viewElements[i][j].addActionListener( viewElements[i][j]);
-				getContentPane().add(viewElements[i][j]);
-			}
+			elementSizeY = 3;		
 	}
+	
+	public void setButton(int i,int j){
+		viewElements[i][j].setSize(elementSizeX, elementSizeY);
+		viewElements[i][j].setLocation( (dimension.width - column * (elementSizeX +1 ) ) / 2 + j * (elementSizeX +1 ), 30 + i * (elementSizeY + 1));
 
+		viewElements[i][j].addActionListener( viewElements[i][j]);
+		getContentPane().add(viewElements[i][j]);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

@@ -13,6 +13,7 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Chest;
 import ca.concordia.soen6441.d20.item.IRoot;
+import ca.concordia.soen6441.view.map.GameView;
 
 public class Game {
 	private Campaign campaign;
@@ -78,6 +79,9 @@ public class Game {
 				}
 			}
 		}
+		
+		GameView gameView =new GameView(map.getHeight(),map.getWidth());
+		gameView.load(map.getMapName());
 	}
 	
 	public void adaptToCharacter(){

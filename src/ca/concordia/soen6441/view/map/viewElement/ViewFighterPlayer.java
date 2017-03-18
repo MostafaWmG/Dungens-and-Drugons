@@ -2,14 +2,19 @@ package ca.concordia.soen6441.view.map.viewElement;
 
 import java.awt.event.ActionEvent;
 
-public class ViewFighter extends ViewObject{
+import javax.swing.ImageIcon;
+
+public class ViewFighterPlayer extends ViewObject{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public ViewFighter(String tag) {
+	
+	public ViewFighterPlayer(String tag) {
+		setImageIcon(new ImageIcon("7.png"));
+		setIcon(getImageIcon());
 		setTag(tag);
 	}
 	@Override
