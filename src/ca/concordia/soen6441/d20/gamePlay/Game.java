@@ -26,6 +26,7 @@ public class Game implements KeyListener {
 	private List<Wall> walls;
 	private Exit exit;
 	private Entery entery;
+	private Location currentLocation;
 	
 	public Game(Campaign campaign, Fighter fighter) {
 		setCampaign(campaign);
@@ -73,6 +74,7 @@ public class Game implements KeyListener {
 				}else if (reference.getTag().equals("Enter") ){
 					System.out.print("E");//enter
 					setEntery((Entery)reference);
+					currentLocation = new Location(j,i);
 				}
 				
 				System.out.print(" ");
@@ -83,11 +85,11 @@ public class Game implements KeyListener {
 		}
 		
 		GameView gameView =new GameView(map.getHeight(),map.getWidth());
-		gameView.load(map.getMapName());
+		gameView.load(map,getFighter());
 	}
 	
 	public void adaptToCharacter(){
-		int level = fighter.getLevel();
+		int level = getFighter().getLevel();
 		
 		for(int i = 0 ; i < getEnemies().size() ; i ++){
 			getEnemies().get(i).levelUp(level - getEnemies().get(i).getLevel());

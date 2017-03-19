@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,8 +12,6 @@ import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
-import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
-import ca.concordia.soen6441.persistence.dao.DaoFactory;
 import ca.concordia.soen6441.view.map.viewElement.ViewEnter;
 import ca.concordia.soen6441.view.map.viewElement.ViewExit;
 import ca.concordia.soen6441.view.map.viewElement.ViewFighterEnemy;
@@ -92,24 +89,8 @@ public class GameView  extends JFrame implements ActionListener{
 	 * This the method that is used for loading map
 	 * @param fileName primary key
 	 */
-	public void load(String fileName){
-		
-		if(fileName == null || (fileName != null && ("".equals(fileName))))   
-		{
-		    return;
-		}
-		
-		if(viewElements !=null)
-			removeGrid();	
-		
-		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName(fileName);
-		if (list.isEmpty())
-		{
-			//TODO use appropriate procedure
-			System.out.println("Invalid map name");
-			return;
-		}
-		map = list.get(0).createModel();
+	public void load(GameMap mapLoaded,Fighter mainCharacter){
+		map = mapLoaded;
 		
 		column = map.getWidth();
 		row = map.getHeight();
@@ -124,16 +105,20 @@ public class GameView  extends JFrame implements ActionListener{
 					viewElements[i][j]= new ViewWall("Wall");
 					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Enemy")){
-					viewElements[i][j]= new ViewFighterEnemy("Enemy",(Fighter)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject(),this);
+					viewElements[i][j]= new ViewFighterEnemy("Enemy",(Fighter)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject(),this,false);
 					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Enter")){
-					viewElements[i][j]= new ViewEnter("Enter");
-					setButton(i, j);	
+					if(mainCharacter.getTag().equals("Enemy")){
+						viewElements[i][j]= new ViewFighterEnemy("Enemy",mainCharacter,this,true);
+					}else{
+						viewElements[i][j]= new ViewFighterEnemy("Player",mainCharacter,this,true);
+					}
+					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Exit")){
 					viewElements[i][j]= new ViewExit("Exit");
 					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Player")){
-					viewElements[i][j]= new ViewFighterPlayer("Player",(Fighter)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject(),this);
+					viewElements[i][j]= new ViewFighterPlayer("Player",(Fighter)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject(),this,false);
 					setButton(i, j);					
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Item")){
 					viewElements[i][j].setTag("Item");
