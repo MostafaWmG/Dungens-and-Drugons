@@ -30,7 +30,8 @@ public class StartGameUserInterFace {
 		campaign = loadCampaign(campName);
 		
 		if(fighter !=null && campaign!= null){
-			new Game(campaign,fighter);
+			Thread t = new Thread(new Game(campaign,fighter));
+			t.start();
 		}else {
 			System.out.println("ERROR NULL");
 		}

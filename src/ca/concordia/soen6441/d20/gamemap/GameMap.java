@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Observable;
 import java.util.Set;
 
 
 
+
+
+
 import ca.concordia.soen6441.d20.common.Location;
+import ca.concordia.soen6441.d20.gamePlay.Game;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstanceEntity;
+import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 
@@ -25,7 +30,7 @@ import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
  * @author Saman Saadi
  *
  */
-public class GameMap {
+public class GameMap extends Observable{
 	public static final GameObjectInstance EMPTY = null;
 	/**
 	 * used to instantiate the map and easily position its elements
@@ -266,19 +271,32 @@ public class GameMap {
 	 * @param destinationY y coordinate where the element wants to be
 	 * @throws MoveNotValidException if the movement can't be done
 	 */
-	public void move(int originX, int originY, int destinationX, int destinationY){
-		if(! moveCanBeDone(originX, originY, destinationX, destinationY)) throw new MoveNotValidException();
+	public boolean move(int originX, int originY, int destinationX, int destinationY,Game game){
+		if(! moveCanBeDone(originX, originY, destinationX, destinationY)) return false;
+		Location origin = new Location(originX, originY);
+		Location destination = new Location(destinationX, destinationY);
+//		this.field[destinationY][destinationX] = this.field[originY][originX];
+//		this.field[originY][originX] = EMPTY;
 		
-		this.field[destinationY][destinationX] = this.field[originY][originX];
-		this.field[originY][originX] = EMPTY;
-		GameObjectInstance instance = this.elements.remove(new Location(originX, originY));
-		if(instance != null)
-		{
-			Location location = new Location(destinationX, destinationY);
-			setGameObjectInstanceAtLocation(location, instance);
+		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Ground")){
+			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
+			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
+			System.out.println("character moved");
+			System.out.println("dest: "+getGameObjectInstanceAtLocation(destination).getGameObject().getTag());
+			System.out.println("origin:" +getGameObjectInstanceAtLocation(origin).getGameObject().getTag());
+			game.setCurrentLocation(destination);
+			setChanged();
+			notifyObservers(this);
 		}
-		else
-			throw new NullPointerException("I cannot find the game object in elements");
+		return true;
+//		GameObjectInstance instance = this.elements.remove(new Location(originX, originY));
+//		if(instance != null)
+//		{
+//			Location location = new Location(destinationX, destinationY);
+//			setGameObjectInstanceAtLocation(location, instance);
+//		}
+//		else
+//			throw new NullPointerException("I cannot find the game object in elements");
 
 	}
 	/**
@@ -290,15 +308,33 @@ public class GameMap {
 	 * @return true if the element can move to the destination
 	 */
 	private boolean moveCanBeDone(int originX, int originY, int destinationX, int destinationY) {
-		if(originX<0 || originY<0 || destinationX<0 ||destinationY<0) return false;
+		if(originX<0 || originY<0 || destinationX<0 ||destinationY<0) {
+			System.out.println("debug1");
+			return false;
+		}
 		
-		if(originX >= getWidth() || destinationX >= getWidth() ) return false;
+		if(originX >= getWidth() || destinationX >= getWidth() ){
+			System.out.println("debug2");
+			return false;
+		}
 		
-		if(originY >= getHeight() || destinationY >= getHeight() ) return false;
+		if(originY >= getHeight() || destinationY >= getHeight() ){
+			System.out.println("debug3");
+			return false;
+		} 
 		
-		if(this.field[originY][originX] == EMPTY) return false;
 		
-		if(this.field[destinationY][destinationX] != EMPTY) return false;
+		Location destination = new Location(destinationX, destinationY);
+		
+		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Wall")){
+			System.out.println("debug4");
+			return false;
+		}
+
+		
+//		if(this.field[originY][originX] == EMPTY) return false;
+//		
+//		if(this.field[destinationY][destinationX] != EMPTY) return false;
 		return true;
 	}
 	

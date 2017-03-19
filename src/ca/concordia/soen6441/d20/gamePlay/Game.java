@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import ca.concordia.soen6441.d20.campaign.Campaign;
 import ca.concordia.soen6441.d20.common.Location;
@@ -17,7 +18,7 @@ import ca.concordia.soen6441.d20.item.Chest;
 import ca.concordia.soen6441.d20.item.IRoot;
 import ca.concordia.soen6441.view.map.GameView;
 
-public class Game implements KeyListener {
+public class Game implements KeyListener,Runnable {
 	private Campaign campaign;
 	private Fighter fighter;
 	private List<Fighter> enemies;
@@ -27,6 +28,8 @@ public class Game implements KeyListener {
 	private Exit exit;
 	private Entery entery;
 	private Location currentLocation;
+	private Scanner scanner;
+	private GameMap map;
 	
 	public Game(Campaign campaign, Fighter fighter) {
 		setCampaign(campaign);
@@ -38,15 +41,8 @@ public class Game implements KeyListener {
 		initializeAndShow();
 	}
 	
-	public void gameLoop(){
-
-		while(true){
-			
-		}
-	}
-	
 	public void initializeAndShow(){
-		GameMap map = getCampaign().getMaps().get(0);
+		map = getCampaign().getMaps().get(0);
 		
 		System.out.println("   ");
 		
@@ -84,8 +80,9 @@ public class Game implements KeyListener {
 			}
 		}
 		
-		GameView gameView =new GameView(map.getHeight(),map.getWidth());
+		GameView gameView =new GameView(map.getHeight(),map.getWidth(),this);
 		adaptToCharacter();
+		map.addObserver(gameView);
 		gameView.load(map,getFighter());
 	}
 	
@@ -250,6 +247,73 @@ public class Game implements KeyListener {
 	 */
 	public void setCurrentLocation(Location currentLocation) {
 		this.currentLocation = currentLocation;
+	}
+
+	@Override
+	public void run() {
+		
+		scanner  = new Scanner(System.in);
+		String keyStr;
+		while(true){
+			System.out.println("Please move the character: ");
+			keyStr = scanner.nextLine();
+			
+			try {
+				Thread.sleep(200);
+			} catch (Exception e) {
+				break;			}
+			
+			if(keyStr.equalsIgnoreCase("w") ){
+				System.out.println("w pressed ");
+				System.out.println("X:" + currentLocation.getX() + "Y:" + currentLocation.getY());
+				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() - 1 ,this)){
+					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
+				}else{
+					System.out.println("Cant move UP");
+				}
+
+			}else if (keyStr.equalsIgnoreCase("a")){
+				System.out.println("a pressed ");
+				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() - 1,currentLocation.getY() ,this)){
+					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
+				}else{
+					System.out.println("Cant move Left");
+				}
+				
+			}else if (keyStr.equalsIgnoreCase("s")){
+				System.out.println("s pressed ");
+				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() + 1 ,this)){
+					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
+				}else{
+					System.out.println("Cant move Down");
+				}
+			}else if (keyStr.equalsIgnoreCase("d")){
+				System.out.println("d pressed ");
+				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() + 1 ,currentLocation.getY()  ,this)){
+					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
+				}else{
+					System.out.println("Cant move Right");
+				}
+			}
+	
+		}
+
+
+
+	}
+
+	/**
+	 * @return the map
+	 */
+	public GameMap getMap() {
+		return map;
+	}
+
+	/**
+	 * @param map the map to set
+	 */
+	public void setMap(GameMap map) {
+		this.map = map;
 	}
 	
 }

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,7 +13,9 @@ import javax.swing.JFrame;
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
+import ca.concordia.soen6441.d20.gamePlay.Game;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.view.map.viewElement.ViewExit;
 import ca.concordia.soen6441.view.map.viewElement.ViewFighterEnemy;
 import ca.concordia.soen6441.view.map.viewElement.ViewFighterPlayer;
@@ -20,7 +24,7 @@ import ca.concordia.soen6441.view.map.viewElement.ViewObject;
 import ca.concordia.soen6441.view.map.viewElement.ViewWall;
 
 
-public class GameView  extends JFrame implements ActionListener{
+public class GameView  extends JFrame implements ActionListener,Observer{
 	
 	/**
 	 * 
@@ -35,9 +39,12 @@ public class GameView  extends JFrame implements ActionListener{
 	private GameMap map;
 	private Constants constants;
 	private boolean inventoryEn;
+	private Game game;
+	private Location mainCharacterLocation;
 	
-	public GameView(int row , int column) {
+	public GameView(int row , int column,Game game) {
 		//initializing
+		this.game = game;
 		this.row = row;
 		this.column = column;
 		viewElements = new ViewObject[row][column];
@@ -112,6 +119,8 @@ public class GameView  extends JFrame implements ActionListener{
 					}else{
 						viewElements[i][j]= new ViewFighterEnemy("Player",mainCharacter,this,true);
 					}
+					setMainCharacterLocation(new Location(j,i));
+					map.setGameObjectInstanceAtLocation(new Location(j,i),new GameObjectInstance(mainCharacter, map));
 					setButton(i, j);
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Exit")){
 					viewElements[i][j]= new ViewExit("Exit");
@@ -143,6 +152,16 @@ public class GameView  extends JFrame implements ActionListener{
 		}
 
 		viewElements = null;
+	}
+	
+	/**
+	 * This method will remove element
+	 */
+	public void removeElement(int i , int j){
+
+		getContentPane().remove(viewElements[i][j]);
+		getContentPane().revalidate();
+		getContentPane().repaint();
 	}
 	
 	/**
@@ -212,6 +231,36 @@ public class GameView  extends JFrame implements ActionListener{
 	 */
 	public void setInventoryEn(boolean inventoryEn) {
 		this.inventoryEn = inventoryEn;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		System.out.println("OBSERVER WORKS FINE");
+		GameMap gMap = (GameMap)o; 
+		
+		removeElement(getMainCharacterLocation().getY(),getMainCharacterLocation().getX());
+		viewElements[getMainCharacterLocation().getY()][getMainCharacterLocation().getX()] = new ViewGround("Ground");
+		setButton(getMainCharacterLocation().getY(), getMainCharacterLocation().getX());
+		
+		removeElement(game.getCurrentLocation().getY(),game.getCurrentLocation().getX());
+		viewElements[game.getCurrentLocation().getY()][game.getCurrentLocation().getX()] = new ViewFighterPlayer(gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject().getTag(),(Fighter) gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject(), this, true);
+		setButton(game.getCurrentLocation().getY(), game.getCurrentLocation().getX());
+		
+		setMainCharacterLocation(new Location(game.getCurrentLocation().getX(),game.getCurrentLocation().getY()));
+	}
+
+	/**
+	 * @return the mainCharacterLocation
+	 */
+	public Location getMainCharacterLocation() {
+		return mainCharacterLocation;
+	}
+
+	/**
+	 * @param mainCharacterLocation the mainCharacterLocation to set
+	 */
+	public void setMainCharacterLocation(Location mainCharacterLocation) {
+		this.mainCharacterLocation = mainCharacterLocation;
 	}
 
 
