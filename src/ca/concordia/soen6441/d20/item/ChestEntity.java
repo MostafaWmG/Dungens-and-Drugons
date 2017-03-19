@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
@@ -18,6 +20,15 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
  * @author wmg
  *
  */
+@NamedQueries({
+	@NamedQuery(
+			name="findChestEntityByName",
+			query="SELECT chest FROM ChestEntity chest WHERE chest.name = :name"
+			),
+	@NamedQuery(
+			name="findChestEntityAll",
+			query="SELECT chest FROM ChestEntity chest")
+})
 @Entity
 public class ChestEntity extends GameObjectEntity implements Serializable{
 
