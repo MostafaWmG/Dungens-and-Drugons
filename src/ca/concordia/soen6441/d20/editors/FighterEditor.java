@@ -294,9 +294,9 @@ public class FighterEditor {
 			System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
 			String change = scanner.nextLine();
 			if(change.equals("p")){
-				changeItemPoint(character,itemEnum);
+				changeItemPoint(character,character.getItem(itemEnum));
 			}else if (change.equals("t")){
-				changeItemType(character,itemEnum);
+				changeItemType(character,character.getItem(itemEnum));
 			}else{
 				System.out.println("Error");
 			}
@@ -308,7 +308,7 @@ public class FighterEditor {
 	 * @param character character 
 	 * @param itemEnum	item that is changing
 	 */
-	public void changeItemType(Fighter character,ItemEnum itemEnum){
+	public void changeItemType(Fighter character,Item item){
 		boolean enumChecker = false;
 		
 		System.out.println("Enter new item type : ");
@@ -325,18 +325,17 @@ public class FighterEditor {
 		try {
 			//ability
 			if(!enumChecker){
-				Item newItem = new Item(character.getItem(itemEnum));
-				character.removeItem(character.getItem(itemEnum));
-				if(newItem.getEnchantmentType() == null){
-					newItem.setAttributeType(null);
-					newItem.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+				character.removeItem(item);
+				if(item.getEnchantmentType() == null){
+					item.setAttributeType(null);
+					item.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
 				}else {
-					newItem.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+					item.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
 				}
 				
-				if(newItem.validate(newItem)){
-					character.putOnItem(newItem);
-					character.getItem(itemEnum).show();
+				if(item.validate(item)){
+					character.putOnItem(item);
+					character.getItem(item.getItemEnum()).show();
 					character.showAbilities();
 					character.showAttributes();
 					saveCharacterChanges(character, "Item");
@@ -345,18 +344,17 @@ public class FighterEditor {
 				}
 
 			}else if(enumChecker){
-				Item newItem = new Item(character.getItem(itemEnum));
-				character.removeItem(character.getItem(itemEnum));
-				if(newItem.getAttributeType() == null){
-					newItem.setEnchantmentType(null);
-					newItem.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
+				character.removeItem(item);
+				if(item.getAttributeType() == null){
+					item.setEnchantmentType(null);
+					item.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
 				}else {
-					newItem.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
+					item.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
 				}
 				
-				if(newItem.validate(newItem)){
-					character.putOnItem(newItem);
-					character.getItem(itemEnum).show();
+				if(item.validate(item)){
+					character.putOnItem(item);
+					character.getItem(item.getItemEnum()).show();
 					character.showAbilities();
 					character.showAttributes();
 					saveCharacterChanges(character, "Item");
@@ -375,20 +373,24 @@ public class FighterEditor {
 	 * @param character character
 	 * @param itemEnum item that is changing
 	 */
-	public void changeItemPoint(Fighter character,ItemEnum itemEnum){
+	public void changeItemPoint(Fighter character,Item item){
 		System.out.println("Enter number to change Point:");
 
 
 		String number = scanner.nextLine();
 		int numberScore = Integer.parseInt(number);
-		Item newItem = new Item(character.getItem(itemEnum));
-		newItem.setEnchantmentPoint(numberScore);
-		character.removeItem(character.getItem(itemEnum));
-		character.putOnItem(newItem);
-		character.getItem(itemEnum).show();
-		//test only
-		character.showAbilities();
-		saveCharacterChanges(character, "Item");
+
+		if(numberScore <=5 && numberScore >= 1){
+			item.show();
+			character.removeItem(item);
+			item.setEnchantmentPoint(numberScore);
+			character.putOnItem(item);
+			character.getItem(item.getItemEnum()).show();
+			saveCharacterChanges(character, "Item");
+		}else{
+			System.out.println("Please Enter number between 1 t0 5!!");
+			changeItemPoint(character,item);
+		}
 
 	}
 	
