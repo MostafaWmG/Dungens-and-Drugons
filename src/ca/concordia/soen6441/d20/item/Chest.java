@@ -165,7 +165,7 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	/**
 	 * show items in the Chest
 	 */
-	public void showBackPack(){
+	public void show(){
 		System.out.println("<<<Chest View>>> ");
 		for(int i = 0 ; i < CHEST_ITEM_MAX_SIZE; i ++){
 			if(getChestItems().get(i).getAttributeType() == null && getChestItems().get(i).getEnchantmentType() == null){
