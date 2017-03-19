@@ -7,6 +7,7 @@ import ca.concordia.soen6441.d20.ability.AbilityEnum;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.factory.ItemFactory;
 import ca.concordia.soen6441.d20.item.Chest;
+import ca.concordia.soen6441.d20.item.ChestEntity;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
@@ -45,7 +46,14 @@ public class ItemEditor {
 		String itemName = scanner.nextLine();
 		
 		//load here
-		Chest chest = new Chest(itemName, "Chest");
+		List<ChestEntity> list = DaoFactory.getChestDao().findByName(itemName);
+		if (list.isEmpty())
+		{
+			//TODO use appropriate procedure
+			System.out.println("Invalid item name");
+			return;
+		}
+		Chest chest = (Chest) list.get(0).createModel();
 		chest.show();
 		
 		System.out.println("Choose : (add to Chest : Type a), (Remve from Chest : Type R)");
@@ -75,7 +83,7 @@ public class ItemEditor {
 		
 		chest.addItem(item);
 		chest.show();
-//		saveChestFactory(chest, "edit");
+		saveChestFactory(chest, "edit");
 	}
 	
 	private void removeFromChest(Chest chest){
@@ -83,9 +91,9 @@ public class ItemEditor {
 		String chestStr = scanner.nextLine();
 		int chestInt = Integer.parseInt(chestStr);
 		
-		chest.removeFromChest(chestInt);
+		chest.removeFromChest(chest.getChestItems().get(chestInt),chestInt);
 		chest.show();
-//		saveChestFactory(chest, "edit");
+		saveChestFactory(chest, "edit");
 		
 	}
 	
@@ -93,9 +101,8 @@ public class ItemEditor {
 		System.out.println("Please Enter Your Chest Name: ");
 		String itemName = scanner.nextLine();
 		
-		//test 
-		Chest chest = new Chest(itemName, "Chest");
-//		saveChestFactory(chest,"create");
+		Chest chest = new Chest(itemName,"Chest");
+		saveChestFactory(chest,"create");
 	}
 	
 	/**
@@ -291,7 +298,7 @@ public class ItemEditor {
 		String answer = scanner.nextLine();
 		
 		if(answer.equals("yes")){
-//			DaoFactory.getItemDao().create(chest.getItemEntity());
+			DaoFactory.getChestDao().create(chest.getChestEntity());
 			reset(chest, section);
 		}else if (answer.equals("no")){
 			reset(chest, section);
@@ -306,7 +313,7 @@ public class ItemEditor {
 	 * @param section edit/create
 	 */
 	private void reset(Chest chest , String section){
-		System.out.println("Do you want to "+section+" another item :(yes or no)");
+		System.out.println("Do you want to "+section+" another Chest :(yes or no)");
 		String answer = scanner.nextLine();
 		
 		if(answer.equals("yes")){

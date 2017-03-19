@@ -87,15 +87,10 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 		
 	}
 	
-	/**
-	 * remove item from Chest at index
-	 * @param index selected item at the index to be removed.
-	 * @param item item to be removed.
-	 */
-	public void removeFromChest(int index){
-		Item tmp = new Item(getName()+index+17+"Chest", ItemEnum.HELMET);
-		getChestItems().set(index,tmp );
-	    getChestEntity().getChestItems().set(index, tmp.getItemEntity());
+
+	public void removeFromChest(Item item,int index){
+		getChestItems().set(index,new Item(item.getName()+index+17, ItemEnum.HELMET) );
+	    getChestEntity().getChestItems().set(index,new Item(item.getName()+index+17, ItemEnum.HELMET).getItemEntity());
 	}
 	
 	/**
@@ -185,7 +180,7 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 			
 			if(!isNullItem(refItem)){
 				if(fighter.addBackPack(refItem))
-					removeFromChest(i);	
+					removeFromChest(getChestItems().get(i),i);	
 			}	
 		}
 	}

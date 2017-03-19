@@ -42,7 +42,7 @@ public class ChestEntity extends GameObjectEntity implements Serializable{
 			joinColumns=@JoinColumn(name="CHEST_ID", referencedColumnName="ID"),
 			inverseJoinColumns=@JoinColumn(name="CHEST_ITEMS_ID", referencedColumnName="ID"))
 	private List <ItemEntity> chestItems;
-	
+
 	public ChestEntity() {
 		chestItems = new ArrayList<ItemEntity>();
 	}
