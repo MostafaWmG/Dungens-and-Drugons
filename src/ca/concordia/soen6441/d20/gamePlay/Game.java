@@ -74,7 +74,7 @@ public class Game implements KeyListener {
 				}else if (reference.getTag().equals("Enter") ){
 					System.out.print("E");//enter
 					setEntery((Entery)reference);
-					currentLocation = new Location(j,i);
+					setCurrentLocation(new Location(j,i));
 				}
 				
 				System.out.print(" ");
@@ -85,6 +85,7 @@ public class Game implements KeyListener {
 		}
 		
 		GameView gameView =new GameView(map.getHeight(),map.getWidth());
+		adaptToCharacter();
 		gameView.load(map,getFighter());
 	}
 	
@@ -235,6 +236,20 @@ public class Game implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @return the currentLocation
+	 */
+	public Location getCurrentLocation() {
+		return currentLocation;
+	}
+
+	/**
+	 * @param currentLocation the currentLocation to set
+	 */
+	public void setCurrentLocation(Location currentLocation) {
+		this.currentLocation = currentLocation;
 	}
 	
 }

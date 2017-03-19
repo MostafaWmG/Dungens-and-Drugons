@@ -12,7 +12,6 @@ import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
-import ca.concordia.soen6441.view.map.viewElement.ViewEnter;
 import ca.concordia.soen6441.view.map.viewElement.ViewExit;
 import ca.concordia.soen6441.view.map.viewElement.ViewFighterEnemy;
 import ca.concordia.soen6441.view.map.viewElement.ViewFighterPlayer;

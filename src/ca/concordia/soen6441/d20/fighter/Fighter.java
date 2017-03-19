@@ -242,6 +242,7 @@ public class Fighter extends GameObject {
 			addItem(new Item(getName()+i+"dontduplicate",ItemEnum.values()[i]));
 		}
 		
+		setLevel(1);
 	}
 	
 	/**

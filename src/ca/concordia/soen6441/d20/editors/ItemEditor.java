@@ -22,7 +22,7 @@ public class ItemEditor {
 	public ItemEditor() {
 		System.out.println("Item Builder Section: ");
 		System.out.println("Choose Section : ");
-		System.out.println("EditItem:(Type e) , CreateItem : (Type C) " );
+		System.out.println("EditItem:(Type e) , CreateItem : (Type C) ,CreateChest:(Type T),EditChest:(Type P) " );
 		scanner = new Scanner(System.in);
 		String hitButton = scanner.nextLine();
 		
@@ -30,9 +30,22 @@ public class ItemEditor {
 			createItem();
 		}else if (hitButton.equals("e")){
 			editItem();
+		}else if (hitButton.equalsIgnoreCase("t")){
+			createChest();
+		}else if(hitButton.equalsIgnoreCase("p")){
+			editChest();
 		}else {
 			System.out.println("Error");
 		}
+	}
+	
+	private void editChest(){
+		
+	}
+	
+	private void createChest(){
+		System.out.println("Please Enter Your Chest Name: ");
+		String itemName = scanner.nextLine();
 	}
 	
 	/**
