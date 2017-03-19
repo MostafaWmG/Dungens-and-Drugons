@@ -101,10 +101,6 @@ public class ItemEditor {
 			return;
 		}
 		Item item = (Item) list.get(0).createModel();
-		//load item from file 
-		// Item item = load(itemName);
-		//this is only for test
-//		Item item = new Item(itemName,ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 3);
 		
 		System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
 		String change = scanner.nextLine();

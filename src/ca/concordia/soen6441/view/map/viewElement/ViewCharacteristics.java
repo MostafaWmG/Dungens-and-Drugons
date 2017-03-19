@@ -33,7 +33,7 @@ public class ViewCharacteristics extends JFrame implements Observer{
 		
 		
 		jTextArea = new JTextArea();
-		initializeButton(jTextArea,"JTextArea",10,10,0,constants.LOCATION_HEIGHT_OFFSET,0);
+		initializeButton(jTextArea,"JTextArea",10,40,0,constants.LOCATION_HEIGHT_OFFSET,0);
 		
 		jTextArea.insert(fighter.show(false),0);
 		setVisible(true);

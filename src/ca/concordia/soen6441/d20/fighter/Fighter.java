@@ -143,7 +143,6 @@ public class Fighter extends GameObject {
 			getWearItems().set(item.getItemEnum().getValue(), item);
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), item.getItemEntity());
 			wearItem(item, item.getEnchantmentPoint());
-//			System.out.println("characted wore the item");
 			setChanged();
 			notifyObservers(this);
 			return false;
@@ -159,11 +158,9 @@ public class Fighter extends GameObject {
 	 */
 	public void wearItem(Item item , int value){
 		if (item.getAttributeType() == null ){
-			System.out.println("debug1: "+ item.getEnchantmentType() + " value: " + value);
 			if(item.getEnchantmentType() != null)
 				getAbilities().get(item.getEnchantmentType().getValue()).update(value);
 		}else if (item.getEnchantmentType() == null){
-			System.out.println("debug1: "+ item.getAttributeType() + " value: " + value);
 			if(item.getAttributeType() == AttributeEnum.ARMORCLASS){
 				getArmor().setBase(getArmor().getBase() + value);
 			}else if (item.getAttributeType() == AttributeEnum.ATTACKBONUS){
@@ -185,14 +182,12 @@ public class Fighter extends GameObject {
 		if(hasItem(item.getItemEnum())){
 			Item tmp = new Item(getName()+item.getItemEnum().getValue()+"dontduplicate", item.getItemEnum());
 			getWearItems().set(item.getItemEnum().getValue(), tmp);		
-			System.out.println("item name :" + tmp.getName());
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), tmp.getItemEntity());
 			wearItem(item, -1 * item.getEnchantmentPoint());
-			System.out.println("item Removed");
 			setChanged();
 			notifyObservers(this);
 		}else {
-			 System.out.println("Character dont have this item");
+//			 System.out.println("Character dont have this item");
 		}
 		setChanged();
 		notifyObservers(this);
@@ -260,13 +255,24 @@ public class Fighter extends GameObject {
 	 * this method will level up our character 
 	 * @param point the amount of level that our character gain in level up action
 	 */
-	public void levelUp(int point){
+	public void levelUp(int point , boolean onlyAbilities){
 		getCharacterEntity().setLevel(getLevel() + point);
 		getAttack().setLevel(getLevel());
 		getHitPoint().setLevel(getLevel());
-		iterate(getAbilities(),getWearItems(), point);
+		if(onlyAbilities){
+			iterate(getAbilities(),null,null, point);
+		}else{
+			iterate(getAbilities(),getWearItems(),getBackPack(), point);
+		}
 	}
 	
+	/**
+	 * this method will level up our character 
+	 * @param point the amount of level that our character gain in level up action
+	 */
+	public void levelUp(int point){
+		levelUp(point, false);
+	}
 	/**
 	 * print all statistics of the characters
 	 */
@@ -308,11 +314,13 @@ public class Fighter extends GameObject {
 			getDamage().showPoint();
 			getAttack().showPoint();
 			getHitPoint().showPoint();
+			System.out.println("Level: "+getLevel());
 		}else{
 			s = s.concat(getArmor().showPoint(consol) );
 			s = s.concat( getDamage().showPoint(consol));
 			s = s.concat(getAttack().showPoint(consol));
 			s = s.concat(getHitPoint().showPoint(consol));
+			s = s.concat("Level: "+ getLevel() + "\n");
 		}
 		return s;
 	}
@@ -829,12 +837,26 @@ public class Fighter extends GameObject {
 	 * @param list the list need to be iterated.
 	 * @param value the value need to be updated.
 	 */
-	private  void iterate(List<Ability> list,List<Item> list2 , int value ) {
+	private  void iterate(List<Ability> list,List<Item> wearList,List<Item> backBack , int value ) {
 		
-		for(int i =0 ; i < list2.size() ; i ++){
-			if(list2.get(i) != null)
-				list2.get(i).update(getLevel());
-		}		
+		if(wearList !=null){
+			for(int i =0 ; i < wearList.size() ; i ++){
+				if(wearList.get(i) != null){
+					Item tmp= wearList.get(i);
+					removeItem(tmp);
+					tmp.update(getLevel());
+					putOnItem(tmp);
+				}
+
+			}		
+		}
+
+		if(backBack != null){
+			for(int i =0 ; i < BACKPACK_SIZE ; i ++){
+				if(backBack.get(i) != null)
+					backBack.get(i).update(getLevel());
+			}	
+		}
 		
 		for(int i =0 ; i < list.size() ; i ++){
 			list.get(i).update(value);
