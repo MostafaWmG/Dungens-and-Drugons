@@ -33,6 +33,7 @@ public class GameMapTest {
 //		assertEquals(gameObject, this.gameMap.getGameObjectAtLocation(gameObject.getLocation()));
 	}
 	
+	//move this method to another test case
 	@Test
 	public void moveAnObjectInTheMapShoulChangeTheObjectPosition() {
 //		Location expectedLocation = new Location(5,5);

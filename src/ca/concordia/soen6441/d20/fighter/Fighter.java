@@ -118,7 +118,7 @@ public class Fighter extends GameObject {
 	}
 	
 	/**
-	 * check if character have wore this item or not
+	 * check if character is wearing this item or not
 	 * @param itemEnum type of item
 	 * @return if true : has this item 
 	 */
