@@ -102,10 +102,6 @@ public class Game implements KeyListener {
 		}
 	}
 	
-	public void showCharacteristics(Fighter fighter){
-		
-	}
-	
 	public void root(IRoot root){
 		
 	}
