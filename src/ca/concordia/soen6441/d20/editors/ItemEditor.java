@@ -101,7 +101,7 @@ public class ItemEditor {
 		System.out.println("Please Enter Your Chest Name: ");
 		String itemName = scanner.nextLine();
 		
-		Chest chest = new Chest(itemName,"Chest");
+		Chest chest = new Chest(itemName);
 		saveChestFactory(chest,"create");
 	}
 	

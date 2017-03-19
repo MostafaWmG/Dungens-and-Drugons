@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import ca.concordia.soen6441.d20.fighter.Fighter;
-import ca.concordia.soen6441.d20.item.Item;
+import ca.concordia.soen6441.d20.item.Chest;
 
 /**
  * This is a Grid class for elements on mapView
@@ -27,7 +27,7 @@ public class Grid extends JButton implements ActionListener{
 	private MapEditor mapEditor;
 	private String tag;
 	private Fighter character;
-	private Item item;
+	private Chest chest;
 		
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class Grid extends JButton implements ActionListener{
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
 		setCharacter(null);
-		setItem(null);
+		setChest(null);
 		iconHandler();
 	}
 	
@@ -53,7 +53,7 @@ public class Grid extends JButton implements ActionListener{
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
 		setCharacter(character);
-		this.setItem(null);
+		setChest(null);
 		iconHandler();
 	}
 	/**
@@ -62,10 +62,10 @@ public class Grid extends JButton implements ActionListener{
 	 * @param mapEditor the map to put elements on it
 	 * @param tag to set the tag.
 	 */
-	public Grid(Item character,MapEditor mapEditor,String tag) {
+	public Grid(Chest chest,MapEditor mapEditor,String tag) {
 		this.mapEditor = mapEditor;
 		this.setTag(tag);
-		setItem(item);
+		setChest(chest);
 		setCharacter(null);
 		iconHandler();
 	}
@@ -90,16 +90,13 @@ public class Grid extends JButton implements ActionListener{
 				mapEditor.setCurrentPointer(mapEditor.images[2]);
 				mapEditor.setTag("Ground");
 			}
-			if(mapEditor.getTag().equals("Item")){
-				setItem(mapEditor.getItem());
+			if(mapEditor.getTag().equals("Chest")){
+				setChest(mapEditor.getChest());
 				mapEditor.iconButtons[5].setVisible(false);
 				mapEditor.setCurrentPointer(mapEditor.images[2]);
 				mapEditor.setTag("Ground");
 			}
-			
-//			if(mapEditor.getTag().equals("Enemy")){
-//				mapEditor.iconButtons[7].setVisible(false);
-//			}
+
 		}
 	}
 
@@ -151,7 +148,7 @@ public class Grid extends JButton implements ActionListener{
 		}else if (tag == "Exit"){
 			icon = new ImageIcon("5.png");
 			setIcon(icon);
-		}else if (tag == "Item"){
+		}else if (tag == "Chest"){
 			icon = new ImageIcon("6.png");
 			setIcon(icon);
 		}else if (tag == "Player"){
@@ -175,16 +172,16 @@ public class Grid extends JButton implements ActionListener{
 	}
 
 	/**
-	 * @return the item
+	 * @return the chest
 	 */
-	public Item getItem() {
-		return item;
+	public Chest getChest() {
+		return chest;
 	}
 
 	/**
-	 * @param item the item to set on the mapView
+	 * @param chest the chest to set
 	 */
-	public void setItem(Item item) {
-		this.item = item;
+	public void setChest(Chest chest) {
+		this.chest = chest;
 	}
 }

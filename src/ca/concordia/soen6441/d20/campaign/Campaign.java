@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ca.concordia.soen6441.d20.gamemap.GameMap;
-import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 
 /**
  * graph of maps that connect the together.
@@ -32,8 +31,10 @@ public class Campaign {
 	{
 		setCampaignEntity(e);
 		campaign = new LinkedList<GameMap>();
-		for (GameMapEntity gameMapEntity : e.getCampaign())
-			addMap(gameMapEntity.createModel(), false);
+
+		for(int i = 0 ; i < e.getCampaign().size(); i++){
+			addMap(i, e.getCampaign().get(i).createModel(),false);
+		}
 	}
 	
 	/**
@@ -48,9 +49,9 @@ public class Campaign {
 	 * add map to Campaign
 	 * @param map selected map to be added
 	 */
-	public void addMap(GameMap map)
+	public void addMap(int index,GameMap map)
 	{
-		addMap(map, true);
+		addMap(index,map, true);
 	}
 	
 	/**
@@ -58,11 +59,11 @@ public class Campaign {
 	 * @param map selected map to be added
 	 * @param saveEntity if we are loading or saving
 	 */
-	private void addMap(GameMap map, boolean saveEntity)
+	private void addMap(int index,GameMap map, boolean saveEntity)
 	{
-		getMaps().add(map);
+		getMaps().add(index,map);
 		if (saveEntity)
-			getCampaignEntity().getCampaign().add(map.getEntity());
+			getCampaignEntity().getCampaign().add(index,map.getEntity());
 	}
 	/**
 	 * This method handles removing a game map

@@ -22,8 +22,8 @@ import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
-import ca.concordia.soen6441.d20.item.Item;
-import ca.concordia.soen6441.d20.item.ItemEntity;
+import ca.concordia.soen6441.d20.item.Chest;
+import ca.concordia.soen6441.d20.item.ChestEntity;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 
 /**
@@ -63,7 +63,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 	private ImageIcon currentPointer;
 	private String tag;
 	private Fighter character;
-	private Item item;
+	private Chest chest;
 	
 	public ImageIcon[] images;
 	public JButton[] iconButtons;
@@ -105,8 +105,8 @@ public class MapEditor  extends JFrame implements ActionListener{
 		JButton loadCharacterButton = new JButton("LoadCharacter");
 		initializeButton(loadCharacterButton, "LoadCharacter",10,0,-100,0,0 ,4);
 		
-		JButton loadItemButton = new JButton("LoadItem");
-		initializeButton(loadItemButton, "LoadItem",0,0,-100,0,0 ,-2);
+		JButton loadChestButton = new JButton("LoadChest");
+		initializeButton(loadChestButton, "LoadChest",0,0,-100,0,0 ,-2);
 		//show the JFrame
 		setVisible(true);
 	}
@@ -127,7 +127,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 			
 			Dimension d = this.getSize();
 			button.setSize(d.width/constants.BUTTON_SIZE_SAVE + sizeWidthOffset , d.height/constants.BUTTON_SIZE_SAVE + sizeHeightOffset);
-//			System.out.println(button.getHeight() + ":" + button.HEIGHT + ":" + dimension.getWidth() + ":" + dimension.width);
 			button.setLocation( (dimension.width- button.getWidth() )/2  +( button.getWidth() * widthMultiple)+ locationWidthOffset,dimension.height - (button.getHeight() * 3)+ locationHeightOffset);
 			button.setActionCommand(name);
 			getContentPane().add(button);
@@ -141,13 +140,12 @@ public class MapEditor  extends JFrame implements ActionListener{
 			//setting up the grid
 			int x = (dimension.width )/ column ;
 			int y = (dimension.height) / row ;
-//			System.out.println(x+ ":"+ y);
+			
 			if( x <= 44 )
 				elementSizeX = x - 5  ;
 			if( y <= 30)
 				elementSizeY = y - 5  ;
 			
-//			System.out.println(elementSizeX+ ":"+ elementSizeY);
 			//minimum size of button
 			if ( elementSizeX <=3 )
 				elementSizeX = 3;
@@ -219,7 +217,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 			
 			if(e.getActionCommand().equals ("image5")){
 				setCurrentPointer((ImageIcon) iconButtons[5].getIcon());
-				setTag("Item");
+				setTag("Chest");
 			}
 			
 			if(e.getActionCommand().equals ("image6")){
@@ -249,9 +247,9 @@ public class MapEditor  extends JFrame implements ActionListener{
 			}
 			
 			
-			if(e.getActionCommand().equals("LoadItem"))
+			if(e.getActionCommand().equals("LoadChest"))
 			{
-				 loadItem(JOptionPane.showInputDialog(this, "LoadItem"));
+				 LoadChest(JOptionPane.showInputDialog(this, "LoadChest"));
 			}
 		}
 	}
@@ -280,16 +278,16 @@ public class MapEditor  extends JFrame implements ActionListener{
 	 * 
 	 * @param name is used to load items related to that name
 	 */
-	public void loadItem(String name){
-		List<ItemEntity> list = DaoFactory.getItemDao().findByName(name);
+	public void LoadChest(String name){
+		List<ChestEntity> list = DaoFactory.getChestDao().findByName(name);
 		if (list.isEmpty())
 		{
 			//TODO use appropriate procedure
 			System.out.println("Invalid Item name");
 			return;
 		}
-		Item item = (Item) list.get(0).createModel();
-		setItem(item);
+		Chest Chest = (Chest) list.get(0).createModel();
+		setChest(Chest);
 		iconButtons[5].setVisible(true);
 	}
 	/**
@@ -321,10 +319,9 @@ public class MapEditor  extends JFrame implements ActionListener{
 				}else if (viewElements[i][j].getTag().equals("Player")){
 					Location location = new Location(j, i);
 					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(viewElements[i][j].getCharacter(), map));
-				}else if (viewElements[i][j].getTag().equals("Item")){
+				}else if (viewElements[i][j].getTag().equals("Chest")){
 					Location location = new Location(j, i);
-					viewElements[i][j].getItem().setTag("Item");
-					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(viewElements[i][j].getItem(), map));
+					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(viewElements[i][j].getChest(), map));
 				}
 
 			}
@@ -394,9 +391,9 @@ public class MapEditor  extends JFrame implements ActionListener{
 					viewElements[i][j].setTag("Player");
 					viewElements[i][j].setCharacter((Fighter) (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
 					viewElements[i][j].iconHandler();
-				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Item")){
-					viewElements[i][j].setTag("Item");
-					viewElements[i][j].setItem((Item)(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
+				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Chest")){
+					viewElements[i][j].setTag("Chest");
+					viewElements[i][j].setChest((Chest)(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
 					viewElements[i][j].iconHandler();
 				}
 			}
@@ -475,16 +472,16 @@ public class MapEditor  extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * @return the item on the map
+	 * @return the chest
 	 */
-	public Item getItem() {
-		return item;
+	public Chest getChest() {
+		return chest;
 	}
 
 	/**
-	 * @param item to set on the map
+	 * @param chest the chest to set
 	 */
-	public void setItem(Item item) {
-		this.item = item;
+	public void setChest(Chest chest) {
+		this.chest = chest;
 	}
 }

@@ -109,8 +109,12 @@ public class CampaignEditor {
 	 * @param campaign selected campaign
 	 */
 	public void addMap(Campaign campaign){
+		System.out.println("Enter your index to add map : ");
+		String mapIndexStr = scanner.nextLine();
 		System.out.println("Enter your map Name to add into Campaign: ");
 		String mapName = scanner.nextLine();
+		
+		int mapIndex =Integer.parseInt(mapIndexStr);
 		
 		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName(mapName);
 		if (list.isEmpty())
@@ -122,9 +126,14 @@ public class CampaignEditor {
 		
 		GameMap map = list.get(0).createModel();
 		
-		campaign.addMap(map);
-		campaign.show();
-		saveCampaignChanges(campaign,"add");
+		try {
+			campaign.addMap(mapIndex, map);
+			campaign.show();
+			saveCampaignChanges(campaign,"add");
+		} catch (Exception e) {
+			System.out.print("Wrong Index");
+		}
+
 	}
 	
 	/**

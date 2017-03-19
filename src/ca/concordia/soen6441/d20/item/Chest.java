@@ -25,16 +25,16 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	
 	protected List<Item> chestItems;
 	
-	public Chest(String name,String tag) {
+	public Chest(String name) {
 		init();
 		setName(name);
-		setTag(tag);
 		setChestItems(new ArrayList<Item>());
 		initializeChest();
 	}
 	
 	public void init(){
 		setChestEntity(new ChestEntity());
+		setTag("Chest");
 	}
 	
 	/**
@@ -43,6 +43,7 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	 */
 	public Chest(ChestEntity chestEntity){
 		setChestEntity(chestEntity);
+		setTag("Chest");
 		chestItems = new ArrayList<Item>();
 		for (ItemEntity item : chestEntity.getChestItems())
 			addItem(item.createItemModel(), false);
