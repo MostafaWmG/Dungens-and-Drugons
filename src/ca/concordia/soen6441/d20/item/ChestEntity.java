@@ -44,6 +44,7 @@ public class ChestEntity extends GameObjectEntity implements Serializable{
 	private List <ItemEntity> chestItems;
 
 	public ChestEntity() {
+		super();
 		chestItems = new ArrayList<ItemEntity>();
 	}
 	

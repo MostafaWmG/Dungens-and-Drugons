@@ -1,6 +1,9 @@
 package ca.concordia.soen6441.d20.item;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ca.concordia.soen6441.d20.fighter.Fighter;
@@ -89,8 +92,12 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	
 
 	public void removeFromChest(Item item,int index){
-		getChestItems().set(index,new Item(item.getName()+index+17, ItemEnum.HELMET) );
-	    getChestEntity().getChestItems().set(index,new Item(item.getName()+index+17, ItemEnum.HELMET).getItemEntity());
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Date dateobj = new Date();
+		Item itemTmp = new Item(item.getName()+df.format(dateobj)+dateobj+17+"Chest", ItemEnum.HELMET);
+		getChestEntity().getChestItems().set(index,itemTmp.getItemEntity());
+		getChestItems().set(index,itemTmp);
+	    
 	}
 	
 	/**

@@ -1,6 +1,9 @@
 package ca.concordia.soen6441.d20.fighter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import ca.concordia.soen6441.d20.ability.Ability;
@@ -180,7 +183,9 @@ public class Fighter extends GameObject {
 	public void removeItem(Item item){
 		
 		if(hasItem(item.getItemEnum())){
-			Item tmp = new Item(getName()+item.getItemEnum().getValue()+"dontduplicate", item.getItemEnum());
+			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+			Date dateobj = new Date();
+			Item tmp = new Item(getName()+item.getItemEnum().getValue()+df.format(dateobj)+"dontduplicate", item.getItemEnum());
 			getWearItems().set(item.getItemEnum().getValue(), tmp);		
 			getCharacterEntity().getWearItems().set(item.getItemEnum().getValue(), tmp.getItemEntity());
 			wearItem(item, -1 * item.getEnchantmentPoint());
@@ -667,7 +672,9 @@ public class Fighter extends GameObject {
 	 * @param index selected item at the index to be removed.
 	 */
 	public void removeBackPack(int index){
-		getBackPack().add(index,new Item(index+7+"", ItemEnum.HELMET));
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Date dateobj = new Date();
+		getBackPack().add(index,new Item(index+7+df.format(dateobj)+"", ItemEnum.HELMET));
 		setChanged();
 		notifyObservers(this);
 	}
@@ -710,12 +717,13 @@ public class Fighter extends GameObject {
 				return false;
 			}
 		}
-
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Date dateobj = new Date();
 		removeItem(itemWear);
 		putOnItem(itemBp);
 		getBackPack().remove(itemBp);
 		// messy code need to be reFactored!!!
-	    getCharacterEntity().getBackpack().set(slot, new Item(itemBp.getName()+slot+7+"dontduplicate", ItemEnum.HELMET).getItemEntity());
+	    getCharacterEntity().getBackpack().set(slot, new Item(itemBp.getName()+slot+df.format(dateobj)+7+"dontduplicate", ItemEnum.HELMET).getItemEntity());
 		ArrayList<Item> backPack = (ArrayList<Item>) getBackPack();
 		backPack.trimToSize();
 		addBackPack(itemWear);
@@ -737,10 +745,12 @@ public class Fighter extends GameObject {
 			System.out.println("Character can't wore the same model of item");
 			return false;
 		}
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Date dateobj = new Date();
 		putOnItem(itemBp);
 		getBackPack().remove(itemBp);
 		// messy code need to be reFactored!!!
-	    getCharacterEntity().getBackpack().set(slot, new Item(itemBp.getName()+slot+7+"dontduplicate", ItemEnum.HELMET).getItemEntity());
+	    getCharacterEntity().getBackpack().set(slot, new Item(itemBp.getName()+df.format(dateobj)+slot+7+"dontduplicate", ItemEnum.HELMET).getItemEntity());
 		ArrayList<Item> backPack = (ArrayList<Item>) getBackPack();
 		backPack.trimToSize();
 		addBackPack(new Item(itemBp.getName()+9+7+"dontduplicate", ItemEnum.HELMET));
