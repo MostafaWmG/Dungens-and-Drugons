@@ -1,5 +1,7 @@
 package ca.concordia.soen6441.d20.item;
 
+
+
 import ca.concordia.soen6441.d20.ability.AbilityEnum;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
@@ -138,8 +140,10 @@ public class Item extends GameObject implements ILevelUp{
 	public void update(int modifier) {
 		if(modifier >= 17){
 			setEnchantmentPoint(5);
+		}else if (modifier <=0){
+			setEnchantmentPoint(1);
 		}else {
-			setEnchantmentPoint((int)Math.ceil(modifier/4));
+			setEnchantmentPoint((int)Math.ceil(modifier/4) + 1);
 		}
 		
 	}
@@ -152,12 +156,30 @@ public class Item extends GameObject implements ILevelUp{
 	/**
 	 * show item
 	 */
-	public void show(){
-		if(getItemEntity().getAttributeType() !=null){
-		 System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint());
-		}else if (getItemEntity().getEnchantmentType() !=null){
-			System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint());
+	public String show(){
+		return show(true);
+	}
+	
+	/**
+	 * show item
+	 */
+	public String show(boolean consol){
+		String s = "";
+		if(consol){
+			if(getItemEntity().getAttributeType() !=null){
+				 System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint());
+				}else if (getItemEntity().getEnchantmentType() !=null){
+					System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint());
+				}	
+		}else{
+			if(getItemEntity().getAttributeType() !=null){
+				 s = s.concat("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint() + "\n"); 
+				}else if (getItemEntity().getEnchantmentType() !=null){
+				s = s.concat("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint()+"\n");
+				}
 		}
+		
+		return s;
 	}
 	
 	/**

@@ -93,8 +93,6 @@ public class FighterEditor {
 		}else {
 			System.out.println("Error null");
 		}
-
-		//		scanner.close();
 	}
 
 
@@ -120,20 +118,20 @@ public class FighterEditor {
 		// we need to create all this characters throw character factory;
 		if(hitButton.equals("i")){
 			editItem(character);
-		}else if (hitButton.equals("a")){
+		}else if (hitButton.equalsIgnoreCase("a")){
 				editAbility(character);
-		}else if (hitButton.equals("t")){
+		}else if (hitButton.equalsIgnoreCase("t")){
 			editAttribute(character);
-		}else if (hitButton.equals("o")){
+		}else if (hitButton.equalsIgnoreCase("o")){
 			addItem(character);
-		}else if (hitButton.equals("n")){
+		}else if (hitButton.equalsIgnoreCase("n")){
 			inventory(character);
 		}else{
 			System.out.println("Error");
 		}
 		//		Scanner.close();
 	}
-	
+
 	/**
 	 * this is a method for showing inventory and editing it
 	 * @param character selected character
@@ -168,7 +166,7 @@ public class FighterEditor {
 		System.out.println("Enter your Item Model from Character");
 		String itemModel = scanner.nextLine();
 		
-//		try {
+		try {
 			boolean reulst  = character.putWearItemIntoBackPack(character.getItem(ItemEnum.valueOf(itemModel.toUpperCase())));
 			if(reulst){
 				character.showInvetory();
@@ -177,9 +175,9 @@ public class FighterEditor {
 			}
 
 			saveCharacterChanges(character, "inventory");
-//		} catch (Exception e) {
-//			System.out.println("Wrong Info");
-//		}
+		} catch (Exception e) {
+			System.out.println("Wrong Info");
+		}
 	}
 	
 	/**
@@ -190,7 +188,7 @@ public class FighterEditor {
 		System.out.println("Enter Slot Number Of Item In BackPack You Want To Wear: ");
 		String itemModelString = scanner.nextLine();
 		
-//		try {
+		try {
 			int itemModel = Integer.parseInt(itemModelString);
 			boolean result =character.putBackPackIntoWearList(character.getBackPack().get(itemModel),itemModel);
 			if(result){
@@ -200,9 +198,9 @@ public class FighterEditor {
 			}
 
 			saveCharacterChanges(character, "inventory");
-//		} catch (Exception e) {
-//			System.out.println("Wrong Info");
-//		}
+		} catch (Exception e) {
+			System.out.println("Wrong Info");
+		}
 	}
 	
 	/**
@@ -252,7 +250,6 @@ public class FighterEditor {
 		String hitButton = scanner.nextLine();
 		
 		if(hitButton.equals("c")){
-//			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
 			boolean result = character.putOnItem(item);
 			if(!result){
 				character.showInvetory();
@@ -261,14 +258,12 @@ public class FighterEditor {
 			}
 			saveCharacterChanges(character, "inventory");
 		}else if (hitButton.equals("b")){
-//			Item item = new Item(itemLoaded,ItemEnum.BELT,AbilityEnum.STRENGTH,+4);
-//			boolean result = character.addBackPack(item);
-			character.addBackPack(item);
-//			if(result){
+			boolean result = character.addBackPack(item);
+			if(result){
 				character.showInvetory();
 				character.showAbilities();
 				character.showAttributes();
-//			}
+			}
 			saveCharacterChanges(character, "inventory");
 		}else{
 			System.out.println("Error");
@@ -294,9 +289,9 @@ public class FighterEditor {
 			System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
 			String change = scanner.nextLine();
 			if(change.equals("p")){
-				changeItemPoint(character,itemEnum);
+				changeItemPoint(character,character.getItem(itemEnum));
 			}else if (change.equals("t")){
-				changeItemType(character,itemEnum);
+				changeItemType(character,character.getItem(itemEnum));
 			}else{
 				System.out.println("Error");
 			}
@@ -308,7 +303,7 @@ public class FighterEditor {
 	 * @param character character 
 	 * @param itemEnum	item that is changing
 	 */
-	public void changeItemType(Fighter character,ItemEnum itemEnum){
+	public void changeItemType(Fighter character,Item item){
 		boolean enumChecker = false;
 		
 		System.out.println("Enter new item type : ");
@@ -316,27 +311,24 @@ public class FighterEditor {
 		
 		try {
 			AbilityEnum.valueOf(itemTypeString.toUpperCase());
-//			System.out.println("phase1: " +enumChecker);
 		} catch (IllegalArgumentException e) {
 			enumChecker = true;
-//			System.out.println("phase2: "+ enumChecker);
 		}
 		
 		try {
 			//ability
 			if(!enumChecker){
-				Item newItem = new Item(character.getItem(itemEnum));
-				character.removeItem(character.getItem(itemEnum));
-				if(newItem.getEnchantmentType() == null){
-					newItem.setAttributeType(null);
-					newItem.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+				character.removeItem(item);
+				if(item.getEnchantmentType() == null){
+					item.setAttributeType(null);
+					item.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
 				}else {
-					newItem.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
+					item.setEnchantmentType(AbilityEnum.valueOf(itemTypeString.toUpperCase()));
 				}
 				
-				if(newItem.validate(newItem)){
-					character.putOnItem(newItem);
-					character.getItem(itemEnum).show();
+				if(item.validate(item)){
+					character.putOnItem(item);
+					character.getItem(item.getItemEnum()).show();
 					character.showAbilities();
 					character.showAttributes();
 					saveCharacterChanges(character, "Item");
@@ -345,18 +337,17 @@ public class FighterEditor {
 				}
 
 			}else if(enumChecker){
-				Item newItem = new Item(character.getItem(itemEnum));
-				character.removeItem(character.getItem(itemEnum));
-				if(newItem.getAttributeType() == null){
-					newItem.setEnchantmentType(null);
-					newItem.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
+				character.removeItem(item);
+				if(item.getAttributeType() == null){
+					item.setEnchantmentType(null);
+					item.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
 				}else {
-					newItem.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
+					item.setAttributeType(AttributeEnum.valueOf(itemTypeString.toUpperCase()));
 				}
 				
-				if(newItem.validate(newItem)){
-					character.putOnItem(newItem);
-					character.getItem(itemEnum).show();
+				if(item.validate(item)){
+					character.putOnItem(item);
+					character.getItem(item.getItemEnum()).show();
 					character.showAbilities();
 					character.showAttributes();
 					saveCharacterChanges(character, "Item");
@@ -375,20 +366,24 @@ public class FighterEditor {
 	 * @param character character
 	 * @param itemEnum item that is changing
 	 */
-	public void changeItemPoint(Fighter character,ItemEnum itemEnum){
+	public void changeItemPoint(Fighter character,Item item){
 		System.out.println("Enter number to change Point:");
 
 
 		String number = scanner.nextLine();
 		int numberScore = Integer.parseInt(number);
-		Item newItem = new Item(character.getItem(itemEnum));
-		newItem.setEnchantmentPoint(numberScore);
-		character.removeItem(character.getItem(itemEnum));
-		character.putOnItem(newItem);
-		character.getItem(itemEnum).show();
-		//test only
-		character.showAbilities();
-		saveCharacterChanges(character, "Item");
+
+		if(numberScore <=5 && numberScore >= 1){
+			item.show();
+			character.removeItem(item);
+			item.setEnchantmentPoint(numberScore);
+			character.putOnItem(item);
+			character.getItem(item.getItemEnum()).show();
+			saveCharacterChanges(character, "Item");
+		}else{
+			System.out.println("Please Enter number between 1 t0 5!!");
+			changeItemPoint(character,item);
+		}
 
 	}
 	
@@ -432,7 +427,6 @@ public class FighterEditor {
 		String leveCheck = "levelLevel";
 		
 		character.showAttributes();
-		System.out.println("Level: " + character.getLevel());
 		System.out.println("Enter Attribute Name:");
 		String attributeName = scanner.nextLine();
 		
@@ -497,8 +491,10 @@ public class FighterEditor {
 				hitPoint.showPoint();
 				break;
 			case 4:
+				character.levelUp(numberScore - character.getLevel(),true);
 				character.setLevel(numberScore);
-				System.out.println("Level :" + character.getLevel());
+				character.show();
+				character.showInvetory();
 				break;
 			default:
 				break;
