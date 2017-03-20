@@ -196,6 +196,7 @@ public class Fighter extends GameObject {
 		}
 		setChanged();
 		notifyObservers(this);
+
 	}
 	
 	/**
@@ -289,7 +290,7 @@ public class Fighter extends GameObject {
 	 * print all statistics of the characters
 	 */
 	public String showAbilities(boolean consolEn){
-		if(consolEn);
+		if(consolEn)
 			System.out.println("<<<ABILITIES>>>");
 		String s = "<<<ABILITIES>>>"+ "\n";
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){

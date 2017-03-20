@@ -1,7 +1,5 @@
 package ca.concordia.soen6441.d20.gamePlay;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,10 +13,10 @@ import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Chest;
-import ca.concordia.soen6441.d20.item.IRoot;
 import ca.concordia.soen6441.view.map.GameView;
+import ca.concordia.soen6441.view.map.viewElement.ViewExchange;
 
-public class Game implements KeyListener,Runnable {
+public class Game implements Runnable {
 	private Campaign campaign;
 	private Fighter fighter;
 	private List<Fighter> enemies;
@@ -42,7 +40,7 @@ public class Game implements KeyListener,Runnable {
 	}
 	
 	public void initializeAndShow(){
-		map = getCampaign().getMaps().get(0);
+		setMap(getCampaign().getMaps().get(0));
 		
 		System.out.println("   ");
 		
@@ -74,16 +72,16 @@ public class Game implements KeyListener,Runnable {
 				}
 				
 				System.out.print(" ");
-				if(j == map.getWidth() - 1 ){
+				if(j == getMap().getWidth() - 1 ){
 					System.out.println("");
 				}
 			}
 		}
 		
-		GameView gameView =new GameView(map.getHeight(),map.getWidth(),this);
+		GameView gameView =new GameView(getMap().getHeight(),getMap().getWidth(),this);
 		adaptToCharacter();
-		map.addObserver(gameView);
-		gameView.load(map,getFighter());
+		getMap().addObserver(gameView);
+		gameView.load(getMap(),getFighter());
 	}
 	
 	public void adaptToCharacter(){
@@ -102,8 +100,10 @@ public class Game implements KeyListener,Runnable {
 		}
 	}
 	
-	public void root(IRoot root){
-		
+	public void createViewExchange(Fighter exchangeFighter,Fighter fighter){
+		ViewExchange viewExchange = new ViewExchange(fighter,exchangeFighter);
+		exchangeFighter.addObserver(viewExchange);
+		fighter.addObserver(viewExchange);
 	}
 	/**
 	 * @return the fighter
@@ -134,14 +134,14 @@ public class Game implements KeyListener,Runnable {
 	}
 
 	/**
-	 * @return the entery
+	 * @return the entry
 	 */
 	public Entery getEntery() {
 		return entery;
 	}
 
 	/**
-	 * @param entery the entery to set
+	 * @param entery the entry to set
 	 */
 	public void setEntery(Entery entery) {
 		this.entery = entery;
@@ -215,24 +215,6 @@ public class Game implements KeyListener,Runnable {
 	 */
 	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("keyID: " +e.getID());
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**

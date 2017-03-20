@@ -98,7 +98,6 @@ public class Main extends JFrame implements ActionListener{
 			if(e.getActionCommand().equals("MapEditor")){
 				try {
 
-					this.setVisible(false);
 					String row = JOptionPane.showInputDialog(getContentPane(), "EnterRow", "Row", HEIGHT);
 					String column = JOptionPane.showInputDialog(getContentPane(), "EnterColumn", "column", WIDTH);
 

@@ -84,7 +84,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 		images = new ImageIcon[8];
 		//enable absolute positioning mode 
 		setLayout(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 //		setSize(row,column);
 		
 		//setting up location

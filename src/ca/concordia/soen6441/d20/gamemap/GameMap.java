@@ -279,8 +279,6 @@ public class GameMap extends Observable{
 		if(! moveCanBeDone(originX, originY, destinationX, destinationY)) return false;
 		Location origin = new Location(originX, originY);
 		Location destination = new Location(destinationX, destinationY);
-//		this.field[destinationY][destinationX] = this.field[originY][originX];
-//		this.field[originY][originX] = EMPTY;
 		
 		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Ground")){
 			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
@@ -288,9 +286,7 @@ public class GameMap extends Observable{
 			game.setCurrentLocation(destination);
 			setChanged();
 			notifyObservers(this);
-		}
-		
-		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Chest")){
+		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Chest")){
 			Chest chest = (Chest)getGameObjectInstanceAtLocation(destination).getGameObject();
 			chest.putRootedIntoBackPack((Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
 			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
@@ -298,16 +294,15 @@ public class GameMap extends Observable{
 			game.setCurrentLocation(destination);
 			setChanged();
 			notifyObservers(this);
+		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Player")){
+			game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+//			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
+//			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
+//			game.setCurrentLocation(destination);
+			setChanged();
+			notifyObservers(this);
 		}
 		return true;
-//		GameObjectInstance instance = this.elements.remove(new Location(originX, originY));
-//		if(instance != null)
-//		{
-//			Location location = new Location(destinationX, destinationY);
-//			setGameObjectInstanceAtLocation(location, instance);
-//		}
-//		else
-//			throw new NullPointerException("I cannot find the game object in elements");
 
 	}
 	/**
