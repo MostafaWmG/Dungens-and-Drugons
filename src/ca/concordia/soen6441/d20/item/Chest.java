@@ -182,22 +182,22 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	}
 
 	@Override
-	public void putRootedIntoBackPack(List<Item> itemsR,Fighter fighter){
-		for(int i = 0 ; i < CHEST_IS_FULL ; i ++){
+	public void putRootedIntoBackPack(Fighter fighter){
+		for(int i = 0 ; i < CHEST_ITEM_MAX_SIZE ; i ++){
 			Item refItem = getChestItems().get(i);
-			
 			if(!isNullItem(refItem)){
-				if(fighter.addBackPack(refItem))
-					removeFromChest(getChestItems().get(i),i);	
+				if(fighter.addBackPack(refItem)){
+					removeFromChest(getChestItems().get(i),i);
+				}
 			}	
 		}
 	}
 
 	public boolean isNullItem(Item item){
 		if(item.getAttributeType() == null && item.getEnchantmentType() == null){
-			return false;
+			return true;
 		}else{
-		return true;
+		return false;
 		}
 	}
 }

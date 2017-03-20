@@ -16,6 +16,8 @@ import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamePlay.Game;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
+import ca.concordia.soen6441.d20.item.Chest;
+import ca.concordia.soen6441.view.map.viewElement.ViewChest;
 import ca.concordia.soen6441.view.map.viewElement.ViewExit;
 import ca.concordia.soen6441.view.map.viewElement.ViewFighterEnemy;
 import ca.concordia.soen6441.view.map.viewElement.ViewFighterPlayer;
@@ -128,10 +130,9 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Player")){
 					viewElements[i][j]= new ViewFighterPlayer("Player",(Fighter)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject(),this,false);
 					setButton(i, j);					
-				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Item")){
-					viewElements[i][j].setTag("Item");
-					// TODO change int to chest 
-//					viewElements[i][j].setItem((Item)(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject()));
+				}else if (map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Chest")){
+					viewElements[i][j]= new ViewChest("Chest",(Chest)map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject());
+					setButton(i, j);	
 				}
 			}
 		}

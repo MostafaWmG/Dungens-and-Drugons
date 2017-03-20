@@ -13,7 +13,10 @@ import java.util.Set;
 
 
 
+
+
 import ca.concordia.soen6441.d20.common.Location;
+import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamePlay.Game;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.Exit;
@@ -23,6 +26,7 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstanceEntity;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
+import ca.concordia.soen6441.d20.item.Chest;
 
 /** 
  * this class represents a Map where different game element can be located
@@ -281,9 +285,16 @@ public class GameMap extends Observable{
 		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Ground")){
 			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
 			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
-			System.out.println("character moved");
-			System.out.println("dest: "+getGameObjectInstanceAtLocation(destination).getGameObject().getTag());
-			System.out.println("origin:" +getGameObjectInstanceAtLocation(origin).getGameObject().getTag());
+			game.setCurrentLocation(destination);
+			setChanged();
+			notifyObservers(this);
+		}
+		
+		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Chest")){
+			Chest chest = (Chest)getGameObjectInstanceAtLocation(destination).getGameObject();
+			chest.putRootedIntoBackPack((Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
+			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
 			game.setCurrentLocation(destination);
 			setChanged();
 			notifyObservers(this);
