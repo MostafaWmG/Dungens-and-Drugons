@@ -17,7 +17,6 @@ public abstract class GameObject extends Observable {
 	 * current selected field. Note that it is not stored in database.
 	 */
 	private GameMap field;
-	//TODO Do we really need tag?
 	private String tag ;
 	
 	/**

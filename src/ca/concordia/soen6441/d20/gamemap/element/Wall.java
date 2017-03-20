@@ -18,7 +18,6 @@ public class Wall extends GameObject {
 	public Wall(String name){		
 		initEmptyWallEntity();
 		setName(name);
-//		setLocation(new Location(0, 0));
 	}
 	
 	/**
@@ -52,7 +51,6 @@ public class Wall extends GameObject {
 	 */
 	@Override
 	public GameObjectEntity getEntity() {
-		// TODO Auto-generated method stub
 		return wallEntity;
 	}
 

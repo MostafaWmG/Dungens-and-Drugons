@@ -19,7 +19,6 @@ public class Entery extends GameObject{
 		setEnteryEntity(new EnteryEntity());
 		init();
 		setName(name);
-//		setLocation(new Location(0, 0));
 	}
 	
 	/**
@@ -41,7 +40,6 @@ public class Entery extends GameObject{
 
 	@Override
 	public GameObjectEntity getEntity() {
-		// TODO Auto-generated method stub
 		return enteryEntity;
 	}
 

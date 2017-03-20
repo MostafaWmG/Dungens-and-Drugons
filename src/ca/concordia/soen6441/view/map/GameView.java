@@ -52,7 +52,6 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 		viewElements = new ViewObject[row][column];
 		//enable absolute positioning mode 
 		setLayout(null);
-//		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		//setting up location
 		dimension = Toolkit.getDefaultToolkit().getScreenSize(); 
@@ -86,7 +85,6 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 			
 			Dimension d = this.getSize();
 			button.setSize(d.width/constants.BUTTON_SIZE_SAVE + sizeWidthOffset , d.height/constants.BUTTON_SIZE_SAVE + sizeHeightOffset);
-//			System.out.println(button.getHeight() + ":" + button.HEIGHT + ":" + dimension.getWidth() + ":" + dimension.width);
 			button.setLocation( (dimension.width- button.getWidth() )/2  +( button.getWidth() * widthMultiple)+ locationWidthOffset,dimension.height - (button.getHeight() * 3)+ locationHeightOffset);
 			button.setActionCommand(name);
 			getContentPane().add(button);
@@ -196,7 +194,6 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getID() == 1001){
 			if(e.getActionCommand().equals("Inventory")){
 				setInventoryEn(true);

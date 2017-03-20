@@ -19,7 +19,6 @@ public class Exit extends GameObject{
 		setExitEntity(new ExitEntity());
 		init();
 		setName(name);
-//		setLocation(new Location(0,0));
 	}
 	/**
 	 * create exit object from the ExitEntity
@@ -41,7 +40,6 @@ public class Exit extends GameObject{
 	
 	@Override
 	public GameObjectEntity getEntity() {
-		// TODO Auto-generated method stub
 		return exitEntity;
 	}
 

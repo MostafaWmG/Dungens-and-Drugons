@@ -416,7 +416,6 @@ public class GameMap extends Observable{
 		Map<Location,String> mapCopy = new HashMap<Location, String>();
 		for(Map.Entry<Location,GameObjectInstance> mapElement : elements.entrySet()){
 			mapCopy.put(mapElement.getKey(), mapElement.getValue().getGameObject().getTag());
-//			System.out.println("map element : " +mapCopy.get(mapElement.getKey()).getTag()+" key: " + mapElement.getKey() );
 		}
 		
 		Set<Location> enterPointSet = enterDoor.keySet();

@@ -16,19 +16,6 @@ public class Ground extends GameObject {
 	 */
 	private GroundEntity groundEntity;
 
-//	/**
-//	 * Creates an object of the class using name and location
-//	 * @param name to set for the object
-//	 * @param location to set for the ground object
-//	 */
-//	public Ground(String name,Location location)
-//	{
-//		initEmptyEntity();
-//		setName(name);
-////		groundEntity.setLocation(location);
-//		
-//	}
-//	
 	/**
 	 * 
 	 * Creates an object of the class using given name
@@ -38,20 +25,7 @@ public class Ground extends GameObject {
 	{
 		initEmptyEntity();
 		setName(name);
-//		groundEntity.setLocation(new Location(0, 0));
 	}
-//	/**
-//	 * Creates an object of the class using given name and coordinates
-//	 * @param name to set for the object
-//	 * @param x to set for the x-coordinate of the ground object
-//	 * @param y set for the y-coordinate of the ground object
-//	 */
-//	public Ground(String name,int x, int y)
-//	{
-//		initEmptyEntity();
-//		setName(name);
-////		groundEntity.setLocation(new Location(x, y));
-//	}
 	
 	/**
 	 * We usually use this constructor for loading from database

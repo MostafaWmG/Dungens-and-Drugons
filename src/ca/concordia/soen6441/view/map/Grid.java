@@ -73,7 +73,7 @@ public class Grid extends JButton implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+
 		if(e.getID() == 1001){
 
 			setIcon(mapEditor.getCurrentPointer());

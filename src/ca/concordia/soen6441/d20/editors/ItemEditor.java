@@ -45,11 +45,9 @@ public class ItemEditor {
 		System.out.println("Please Enter Your Chest Name: ");
 		String itemName = scanner.nextLine();
 		
-		//load here
 		List<ChestEntity> list = DaoFactory.getChestDao().findByName(itemName);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
 			System.out.println("Invalid item name");
 			return;
 		}
@@ -75,8 +73,7 @@ public class ItemEditor {
 		List<ItemEntity> list = DaoFactory.getItemDao().findByName(itemName);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
-			System.out.println("Invalid item name");
+			System.out.println("Invalid Item name");
 			return;
 		}
 		Item item = (Item) list.get(0).createModel();
@@ -153,7 +150,6 @@ public class ItemEditor {
 		List<ItemEntity> list = DaoFactory.getItemDao().findByName(itemName);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
 			System.out.println("Invalid item name");
 			return;
 		}

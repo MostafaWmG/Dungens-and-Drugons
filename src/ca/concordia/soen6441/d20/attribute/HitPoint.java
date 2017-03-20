@@ -13,7 +13,6 @@ public class HitPoint implements ILevelUp {
 	 * This object is used to read hit point from data base or store hit point to database.
 	 */
 	private HitPointEntity hitPointEntity;
-	//TODO we have Dice both in HitPoint and Character
 	private Dice dice ;
 		
 	/**

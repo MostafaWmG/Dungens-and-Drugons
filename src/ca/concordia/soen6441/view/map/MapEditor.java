@@ -84,7 +84,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 		images = new ImageIcon[8];
 		//enable absolute positioning mode 
 		setLayout(null);
-//		setSize(row,column);
 		
 		//setting up location
 		dimension = Toolkit.getDefaultToolkit().getScreenSize(); 
@@ -185,7 +184,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getID() == 1001){
 			
 			if(e.getActionCommand().equals ("image0")){
@@ -196,7 +194,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 			if(e.getActionCommand().equals ("image1")){
 				setCurrentPointer((ImageIcon) iconButtons[1].getIcon());
 				setTag("Enemy");
-//				setTag(getCharacter().getTag());
 			}
 
 			if(e.getActionCommand().equals ("image2")){
@@ -260,8 +257,7 @@ public class MapEditor  extends JFrame implements ActionListener{
 		List<FighterEntity> list = DaoFactory.getFighterDao().findByName(name);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
-			System.out.println("Invalid Character name");
+			System.out.println("Invalid Fighter name");
 			return;
 		}
 		Fighter character = (Fighter) list.get(0).createModel();
@@ -281,7 +277,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 		List<ChestEntity> list = DaoFactory.getChestDao().findByName(name);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
 			System.out.println("Invalid Item name");
 			return;
 		}
@@ -299,7 +294,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){	
-//				System.out.println("i:"+ i + " j: " +j+ " : "+ viewElements[i][j]);
 				if(viewElements[i][j].getTag().equals("Ground")){
 					Location location = new Location(j, i);
 					map.setGameObjectInstanceAtLocation(location, new GameObjectInstance(new Ground(mapName+i+j), map));
@@ -350,18 +344,11 @@ public class MapEditor  extends JFrame implements ActionListener{
 		List<GameMapEntity> list = DaoFactory.getGameMapDao().findByName(fileName);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
 			System.out.println("Invalid map name");
 			return;
 		}
 		GameMap map = list.get(0).createModel();
 		
-//		System.out.println("width : "+ map.getWidth() + "height : " + map.getHeight());
-//		for(int i = 0 ; i < map.getHeight(); i ++){
-//			for( int j = 0 ; j < map.getWidth(); j ++){
-//				System.out.println("elementi: "+i+" elementj: "+j+" GameObject: " + map.getGameObjectAtLocation(new Location(j,i)).getTag());
-//			}
-//		}
 		column = map.getWidth();
 		row = map.getHeight();
 		viewElements = new Grid[row][column];
@@ -369,7 +356,6 @@ public class MapEditor  extends JFrame implements ActionListener{
 
 		for(int i = 0; i < row ; i++){
 			for(int j = 0; j < column ; j++){
-//				System.out.println(map.getGameObjectAtLocation(new Location(j,i)).getTag());
 				if(map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject().getTag().equals("Ground")){
 					viewElements[i][j].setTag("Ground");
 					viewElements[i][j].iconHandler();

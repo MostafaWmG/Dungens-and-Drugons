@@ -153,7 +153,6 @@ public class Fighter extends GameObject {
 	}
 	
 	// need to  re factor
-	//TODO Is there any part of this function related to persistence?
 	/**
 	 * this method updates the character statistics that character gains by wearing or removing the item
 	 * @param item the item that character wears
@@ -192,7 +191,7 @@ public class Fighter extends GameObject {
 			setChanged();
 			notifyObservers(this);
 		}else {
-//			 System.out.println("Character dont have this item");
+
 		}
 		setChanged();
 		notifyObservers(this);
@@ -233,9 +232,6 @@ public class Fighter extends GameObject {
 			
 			roll = 0 ;
 			roll = dice.roll6() + dice.roll6() + dice.roll6() ;
-			
-//			System.out.println("character ability : " + AbilityEnum.values()[i] + " ,Score :  " + roll + " ,modifier : " + (int)Math.floor( (roll - 10) /2 ));
-			// To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down).
 			addAbility(new Ability(AbilityEnum.values()[i],roll,(int)Math.floor( (roll - 10) /2 )) );
 		}
 		

@@ -107,15 +107,13 @@ public class FighterEditor {
 		List<FighterEntity> list = DaoFactory.getFighterDao().findByName(characterLoaded);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
-			System.out.println("Invalid map name");
+			System.out.println("Invalid Fighter name");
 			return;
 		}
 		Fighter character = (Fighter) list.get(0).createModel();
 		System.out.println("Edit WornItems :(Type i) , Edit Abilities :(Type a) , Edit Attributes: (Type t) , Inventory:(Type: n)");
 		String hitButton = scanner.nextLine();
 	
-		// we need to create all this characters throw character factory;
 		if(hitButton.equals("i")){
 			editItem(character);
 		}else if (hitButton.equalsIgnoreCase("a")){
@@ -129,7 +127,6 @@ public class FighterEditor {
 		}else{
 			System.out.println("Error");
 		}
-		//		Scanner.close();
 	}
 
 	/**

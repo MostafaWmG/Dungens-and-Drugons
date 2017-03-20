@@ -42,8 +42,7 @@ public class StartGameUserInterFace {
 		List<FighterEntity> list = DaoFactory.getFighterDao().findByName(characterLoaded);
 		if (list.isEmpty())
 		{
-			//TODO use appropriate procedure
-			System.out.println("Invalid character name");
+			System.out.println("Invalid Fighter name");
 			return null;
 		}
 		return (Fighter) list.get(0).createModel();	
