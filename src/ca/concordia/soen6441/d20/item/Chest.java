@@ -105,9 +105,9 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	 * chest will add this item.
 	 * @param item which is going to be wear.
 	 */
-	public void addItem(Item item) {
+	public boolean addItem(Item item) {
 		
-		addItem(item, true);
+		return addItem(item, true);
 	}
 	
 	/**
@@ -115,14 +115,14 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	 * @param item which is going to be add.
 	 * @param saveEntity true if we want to save this items for chest on database
 	 */
-	private void addItem(Item item, boolean saveEntity)
+	private boolean addItem(Item item, boolean saveEntity)
 	{
 		if(getChestItems().size() >= CHEST_ITEM_MAX_SIZE){
 			
 			int index = findEmptyPositionInChest();
 			
 			if(index == -1)
-				return;
+				return false;
 			
 			getChestItems().set(index, item);
 			if (saveEntity)
@@ -139,6 +139,7 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 					getChestEntity().getChestItems().add(item.getItemEntity());
 			}
 		}
+		return true;
 	}
 	
 	/**

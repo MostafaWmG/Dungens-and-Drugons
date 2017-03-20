@@ -239,15 +239,25 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 		System.out.println("OBSERVER WORKS FINE");
 		GameMap gMap = (GameMap)o; 
 		
-		removeElement(getMainCharacterLocation().getY(),getMainCharacterLocation().getX());
-		viewElements[getMainCharacterLocation().getY()][getMainCharacterLocation().getX()] = new ViewGround("Ground");
-		setButton(getMainCharacterLocation().getY(), getMainCharacterLocation().getX());
-		
-		removeElement(game.getCurrentLocation().getY(),game.getCurrentLocation().getX());
-		viewElements[game.getCurrentLocation().getY()][game.getCurrentLocation().getX()] = new ViewFighterPlayer(gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject().getTag(),(Fighter) gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject(), this, true);
-		setButton(game.getCurrentLocation().getY(), game.getCurrentLocation().getX());
-		
-		setMainCharacterLocation(new Location(game.getCurrentLocation().getX(),game.getCurrentLocation().getY()));
+		if(gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject().getTag().equals("Chest")){
+			
+			removeElement(game.getCurrentLocation().getY(),game.getCurrentLocation().getX());
+			viewElements[game.getCurrentLocation().getY()][game.getCurrentLocation().getX()] = new ViewChest("Chest",(Chest)gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject());
+			setButton(game.getCurrentLocation().getY(), game.getCurrentLocation().getX());
+			
+			game.setCurrentLocation(new Location(getMainCharacterLocation().getY(),getMainCharacterLocation().getX()));
+		}else{
+			removeElement(getMainCharacterLocation().getY(),getMainCharacterLocation().getX());
+			viewElements[getMainCharacterLocation().getY()][getMainCharacterLocation().getX()] = new ViewGround("Ground");
+			setButton(getMainCharacterLocation().getY(), getMainCharacterLocation().getX());
+			
+			removeElement(game.getCurrentLocation().getY(),game.getCurrentLocation().getX());
+			viewElements[game.getCurrentLocation().getY()][game.getCurrentLocation().getX()] = new ViewFighterPlayer(gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject().getTag(),(Fighter) gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject(), this, true);
+			setButton(game.getCurrentLocation().getY(), game.getCurrentLocation().getX());
+			
+			setMainCharacterLocation(new Location(game.getCurrentLocation().getX(),game.getCurrentLocation().getY()));
+		}
+
 	}
 
 	/**

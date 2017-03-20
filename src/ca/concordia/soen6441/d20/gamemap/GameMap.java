@@ -1,12 +1,17 @@
 package ca.concordia.soen6441.d20.gamemap;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Set;
+
+
 
 
 
@@ -27,6 +32,7 @@ import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.gamemap.exceptions.MoveNotValidException;
 import ca.concordia.soen6441.d20.item.Chest;
+import ca.concordia.soen6441.d20.item.Item;
 
 /** 
  * this class represents a Map where different game element can be located
@@ -296,14 +302,37 @@ public class GameMap extends Observable{
 			notifyObservers(this);
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Player")){
 			game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
-//			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
-//			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
-//			game.setCurrentLocation(destination);
+			setChanged();
+			notifyObservers(this);
+		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Enemy")){
+			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+			Date dateobj = new Date();
+			Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
+			Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+			putFromFighterToChest(fighter,chest);
+			setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
+			game.setCurrentLocation(destination);
 			setChanged();
 			notifyObservers(this);
 		}
 		return true;
 
+	}
+	
+	private void putFromFighterToChest(Fighter fighter,Chest chest){
+		for(int i = 0 ; i < fighter.getWearItems().size() ; i++){
+			Item refItem = fighter.getWearItems().get(i);
+			if(!chest.isNullItem(refItem)){
+				chest.addItem(refItem);
+			}	
+		}
+		
+		for(int i = 0 ; i < fighter.getBackPack().size(); i++){
+			Item refItem = fighter.getBackPack().get(i);
+			if(!chest.isNullItem(refItem)){
+				chest.addItem(refItem);
+			}	
+		}
 	}
 	/**
 	 * 

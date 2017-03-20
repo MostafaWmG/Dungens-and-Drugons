@@ -247,9 +247,7 @@ public class Game implements Runnable {
 			
 			if(keyStr.equalsIgnoreCase("w") ){
 				System.out.println("w pressed ");
-				System.out.println("X:" + currentLocation.getX() + "Y:" + currentLocation.getY());
 				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() - 1 ,this)){
-					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
 				}else{
 					System.out.println("Cant move UP");
 				}
@@ -257,7 +255,6 @@ public class Game implements Runnable {
 			}else if (keyStr.equalsIgnoreCase("a")){
 				System.out.println("a pressed ");
 				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() - 1,currentLocation.getY() ,this)){
-					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
 				}else{
 					System.out.println("Cant move Left");
 				}
@@ -265,14 +262,12 @@ public class Game implements Runnable {
 			}else if (keyStr.equalsIgnoreCase("s")){
 				System.out.println("s pressed ");
 				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() + 1 ,this)){
-					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
 				}else{
 					System.out.println("Cant move Down");
 				}
 			}else if (keyStr.equalsIgnoreCase("d")){
 				System.out.println("d pressed ");
 				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() + 1 ,currentLocation.getY()  ,this)){
-					System.out.println("new X:" + currentLocation.getX() + "new Y:" + currentLocation.getY());
 				}else{
 					System.out.println("Cant move Right");
 				}
