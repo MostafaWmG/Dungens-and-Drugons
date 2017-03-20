@@ -614,7 +614,6 @@ public class Fighter extends GameObject {
 	 * @return empty slot
 	 */
 	public int findEmptyPositionInBackPack(){
-		System.out.println("index: " +getBackPack().size());
 		for (int i = 0 ; i < BACKPACK_SIZE; i ++ ){
 			if(getBackPack().get(i).getAttributeType() == null && getBackPack().get(i).getEnchantmentType() == null){
 				return i ;

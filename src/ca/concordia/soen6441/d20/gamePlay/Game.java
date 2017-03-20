@@ -28,19 +28,30 @@ public class Game implements Runnable {
 	private Location currentLocation;
 	private Scanner scanner;
 	private GameMap map;
+	private GameView gameView;
+	private int mapNumber;
+	private boolean runner;
 	
 	public Game(Campaign campaign, Fighter fighter) {
+		setRunner(true);
 		setCampaign(campaign);
 		setFighter(fighter);
 		setEnemies(new ArrayList<>());
 		setFriends(new ArrayList<>());
 		setChests(new ArrayList<>());
 		setWalls(new ArrayList<>());
+		setMapNumber(0);
 		initializeAndShow();
 	}
 	
 	public void initializeAndShow(){
-		setMap(getCampaign().getMaps().get(0));
+		if(getMapNumber() < getCampaign().getMaps().size()){
+			setMap(getCampaign().getMaps().get(getMapNumber()));
+		}
+		else{ 
+			finishGame();
+			return;
+		}
 		
 		System.out.println("   ");
 		
@@ -78,10 +89,15 @@ public class Game implements Runnable {
 			}
 		}
 		
-		GameView gameView =new GameView(getMap().getHeight(),getMap().getWidth(),this);
+		if(getGameView() !=null){
+			getGameView().removeGrid();
+		}else{
+			setGameView(new GameView(getMap().getHeight(),getMap().getWidth(),this));
+		}
+
 		adaptToCharacter();
-		getMap().addObserver(gameView);
-		gameView.load(getMap(),getFighter());
+		getMap().addObserver(getGameView());
+		getGameView().load(getMap(),getFighter());
 	}
 	
 	public void adaptToCharacter(){
@@ -104,6 +120,23 @@ public class Game implements Runnable {
 		ViewExchange viewExchange = new ViewExchange(fighter,exchangeFighter);
 		exchangeFighter.addObserver(viewExchange);
 		fighter.addObserver(viewExchange);
+	}
+	
+	public void reset(){
+		setMapNumber(getMapNumber()+1);
+		getFighter().levelUp(1,true);
+		initializeAndShow();
+	}
+	
+	private void terminate(){
+		setRunner(false);
+	}
+	
+	private void finishGame(){
+		System.out.print("Game Is finished");
+		getGameView().setVisible(false);
+		getGameView().dispose();
+		terminate();
 	}
 	/**
 	 * @return the fighter
@@ -236,7 +269,7 @@ public class Game implements Runnable {
 		
 		scanner  = new Scanner(System.in);
 		String keyStr;
-		while(true){
+		while(runner){
 			System.out.println("Please move the character: ");
 			keyStr = scanner.nextLine();
 			
@@ -291,6 +324,48 @@ public class Game implements Runnable {
 	 */
 	public void setMap(GameMap map) {
 		this.map = map;
+	}
+
+	/**
+	 * @return the gameView
+	 */
+	public GameView getGameView() {
+		return gameView;
+	}
+
+	/**
+	 * @param gameView the gameView to set
+	 */
+	public void setGameView(GameView gameView) {
+		this.gameView = gameView;
+	}
+
+	/**
+	 * @return the mapNumber
+	 */
+	public int getMapNumber() {
+		return mapNumber;
+	}
+
+	/**
+	 * @param mapNumber the mapNumber to set
+	 */
+	public void setMapNumber(int mapNumber) {
+		this.mapNumber = mapNumber;
+	}
+
+	/**
+	 * @return the runner
+	 */
+	public boolean isRunner() {
+		return runner;
+	}
+
+	/**
+	 * @param runner the runner to set
+	 */
+	public void setRunner(boolean runner) {
+		this.runner = runner;
 	}
 	
 }

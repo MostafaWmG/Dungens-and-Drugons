@@ -302,8 +302,6 @@ public class GameMap extends Observable{
 			notifyObservers(this);
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Player")){
 			game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
-			setChanged();
-			notifyObservers(this);
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Enemy")){
 			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 			Date dateobj = new Date();
@@ -314,6 +312,8 @@ public class GameMap extends Observable{
 			game.setCurrentLocation(destination);
 			setChanged();
 			notifyObservers(this);
+		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Exit")){
+			game.reset();
 		}
 		return true;
 
@@ -366,10 +366,6 @@ public class GameMap extends Observable{
 			return false;
 		}
 
-		
-//		if(this.field[originY][originX] == EMPTY) return false;
-//		
-//		if(this.field[destinationY][destinationX] != EMPTY) return false;
 		return true;
 	}
 	
@@ -546,19 +542,15 @@ public class GameMap extends Observable{
 			}else if (conditon == 1){
 				map.put(currentLocation, "Wall");
 				if(up){
-//					System.out.println("UP 1");
 					currentLocation.setY(finderUp.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(down){
-//					System.out.println("down 1");
 					currentLocation.setY(finderDown.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(right){
-//					System.out.println("right 1");
 					currentLocation.setX(finderRight.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if (left){
-//					System.out.println("left 1");
 					currentLocation.setX(finderLeft.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}
@@ -567,19 +559,15 @@ public class GameMap extends Observable{
 				conditionList.add( new Location(currentLocation.getX(), currentLocation.getY()));
 				map.put(currentLocation, "Condition");
 				if(up){
-//					System.out.println("UP");
 					currentLocation.setY(finderUp.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(down){
-//					System.out.println("Down");
 					currentLocation.setY(finderDown.getY());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if(right){
-//					System.out.println("right");
 					currentLocation.setX(finderRight.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}else if (left){
-//					System.out.println("left");
 					currentLocation.setX(finderLeft.getX());
 					return explore(finderUp, finderDown, finderRight, finderLeft, currentLocation, map,conditionList,valid);
 				}

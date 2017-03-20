@@ -236,7 +236,6 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("OBSERVER WORKS FINE");
 		GameMap gMap = (GameMap)o; 
 		
 		if(gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject().getTag().equals("Chest")){
