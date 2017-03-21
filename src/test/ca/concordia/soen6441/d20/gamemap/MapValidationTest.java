@@ -76,20 +76,15 @@ public class MapValidationTest {
 		assertTrue(!gameMap.mapValidator());
 	}
 	
-//	@Test
-//	public void mapValidatorMethodTest3(){
-//		assertTrue(gameMap.mapValidator());
-//	}
-//	
-//	@Test
-//	public void mapValidatorMethodTest4(){
-//		assertTrue(gameMap.mapValidator());
-//	}
-//	
-//	@Test
-//	public void mapValidatorMethodTest5(){
-//		assertTrue(gameMap.mapValidator());
-//	}
-	
+	@Test
+	public void mapValidatorMethodTest3(){
+		
+		for(int i = 0 ;  i < height ; i++){
+			Wall wall = new Wall("testWall");
+			GameObjectInstance wallInstnce = new GameObjectInstance(wall,gameMap);
+			gameMap.setGameObjectInstanceAtLocation(new Location(i,2),wallInstnce);
+		}
+		assertTrue(!gameMap.mapValidator());
+	}
 
 }

@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({MapValidationTest.class,
-			GameMapTest.class})
+			GameMapTest.class,GameMapValidatorTest.class})
 public class TestSuiteGameMap {
 
 }
