@@ -14,7 +14,6 @@ import ca.concordia.soen6441.d20.item.Item;
 /**
  * this an abstract class for creating character and items.
  * @author mostafa
- * @author alvaro
  */
 public abstract class FighterBuilder {
 	

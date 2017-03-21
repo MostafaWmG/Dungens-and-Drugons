@@ -11,6 +11,10 @@ import javax.swing.JTextArea;
 import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 
+/**
+ * implements the frame that shows the selected map object's characteristcs
+ *
+ */
 public class ViewCharacteristics extends JFrame implements Observer{
 	/**
 	 * 
@@ -20,6 +24,10 @@ public class ViewCharacteristics extends JFrame implements Observer{
 	private Constants constants;
 	private JTextArea jTextArea ;
 	
+	/**
+	 * constructor
+	 * @param fighter the fighter to show its characteristics
+	 */
 	@SuppressWarnings("static-access")
 	public ViewCharacteristics(Fighter fighter) {
 		setFighter(fighter);
@@ -38,7 +46,7 @@ public class ViewCharacteristics extends JFrame implements Observer{
 		jTextArea.insert(fighter.show(false),0);
 		setVisible(true);
 	}
-	
+
 	@SuppressWarnings("static-access")
 	public void initializeButton(JTextArea button ,String name , int sizeWidthOffset ,int sizeHeightOffset , int locationWidthOffset, int locationHeightOffset ,int heightMultiple){
 		

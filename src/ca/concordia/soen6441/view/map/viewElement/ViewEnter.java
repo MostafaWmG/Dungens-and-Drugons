@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 
+/**
+ * used to generate the enter door view (an icon to put in the map)
+ *
+ */
 public class ViewEnter extends ViewObject {
 	
 	/**

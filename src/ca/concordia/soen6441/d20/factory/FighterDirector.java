@@ -2,6 +2,10 @@ package ca.concordia.soen6441.d20.factory;
 
 import ca.concordia.soen6441.d20.fighter.Fighter;
 
+/**
+ * this class is in charge of creating the fighter using the fighter builder
+ *
+ */
 public class FighterDirector {
 	private FighterBuilder fighterBuilder;
 

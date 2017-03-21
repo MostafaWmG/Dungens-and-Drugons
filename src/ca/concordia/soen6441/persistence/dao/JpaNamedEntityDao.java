@@ -29,6 +29,9 @@ public class JpaNamedEntityDao<T, PK extends Serializable>
 		setAllQuery(em.createNamedQuery(allQueryName, type));
 	}
 
+	/**
+	 * find an object in the database by name
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findByName(String name) {		

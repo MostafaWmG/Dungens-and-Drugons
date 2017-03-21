@@ -25,7 +25,11 @@ import ca.concordia.soen6441.view.map.viewElement.ViewGround;
 import ca.concordia.soen6441.view.map.viewElement.ViewObject;
 import ca.concordia.soen6441.view.map.viewElement.ViewWall;
 
-
+/**
+ * game view deriving from JFrame. It is the view in the ModelViewComtroller pattern
+ * shows the game itself
+ *
+ */
 public class GameView  extends JFrame implements ActionListener,Observer{
 	
 	/**
@@ -44,6 +48,12 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 	private Game game;
 	private Location mainCharacterLocation;
 	
+	/**
+	 * constructor
+	 * @param row number of rows the map has
+	 * @param column number of columns the map has
+	 * @param game the object game which represents the game itself
+	 */
 	public GameView(int row , int column,Game game) {
 		//initializing
 		this.game = game;

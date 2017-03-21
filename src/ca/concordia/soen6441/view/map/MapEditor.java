@@ -31,7 +31,6 @@ import ca.concordia.soen6441.persistence.dao.DaoFactory;
  * @author wmg
  *
  */
-
 @SuppressWarnings("serial")
 public class MapEditor  extends JFrame implements ActionListener{
 

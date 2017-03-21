@@ -6,6 +6,10 @@ import javax.swing.ImageIcon;
 
 import ca.concordia.soen6441.d20.item.Chest;
 
+/**
+ * used to generate the chest's view (an icon to put in the map)
+ *
+ */
 public class ViewChest extends ViewObject {
 	
 	/**

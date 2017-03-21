@@ -20,6 +20,9 @@ public class NimbleFighterBuilder extends FighterBuilder{
 		getFighter().setTag(tag);
 	}
 
+	/**
+	 * set the defaoult abilities for the Nimble
+	 */
 	@Override
 	public void setCharacterAbility() {
 		List<Integer> numbers = getFighter().rollDice();

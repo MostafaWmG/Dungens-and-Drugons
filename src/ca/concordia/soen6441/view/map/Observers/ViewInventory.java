@@ -16,6 +16,10 @@ import ca.concordia.soen6441.constants.Constants;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 
+/**
+ * shows the inventory the character has
+ *
+ */
 public class ViewInventory extends JFrame implements Observer,ActionListener{
 	/**
 	 * 
@@ -25,6 +29,10 @@ public class ViewInventory extends JFrame implements Observer,ActionListener{
 	private Constants constants;
 	private JTextArea jTextArea ;
 	
+	/**
+	 * inventory view for the fighter
+	 * @param fighter object whose inventory will be shown
+	 */
 	@SuppressWarnings("static-access")
 	public ViewInventory(Fighter fighter) {
 		setFighter(fighter);
@@ -77,6 +85,10 @@ public class ViewInventory extends JFrame implements Observer,ActionListener{
 		button.setActionCommand(name);
 		getContentPane().add(button);
 	}
+	
+	/**
+	 * update all the observers
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		jTextArea.setText(null);
@@ -98,6 +110,9 @@ public class ViewInventory extends JFrame implements Observer,ActionListener{
 		this.fighter = fighter;
 	}
 
+	/**
+	 * method executed eveytime an action(click) is fired
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

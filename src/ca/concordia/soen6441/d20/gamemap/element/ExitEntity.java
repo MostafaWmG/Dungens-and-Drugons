@@ -8,7 +8,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class ExitEntity extends GameObjectEntity implements Serializable {
 
 	

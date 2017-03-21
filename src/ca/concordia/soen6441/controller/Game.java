@@ -16,22 +16,62 @@ import ca.concordia.soen6441.d20.item.Chest;
 import ca.concordia.soen6441.view.map.Observers.GameView;
 import ca.concordia.soen6441.view.map.viewElement.ViewExchange;
 
+/**
+ * this class implements all the game logic.
+ * This is the main class where the player can run the game and play
+ *
+ */
 public class Game implements Runnable {
+	/**
+	 * the campaing for this game
+	 */
 	private Campaign campaign;
+	/**
+	 * player playing the game
+	 */
 	private Fighter fighter;
+	/**
+	 * enemies in the game
+	 */
 	private List<Fighter> enemies;
+	/**
+	 * frien characters in the map
+	 */
 	private List<Fighter> friends;
+	/**
+	 * chest in the map
+	 */
 	private List<Chest> chests;
+	/**
+	 * wall in the map
+	 */
 	private List<Wall> walls;
+	/**
+	 * exit and enter door
+	 */
 	private Exit exit;
 	private Entery entery;
 	private Location currentLocation;
+	/**
+	 * object to read the player's actions
+	 */
 	private Scanner scanner;
+	/**
+	 * game map
+	 */
 	private GameMap map;
 	private GameView gameView;
 	private int mapNumber;
-	private boolean runner;
+	/**
+	 * check if the game is running, true, if it is not, or false if it is stopped 
+	 */
+	private volatile boolean runner;
 
+	/**
+	 * Constructs a game given the campaing and player
+	 * @param campaign campaign the fighter wants to get in
+	 * @param fighter the player
+	 */
 	public Game(Campaign campaign, Fighter fighter) {
 		setRunner(true);
 		setCampaign(campaign);
@@ -44,6 +84,12 @@ public class Game implements Runnable {
 		initializeAndShow();
 	}
 	
+	/**
+	 * create a game
+	 * @param campaign campaing the player wants to play
+	 * @param fighter the player
+	 * @param test if this is a test this parameter is true, false otherwise
+	 */
 	public Game(Campaign campaign, Fighter fighter,boolean test) {
 		setRunner(true);
 		setCampaign(campaign);
@@ -60,6 +106,10 @@ public class Game implements Runnable {
 		initializeAndShow(true);
 	}
 	
+	/**
+	 * initialize the map with the object saved
+	 * @param test parameter to know if this is a test or an actual game
+	 */
 	public void initializeAndShow(boolean test){
 		if(getMapNumber() < getCampaign().getMaps().size()){
 			setMap(getCampaign().getMaps().get(getMapNumber()));
@@ -118,6 +168,9 @@ public class Game implements Runnable {
 		}
 	}
 	
+	/**
+	 * adapt the map and elements in it to the player level
+	 */
 	public void adaptToCharacter(){
 		int level = getFighter().getLevel();
 		
@@ -134,6 +187,11 @@ public class Game implements Runnable {
 		}
 	}
 	
+	/**
+	 * create the view exchange
+	 * @param exchangeFighter
+	 * @param fighter
+	 */
 	public void createViewExchange(Fighter exchangeFighter,Fighter fighter){
 		ViewExchange viewExchange = new ViewExchange(fighter,exchangeFighter);
 		exchangeFighter.addObserver(viewExchange);
@@ -146,10 +204,16 @@ public class Game implements Runnable {
 		initializeAndShow();
 	}
 	
+	/**
+	 * terminate the run method
+	 */
 	public void terminate(){
 		setRunner(false);
 	}
 	
+	/**
+	 * finishes the game
+	 */
 	private void finishGame(){
 		System.out.print("Game Is finished");
 		getGameView().setVisible(false);

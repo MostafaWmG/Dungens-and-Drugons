@@ -9,7 +9,6 @@ import ca.concordia.soen6441.d20.ability.AbilityEnum;
 /**
  * This is a BullyFighterBuilder class for creating BullyFighter
  * @author wmg
- * @author alvaro
  */
 public class BullyFighterBuilder extends FighterBuilder {
 		

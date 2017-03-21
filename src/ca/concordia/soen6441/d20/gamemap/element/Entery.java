@@ -6,7 +6,6 @@ package ca.concordia.soen6441.d20.gamemap.element;
  * @author Saman Saadi
  *
  */
-
 public class Entery extends GameObject{
 	
 	private EnteryEntity enteryEntity;

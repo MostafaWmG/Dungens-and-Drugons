@@ -1,16 +1,16 @@
 package ca.concordia.soen6441.d20.gamemap.element;
 
-/**
- * This abstract class represents common features of game elements. Its subclasses are:
- * Character,Player,Wall,Ground,Exit and Entry.
- * @author Saman Saadi
- */
+
 
 import java.util.Observable;
 
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
-
+/**
+ * This abstract class represents common features of game elements. Its subclasses are:
+ * Character,Player,Wall,Ground,Exit and Entry.
+ * @author Saman Saadi
+ */
 public abstract class GameObject extends Observable {
 
 	/**

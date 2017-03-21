@@ -4,7 +4,7 @@ import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
 /**
- * 
+ * class that links a gameobject instance to the database
  * @author Saman Saadi
  *
  */

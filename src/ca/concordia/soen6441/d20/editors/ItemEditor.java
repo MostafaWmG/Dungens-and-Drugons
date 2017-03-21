@@ -18,6 +18,9 @@ import ca.concordia.soen6441.persistence.dao.DaoFactory;
  *
  */
 public class ItemEditor {
+	/**
+	 * read the input from the keyboard
+	 */
 	private Scanner scanner;
 
 	

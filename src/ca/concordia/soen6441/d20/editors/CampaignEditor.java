@@ -75,6 +75,10 @@ public class CampaignEditor {
 		}
 	}
 	
+	/**
+	 * remove a map from a campaing
+	 * @param campaign campaing which map will be removed
+	 */
 	private void removeMap(Campaign campaign){
 		campaign.show();
 		System.out.println("Enter your map index to remove from Campaign: ");

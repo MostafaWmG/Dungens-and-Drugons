@@ -9,7 +9,6 @@ import ca.concordia.soen6441.d20.item.ILevelUp;
  * @author 
  *
  */
-
 public class ArmorClass implements ILevelUp {
 	
 	/**

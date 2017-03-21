@@ -9,6 +9,10 @@ import ca.concordia.soen6441.view.map.Observers.GameView;
 import ca.concordia.soen6441.view.map.Observers.ViewCharacteristics;
 import ca.concordia.soen6441.view.map.Observers.ViewInventory;
 
+/**
+ * used to generate the fighter view (an icon to put in the map)
+ *
+ */
 public class ViewFighterPlayer extends ViewObject{
 
 	/**

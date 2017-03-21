@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * class parent to genetrate all the view (an icon to put in the map)
+ *
+ */
 public abstract class ViewObject extends JButton implements ActionListener {
 	
 	/**

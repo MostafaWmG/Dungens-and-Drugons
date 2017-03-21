@@ -15,6 +15,9 @@ public class StartGameUserInterFace {
 	private Campaign campaign;
 	private Fighter fighter;
 	
+	/**
+	 * by choosing the campaing and the character, it loads both from the file
+	 */
 	public StartGameUserInterFace(){
 
 		System.out.println("Start Game: ");
@@ -38,6 +41,11 @@ public class StartGameUserInterFace {
 		
 	}
 	
+	/**
+	 * load a character
+	 * @param characterLoaded name of the character to be loaded
+	 * @return
+	 */
 	private Fighter loadCharacter(String characterLoaded){
 		List<FighterEntity> list = DaoFactory.getFighterDao().findByName(characterLoaded);
 		if (list.isEmpty())
@@ -48,6 +56,11 @@ public class StartGameUserInterFace {
 		return (Fighter) list.get(0).createModel();	
 	}
 	
+	/**
+	 * load a  campaing
+	 * @param CampaignLoaded campaing's name to be loaded
+	 * @return
+	 */
 	private Campaign loadCampaign(String CampaignLoaded){
 		List<CampaignEntity> list = DaoFactory.getCampaignDao().findByName(CampaignLoaded);
 		if (list.isEmpty())

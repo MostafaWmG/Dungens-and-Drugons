@@ -5,6 +5,10 @@ import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 
+/**
+ * this class is in charge of creating Items using the Factory pattern
+ *
+ */
 public class ItemFactory {
 
 	/**

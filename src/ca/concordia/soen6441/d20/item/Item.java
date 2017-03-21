@@ -10,7 +10,6 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 /**
  * every new Item class represent an actual item . 
  * @author wmg
- * @author alvaro
  */
 public class Item extends GameObject implements ILevelUp{
 	
