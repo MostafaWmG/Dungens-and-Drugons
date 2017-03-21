@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 import ca.concordia.soen6441.d20.fighter.Fighter;
-import ca.concordia.soen6441.view.map.GameView;
+import ca.concordia.soen6441.view.map.Observers.GameView;
+import ca.concordia.soen6441.view.map.Observers.ViewCharacteristics;
+import ca.concordia.soen6441.view.map.Observers.ViewInventory;
 
 public class ViewFighterPlayer extends ViewObject{
 

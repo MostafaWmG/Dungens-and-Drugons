@@ -3,11 +3,11 @@ package ca.concordia.soen6441.d20.editors;
 import java.util.List;
 import java.util.Scanner;
 
+import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.campaign.Campaign;
 import ca.concordia.soen6441.d20.campaign.CampaignEntity;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.fighter.FighterEntity;
-import ca.concordia.soen6441.d20.gamePlay.Game;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 
 public class StartGameUserInterFace {

@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.d20.gamePlay;
+package ca.concordia.soen6441.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Chest;
-import ca.concordia.soen6441.view.map.GameView;
+import ca.concordia.soen6441.view.map.Observers.GameView;
 import ca.concordia.soen6441.view.map.viewElement.ViewExchange;
 
 public class Game implements Runnable {

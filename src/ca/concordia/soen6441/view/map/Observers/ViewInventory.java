@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.view.map.viewElement;
+package ca.concordia.soen6441.view.map.Observers;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

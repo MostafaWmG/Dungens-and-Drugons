@@ -1,4 +1,4 @@
-package ca.concordia.soen6441.view.map;
+package ca.concordia.soen6441.view.map.Observers;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -11,9 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import ca.concordia.soen6441.constants.Constants;
+import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-import ca.concordia.soen6441.d20.gamePlay.Game;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.item.Chest;
