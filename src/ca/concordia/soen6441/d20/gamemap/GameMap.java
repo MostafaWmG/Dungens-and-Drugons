@@ -253,10 +253,10 @@ public class GameMap extends Observable{
 	
 	/**
 	 * this method allows us to place a GameObject into the map
-	 * if the position is alredy used, no element is placed, 
-	 * the same hapens if the location is out the map boundaries.
+	 * if the position is already used, no element is placed, 
+	 * the same happens if the location is out the map boundaries.
 	 * @param instance game object instance to be added to the map
-	 * @param location locaton where the element must be placed
+	 * @param location location where the element must be placed
 	 * @param saveEntity true if we want to save the object to database
 	 */
 	private void place(GameObjectInstance instance, Location location, boolean saveEntity)
