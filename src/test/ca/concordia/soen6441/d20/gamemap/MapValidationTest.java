@@ -52,14 +52,18 @@ public class MapValidationTest {
 
 	}
 	
-	// this is a valid map
+	/**
+	 *  this is a valid map
+	 */
 	@Test
 	public void mapValidatorMethodTest(){
 		assertTrue(gameMap.mapValidator());
 	}
 	
 	
-	// this is not a valid map
+	/**
+	 * this is not a valid map
+	 */
 	@Test
 	public void mapValidatorMethodTest2(){
 		
