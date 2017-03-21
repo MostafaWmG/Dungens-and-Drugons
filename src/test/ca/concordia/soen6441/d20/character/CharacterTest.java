@@ -137,8 +137,6 @@ public class CharacterTest {
 		deleteFightersFromDB();
 		fighter1 = new Fighter("Enemy", fighter1Name);
 		fighter2 = new Fighter("Player", fighter2Name);
-		assertTrue(fighter1.getLocation().getX() == 0 && fighter1.getLocation().getY() == 7);
-		assertTrue(fighter2.getLocation().getX() == 17 && fighter2.getLocation().getY() == 3);
 		assertTrue(fighter1.getName() == fighter1Name);
 		assertTrue(fighter2.getName() == fighter2Name);
 		assertTrue(fighter1.getTag() == "Enemy");
@@ -155,11 +153,7 @@ public class CharacterTest {
 	public void testCharacterStringString() {
 		deleteFightersFromDB();
 		fighter1 = new Fighter("Enemy", fighter1Name);
-		fighter1.setLocation(new Location(0, 7));
 		fighter2 = new Fighter("Player", fighter2Name);
-		fighter2.setLocation(new Location(17, 3));
-		assertTrue(fighter1.getLocation().getX() == 0 && fighter1.getLocation().getY() == 7);
-		assertTrue(fighter2.getLocation().getX() == 17 && fighter2.getLocation().getY() == 3);
 		assertTrue(fighter1.getName() == fighter1Name);
 		assertTrue(fighter2.getName() == fighter2Name);
 		assertTrue(fighter1.getTag() == "Enemy");
@@ -180,15 +174,9 @@ public class CharacterTest {
 			testCharacterStringStringIntInt();
 		Fighter dbFighter1 = (Fighter) list1.get(0).createModel();
 		Fighter dbFighter2 = (Fighter) list2.get(0).createModel();
-		System.out.println(dbFighter1.getLocation());
-		System.out.println(fighter1.getLocation());
-		assertTrue(dbFighter1.getLocation().getX() == fighter1.getLocation().getX());
-		assertTrue(dbFighter1.getLocation().getY() == fighter1.getLocation().getY());
 		assertTrue(dbFighter1.getName() == fighter1Name);
 		assertTrue(dbFighter1.getTag() == "Enemy");
 		
-		assertTrue(dbFighter2.getLocation().getX() == fighter2.getLocation().getX());
-		assertTrue(dbFighter2.getLocation().getY() == fighter2.getLocation().getY());
 		assertTrue(dbFighter2.getName() == fighter2Name);
 		assertTrue(dbFighter2.getTag() == "Player");
 	}
