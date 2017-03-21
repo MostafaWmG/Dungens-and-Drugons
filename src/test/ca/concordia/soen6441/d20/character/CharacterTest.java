@@ -5,6 +5,7 @@ import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
@@ -18,12 +19,14 @@ import org.junit.Test;
 
 public class CharacterTest {
 	private Fighter characterWithInitialPosition;
+	private GameMap map;
 
 	@Before
 	public void setUp() throws Exception {
 		characterWithInitialPosition = new Fighter("tag","name");
-		characterWithInitialPosition.setField(new GameMap("mapName", 10, 5));
-		characterWithInitialPosition.getField().place(characterWithInitialPosition, characterWithInitialPosition.getLocation());
+		map = new GameMap("mapName", 10, 5);
+		characterWithInitialPosition.setField(map);
+		characterWithInitialPosition.getField().place(new GameObjectInstance(characterWithInitialPosition, map), new Location(0,0));
 	}
 
 	@Test
@@ -46,16 +49,6 @@ public class CharacterTest {
 	}
 
 
-	@Test
-	public void testMove() {
-		Location original = characterWithInitialPosition.getLocation();
-		Location expected = new Location(2, 2);
-		
-//		characterWithInitialPosition.move(2, 2);
-		
-		assertEquals(new Location(0, 0), original);
-		assertEquals(expected, characterWithInitialPosition.getLocation());
-	}
 
 	@Test
 	public void testHasItem() {

@@ -31,7 +31,7 @@ public class Game implements Runnable {
 	private GameView gameView;
 	private int mapNumber;
 	private boolean runner;
-	
+
 	public Game(Campaign campaign, Fighter fighter) {
 		setRunner(true);
 		setCampaign(campaign);
@@ -44,7 +44,23 @@ public class Game implements Runnable {
 		initializeAndShow();
 	}
 	
+	public Game(Campaign campaign, Fighter fighter,boolean test) {
+		setRunner(true);
+		setCampaign(campaign);
+		setFighter(fighter);
+		setEnemies(new ArrayList<>());
+		setFriends(new ArrayList<>());
+		setChests(new ArrayList<>());
+		setWalls(new ArrayList<>());
+		setMapNumber(0);
+		initializeAndShow(test);
+	}
+	
 	public void initializeAndShow(){
+		initializeAndShow(true);
+	}
+	
+	public void initializeAndShow(boolean test){
 		if(getMapNumber() < getCampaign().getMaps().size()){
 			setMap(getCampaign().getMaps().get(getMapNumber()));
 		}
@@ -89,15 +105,17 @@ public class Game implements Runnable {
 			}
 		}
 		
-		if(getGameView() !=null){
-			getGameView().removeGrid();
-		}else{
-			setGameView(new GameView(getMap().getHeight(),getMap().getWidth(),this));
-		}
+		if(test){
+			if(getGameView() !=null){
+				getGameView().removeGrid();
+			}else{
+				setGameView(new GameView(getMap().getHeight(),getMap().getWidth(),this));
+			}
 
-		adaptToCharacter();
-		getMap().addObserver(getGameView());
-		getGameView().load(getMap(),getFighter());
+			adaptToCharacter();
+			getMap().addObserver(getGameView());
+			getGameView().load(getMap(),getFighter());
+		}
 	}
 	
 	public void adaptToCharacter(){
@@ -128,7 +146,7 @@ public class Game implements Runnable {
 		initializeAndShow();
 	}
 	
-	private void terminate(){
+	public void terminate(){
 		setRunner(false);
 	}
 	
@@ -279,31 +297,14 @@ public class Game implements Runnable {
 				break;			}
 			
 			if(keyStr.equalsIgnoreCase("w") ){
-				System.out.println("w pressed ");
-				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() - 1 ,this)){
-				}else{
-					System.out.println("Cant move UP");
-				}
+				moveUP();
 
 			}else if (keyStr.equalsIgnoreCase("a")){
-				System.out.println("a pressed ");
-				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() - 1,currentLocation.getY() ,this)){
-				}else{
-					System.out.println("Cant move Left");
-				}
-				
+				moveLeft();
 			}else if (keyStr.equalsIgnoreCase("s")){
-				System.out.println("s pressed ");
-				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() + 1 ,this)){
-				}else{
-					System.out.println("Cant move Down");
-				}
+				moveDown();
 			}else if (keyStr.equalsIgnoreCase("d")){
-				System.out.println("d pressed ");
-				if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() + 1 ,currentLocation.getY()  ,this)){
-				}else{
-					System.out.println("Cant move Right");
-				}
+				moveRight();
 			}
 	
 		}
@@ -311,7 +312,38 @@ public class Game implements Runnable {
 
 
 	}
-
+	
+	public void moveUP(){
+		System.out.println("w pressed ");
+		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() - 1 ,this)){
+		}else{
+			System.out.println("Cant move UP");
+		}
+	}
+	
+	public void moveDown(){
+		System.out.println("s pressed ");
+		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() + 1 ,this)){
+		}else{
+			System.out.println("Cant move Down");
+		}		
+	}
+	
+	public void moveLeft(){
+		System.out.println("a pressed ");
+		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() - 1,currentLocation.getY() ,this)){
+		}else{
+			System.out.println("Cant move Left");
+		}
+	}
+	
+	public void moveRight(){
+		System.out.println("d pressed ");
+		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() + 1 ,currentLocation.getY()  ,this)){
+		}else{
+			System.out.println("Cant move Right");
+		}
+	}
 	/**
 	 * @return the map
 	 */
