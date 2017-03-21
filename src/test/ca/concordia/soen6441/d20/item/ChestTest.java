@@ -2,7 +2,6 @@ package test.ca.concordia.soen6441.d20.item;
 
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;

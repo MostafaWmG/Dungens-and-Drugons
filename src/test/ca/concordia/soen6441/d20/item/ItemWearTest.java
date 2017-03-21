@@ -16,6 +16,11 @@ import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 
+/**
+ * wearing items should correctly influence the character’s abilities
+ * @author wmg
+ *
+ */
 public class ItemWearTest {
 	Fighter fighter;
 	Item item;
