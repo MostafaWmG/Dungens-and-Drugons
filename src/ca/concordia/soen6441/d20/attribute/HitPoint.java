@@ -22,7 +22,7 @@ public class HitPoint implements ILevelUp {
 		initEmptyEntity();
 		setBase(10);
 		setModifier(modifier);		
-		setLevel(level);
+		setLevel(1);
 	}
 	
 	/**

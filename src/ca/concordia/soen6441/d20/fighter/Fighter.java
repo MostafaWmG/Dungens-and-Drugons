@@ -89,6 +89,7 @@ public class Fighter extends GameObject {
 	 */
 	public Fighter(FighterEntity entity)
 	{
+		dice = new Dice();
 		setCharacterEntity(entity);
 		backPack = new ArrayList<>();
 		wearItems = new ArrayList<>();
@@ -114,6 +115,7 @@ public class Fighter extends GameObject {
 	private void init(){
 		
 		setCharacterEntity(new FighterEntity());
+		dice = new Dice();
 	}
 		
 	public void attack(Fighter enemy) {
@@ -226,7 +228,6 @@ public class Fighter extends GameObject {
 	public void setCharacterAbility(){
 		
 		int roll = 0;
-		dice  = new Dice();
 
 		for (int i= 0 ; i < AbilityEnum.values().length ; i++ ){
 			
@@ -261,7 +262,7 @@ public class Fighter extends GameObject {
 		getCharacterEntity().setLevel(getLevel() + point);
 		getAttack().setLevel(getLevel());
 		getHitPoint().setLevel(getLevel());
-		getHitPoint().setBase(dice.roll10() * getHitPoint().getLevel());
+		getHitPoint().setBase(dice.roll10() * (getHitPoint().getLevel()));
 		if(onlyAbilities){
 			iterate(getAbilities(),null,null, point);
 		}else{
