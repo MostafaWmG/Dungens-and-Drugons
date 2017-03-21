@@ -18,14 +18,16 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 
 public class MapValidationTest {
 	private GameMap gameMap;
+	private int width;
+	private int height;
 	
 	@Before 
 	public void setUp(){
 		Location wallLocation = new Location(4,4);
 		Location enteryLocation = new Location(6,6);
 		Location exitLocation = new Location(1,1);
-		int width = 10 ;
-		int height = 10 ;
+		width = 10 ;
+		height = 10 ;
 		gameMap = new GameMap("Test",height,width);
 		
 		for(int i = 0; i < height ; i++){
@@ -50,10 +52,40 @@ public class MapValidationTest {
 
 	}
 	
+	// this is a valid map
 	@Test
 	public void mapValidatorMethodTest(){
 		assertTrue(gameMap.mapValidator());
 	}
+	
+	
+	// this is not a valid map
+	@Test
+	public void mapValidatorMethodTest2(){
+		
+		for(int i = 0 ;  i < width ; i++){
+			Wall wall = new Wall("testWall");
+			GameObjectInstance wallInstnce = new GameObjectInstance(wall,gameMap);
+			gameMap.setGameObjectInstanceAtLocation(new Location(2,i),wallInstnce);
+		}
+			
+		assertTrue(!gameMap.mapValidator());
+	}
+	
+//	@Test
+//	public void mapValidatorMethodTest3(){
+//		assertTrue(gameMap.mapValidator());
+//	}
+//	
+//	@Test
+//	public void mapValidatorMethodTest4(){
+//		assertTrue(gameMap.mapValidator());
+//	}
+//	
+//	@Test
+//	public void mapValidatorMethodTest5(){
+//		assertTrue(gameMap.mapValidator());
+//	}
 	
 
 }
