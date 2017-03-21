@@ -261,6 +261,7 @@ public class Fighter extends GameObject {
 		getCharacterEntity().setLevel(getLevel() + point);
 		getAttack().setLevel(getLevel());
 		getHitPoint().setLevel(getLevel());
+		getHitPoint().setBase(dice.roll10() * getHitPoint().getLevel());
 		if(onlyAbilities){
 			iterate(getAbilities(),null,null, point);
 		}else{

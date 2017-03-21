@@ -1,6 +1,5 @@
 package ca.concordia.soen6441.d20.attribute;
 
-import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.item.ILevelUp;
 /**
  * 
@@ -13,7 +12,6 @@ public class HitPoint implements ILevelUp {
 	 * This object is used to read hit point from data base or store hit point to database.
 	 */
 	private HitPointEntity hitPointEntity;
-	private Dice dice ;
 		
 	/**
 	 * 
@@ -25,7 +23,6 @@ public class HitPoint implements ILevelUp {
 		setBase(10);
 		setModifier(modifier);		
 		setLevel(level);
-		init();
 	}
 	
 	/**
@@ -35,15 +32,8 @@ public class HitPoint implements ILevelUp {
 	public HitPoint(HitPointEntity entity)
 	{
 		setHitPointEntity(entity);
-		init();
 	}
-	/**
-	 * declares Dice object.
-	 */
-	private void init()
-	{
-		dice = new Dice();
-	}
+
 	/**
 	 * declares a new HitPointEntity object.
 	 */
@@ -79,7 +69,6 @@ public class HitPoint implements ILevelUp {
 	
 	@Override
 	public void update(int modfier) {
-		setBase(dice.roll10() * getLevel());
 		setModifier(modfier * getLevel());
 	}
 
