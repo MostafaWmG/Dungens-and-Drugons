@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Test.*;
-import org.junit.Before.*;
+
 
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
@@ -22,12 +21,20 @@ public class MapValidationTest {
 	
 	@Before 
 	public void setUp(){
-		Location wallLocation = new Location(40,40);
-		Location enteryLocation = new Location(60,60);
-		Location exitLocation = new Location(10,10);
-		int width = 100 ;
-		int height = 100 ;
-		gameMap = new GameMap("Test",width,height);
+		Location wallLocation = new Location(4,4);
+		Location enteryLocation = new Location(6,6);
+		Location exitLocation = new Location(1,1);
+		int width = 10 ;
+		int height = 10 ;
+		gameMap = new GameMap("Test",height,width);
+		
+		for(int i = 0; i < height ; i++){
+			for(int j = 0; j < width ; j++){
+					Ground ground = new Ground("testGround" +i+j);
+					GameObjectInstance groundInstance = new GameObjectInstance(ground,gameMap);
+					gameMap.setGameObjectInstanceAtLocation(new Location(j,i),groundInstance);	
+			}
+		}
 		
 		Wall wall = new Wall("testWall");
 		GameObjectInstance wallInstnce = new GameObjectInstance(wall,gameMap);
@@ -45,7 +52,7 @@ public class MapValidationTest {
 	
 	@Test
 	public void mapValidatorMethodTest(){
-		//assertTrue(this.gameMap.mapValidator());
+		assertTrue(gameMap.mapValidator());
 	}
 	
 
