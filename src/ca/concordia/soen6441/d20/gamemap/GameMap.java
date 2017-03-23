@@ -305,6 +305,8 @@ public class GameMap extends Observable{
 			notifyObservers(this);
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Player")){
 			game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+			setChanged();
+			notifyObservers(this);
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Enemy")){
 			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 			Date dateobj = new Date();

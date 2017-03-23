@@ -147,7 +147,7 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 	 * @return empty slot
 	 */
 	public int findEmptyPositionInChest(){
-		System.out.println("indexChest: " +getChestItems().size());
+//		System.out.println("indexChest: " +getChestItems().size());
 		for (int i = 0 ; i < CHEST_ITEM_MAX_SIZE; i ++ ){
 			if(getChestItems().get(i).getAttributeType() == null && getChestItems().get(i).getEnchantmentType() == null){
 				return i ;
