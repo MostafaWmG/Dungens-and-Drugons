@@ -1,11 +1,14 @@
 
 ca.concordia.soen6441.constants
+ca.concordia.soen6441.controller
+ca.concordia.soen6441.d20.ability
+ca.concordia.soen6441.d20.attribute
 ca.concordia.soen6441.d20.campaign
-ca.concordia.soen6441.d20.character
-ca.concordia.soen6441.d20.character.factory
 ca.concordia.soen6441.d20.common
 ca.concordia.soen6441.d20.dice
 ca.concordia.soen6441.d20.editors
+ca.concordia.soen6441.d20.factory
+ca.concordia.soen6441.d20.fighter
 ca.concordia.soen6441.d20.gamemap
 ca.concordia.soen6441.d20.gamemap.element
 ca.concordia.soen6441.d20.gamemap.exceptions
@@ -14,10 +17,12 @@ ca.concordia.soen6441.d20.item
 ca.concordia.soen6441.persistence.dao
 ca.concordia.soen6441.persistence.dao.interfaces
 ca.concordia.soen6441.view.map
+ca.concordia.soen6441.view.map.Observers
+ca.concordia.soen6441.view.map.viewElement
 test.ca.concordia.soen6441.d20.character
 test.ca.concordia.soen6441.d20.common
 test.ca.concordia.soen6441.d20.gamemap
 test.ca.concordia.soen6441.d20.gamemap.element
-test.ca.concordia.soen6441.d20.gamemap.validator
+test.ca.concordia.soen6441.d20.item
 test.ca.concordia.soen6441.model.persistence
 test.ca.concordia.soen6441.model.persistence.sample_entities
