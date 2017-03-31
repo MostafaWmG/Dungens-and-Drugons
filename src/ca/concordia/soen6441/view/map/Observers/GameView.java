@@ -251,7 +251,7 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 			viewElements[game.getCurrentLocation().getY()][game.getCurrentLocation().getX()] = new ViewChest("Chest",(Chest)gMap.getGameObjectInstanceAtLocation(game.getCurrentLocation()).getGameObject());
 			setButton(game.getCurrentLocation().getY(), game.getCurrentLocation().getX());
 			
-			game.setCurrentLocation(new Location(getMainCharacterLocation().getY(),getMainCharacterLocation().getX()));
+			game.setCurrentLocation(new Location(getMainCharacterLocation().getX(),getMainCharacterLocation().getY()));
 		}else{
 			removeElement(getMainCharacterLocation().getY(),getMainCharacterLocation().getX());
 			viewElements[getMainCharacterLocation().getY()][getMainCharacterLocation().getX()] = new ViewGround("Ground");
