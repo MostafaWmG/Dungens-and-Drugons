@@ -15,12 +15,24 @@ import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 
+/**
+*This test class impelements test cases for testing movement of the character object.
+*It has 4 test cases, each one testing one aspect of the character object.
+*Method beforeMethod handles initialization required for the test cases.
+*
+*/
+
 public class CharacterMovementTest {
 	Fighter fighter;
 	GameMap map;
 	Campaign camp;
 	Game game;
-	
+	/**
+	*This method creates a fighter object with a given tag and name
+	* creates a map object
+	*sets game elements on the map
+	*adds the map to the campaing
+	*/
 	@Before
 	public void beforeMethod(){
 		fighter = new Fighter("Player", "testFighterMov");
