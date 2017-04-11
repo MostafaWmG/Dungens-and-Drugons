@@ -8,10 +8,18 @@ import org.junit.Test;
 
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
-
+/**
+ * This is a test class for validation of the map created for the game
+ * @author negar
+ *
+ */
 public class GameMapTest {
 	private GameMap gameMap;
 	
+	/**
+	 * setUp method creates a map for size indicated by "height" and "width"
+	 * before each test case
+	 */
 	@Before
 	public void setUp() {
 		int width = 20;
@@ -19,6 +27,10 @@ public class GameMapTest {
 		this.gameMap = new GameMap("test",width, height);
 	}
 
+	/**
+	 * By implementing this test case we want to
+	 * test that an object created from the GameMap class is not null
+	 */
 	@Test
 	public void createAGameObject() {
 		assertNotNull(this.gameMap);
