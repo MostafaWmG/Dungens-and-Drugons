@@ -6,7 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.concordia.soen6441.d20.common.Location;
-
+/**
+ * This test class is representation of Location class working correctly.
+ *
+ */
 public class LocationTest {
 	private Location location;
 	
