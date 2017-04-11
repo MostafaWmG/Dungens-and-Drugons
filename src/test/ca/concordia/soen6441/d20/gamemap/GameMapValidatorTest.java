@@ -12,10 +12,18 @@ import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
-
+/**
+ * 
+ * This is a test class for GameMap validation
+ *
+ */
 public class GameMapValidatorTest {
 	private GameMap map;
 	
+	/**
+	 * This method initializes a map before the test case executes
+	 * It locates different game map elements on the map object of the game
+	 */
 	@Before
 	public void beforMethod(){
 		String name = "TestCase1";
@@ -46,7 +54,9 @@ public class GameMapValidatorTest {
 		map.setGameObjectInstanceAtLocation(new Location(4, 3), new GameObjectInstance(new Ground(name), map));
 
 	}
-	
+	/**
+	 * This test case is for testing the mapValidator method of the GameMap class
+	 */
 	@Test
 	public void assertionTest1(){
 		assertTrue(map.mapValidator());
