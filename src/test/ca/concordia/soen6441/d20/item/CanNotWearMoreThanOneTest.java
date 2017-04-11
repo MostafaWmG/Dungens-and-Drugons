@@ -12,7 +12,7 @@ import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 
 /**
- *class for testing that character cannot w ear more than one item of each kind
+ *class for testing that character cannot wear more than one item of each kind
  * @author wmg
  *
  */
