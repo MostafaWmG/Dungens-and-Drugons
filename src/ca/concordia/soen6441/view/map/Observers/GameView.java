@@ -294,6 +294,12 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 			setButton(destination.getY(),destination.getX());
 		}
 	}
+	
+	public void removeDeadFighter(Location origin){
+		removeElement(origin.getY(),origin.getX());
+		viewElements[origin.getY()][origin.getX()] = new ViewGround("Ground");
+		setButton(origin.getY(), origin.getX());
+	}
 	/**
 	 * @return the mainCharacterLocation
 	 */

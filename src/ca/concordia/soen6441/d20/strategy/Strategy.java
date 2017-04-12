@@ -19,6 +19,8 @@ public abstract class Strategy {
 	protected boolean canAttack ;
 	protected int count;
 	protected boolean isAlive;
+	protected int burnTimes;
+	protected int burnDamage;
 	
 	public Strategy() {
 		setAlive(true);
@@ -53,6 +55,23 @@ public abstract class Strategy {
 		else {
 			return "Chest";
 		}
+	}
+	
+	protected void applyEffects(){
+		if(getBurnTimes() > 0){
+			setBurnTimes(getBurnTimes() - 1);
+			setAlive(!getFighter().takeDamge(getBurnDamage()));
+		}
+		
+	}
+	
+	public void activeBuringEffect(int burnDamge){
+		setBurnTimes(3);
+		setBurnDamage(burnDamge);
+	}
+	
+	public void setSlayingEffect(){
+		
 	}
 	
 	public void threadSleep()
@@ -208,5 +227,33 @@ public abstract class Strategy {
 	 */
 	public void setCanAttack(boolean canAttack) {
 		this.canAttack = canAttack;
+	}
+
+	/**
+	 * @return the burnTimes
+	 */
+	public int getBurnTimes() {
+		return burnTimes;
+	}
+
+	/**
+	 * @param burnTimes the burnTimes to set
+	 */
+	public void setBurnTimes(int burnTimes) {
+		this.burnTimes = burnTimes;
+	}
+
+	/**
+	 * @return the burnDamage
+	 */
+	public int getBurnDamage() {
+		return burnDamage;
+	}
+
+	/**
+	 * @param burnDamage the burnDamage to set
+	 */
+	public void setBurnDamage(int burnDamage) {
+		this.burnDamage = burnDamage;
 	}
 }

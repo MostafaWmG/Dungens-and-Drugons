@@ -31,15 +31,23 @@ public class FriendlyNPC extends Strategy{
 			System.out.println("Current location of FNPC : " + getOrigin().getX() + " : " + getOrigin().getY());
 			setCount(getCount() - 1);
 			
-			if(isCanInteract()){
-				interact();
-			}else if (isCanAttack()){
-				attack();
-			}else if(getMoveCounter() !=3){
-				move();
-			}else {
-				System.out.println("FNPC Waiting: ");
+			applyEffects();
+			
+			if(isAlive()){
+				if(isCanInteract()){
+					interact();
+				}else if (isCanAttack()){
+					attack();
+				}else if(getMoveCounter() !=3){
+					move();
+				}else {
+					System.out.println("FNPC Waiting: ");
+				}
+			}else{
+				game.getGameView().removeDeadFighter(getOrigin());
+				System.out.println("Fighter: "+ getFighter().getName() + " Dies because of weapon effects" );
 			}
+			
 		}
 	}
 

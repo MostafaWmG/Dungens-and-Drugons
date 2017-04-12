@@ -159,6 +159,17 @@ public class Fighter extends GameObject {
 		
 	}
 	
+	public boolean takeDamge(int damage){
+
+		getHitPoint().setBase((getHitPoint().getPoint() - damage));
+
+		if(getHitPoint().getPoint() <= 0){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	/**
 	 * check if character is wearing this item or not
 	 * @param itemEnum type of item

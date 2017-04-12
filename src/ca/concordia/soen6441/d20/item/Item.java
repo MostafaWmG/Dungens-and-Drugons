@@ -4,14 +4,16 @@ package ca.concordia.soen6441.d20.item;
 
 import ca.concordia.soen6441.d20.ability.AbilityEnum;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
+import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
+import ca.concordia.soen6441.d20.item.decorator.IItem;
 
 /**
  * every new Item class represent an actual item . 
  * @author wmg
  */
-public class Item extends GameObject implements ILevelUp{
+public class Item extends GameObject implements ILevelUp,IItem{
 	
 	private ItemEntity itemEntity;
 	
@@ -288,5 +290,10 @@ public class Item extends GameObject implements ILevelUp{
 	@Override
 	public String getTag(){
 		return getItemEntity().getItemTag();
+	}
+
+	@Override
+	public Fighter specialEffect(Fighter attacker,Fighter target) {
+		return target;
 	}
 }

@@ -49,7 +49,6 @@ public class HitPoint implements ILevelUp {
 		return (getBase() + getModifier());
 	}
 		
-
 	/**
 	 * Prints hit point of the character
 	 */
