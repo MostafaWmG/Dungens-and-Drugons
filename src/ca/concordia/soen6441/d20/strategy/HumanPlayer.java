@@ -18,26 +18,26 @@ public class HumanPlayer extends Strategy {
 
 	@Override
 	public void turn(Game game) {
-		int count = 6;
-		canAttack = true;
-		canInteract = true;
+		setCount(6);
+		setCanAttack(true);
+		setCanInteract(true);
 		scanner  = new Scanner(System.in);
 		setGame(game);
 		
-		while(count > 0){
-			origin = getGame().getCurrentLocation();
-			destinationUp = new Location(origin.getX(),origin.getY()-1);
-			destinationDown = new Location(origin.getX(),origin.getY()+1);
-			destinationLeft = new Location(origin.getX()-1,origin.getY());
-			destinationRight = new Location(origin.getX()+1,origin.getY());
-			System.out.println("Current location : " + origin.getX() + " : " + origin.getY());
-			count --;
-			System.out.println("counter : " + count);
-			if(count <= 2 ){
+		while(getCount() > 0){
+			setOrigin(game.getCurrentLocation()); 
+			setDestinationUp(new Location(getOrigin().getX(),getOrigin().getY()-1));
+			setDestinationDown(new Location(getOrigin().getX(),getOrigin().getY()+1));
+			setDestinationLeft(new Location(getOrigin().getX()-1,getOrigin().getY()));
+			setDestinationRight(new Location(getOrigin().getX()+1,getOrigin().getY()));
+			System.out.println("Current location : " + getOrigin().getX() + " : " + getOrigin().getY());
+			setCount(getCount()-1); 
+			System.out.println("counter : " + getCount());
+			if(getCount() <= 2 ){
 				
-				if(canAttack){
+				if(isCanAttack()){
 					attack();
-				}else if(canInteract){
+				}else if(isCanInteract()){
 					interact();
 				}else{
 					System.out.println("cant attack or move <2");
@@ -54,16 +54,16 @@ public class HumanPlayer extends Strategy {
 	}
 	
 	private boolean check(Location location){
-		if(checkDestination(game, location).equals("Enemy")){
-			if(canAttack){
-				canAttack = false;	
+		if(checkDestination(getGame(), location).equals("Enemy")){
+			if(isCanAttack()){
+				setCanAttack(false);	
 			}else{
 				return false;
 			}
 			
-		}else if (checkDestination(game, location).equals("Chest") || checkDestination(game, location).equals("Player")){
-			if(canInteract){
-				canInteract = false;	
+		}else if (checkDestination(getGame(), location).equals("Chest") || checkDestination(getGame(), location).equals("Player")){
+			if(isCanInteract()){
+				setCanInteract(false);
 			}else {
 				return false;
 			}
@@ -78,25 +78,25 @@ public class HumanPlayer extends Strategy {
 		keyStr = scanner.nextLine();
 
 		if(keyStr.equalsIgnoreCase("w") ){
-			if(check(destinationUp))
+			if(check(getDestinationUp()))
 				getGame().moveUP();
 			else {
 				System.out.println("Cant attack or interact.");
 			}
 		}else if (keyStr.equalsIgnoreCase("a")){
-			if (check(destinationLeft))
+			if (check(getDestinationLeft()))
 				getGame().moveLeft();
 			else {
 				System.out.println("Cant attack or interact.");
 			}
 		}else if (keyStr.equalsIgnoreCase("s")){
-			if (check(destinationDown))
+			if (check(getDestinationDown()))
 				getGame().moveDown();
 			else {
 				System.out.println("Cant attack or interact.");
 			}
 		}else if (keyStr.equalsIgnoreCase("d")){
-			if(check(destinationRight))
+			if(check(getDestinationRight()))
 				getGame().moveRight();
 			else {
 				System.out.println("Cant attack or interact.");
@@ -108,27 +108,27 @@ public class HumanPlayer extends Strategy {
 	public void attack() {
 		String temp;
 		System.out.println("attack up");
-		temp = checkDestination(game,destinationUp);
+		temp = checkDestination(getGame(),getDestinationUp());
 		if(temp.equals("Enemy")){
 			getGame().moveUP();
 		}else{
 			System.out.println("attack down");
-			temp = checkDestination(game,destinationDown);
+			temp = checkDestination(getGame(),getDestinationDown());
 			if(temp.equals("Enemy")){
 				getGame().moveDown();
 			}else{
 				System.out.println("attack left");
-				temp = checkDestination(game,destinationLeft);
+				temp = checkDestination(getGame(),getDestinationLeft());
 				if(temp.equals("Enemy")){
 					getGame().moveLeft();
 				}else{
 					System.out.println("attack right");
-					temp = checkDestination(game,destinationRight);
+					temp = checkDestination(getGame(),getDestinationRight());
 					if(temp.equals("Enemy")){
 						getGame().moveRight();
 					}else{
 						System.out.println("interact");
-						if(canInteract){
+						if(isCanInteract()){
 							interact();
 						}else{
 							System.out.println("no interact");
@@ -144,25 +144,25 @@ public class HumanPlayer extends Strategy {
 	public void interact() {
 		String temp;
 		System.out.println("interact entered");
-		temp = checkDestination(game,destinationUp);
+		temp = checkDestination(getGame(),getDestinationUp());
 		if(temp.equals("Player") || temp.equals("Chest")||temp.equals("Exit")){
-			canInteract = false;
+			setCanInteract(false);
 			getGame().moveUP();
 		}else{
-			System.out.println("null exception: "+ destinationDown + ":" + temp);
-			temp = checkDestination(game,destinationDown);
+			System.out.println("null exception: "+ getDestinationDown() + ":" + temp);
+			temp = checkDestination(getGame(),getDestinationDown());
 			if(temp.equals("Player") || temp.equals("Chest") ||temp.equals("Exit")){
-				canInteract = false;
+				setCanInteract(false);
 				getGame().moveDown();
 			}else{
-				temp = checkDestination(game,destinationLeft);
+				temp = checkDestination(getGame(),getDestinationLeft());
 				if(temp.equals("Player") || temp.equals("Chest")||temp.equals("Exit")){
-					canInteract = false;
+					setCanInteract(false);
 					getGame().moveLeft();
 				}else{
-					temp = checkDestination(game,destinationRight);
+					temp = checkDestination(getGame(),getDestinationRight());
 					if(temp.equals("Player") || temp.equals("Chest") || temp.equals("Exit")){
-						canInteract = false;
+						setCanInteract(false);
 						getGame().moveRight();
 					}else{
 						System.out.println("there is nothing  to interact with");

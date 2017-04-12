@@ -41,7 +41,7 @@ public class ComputerPlayer extends Strategy{
 	public void move() {
 		setMoveCounter(getMoveCounter() + 1);
 		Location direction;
-		direction =new Location(game.getExit().getX() - getOrigin().getX(),game.getExit().getY() - getOrigin().getY());
+		direction =new Location(getGame().getExit().getX() - getOrigin().getX(),getGame().getExit().getY() - getOrigin().getY());
 		double magnetude  = Math.sqrt( Math.pow(direction.getX(),2) + Math.pow(direction.getY(), 2) );
 		direction.setX((int) (direction.getX() / magnetude));
 		direction.setY((int) (direction.getY()/magnetude));
@@ -57,23 +57,23 @@ public class ComputerPlayer extends Strategy{
 				System.out.println("Y DIR");
 				direction.setY(0);
 			}
-       			game.moveDirection(getOrigin(), direction,true);
+       			getGame().moveDirection(getOrigin(), direction,true);
 		}else if (direction.getX() == 0 && direction.getY() == 0){
 			System.out.println("BOTH ZERO");
 			int rand = new Random().nextInt(4);
 			System.out.println("RANDOM DIR FOR AI: "+ rand);
 			if(rand ==0){
-				game.moveUP();
+				getGame().moveUP();
 			}else if (rand == 1){
-				game.moveDown();
+				getGame().moveDown();
 			}else if (rand == 2){
-				game.moveLeft();
+				getGame().moveLeft();
 			}else if (rand == 3){
-				game.moveRight();
+				getGame().moveRight();
 			}
 		}else{
 			System.out.println("NORMAL MOVE OF AI");
-				game.moveDirection(getOrigin(), direction,true);
+				getGame().moveDirection(getOrigin(), direction,true);
 		}
 		threadSleep();
 		
