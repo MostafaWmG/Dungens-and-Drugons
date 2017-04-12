@@ -20,7 +20,10 @@ public class MapValidationTest {
 	private GameMap gameMap;
 	private int width;
 	private int height;
-	
+	/**
+	 * Creating a game map and placing different elements of the map
+	 * such as entry , exit and wall on the map at different locations.
+	 */
 	@Before 
 	public void setUp(){
 		Location wallLocation = new Location(4,4);
@@ -75,7 +78,10 @@ public class MapValidationTest {
 			
 		assertTrue(!gameMap.mapValidator());
 	}
-	
+	/**
+	 * This test case shows that for a map that has a wall in front of the exit door
+	 * the mapValidator returns false. Meaning that the map is not valid
+	 */
 	@Test
 	public void mapValidatorMethodTest3(){
 		

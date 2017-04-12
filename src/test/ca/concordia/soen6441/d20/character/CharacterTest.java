@@ -16,11 +16,23 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * This Test class is implemented to check if the character is set on the map correctly. 
+ * And other characteristics of the character object.
+ * @author negar
+ *
+ */
 public class CharacterTest {
 	private Fighter characterWithInitialPosition;
 	private GameMap map;
 
+	/**
+	 * This is the method that sets the initial values for testing
+	 * Creates a fighter with a given tag and name.
+	 * sets the character on a map
+	 * gets the field of the character.
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		characterWithInitialPosition = new Fighter("tag","name");
@@ -29,16 +41,25 @@ public class CharacterTest {
 		characterWithInitialPosition.getField().place(new GameObjectInstance(characterWithInitialPosition, map), new Location(0,0));
 	}
 
+	/**
+	 * First test case: Checking that position of the charcater read from the database is not empty
+	 */
 	@Test
 	public void testGetEntity() {
 		assertNotNull(characterWithInitialPosition.getEntity());
 	}
 
+	/**
+	 * Test case 2: Check to see if the character created returns the expected tag.
+	 */
 	@Test
 	public void testGetTag() {
 		assertEquals("tag", characterWithInitialPosition.getTag());
 	}
 
+	/**
+	 * Test case 3: This method test the validity of the setTag method
+	 */
 	@Test
 	public void testSetTag() {
 		String expected = "new_tag";
@@ -49,12 +70,17 @@ public class CharacterTest {
 	}
 
 
-
+	/**
+	 * Test case 4: This method implements test case for the getWearItems() method
+	 */
 	@Test
 	public void testHasItem() {
 		assertNotNull(characterWithInitialPosition.getWearItems());
 	}
 
+	/**
+	 * Test case 5: This method checks that the method putOnItem sets the expected items for the character
+	 */
 	@Test
 	public void testPutOnItem() {
 		characterWithInitialPosition.putOnItem(new Item("name", ItemEnum.ARMOR));
@@ -63,6 +89,9 @@ public class CharacterTest {
 	}
 
 
+	/**
+	 * This test case checks the validity of the removeItem method
+	 */
 	@Test
 	public void testRemoveItem() {
 		Item item = new Item("name", ItemEnum.ARMOR);
@@ -73,6 +102,9 @@ public class CharacterTest {
 		assertFalse(characterWithInitialPosition.hasItem(ItemEnum.ARMOR));
 	}
 
+	/**
+	 * This method is implemented to prove that setAbilities method works as expected
+	 */
 	@Test
 	public void testAddAbilityAbility() {
 		ArrayList<Ability> abilities = new ArrayList<Ability>();
@@ -83,13 +115,20 @@ public class CharacterTest {
 		assertEquals(1, characterWithInitialPosition.getAbilities().size());
 	}
 
+	/**
+	 * This method is for testing the setBackPack method
+	 */
 	@Test
 	public void testSetBackPack() {
 		characterWithInitialPosition.setBackPack(new ArrayList<>());
 		
 		assertEquals(0, characterWithInitialPosition.getBackPack().size());
 	}
-
+	
+	/**
+	 * This method compares the results of the getBackPack method with the results we expect to see
+	 * 
+	 */
 	@Test
 	public void testGetBackPack() {
 		characterWithInitialPosition.setBackPack(new ArrayList<>());
@@ -98,7 +137,9 @@ public class CharacterTest {
 		
 		assertEquals(0, items.size());
 	}
-
+	/**
+	 * This test case is for testing the initializeBackPack method
+	 */
 	@Test
 	public void testInitializeBackPack() {
 		characterWithInitialPosition.setBackPack(new ArrayList<>());
@@ -121,7 +162,10 @@ public class CharacterTest {
 				DaoFactory.getFighterDao().delete(list.get(0));
 		}
 	}
-	
+	/**
+	 * This method initializes the two fighter object created.
+	 * They will be used in test cases that follow this method
+	 */
 	@Before
 	public void initFighters()
 	{

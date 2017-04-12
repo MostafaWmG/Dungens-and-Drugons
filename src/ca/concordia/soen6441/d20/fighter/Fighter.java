@@ -14,6 +14,7 @@ import ca.concordia.soen6441.d20.attribute.AttackBonus;
 import ca.concordia.soen6441.d20.attribute.AttributeEnum;
 import ca.concordia.soen6441.d20.attribute.DamageBonus;
 import ca.concordia.soen6441.d20.attribute.HitPoint;
+import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
@@ -59,6 +60,10 @@ public class Fighter extends GameObject {
 	
 	public Fighter(){
 		init();
+	}
+	
+	public boolean isDead() {
+		return hitPoint.getBase()<=0;
 	}
 	
 	/**
@@ -119,8 +124,38 @@ public class Fighter extends GameObject {
 		setCharacterEntity(new FighterEntity());
 		dice = new Dice();
 	}
+	
+	private boolean isInRange(Location l){
+		Location fighterLocation = this.getLocation();
+		return (fighterLocation.getX() == (l.getX()+1) 
+				&& fighterLocation.getY() == l.getY()) 
+				|| (fighterLocation.getY() == l.getY() +1 
+				&& fighterLocation.getX() == l.getX())
+				|| (fighterLocation.getX() == (l.getX()-1)
+				&& fighterLocation.getY() == l.getY())
+				|| (fighterLocation.getY() == (l.getY()-1)
+				&& fighterLocation.getX() == l.getX());
+	}
 		
 	public void attack(Fighter enemy) {
+		Location enemyLocation = enemy.getLocation();
+		if(isInRange(enemyLocation)){
+			int strong = dice.roll6() + (this.attackBonus==null?0:this.attackBonus.getModifier()) 
+					+ (this.armorClass==null?0:this.armorClass.getModfier())+ this.getLevel();
+			
+			if(strong > (enemy.getArmor()==null?0:enemy.getArmor().getPoint())){
+				enemy.getHitPoint().setModifier(enemy.getHitPoint().getModifier());
+				enemy.getHitPoint().setBase(enemy.getHitPoint().getBase()-strong);
+				if(enemy.getHitPoint().getBase()<=0){
+					System.out.println(String.format("enemy %s has died", enemy));
+				}
+				else System.out.println("You have hit the enemy :)");
+			} else {
+				System.out.println("You have missed :(");
+			}
+		} else {
+			System.out.println("You cannot attack. Enemy too far away");
+		}
 		
 	}
 	

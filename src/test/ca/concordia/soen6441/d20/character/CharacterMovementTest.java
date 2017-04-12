@@ -15,12 +15,24 @@ import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.gamemap.element.Ground;
 
+/**
+*This test class impelements test cases for testing movement of the character object.
+*It has 4 test cases, each one testing movement of the character to each direction.
+*Method beforeMethod handles initialization required for the test cases.
+*
+*/
+
 public class CharacterMovementTest {
 	Fighter fighter;
 	GameMap map;
 	Campaign camp;
 	Game game;
-	
+	/**
+	*This method creates a fighter object with a given tag and name
+	* creates a map object
+	*sets game elements on the map
+	*adds the map to the campaing
+	*/
 	@Before
 	public void beforeMethod(){
 		fighter = new Fighter("Player", "testFighterMov");
@@ -41,7 +53,9 @@ public class CharacterMovementTest {
 		
 		game = new Game(camp, fighter,false);
 	}
-	
+	/**
+	 * This method is used to check that character can move down in the map
+	 */
 	@Test
 	public void testAssertionMoveDown(){
 		Location currentLocation = new Location(game.getCurrentLocation().getX(),game.getCurrentLocation().getY());
@@ -53,7 +67,9 @@ public class CharacterMovementTest {
 		assertEquals(currentLocation,game.getCurrentLocation());
 		
 	}	
-	
+	/**
+	 * This method tests that character can move up on the map
+	 */
 	@Test
 	public void testAssertionMoveUP(){
 		Location currentLocation = new Location(game.getCurrentLocation().getX(),game.getCurrentLocation().getY());
@@ -65,7 +81,9 @@ public class CharacterMovementTest {
 		assertEquals(currentLocation,game.getCurrentLocation());
 		
 	}
-	
+	/**
+	 * This test case test to see if the character can move to the left on the map
+	 */
 	@Test
 	public void testAssertionMoveLeft(){
 		Location currentLocation = new Location(game.getCurrentLocation().getX(),game.getCurrentLocation().getY());
@@ -77,7 +95,9 @@ public class CharacterMovementTest {
 		assertEquals(currentLocation,game.getCurrentLocation());
 		
 	}
-	
+	/**
+	 * This test case is to check the correct movement of the character to the right on the map
+	 */
 	@Test
 	public void testAssertionMoveRight(){
 		Location currentLocation = new Location(game.getCurrentLocation().getX(),game.getCurrentLocation().getY());

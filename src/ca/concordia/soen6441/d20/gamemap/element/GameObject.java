@@ -19,6 +19,8 @@ public abstract class GameObject extends Observable {
 	private GameMap field;
 	private String tag ;
 	
+	private Location location;
+	
 	/**
 	 * All GameObject sub-classes must implement this method. By using this
 	 * method GameMap is able to extract entities for saving data.
@@ -62,7 +64,8 @@ public abstract class GameObject extends Observable {
 	 */
 	@Deprecated
 	public Location getLocation() {
-		throw new RuntimeException("Don't use this function");
+		//throw new RuntimeException("Don't use this function");
+		return this.location;
 	}
 
 	/**
@@ -71,7 +74,8 @@ public abstract class GameObject extends Observable {
 	//TODO Remove this function
 	@Deprecated
 	public void setLocation(Location location) {
-		throw new RuntimeException("Don't use this function");
+		this.location = location;
+		//throw new RuntimeException("Don't use this function");
 	}
 	
 	/**
