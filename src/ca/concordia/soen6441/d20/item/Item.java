@@ -293,7 +293,7 @@ public class Item extends GameObject implements ILevelUp,IItem{
 	}
 
 	@Override
-	public Fighter specialEffect(Fighter attacker,Fighter target) {
-		return target;
+	public void specialEffect(Fighter attacker,Fighter target) {
+		
 	}
 }

@@ -11,7 +11,7 @@ public abstract class ItemDecorator implements IItem {
 	}
 
 	@Override
-	public Fighter specialEffect(Fighter attacker,Fighter target) {
-		return decoratedItem.specialEffect(attacker,target);
+	public void specialEffect(Fighter attacker,Fighter target) {
+		decoratedItem.specialEffect(attacker,target);
 	}
 }
