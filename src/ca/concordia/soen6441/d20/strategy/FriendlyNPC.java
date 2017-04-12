@@ -25,7 +25,7 @@ public class FriendlyNPC implements Strategy{
 		while(count > 0){
 			count --;
 			if(checkDestination(game, destinationUp).equals("Enemy")){
-				attack(destinationUp);
+				attack();
 				threadSleep();
 			}else if(checkDestination(game, destinationUp).equals("Ground")){
 				
@@ -35,19 +35,19 @@ public class FriendlyNPC implements Strategy{
 	}
 
 	@Override
-	public void move(Location location) {
+	public void move() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void attack(Location location) {
+	public void attack() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void interact(Location location) {
+	public void interact() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -273,7 +273,9 @@ public class GameMap extends Observable{
 		setGameObjectAtLocation(location, instance, saveEntity);
 	}
 	
-	
+	public boolean move(int originX, int originY, int destinationX, int destinationY,Game game){
+		return move(originX, originY, destinationX, destinationY, game,true);
+	}
 	/** move an element from one point of the map to the other, 
 	 * if the final position is not empty, the original position is empty,
 	 * or the destination is not empty an MoveNotValidException is thrown.
@@ -284,44 +286,81 @@ public class GameMap extends Observable{
 	 * @param destinationY y coordinate where the element wants to be
 	 * @throws MoveNotValidException if the movement can't be done
 	 */
-	public boolean move(int originX, int originY, int destinationX, int destinationY,Game game){
+	public boolean move(int originX, int originY, int destinationX, int destinationY,Game game,boolean isMainCharacter){
 		if(! moveCanBeDone(originX, originY, destinationX, destinationY)) return false;
 		Location origin = new Location(originX, originY);
 		Location destination = new Location(destinationX, destinationY);
-		
+		System.out.println("TAG IN MOVE: " + getGameObjectInstanceAtLocation(destination).getGameObject().getTag());
 		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Ground")){
 			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
 			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
-			game.setCurrentLocation(destination);
-			setChanged();
-			notifyObservers(this);
+			
+			if(isMainCharacter){
+				game.setCurrentLocation(destination);
+				setChanged();
+				notifyObservers(this);
+			}else{
+				game.getGameView().updateWithOutObserver(origin, destination);
+				updateLocation(game,origin,destination);
+			}
+
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Chest")){
 			Chest chest = (Chest)getGameObjectInstanceAtLocation(destination).getGameObject();
 			chest.putRootedIntoBackPack((Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
 			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
 			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
-			game.setCurrentLocation(destination);
-			setChanged();
-			notifyObservers(this);
+			
+			if(isMainCharacter){
+				game.setCurrentLocation(destination);
+				setChanged();
+				notifyObservers(this);
+			}else{
+				game.getGameView().updateWithOutObserver(origin, destination);
+				updateLocation(game,origin,destination);
+			}
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Player")){
-			game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
-			setChanged();
-			notifyObservers(this);
+			if(isMainCharacter){
+				game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+			}else{
+				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+				Date dateobj = new Date();
+				Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
+				Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+				putFromFighterToChest(fighter,chest);
+				setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
+				game.getGameView().updateWithOutObserver(origin, destination);
+				game.die(fighter);
+			}
+
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Enemy")){
-			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-			Date dateobj = new Date();
-			Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
-			Chest chest = new Chest(fighter.getName() +df.format(dateobj));
-			putFromFighterToChest(fighter,chest);
-			setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
-			game.setCurrentLocation(destination);
-			setChanged();
-			notifyObservers(this);
+			if(isMainCharacter){
+				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+				Date dateobj = new Date();
+				Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
+				Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+				putFromFighterToChest(fighter,chest);
+				setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
+				game.setCurrentLocation(destination);
+				setChanged();
+				notifyObservers(this);
+			}else{
+				game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+			}
+
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Exit")){
 			game.reset();
 		}
 		return true;
 
+	}
+	
+	private void updateLocation(Game game,Location origin,Location destination){
+		for(Map.Entry<Fighter,Location> location : game.getLocations().entrySet()){
+			if(location.getValue().equals(origin)){
+				location.setValue(destination);
+				System.out.println("LOCATION OF NPC UPDATED: " + destination.getX() + " : " + destination.getY());
+			}
+		}	
 	}
 	
 	private void putFromFighterToChest(Fighter fighter,Chest chest){

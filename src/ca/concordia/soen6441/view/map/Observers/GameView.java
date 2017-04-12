@@ -265,7 +265,26 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 		}
 
 	}
-
+	
+	public void updateWithOutObserver(Location location,Location destination){
+		
+		if(map.getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Chest")){
+			System.out.println("Enter chest:");
+			removeElement(destination.getY(),destination.getX());
+			viewElements[destination.getY()][destination.getX()] = new ViewChest("Chest",(Chest)map.getGameObjectInstanceAtLocation(destination).getGameObject());
+			setButton(destination.getY(), destination.getX());
+			
+		}else{
+			System.out.println("Skip chest:");
+			removeElement(location.getY(),location.getX());
+			viewElements[location.getY()][location.getX()] = new ViewGround("Ground");
+			setButton(location.getY(), location.getX());
+			
+			removeElement(destination.getY(),destination.getX());
+			viewElements[destination.getY()][destination.getX()] = new ViewFighterEnemy(map.getGameObjectInstanceAtLocation(destination).getGameObject().getTag(),(Fighter) map.getGameObjectInstanceAtLocation(destination).getGameObject(), this, false);
+			setButton(destination.getY(),destination.getX());
+		}
+	}
 	/**
 	 * @return the mainCharacterLocation
 	 */

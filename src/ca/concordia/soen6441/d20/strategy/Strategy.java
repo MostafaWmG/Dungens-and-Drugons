@@ -7,15 +7,15 @@ public interface Strategy {
 	
 	public void turn(Game game);
 	
-	public void move(Location location);
+	public void move();
 	
-	public void attack(Location location);
+	public void attack();
 	
-	public void interact(Location location);
+	public void interact();
 	
 	public default String checkDestination(Game game,Location destination){
 		if(! game.getMap().moveCanBeDone(game.getCurrentLocation().getX(), game.getCurrentLocation().getY(), destination.getX(), destination.getY())) {
-//			System.out.println("out of map");
+			System.out.println("out of map");
 			return "null";
 		}else{
 			System.out.println("we can go");

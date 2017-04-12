@@ -1,6 +1,7 @@
 package ca.concordia.soen6441.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,6 +72,7 @@ public class Game implements Runnable {
 	private List<Fighter> tempSort;
 	private List<Fighter> turnOrder;
 	private boolean ordered;
+	private HashMap<Fighter, Location> locations;
 	/**
 	 * check if the game is running, true, if it is not, or false if it is stopped 
 	 */
@@ -95,6 +97,7 @@ public class Game implements Runnable {
 		setTempSort(new ArrayList<Fighter>());
 		setTurnOrder(new ArrayList<Fighter>());
 		setOrdered(false);
+		setLocations(new HashMap<Fighter, Location>());
 		initializeAndShow();
 	}
 	
@@ -118,6 +121,7 @@ public class Game implements Runnable {
 		setTempSort(new ArrayList<Fighter>());
 		setTurnOrder(new ArrayList<Fighter>());
 		setOrdered(false);
+		setLocations(new HashMap<Fighter, Location>());
 		initializeAndShow(test);
 	}
 	
@@ -155,12 +159,14 @@ public class Game implements Runnable {
 					tempFighter.setStrategy(new AggressiveNPC(tempFighter));
 					getEnemies().add(tempFighter);
 					getFighters().add(tempFighter);
+					getLocations().put(tempFighter, new Location(j,i));
 				}else if (reference.getTag().equals("Player") ){
 					System.out.print("F");//friendly
 					Fighter tempFighter = (Fighter)reference;
 					tempFighter.setStrategy(new FriendlyNPC(tempFighter));
 					getFriends().add(tempFighter);
 					getFighters().add(tempFighter);
+					getLocations().put(tempFighter, new Location(j,i));
 				}else if (reference.getTag().equals("Chest") ){
 					System.out.print("C");//chest
 					getChests().add((Chest)reference);
@@ -223,6 +229,7 @@ public class Game implements Runnable {
 		}
 		
 		getFighters().add(getFighter());
+		getLocations().put(getFighter(), getCurrentLocation());
 		
 		for (int i = 0; i < getFighters().size(); i++) {
 			int roll = getDice().roll20();
@@ -277,6 +284,13 @@ public class Game implements Runnable {
 		getGameView().setVisible(false);
 		getGameView().dispose();
 		terminate();
+	}
+	
+	public void die(Fighter fighter){
+		for(int i = 0 ; i < getTurnOrder().size();i++){
+			if(getTurnOrder().get(i).getName().equalsIgnoreCase(fighter.getName()))
+				getTurnOrder().remove(i);
+		}
 	}
 	/**
 	 * @return the fighter
@@ -454,12 +468,37 @@ public class Game implements Runnable {
 
 	}
 	
+	public void moveDirection(Location origin,Location direction){
+		System.out.println("AI movement");
+		if(getMap().move(origin.getX(), origin.getY(),origin.getX() +direction.getX() , origin.getY() + direction.getY(), this,false)){
+			System.out.println("AI MOVED");
+		}else{
+			System.out.println("AI cant move Character");
+		}
+	}
+	
+	public void moveUP(Location origin){
+		System.out.println("moved up ");
+		if(getMap().move(origin.getX(), origin.getY(),origin.getX() ,origin.getY() - 1 ,this,false)){
+		}else{
+			System.out.println("NPC Cant move UP");
+		}	
+	}
+	
 	public void moveUP(){
 		System.out.println("w pressed ");
 		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() - 1 ,this)){
 		}else{
 			System.out.println("Cant move UP");
 		}
+	}
+	
+	public void moveDown(Location origin){
+		System.out.println("moved down ");
+		if(getMap().move(origin.getX(), origin.getY(),origin.getX() ,origin.getY() + 1 ,this,false)){
+		}else{
+			System.out.println("NPC Cant move Down");
+		}		
 	}
 	
 	public void moveDown(){
@@ -470,11 +509,27 @@ public class Game implements Runnable {
 		}		
 	}
 	
+	public void moveLeft(Location origin){
+		System.out.println("moved left ");
+		if(getMap().move(origin.getX(), origin.getY(),origin.getX() - 1,origin.getY() ,this,false)){
+		}else{
+			System.out.println("NPC Cant move Left");
+		}
+	}
+	
 	public void moveLeft(){
 		System.out.println("a pressed ");
 		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() - 1,currentLocation.getY() ,this)){
 		}else{
 			System.out.println("Cant move Left");
+		}
+	}
+	
+	public void moveRight(Location origin){
+		System.out.println("moved Right ");
+		if(getMap().move(origin.getX(), origin.getY(),origin.getX() + 1 ,origin.getY()  ,this,false)){
+		}else{
+			System.out.println("NPC Cant move Right");
 		}
 	}
 	
@@ -609,6 +664,20 @@ public class Game implements Runnable {
 	 */
 	public void setOrdered(boolean ordered) {
 		this.ordered = ordered;
+	}
+
+	/**
+	 * @return the locations
+	 */
+	public HashMap<Fighter, Location> getLocations() {
+		return locations;
+	}
+
+	/**
+	 * @param locations the locations to set
+	 */
+	public void setLocations(HashMap<Fighter, Location> locations) {
+		this.locations = locations;
 	}
 	
 }

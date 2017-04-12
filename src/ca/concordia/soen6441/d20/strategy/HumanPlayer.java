@@ -16,8 +16,8 @@ public class HumanPlayer implements Strategy {
 	private Location destinationLeft;
 	private Location destinationRight;
 	private Location origin;
-	private boolean canAttack = true;
-	private boolean canInteract = false;
+	private boolean canAttack ;
+	private boolean canInteract ;
 	
 	public HumanPlayer(Fighter fighter) {
 		setFighter(fighter);
@@ -47,15 +47,15 @@ public class HumanPlayer implements Strategy {
 			if(count <= 2 ){
 				
 				if(canAttack){
-					attack(null);
+					attack();
 				}else if(canInteract){
-					interact(null);
+					interact();
 				}else{
 					System.out.println("cant attack or move <2");
 				}
 			}else{
 				
-				move(null);
+				move();
 			}
 
 			threadSleep();
@@ -83,7 +83,7 @@ public class HumanPlayer implements Strategy {
 		return true;
 	}
 	@Override
-	public void move(Location location) {
+	public void move() {
 		String keyStr;
 		System.out.println("Please move the character: ");
 		keyStr = scanner.nextLine();
@@ -116,7 +116,7 @@ public class HumanPlayer implements Strategy {
 	}
 
 	@Override
-	public void attack(Location location) {
+	public void attack() {
 		String temp;
 		System.out.println("attack up");
 		temp = checkDestination(game,destinationUp);
@@ -140,7 +140,7 @@ public class HumanPlayer implements Strategy {
 					}else{
 						System.out.println("interact");
 						if(canInteract){
-							interact(null);
+							interact();
 						}else{
 							System.out.println("no interact");
 						}
@@ -152,7 +152,7 @@ public class HumanPlayer implements Strategy {
 	}
 
 	@Override
-	public void interact(Location location) {
+	public void interact() {
 		String temp;
 		System.out.println("interact entered");
 		temp = checkDestination(game,destinationUp);
