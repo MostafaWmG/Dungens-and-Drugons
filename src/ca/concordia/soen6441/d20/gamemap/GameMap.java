@@ -347,7 +347,7 @@ public class GameMap extends Observable{
 	 * @param destinationY y  coordinate where the element wants to be
 	 * @return true if the element can move to the destination
 	 */
-	private boolean moveCanBeDone(int originX, int originY, int destinationX, int destinationY) {
+	public boolean moveCanBeDone(int originX, int originY, int destinationX, int destinationY) {
 		if(originX<0 || originY<0 || destinationX<0 ||destinationY<0) {
 			System.out.println("debug1");
 			return false;

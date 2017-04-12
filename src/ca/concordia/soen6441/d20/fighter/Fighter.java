@@ -20,6 +20,7 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
+import ca.concordia.soen6441.d20.strategy.Strategy;
 
 /**
  * This class is used to create a character, a monster or a player.
@@ -46,6 +47,7 @@ public class Fighter extends GameObject {
 	 */	
 	private FighterEntity characterEntity;
 	
+	protected Strategy strategy;
 	protected List<Item> backPack;
 	protected List <Ability> abilities;
 	protected List <Item> wearItems;
@@ -918,5 +920,19 @@ public class Fighter extends GameObject {
 	public String getTag()
 	{
 		return getCharacterEntity().getFighterType();
+	}
+
+	/**
+	 * @return the strategy
+	 */
+	public Strategy getStrategy() {
+		return strategy;
+	}
+
+	/**
+	 * @param strategy the strategy to set
+	 */
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
 	}
 }

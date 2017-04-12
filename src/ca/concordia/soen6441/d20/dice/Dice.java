@@ -34,6 +34,15 @@ public class Dice {
 	public int roll10(){
 		return (random.nextInt(10) + 1 );
 	}
+	
+	/**
+	 * Equal to d20 dice
+	 * @return number between 1 to 20
+	 */
+	public int roll20(){
+		return (random.nextInt(20) + 1 );
+	}
+	
 	/**
 	 * This method returns a Random object
 	 * @return random object
