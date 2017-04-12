@@ -24,11 +24,11 @@ public class AggressiveNPC extends Strategy{
 		
 		while(count > 0){
 			System.out.println("ENTER AGGRESIVE PLAYER LOOP: ");
-			setOrigin(game.getLocations().get(fighter)); 
-			setDestinationUp(new Location(origin.getX(),origin.getY()-1));
-			setDestinationDown(new Location(origin.getX(),origin.getY()+1));
-			setDestinationLeft(new Location(origin.getX()-1,origin.getY()));
-			setDestinationRight(new Location(origin.getX()+1,origin.getY()));
+			setOrigin(game.getLocations().get(getFighter())); 
+			setDestinationUp(new Location(getOrigin().getX(),getOrigin().getY()-1));
+			setDestinationDown(new Location(getOrigin().getX(),getOrigin().getY()+1));
+			setDestinationLeft(new Location(getOrigin().getX()-1,getOrigin().getY()));
+			setDestinationRight(new Location(getOrigin().getX()+1,getOrigin().getY()));
 			System.out.println("Current location of NPC : " + getOrigin().getX() + " : " + getOrigin().getY());
 			setCount(getCount() -1);			
 			attack();
@@ -43,7 +43,7 @@ public class AggressiveNPC extends Strategy{
 	public void move() {
 		setMoveCounter(getMoveCounter() + 1); 
 		Location direction;
-		direction =new Location(game.getCurrentLocation().getX() - getOrigin().getX(),game.getCurrentLocation().getY() - getOrigin().getY());
+		direction =new Location(getGame().getCurrentLocation().getX() - getOrigin().getX(),getGame().getCurrentLocation().getY() - getOrigin().getY());
 		double magnetude  = Math.sqrt( Math.pow(direction.getX(),2) + Math.pow(direction.getY(), 2) );
 		direction.setX((int) (direction.getX() / magnetude));
 		direction.setY((int) (direction.getY()/magnetude));
@@ -59,46 +59,46 @@ public class AggressiveNPC extends Strategy{
 				System.out.println("Y DIR");
 				direction.setY(0);
 			}
-			game.moveDirection(getOrigin(), direction);
+			getGame().moveDirection(getOrigin(), direction);
 		}else if (direction.getX() == 0 && direction.getY() == 0){
 			System.out.println("BOTH ZERO");
 			int rand = new Random().nextInt(4);
 			System.out.println("RANDOM DIR FOR AI: "+ rand);
 			if(rand ==0){
-				game.moveUP(getOrigin());
+				getGame().moveUP(getOrigin());
 			}else if (rand == 1){
-				game.moveDown(getOrigin());
+				getGame().moveDown(getOrigin());
 			}else if (rand == 2){
-				game.moveLeft(getOrigin());
+				getGame().moveLeft(getOrigin());
 			}else if (rand == 3){
-				game.moveRight(getOrigin());
+				getGame().moveRight(getOrigin());
 			}
 		}else{
 			System.out.println("NORMAL MOVE OF AI");
-			game.moveDirection(getOrigin(), direction);
+			getGame().moveDirection(getOrigin(), direction);
 		}
 		threadSleep();
 	}
 
 	@Override
 	public void attack() {
-		if(checkDestination(game, getDestinationUp()).equals("Player")){
-			game.moveUP(getOrigin());
+		if(checkDestination(getGame(), getDestinationUp()).equals("Player")){
+			getGame().moveUP(getOrigin());
 			threadSleep();
 			setCanInteract(false);
 			setCount(0);
-		}else if (checkDestination(game, getDestinationDown()).equalsIgnoreCase("Player")){
-			game.moveDown(getOrigin());
+		}else if (checkDestination(getGame(), getDestinationDown()).equalsIgnoreCase("Player")){
+			getGame().moveDown(getOrigin());
 			threadSleep();
 			setCanInteract(false);
 			setCount(0);
-		}else if (checkDestination(game, getDestinationLeft()).equalsIgnoreCase("Player")) {
-			game.moveLeft(getOrigin());
+		}else if (checkDestination(getGame(), getDestinationLeft()).equalsIgnoreCase("Player")) {
+			getGame().moveLeft(getOrigin());
 			threadSleep();
 			setCanInteract(false);
 			setCount(0);
-		}else if (checkDestination(game, getDestinationRight()).equalsIgnoreCase("Player")) {
-			game.moveRight(getOrigin());
+		}else if (checkDestination(getGame(), getDestinationRight()).equalsIgnoreCase("Player")) {
+			getGame().moveRight(getOrigin());
 			threadSleep();
 			setCanInteract(false);
 			setCount(0);
@@ -113,22 +113,22 @@ public class AggressiveNPC extends Strategy{
 
 	@Override
 	public void interact() {
-		if(checkDestination(game, getDestinationUp()).equals("Chest") ||checkDestination(game, getDestinationUp()).equals("Enemy") ){
-			game.moveUP(getOrigin());
+		if(checkDestination(getGame(), getDestinationUp()).equals("Chest") ||checkDestination(getGame(), getDestinationUp()).equals("Enemy") ){
+			getGame().moveUP(getOrigin());
 			threadSleep();
-			canInteract = false;
-		}else if (checkDestination(game, getDestinationDown()).equalsIgnoreCase("Chest") || checkDestination(game, getDestinationDown()).equals("Enemy")){
-			game.moveDown(getOrigin());
+			setCanInteract(false);
+		}else if (checkDestination(getGame(), getDestinationDown()).equalsIgnoreCase("Chest") || checkDestination(game, getDestinationDown()).equals("Enemy")){
+			getGame().moveDown(getOrigin());
 			threadSleep();
-			canInteract = false;
-		}else if (checkDestination(game, getDestinationLeft()).equalsIgnoreCase("Chest") || checkDestination(game, getDestinationLeft()).equals("Enemy")) {
-			game.moveLeft(getOrigin());
+			setCanInteract(false);
+		}else if (checkDestination(getGame(), getDestinationLeft()).equalsIgnoreCase("Chest") || checkDestination(getGame(), getDestinationLeft()).equals("Enemy")) {
+			getGame().moveLeft(getOrigin());
 			threadSleep();
-			canInteract = false;
-		}else if (checkDestination(game, getDestinationRight()).equalsIgnoreCase("Chest") || checkDestination(game, getDestinationRight()).equals("Enemy")) {
-			game.moveRight(getOrigin());
+			setCanInteract(false);
+		}else if (checkDestination(getGame(), getDestinationRight()).equalsIgnoreCase("Chest") || checkDestination(getGame(), getDestinationRight()).equals("Enemy")) {
+			getGame().moveRight(getOrigin());
 			threadSleep();
-			canInteract = false;
+			setCanInteract(false);
 		}else if (getMoveCounter() != 3){
 			move();
 		}else{

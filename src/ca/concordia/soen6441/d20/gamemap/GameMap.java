@@ -290,6 +290,12 @@ public class GameMap extends Observable{
 		if(! moveCanBeDone(originX, originY, destinationX, destinationY)) return false;
 		Location origin = new Location(originX, originY);
 		Location destination = new Location(destinationX, destinationY);
+		boolean friendly = false;
+		
+		if(!isMainCharacter && getGameObjectInstanceAtLocation(origin).getGameObject().getTag().equals("Player")){
+			friendly = true;
+		}
+		
 		System.out.println("TAG IN MOVE: " + getGameObjectInstanceAtLocation(destination).getGameObject().getTag());
 		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Ground")){
 			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
@@ -299,6 +305,9 @@ public class GameMap extends Observable{
 				game.setCurrentLocation(destination);
 				setChanged();
 				notifyObservers(this);
+			}else if(friendly){
+				game.getGameView().updateWithOutObserver(origin, destination,true);
+				updateLocation(game,origin,destination);
 			}else{
 				game.getGameView().updateWithOutObserver(origin, destination);
 				updateLocation(game,origin,destination);
@@ -314,6 +323,9 @@ public class GameMap extends Observable{
 				game.setCurrentLocation(destination);
 				setChanged();
 				notifyObservers(this);
+			}else if (friendly){
+				game.getGameView().updateWithOutObserver(origin, destination,true);
+				updateLocation(game,origin,destination);
 			}else{
 				game.getGameView().updateWithOutObserver(origin, destination);
 				updateLocation(game,origin,destination);
@@ -321,6 +333,8 @@ public class GameMap extends Observable{
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Player")){
 			if(isMainCharacter){
 				game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+			}else if (friendly){
+				System.out.println("EXCHANGE ITEM BETWEEN FRIENDLY");
 			}else{
 				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 				Date dateobj = new Date();
@@ -343,8 +357,20 @@ public class GameMap extends Observable{
 				game.setCurrentLocation(destination);
 				setChanged();
 				notifyObservers(this);
+				game.die(fighter);
+			}else if(friendly){
+				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+				Date dateobj = new Date();
+				Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
+				Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+				putFromFighterToChest(fighter,chest);
+				setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
+				game.setCurrentLocation(destination);
+				game.getGameView().updateWithOutObserver(origin, destination,true);
+				game.die(fighter);
 			}else{
-				game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+//				game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
+				System.out.println("ITEM EXCHANGE BETWEEN ENEMY");
 			}
 
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Exit")){

@@ -266,7 +266,11 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 
 	}
 	
-	public void updateWithOutObserver(Location location,Location destination){
+	public void updateWithOutObserver(Location location , Location destination){
+		updateWithOutObserver(location, destination,false);
+	}
+	
+	public void updateWithOutObserver(Location location,Location destination, boolean isFriendly){
 		
 		if(map.getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Chest")){
 			System.out.println("Enter chest:");
@@ -281,7 +285,12 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 			setButton(location.getY(), location.getX());
 			
 			removeElement(destination.getY(),destination.getX());
-			viewElements[destination.getY()][destination.getX()] = new ViewFighterEnemy(map.getGameObjectInstanceAtLocation(destination).getGameObject().getTag(),(Fighter) map.getGameObjectInstanceAtLocation(destination).getGameObject(), this, false);
+			if(isFriendly){
+				viewElements[destination.getY()][destination.getX()] = new ViewFighterPlayer(map.getGameObjectInstanceAtLocation(destination).getGameObject().getTag(),(Fighter) map.getGameObjectInstanceAtLocation(destination).getGameObject(), this, false);
+			}else{
+				viewElements[destination.getY()][destination.getX()] = new ViewFighterEnemy(map.getGameObjectInstanceAtLocation(destination).getGameObject().getTag(),(Fighter) map.getGameObjectInstanceAtLocation(destination).getGameObject(), this, false);
+			}
+			
 			setButton(destination.getY(),destination.getX());
 		}
 	}

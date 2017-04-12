@@ -17,6 +17,8 @@ public class ComputerPlayer extends Strategy{
 	public void turn(Game game) {
 		setCount(6);
 		setMoveCounter(0);
+		setCanAttack(true);
+		setCanInteract(true);
 		setGame(game);
 		
 		while(count > 0){
@@ -55,7 +57,7 @@ public class ComputerPlayer extends Strategy{
 				System.out.println("Y DIR");
 				direction.setY(0);
 			}
-			game.moveDirection(getOrigin(), direction,true);
+       			game.moveDirection(getOrigin(), direction,true);
 		}else if (direction.getX() == 0 && direction.getY() == 0){
 			System.out.println("BOTH ZERO");
 			int rand = new Random().nextInt(4);
@@ -71,12 +73,22 @@ public class ComputerPlayer extends Strategy{
 			}
 		}else{
 			System.out.println("NORMAL MOVE OF AI");
-			game.moveDirection(getOrigin(), direction,true);
+				game.moveDirection(getOrigin(), direction,true);
 		}
 		threadSleep();
 		
 	}
-
+	
+//	private void check(Location direction){
+//		if(checkDestination(getGame(), new Location(getOrigin().getX()+direction.getX(),getOrigin().getY()+direction.getY())).equals("Enemy")){
+//			setCanAttack(false);
+//		}
+//		
+//		if(checkDestination(getGame(), new Location(getOrigin().getX()+direction.getX(),getOrigin().getY()+direction.getY())).equals("Chest") ||checkDestination(getGame(), new Location(getOrigin().getX()+direction.getX(),getOrigin().getY()+direction.getY())).equals("Player") ){
+//			setCanInteract(false);
+//		}
+//	}
+	
 	@Override
 	public void attack() {
 		// TODO Auto-generated method stub
