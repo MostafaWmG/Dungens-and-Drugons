@@ -3,7 +3,7 @@ package ca.concordia.soen6441.controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import ca.concordia.soen6441.d20.campaign.Campaign;
 import ca.concordia.soen6441.d20.common.Location;
@@ -324,7 +324,7 @@ public class Game implements Runnable {
 	 * @return the enemies
 	 */
 	public List<Fighter> getEnemies() {
-		return enemies;
+		return enemies.stream().filter(en->!en.isDead()).collect(Collectors.toList());
 	}
 
 	/**
