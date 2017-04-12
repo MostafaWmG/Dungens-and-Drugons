@@ -6,41 +6,31 @@ import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 
-public class AggressiveNPC implements Strategy{
+public class AggressiveNPC extends Strategy{
 	
-	private Fighter fighter;
-	private Game game;
-	private Location destinationUp;
-	private Location destinationDown;
-	private Location destinationLeft;
-	private Location destinationRight;
-	private Location origin;
-	private int moveCounter ;
-	private boolean canInteract ;
-	private int count;
 	
 	public AggressiveNPC(Fighter fighter) {
+		super();
 		setFighter(fighter);
 		System.out.println("AGGRESIVE PLAYER CREATED: ");
 	}
 	@Override
 	public void turn(Game game) {
-		count = 6;
-		moveCounter = 0;
-		canInteract = true;
+		setCount(6);
+		setMoveCounter(0);
+		setCanInteract(true);
 		setGame(game);
 
 		
 		while(count > 0){
 			System.out.println("ENTER AGGRESIVE PLAYER LOOP: ");
-			origin = game.getLocations().get(fighter);
-			destinationUp = new Location(origin.getX(),origin.getY()-1);
-			destinationDown = new Location(origin.getX(),origin.getY()+1);
-			destinationLeft = new Location(origin.getX()-1,origin.getY());
-			destinationRight = new Location(origin.getX()+1,origin.getY());
-			System.out.println("Current location of NPC : " + origin.getX() + " : " + origin.getY());
-			count --;
-			
+			setOrigin(game.getLocations().get(fighter)); 
+			setDestinationUp(new Location(origin.getX(),origin.getY()-1));
+			setDestinationDown(new Location(origin.getX(),origin.getY()+1));
+			setDestinationLeft(new Location(origin.getX()-1,origin.getY()));
+			setDestinationRight(new Location(origin.getX()+1,origin.getY()));
+			System.out.println("Current location of NPC : " + getOrigin().getX() + " : " + getOrigin().getY());
+			setCount(getCount() -1);			
 			attack();
 
 		}
@@ -51,9 +41,9 @@ public class AggressiveNPC implements Strategy{
 
 	@Override
 	public void move() {
-		moveCounter ++;
+		setMoveCounter(getMoveCounter() + 1); 
 		Location direction;
-		direction =new Location(game.getCurrentLocation().getX() - origin.getX(),game.getCurrentLocation().getY() - origin.getY());
+		direction =new Location(game.getCurrentLocation().getX() - getOrigin().getX(),game.getCurrentLocation().getY() - getOrigin().getY());
 		double magnetude  = Math.sqrt( Math.pow(direction.getX(),2) + Math.pow(direction.getY(), 2) );
 		direction.setX((int) (direction.getX() / magnetude));
 		direction.setY((int) (direction.getY()/magnetude));
@@ -69,48 +59,52 @@ public class AggressiveNPC implements Strategy{
 				System.out.println("Y DIR");
 				direction.setY(0);
 			}
-			game.moveDirection(origin, direction);
+			game.moveDirection(getOrigin(), direction);
 		}else if (direction.getX() == 0 && direction.getY() == 0){
 			System.out.println("BOTH ZERO");
 			int rand = new Random().nextInt(4);
 			System.out.println("RANDOM DIR FOR AI: "+ rand);
 			if(rand ==0){
-				game.moveUP(origin);
+				game.moveUP(getOrigin());
 			}else if (rand == 1){
-				game.moveDown(origin);
+				game.moveDown(getOrigin());
 			}else if (rand == 2){
-				game.moveLeft(origin);
+				game.moveLeft(getOrigin());
 			}else if (rand == 3){
-				game.moveRight(origin);
+				game.moveRight(getOrigin());
 			}
 		}else{
 			System.out.println("NORMAL MOVE OF AI");
-			game.moveDirection(origin, direction);
+			game.moveDirection(getOrigin(), direction);
 		}
 		threadSleep();
 	}
 
 	@Override
 	public void attack() {
-		if(checkDestination(game, destinationUp).equals("Player")){
-			game.moveUP(origin);
+		if(checkDestination(game, getDestinationUp()).equals("Player")){
+			game.moveUP(getOrigin());
 			threadSleep();
-			count = 0;
-		}else if (checkDestination(game, destinationDown).equalsIgnoreCase("Player")){
-			game.moveDown(origin);
+			setCanInteract(false);
+			setCount(0);
+		}else if (checkDestination(game, getDestinationDown()).equalsIgnoreCase("Player")){
+			game.moveDown(getOrigin());
 			threadSleep();
-			count = 0;
-		}else if (checkDestination(game, destinationLeft).equalsIgnoreCase("Player")) {
-			game.moveLeft(origin);
+			setCanInteract(false);
+			setCount(0);
+		}else if (checkDestination(game, getDestinationLeft()).equalsIgnoreCase("Player")) {
+			game.moveLeft(getOrigin());
 			threadSleep();
-			count = 0;
-		}else if (checkDestination(game, destinationRight).equalsIgnoreCase("Player")) {
-			game.moveRight(origin);
+			setCanInteract(false);
+			setCount(0);
+		}else if (checkDestination(game, getDestinationRight()).equalsIgnoreCase("Player")) {
+			game.moveRight(getOrigin());
 			threadSleep();
-			count = 0;
-		}else if (canInteract){
+			setCanInteract(false);
+			setCount(0);
+		}else if (isCanInteract()){
 			interact();
-		}else if (moveCounter != 3){
+		}else if (getMoveCounter() != 3){
 			move();
 		}else{
 			System.out.println("AI Enter ALERT MODE: ");
@@ -119,56 +113,27 @@ public class AggressiveNPC implements Strategy{
 
 	@Override
 	public void interact() {
-		if(checkDestination(game, destinationUp).equals("Chest") ||checkDestination(game, destinationUp).equals("Enemy") ){
-			game.moveUP(origin);
+		if(checkDestination(game, getDestinationUp()).equals("Chest") ||checkDestination(game, getDestinationUp()).equals("Enemy") ){
+			game.moveUP(getOrigin());
 			threadSleep();
 			canInteract = false;
-		}else if (checkDestination(game, destinationDown).equalsIgnoreCase("Chest") || checkDestination(game, destinationDown).equals("Enemy")){
-			game.moveDown(origin);
+		}else if (checkDestination(game, getDestinationDown()).equalsIgnoreCase("Chest") || checkDestination(game, getDestinationDown()).equals("Enemy")){
+			game.moveDown(getOrigin());
 			threadSleep();
 			canInteract = false;
-		}else if (checkDestination(game, destinationLeft).equalsIgnoreCase("Chest") || checkDestination(game, destinationLeft).equals("Enemy")) {
-			game.moveLeft(origin);
+		}else if (checkDestination(game, getDestinationLeft()).equalsIgnoreCase("Chest") || checkDestination(game, getDestinationLeft()).equals("Enemy")) {
+			game.moveLeft(getOrigin());
 			threadSleep();
 			canInteract = false;
-		}else if (checkDestination(game, destinationRight).equalsIgnoreCase("Chest") || checkDestination(game, destinationRight).equals("Enemy")) {
-			game.moveRight(origin);
+		}else if (checkDestination(game, getDestinationRight()).equalsIgnoreCase("Chest") || checkDestination(game, getDestinationRight()).equals("Enemy")) {
+			game.moveRight(getOrigin());
 			threadSleep();
 			canInteract = false;
-		}else if (moveCounter != 3){
+		}else if (getMoveCounter() != 3){
 			move();
 		}else{
 			System.out.println("AI IS IN ALERT MODE");
 		}
 		
 	}
-
-	/**
-	 * @return the fighter
-	 */
-	public Fighter getFighter() {
-		return fighter;
-	}
-
-	/**
-	 * @param fighter the fighter to set
-	 */
-	public void setFighter(Fighter fighter) {
-		this.fighter = fighter;
-	}
-	
-	/**
-	 * @return the game
-	 */
-	public Game getGame() {
-		return game;
-	}
-
-	/**
-	 * @param game the game to set
-	 */
-	public void setGame(Game game) {
-		this.game = game;
-	}
-
 }

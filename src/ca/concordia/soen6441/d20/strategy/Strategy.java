@@ -2,18 +2,37 @@ package ca.concordia.soen6441.d20.strategy;
 
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
+import ca.concordia.soen6441.d20.fighter.Fighter;
 
-public interface Strategy {
+public abstract class Strategy {
 	
-	public void turn(Game game);
 	
-	public void move();
+	protected Fighter fighter;
+	protected Game game;
+	protected Location destinationUp;
+	protected Location destinationDown;
+	protected Location destinationLeft;
+	protected Location destinationRight;
+	protected Location origin;
+	protected int moveCounter ;
+	protected boolean canInteract ;
+	protected boolean canAttack ;
+	protected int count;
+	protected boolean isAlive;
 	
-	public void attack();
+	public Strategy() {
+		setAlive(true);
+	}
 	
-	public void interact();
+	public abstract void turn(Game game);
 	
-	public default String checkDestination(Game game,Location destination){
+	public abstract void move();
+	
+	public abstract void attack();
+	
+	public abstract void interact();
+	
+	public String checkDestination(Game game,Location destination){
 		if(! game.getMap().moveCanBeDone(game.getCurrentLocation().getX(), game.getCurrentLocation().getY(), destination.getX(), destination.getY())) {
 			System.out.println("out of map");
 			return "null";
@@ -36,7 +55,7 @@ public interface Strategy {
 		}
 	}
 	
-	public default void threadSleep()
+	public void threadSleep()
 	{
 		try {
 			Thread.sleep(500);
@@ -44,5 +63,150 @@ public interface Strategy {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * @return the fighter
+	 */
+	public Fighter getFighter() {
+		return fighter;
+	}
+	/**
+	 * @param fighter the fighter to set
+	 */
+	public void setFighter(Fighter fighter) {
+		this.fighter = fighter;
+	}
+	/**
+	 * @return the game
+	 */
+	public Game getGame() {
+		return game;
+	}
+	/**
+	 * @param game the game to set
+	 */
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	/**
+	 * @return the destinationUp
+	 */
+	public Location getDestinationUp() {
+		return destinationUp;
+	}
+	/**
+	 * @param destinationUp the destinationUp to set
+	 */
+	public void setDestinationUp(Location destinationUp) {
+		this.destinationUp = destinationUp;
+	}
+	/**
+	 * @return the destinationDown
+	 */
+	public Location getDestinationDown() {
+		return destinationDown;
+	}
+	/**
+	 * @param destinationDown the destinationDown to set
+	 */
+	public void setDestinationDown(Location destinationDown) {
+		this.destinationDown = destinationDown;
+	}
+	/**
+	 * @return the destinationLeft
+	 */
+	public Location getDestinationLeft() {
+		return destinationLeft;
+	}
+	/**
+	 * @param destinationLeft the destinationLeft to set
+	 */
+	public void setDestinationLeft(Location destinationLeft) {
+		this.destinationLeft = destinationLeft;
+	}
+	/**
+	 * @return the destinationRight
+	 */
+	public Location getDestinationRight() {
+		return destinationRight;
+	}
+	/**
+	 * @param destinationRight the destinationRight to set
+	 */
+	public void setDestinationRight(Location destinationRight) {
+		this.destinationRight = destinationRight;
+	}
+	/**
+	 * @return the origin
+	 */
+	public Location getOrigin() {
+		return origin;
+	}
+	/**
+	 * @param origin the origin to set
+	 */
+	public void setOrigin(Location origin) {
+		this.origin = origin;
+	}
+	/**
+	 * @return the moveCounter
+	 */
+	public int getMoveCounter() {
+		return moveCounter;
+	}
+	/**
+	 * @param moveCounter the moveCounter to set
+	 */
+	public void setMoveCounter(int moveCounter) {
+		this.moveCounter = moveCounter;
+	}
+	/**
+	 * @return the canInteract
+	 */
+	public boolean isCanInteract() {
+		return canInteract;
+	}
+	/**
+	 * @param canInteract the canInteract to set
+	 */
+	public void setCanInteract(boolean canInteract) {
+		this.canInteract = canInteract;
+	}
+	/**
+	 * @return the count
+	 */
+	public int getCount() {
+		return count;
+	}
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(int count) {
+		this.count = count;
+	}
+	/**
+	 * @return the isAlive
+	 */
+	public boolean isAlive() {
+		return isAlive;
+	}
+	/**
+	 * @param isAlive the isAlive to set
+	 */
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+	/**
+	 * @return the canAttack
+	 */
+	public boolean isCanAttack() {
+		return canAttack;
+	}
+	/**
+	 * @param canAttack the canAttack to set
+	 */
+	public void setCanAttack(boolean canAttack) {
+		this.canAttack = canAttack;
 	}
 }

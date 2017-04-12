@@ -6,27 +6,16 @@ import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 
-public class HumanPlayer implements Strategy {
+public class HumanPlayer extends Strategy {
 
-	private Fighter fighter;
+
 	private Scanner scanner;
-	private Game game;
-	private Location destinationUp;
-	private Location destinationDown;
-	private Location destinationLeft;
-	private Location destinationRight;
-	private Location origin;
-	private boolean canAttack ;
-	private boolean canInteract ;
 	
 	public HumanPlayer(Fighter fighter) {
+		super();
 		setFighter(fighter);
 	}
 
-	//up y-1
-	// down y+1
-	// left x-1
-	// right x+1
 	@Override
 	public void turn(Game game) {
 		int count = 6;
@@ -183,31 +172,5 @@ public class HumanPlayer implements Strategy {
 		}
 
 	}
-	/**
-	 * @return the fighter
-	 */
-	public Fighter getFighter() {
-		return fighter;
-	}
-	/**
-	 * @param fighter the fighter to set
-	 */
-	public void setFighter(Fighter fighter) {
-		this.fighter = fighter;
-	}
-
-	/**
-	 * @return the game
-	 */
-	public Game getGame() {
-		return game;
-	}
-
-	/**
-	 * @param game the game to set
-	 */
-	public void setGame(Game game) {
-		this.game = game;
-	}
-
+ 
 }

@@ -348,7 +348,8 @@ public class GameMap extends Observable{
 			}
 
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Exit")){
-			game.reset();
+			if(isMainCharacter)
+				game.reset();
 		}
 		return true;
 

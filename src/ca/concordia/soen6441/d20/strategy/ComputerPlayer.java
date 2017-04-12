@@ -1,43 +1,79 @@
 package ca.concordia.soen6441.d20.strategy;
 
+import java.util.Random;
+
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 
-public class ComputerPlayer implements Strategy{
-	
-	private Fighter fighter;
-	private Game game;
-	
+public class ComputerPlayer extends Strategy{
+		
 	public ComputerPlayer(Fighter fighter) {
+		super();
 		setFighter(fighter);
 	}
 	
 	@Override
 	public void turn(Game game) {
-		int count = 3;
+		setCount(6);
+		setMoveCounter(0);
 		setGame(game);
-		Location origin = getGame().getCurrentLocation();
-		Location destinationUp = new Location(origin.getX(),origin.getY()-1);
-		Location destinationDown = new Location(origin.getX(),origin.getY()+1);
-		Location destinationLeft = new Location(origin.getX()-1,origin.getY());
-		Location destinationRight = new Location(origin.getX()+1,origin.getY());
 		
 		while(count > 0){
-			count --;
-			if(checkDestination(game, destinationUp).equals("Enemy")){
-				attack();
-				threadSleep();
-			}else if(checkDestination(game, destinationUp).equals("Ground")){
-				
+			System.out.println("ENTER COMPUTER PLAYER LOOP: ");
+			setOrigin(game.getCurrentLocation());
+			System.out.println("Current location of NPC : " + getOrigin().getX() + " : " + getOrigin().getY());
+			setCount(getCount() - 1);
+			
+			if(getMoveCounter() !=3)
+				move();
+			else {
+				System.out.println("COMPUTER Waiting: ");
 			}
+
 		}
 		
 	}
 
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
+		setMoveCounter(getMoveCounter() + 1);
+		Location direction;
+		direction =new Location(game.getExit().getX() - getOrigin().getX(),game.getExit().getY() - getOrigin().getY());
+		double magnetude  = Math.sqrt( Math.pow(direction.getX(),2) + Math.pow(direction.getY(), 2) );
+		direction.setX((int) (direction.getX() / magnetude));
+		direction.setY((int) (direction.getY()/magnetude));
+		
+		System.out.println("direction:" + direction.getX() +" : "+ direction.getY());
+		if(direction.getX() != 0 && direction.getY() != 0){
+			System.out.println("BOTH NOT ZERO");
+			boolean rand = new Random().nextBoolean();
+			if(rand){
+				System.out.println("X DIR");
+				direction.setX(0);
+			}else {
+				System.out.println("Y DIR");
+				direction.setY(0);
+			}
+			game.moveDirection(getOrigin(), direction,true);
+		}else if (direction.getX() == 0 && direction.getY() == 0){
+			System.out.println("BOTH ZERO");
+			int rand = new Random().nextInt(4);
+			System.out.println("RANDOM DIR FOR AI: "+ rand);
+			if(rand ==0){
+				game.moveUP();
+			}else if (rand == 1){
+				game.moveDown();
+			}else if (rand == 2){
+				game.moveLeft();
+			}else if (rand == 3){
+				game.moveRight();
+			}
+		}else{
+			System.out.println("NORMAL MOVE OF AI");
+			game.moveDirection(getOrigin(), direction,true);
+		}
+		threadSleep();
 		
 	}
 
@@ -52,31 +88,4 @@ public class ComputerPlayer implements Strategy{
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * @return the fighter
-	 */
-	public Fighter getFighter() {
-		return fighter;
-	}
-	/**
-	 * @param fighter the fighter to set
-	 */
-	public void setFighter(Fighter fighter) {
-		this.fighter = fighter;
-	}
-	
-	/**
-	 * @return the game
-	 */
-	public Game getGame() {
-		return game;
-	}
-
-	/**
-	 * @param game the game to set
-	 */
-	public void setGame(Game game) {
-		this.game = game;
-	}
-
 }

@@ -1,6 +1,7 @@
 package ca.concordia.soen6441.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +13,6 @@ import ca.concordia.soen6441.d20.dice.Dice;
 import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
-import ca.concordia.soen6441.d20.gamemap.element.Exit;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Chest;
@@ -57,7 +57,7 @@ public class Game implements Runnable {
 	/**
 	 * exit and enter door
 	 */
-	private Exit exit;
+	private Location exitLocation;
 	private Entery entery;
 	private Location currentLocation;
 	private Dice dice ;
@@ -70,7 +70,7 @@ public class Game implements Runnable {
 	private GameView gameView;
 	private int mapNumber;
 	private List<Fighter> tempSort;
-	private List<Fighter> turnOrder;
+	private final List<Fighter> turnOrder = Collections.synchronizedList(new ArrayList<Fighter>());
 	private boolean ordered;
 	private HashMap<Fighter, Location> locations;
 	/**
@@ -95,7 +95,7 @@ public class Game implements Runnable {
 		setDice(new Dice());
 		setFighters(new ArrayList<Fighter>());
 		setTempSort(new ArrayList<Fighter>());
-		setTurnOrder(new ArrayList<Fighter>());
+//		setTurnOrder();
 		setOrdered(false);
 		setLocations(new HashMap<Fighter, Location>());
 		initializeAndShow();
@@ -119,7 +119,7 @@ public class Game implements Runnable {
 		setDice(new Dice());
 		setFighters(new ArrayList<Fighter>());
 		setTempSort(new ArrayList<Fighter>());
-		setTurnOrder(new ArrayList<Fighter>());
+//		setTurnOrder(new Vector<Fighter>());
 		setOrdered(false);
 		setLocations(new HashMap<Fighter, Location>());
 		initializeAndShow(test);
@@ -172,7 +172,7 @@ public class Game implements Runnable {
 					getChests().add((Chest)reference);
 				}else if (reference.getTag().equals("Exit") ){
 					System.out.print("Q");//exit
-					setExit((Exit)reference);
+					setExit(new Location(j,i));
 				}else if (reference.getTag().equals("Enter") ){
 					System.out.print("E");//enter
 					setEntery((Entery)reference);
@@ -287,11 +287,9 @@ public class Game implements Runnable {
 	}
 	
 	public void die(Fighter fighter){
-		for(int i = 0 ; i < getTurnOrder().size();i++){
-			if(getTurnOrder().get(i).getName().equalsIgnoreCase(fighter.getName()))
-				getTurnOrder().remove(i);
-		}
+		fighter.getStrategy().setAlive(false);
 	}
+	
 	/**
 	 * @return the fighter
 	 */
@@ -309,15 +307,15 @@ public class Game implements Runnable {
 	/**
 	 * @return the exit
 	 */
-	public Exit getExit() {
-		return exit;
+	public Location getExit() {
+		return exitLocation;
 	}
 
 	/**
 	 * @param exit the exit to set
 	 */
-	public void setExit(Exit exit) {
-		this.exit = exit;
+	public void setExit(Location exitLocation) {
+		this.exitLocation = exitLocation;
 	}
 
 	/**
@@ -450,18 +448,37 @@ public class Game implements Runnable {
 			if(getTurnOrder().isEmpty())
 				finishGame();
 			
-			for (Iterator<Fighter> iterator = getTurnOrder().iterator() ; iterator.hasNext();) {
-				Fighter fighter = iterator.next();
-				fighter.getStrategy().turn(this);
+			synchronized (getTurnOrder()) {
+				for (Iterator<Fighter> iterator = getTurnOrder().iterator() ; iterator.hasNext();) {
+					System.out.println("Enter Turn");
+					Fighter fighter = iterator.next();
+					
+					if(fighter.getStrategy().isAlive()){
+						fighter.getStrategy().turn(this);
+					}
+					else {
+						System.out.println(fighter.getName() + " is DEAD.");
+					}
 
-				System.out.println("Turn Finished:");
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("Turn Finished:");
+				}
+				
+				for(Iterator<Fighter> iterator = getTurnOrder().iterator();iterator.hasNext();){
+					Fighter fighter = iterator.next();
+					if(!fighter.getStrategy().isAlive()){
+						System.out.println(fighter.getName()+" Has been removed.");
+						iterator.remove();
+					}
 				}
 			}
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			System.out.println("Next Turn: ");
 		}
 
@@ -469,12 +486,26 @@ public class Game implements Runnable {
 	}
 	
 	public void moveDirection(Location origin,Location direction){
-		System.out.println("AI movement");
-		if(getMap().move(origin.getX(), origin.getY(),origin.getX() +direction.getX() , origin.getY() + direction.getY(), this,false)){
-			System.out.println("AI MOVED");
-		}else{
-			System.out.println("AI cant move Character");
+		moveDirection(origin, direction,true);
+	}
+	
+	public void moveDirection(Location origin,Location direction,boolean isPlayer){
+		if(isPlayer){
+			System.out.println("AI movement");
+			if(getMap().move(origin.getX(), origin.getY(),origin.getX() +direction.getX() , origin.getY() + direction.getY(), this,false)){
+				System.out.println("AI MOVED");
+			}else{
+				System.out.println("AI cant move Character");
+			}
+		}else {
+			System.out.println("PC movement");
+			if(getMap().move(origin.getX(), origin.getY(),origin.getX() +direction.getX() , origin.getY() + direction.getY(), this,true)){
+				System.out.println("PC MOVED");
+			}else{
+				System.out.println("PC cant move Character");
+			}
 		}
+
 	}
 	
 	public void moveUP(Location origin){
@@ -645,12 +676,12 @@ public class Game implements Runnable {
 		return turnOrder;
 	}
 
-	/**
-	 * @param turnOrder the turnOrder to set
-	 */
-	public void setTurnOrder(List<Fighter> turnOrder) {
-		this.turnOrder = turnOrder;
-	}
+//	/**
+//	 * @param turnOrder the turnOrder to set
+//	 */
+//	public void setTurnOrder(List<Fighter> turnOrder) {
+//		this.turnOrder = turnOrder;
+//	}
 
 	/**
 	 * @return the ordered
