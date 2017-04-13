@@ -17,6 +17,8 @@ public class Item extends GameObject implements ILevelUp,IItem{
 	
 	private ItemEntity itemEntity;
 	
+	private boolean mele;
+	
 	public Item(String name,ItemEnum item,AbilityEnum enchantmentType, int point) {
 		initEmptyEntity();
 		setName(name);
@@ -295,5 +297,19 @@ public class Item extends GameObject implements ILevelUp,IItem{
 	@Override
 	public void specialEffect(Fighter attacker,Fighter target) {
 		
+	}
+
+	/**
+	 * @return the mele
+	 */
+	public boolean isMele() {
+		return mele;
+	}
+
+	/**
+	 * @param mele the mele to set
+	 */
+	public void setMele(boolean mele) {
+		this.mele = mele;
 	}
 }
