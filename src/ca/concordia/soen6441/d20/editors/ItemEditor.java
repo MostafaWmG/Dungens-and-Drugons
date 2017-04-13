@@ -13,7 +13,7 @@ import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
- * this a class for create/edit Items.
+ * This a class for is used to create/edit Items.
  * @author wmg
  *
  */
@@ -43,7 +43,9 @@ public class ItemEditor {
 			System.out.println("Error");
 		}
 	}
-	
+	/**
+	 * This method is used to add item to chest or remove item from it.
+	 */
 	private void editChest(){
 		System.out.println("Please Enter Your Chest Name: ");
 		String itemName = scanner.nextLine();
@@ -68,7 +70,10 @@ public class ItemEditor {
 		}
 		
 	}
-	
+	/**
+	 * This method is used to add an item to chest
+	 * @param chest the chest that we want to add an item to.
+	 */
 	private void addToChest(Chest chest){
 		System.out.println("Please Enter Your Item Name:");
 		String itemName = scanner.nextLine();
@@ -85,7 +90,10 @@ public class ItemEditor {
 		chest.show();
 		saveChestFactory(chest, "edit");
 	}
-	
+	/**
+	 * Removes an item from the specified chest.
+	 * @param chest gets chest that we want to remove an item from
+	 */
 	private void removeFromChest(Chest chest){
 		System.out.println("Please Enter slot number:");
 		String chestStr = scanner.nextLine();
@@ -96,7 +104,9 @@ public class ItemEditor {
 		saveChestFactory(chest, "edit");
 		
 	}
-	
+	/**
+	 * This method is used to create a chest
+	 */
 	private void createChest(){
 		System.out.println("Please Enter Your Chest Name: ");
 		String itemName = scanner.nextLine();

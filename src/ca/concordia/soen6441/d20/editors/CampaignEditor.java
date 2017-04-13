@@ -9,7 +9,8 @@ import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.GameMapEntity;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
- * CampaignEditor class
+ * CampaignEditor class. This class is used for adding a map to the campaign or any other
+ * changes to game campaign.
  * @author wmg
  *
  */

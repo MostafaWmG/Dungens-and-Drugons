@@ -2,7 +2,7 @@ package ca.concordia.soen6441.d20.dice;
 
 import java.util.Random;
 /**
- * dice that produce numbers randomly
+ * This dice is used in the game for producing numbers randomly. These numbers then define how to play the game.
  * @author wmg
  *
  */

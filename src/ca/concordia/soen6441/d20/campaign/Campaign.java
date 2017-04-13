@@ -6,7 +6,7 @@ import java.util.List;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 
 /**
- * graph of maps that connect the together.
+ * This class impelements game campaign which is a graph of maps that connect the together.
  * @author wmg
  *
  */

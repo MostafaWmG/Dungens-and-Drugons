@@ -11,14 +11,19 @@ import ca.concordia.soen6441.d20.fighter.FighterEntity;
 import ca.concordia.soen6441.d20.strategy.ComputerPlayer;
 import ca.concordia.soen6441.d20.strategy.HumanPlayer;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
-
+/**
+ * 
+ * This class is the user interface to start the game with. It loads the game campaign and
+ * the character specified by user. 
+ *
+ */
 public class StartGameUserInterFace {
 	private Scanner scanner;
 	private Campaign campaign;
 	private Fighter fighter;
 	
 	/**
-	 * by choosing the campaing and the character, it loads both from the file
+	 * by choosing the campaign and the character, it loads both from the file
 	 */
 	public StartGameUserInterFace(){
 
