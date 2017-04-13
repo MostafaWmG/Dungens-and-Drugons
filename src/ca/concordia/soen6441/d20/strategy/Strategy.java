@@ -70,6 +70,11 @@ public abstract class Strategy {
 		setBurnDamage(burnDamge);
 	}
 	
+	public void activeSlayingEffect()
+	{
+		setAlive(false);
+	}
+	
 	public void setSlayingEffect(){
 		
 	}
