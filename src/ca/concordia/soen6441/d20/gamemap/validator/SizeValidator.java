@@ -2,7 +2,7 @@ package ca.concordia.soen6441.d20.gamemap.validator;
 
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 /**
- * validate a map so it cannot be smaller than 2x2
+ * This class is implemented to validate a map so it cannot be smaller than 2x2
  *
  */
 public class SizeValidator {
