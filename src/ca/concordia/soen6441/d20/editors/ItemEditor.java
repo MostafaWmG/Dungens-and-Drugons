@@ -186,7 +186,19 @@ public class ItemEditor {
 	}
 	
 	private void changeItemRange(Item item){
-		
+		item.show();
+		System.out.println("Enter mele or range to change :");
+
+		String mele = scanner.nextLine();
+		if(mele.equalsIgnoreCase("mele")){
+			item.setMele(true);
+			item.show();
+			saveItemFactory(item, "edit");
+		}else{
+			item.setMele(false);
+			item.show();
+			saveItemFactory(item, "edit");
+		}
 	}
 	/**
 	 * this is a method for changing itemPoint

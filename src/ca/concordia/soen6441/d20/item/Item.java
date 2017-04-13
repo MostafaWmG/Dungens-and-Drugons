@@ -172,15 +172,15 @@ public class Item extends GameObject implements ILevelUp,IItem{
 		String s = "";
 		if(consol){
 			if(getItemEntity().getAttributeType() !=null){
-				 System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint());
+				 System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint() + " Mele: " + getItemEntity().isMele());
 				}else if (getItemEntity().getEnchantmentType() !=null){
-					System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint());
+					System.out.println("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint()+ " Mele: " + getItemEntity().isMele());
 				}	
 		}else{
 			if(getItemEntity().getAttributeType() !=null){
-				 s = s.concat("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint() + "\n"); 
+				 s = s.concat("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getAttributeType()+" Point: "+ getItemEntity().getPoint() + " Mele: " + getItemEntity().isMele() + "\n"); 
 				}else if (getItemEntity().getEnchantmentType() !=null){
-				s = s.concat("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint()+"\n");
+				s = s.concat("Item name: "+ getItemEntity().getName()+" Item model: "+getItemEntity().getItemEnum()+" Type: "+getItemEntity().getEnchantmentType()+" Point: "+ getItemEntity().getPoint()+ " Mele: " + getItemEntity().isMele()+ "\n");
 				}
 		}
 		

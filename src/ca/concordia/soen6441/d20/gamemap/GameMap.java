@@ -351,6 +351,10 @@ public class GameMap extends Observable{
 				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 				Date dateobj = new Date();
 				Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
+				
+				Fighter attacker =(Fighter)getGameObjectInstanceAtLocation(origin).getGameObject();
+				attacker.attack(fighter);
+				
 				Chest chest = new Chest(fighter.getName() +df.format(dateobj));
 				putFromFighterToChest(fighter,chest);
 				setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
