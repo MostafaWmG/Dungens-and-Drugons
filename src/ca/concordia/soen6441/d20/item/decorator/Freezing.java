@@ -1,9 +1,13 @@
 package ca.concordia.soen6441.d20.item.decorator;
 
 import ca.concordia.soen6441.d20.fighter.Fighter;
+
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEnum;
-
+/**
+ * This class is subclass of ItemDecorator. It is used to implement Decorator pattern.
+ * Target in freezing mode cannot move for a number of turnsequal to the enchantment bonus of the weapon.
+ */
 public class Freezing extends ItemDecorator {
 
 	public Freezing(Item decoratedItem) {
