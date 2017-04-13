@@ -10,12 +10,14 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.item.decorator.IItem;
 
 /**
- * every new Item class represent an actual item . 
+ * every new Item class represents an actual item that character can wear or put in chest or backpack.
  * @author wmg
  */
 public class Item extends GameObject implements ILevelUp,IItem{
 	
 	private ItemEntity itemEntity;
+	
+	private boolean mele;
 	
 	public Item(String name,ItemEnum item,AbilityEnum enchantmentType, int point) {
 		initEmptyEntity();
@@ -295,5 +297,19 @@ public class Item extends GameObject implements ILevelUp,IItem{
 	@Override
 	public void specialEffect(Fighter attacker,Fighter target) {
 		
+	}
+
+	/**
+	 * @return the mele
+	 */
+	public boolean isMele() {
+		return mele;
+	}
+
+	/**
+	 * @param mele the mele to set
+	 */
+	public void setMele(boolean mele) {
+		this.mele = mele;
 	}
 }

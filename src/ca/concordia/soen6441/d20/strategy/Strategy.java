@@ -3,7 +3,13 @@ package ca.concordia.soen6441.d20.strategy;
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-
+/**
+ * This abstract class is used to implement Strategy pattern.
+ * In this game we have 4 Strategies.
+ * Each subclasses of this class implement one strategy.
+ * @author negar
+ *
+ */
 public abstract class Strategy {
 	
 	
@@ -41,6 +47,12 @@ public abstract class Strategy {
 	
 	public abstract void interact();
 	
+	/**
+	 * This method validates that the character of the game can move to the desired destination or not
+	 * @param game the current game that character is playin
+	 * @param destination that character wants to go
+	 * @return string that show us the ability to move or not
+	 */
 	public String checkDestination(Game game,Location destination){
 		if(! game.getMap().moveCanBeDone(game.getCurrentLocation().getX(), game.getCurrentLocation().getY(), destination.getX(), destination.getY())) {
 			System.out.println("out of map");
@@ -63,7 +75,9 @@ public abstract class Strategy {
 			return "Chest";
 		}
 	}
-	
+	/**
+	 * this method applies the effect that is appropriate
+	 */
 	protected void applyEffects(){
 		if(getBurnTimes() > 0){
 			setBurnTimes(getBurnTimes() - 1);
@@ -82,18 +96,27 @@ public abstract class Strategy {
 			setFear(false);
 		}
 	}
-	
+	/**
+	 * apply fear effect
+	 * @param fearTimes 
+	 * @param attacker use this fighter to get its location
+	 */
 	public void activeFearEffect(int fearTimes,Fighter attacker){
 		setFearTiems(fearTimes);
 		getGame().getLocations().get(attacker);
 		setFear(true);
 	}
-	
+	/**
+	 * apply burning effect
+	 * @param burnDamge to set
+	 */
 	public void activeBuringEffect(int burnDamge){
 		setBurnTimes(3);
 		setBurnDamage(burnDamge);
 	}
-	
+	/**
+	 * apply slaying effect
+	 */
 	public void activeSlayingEffect()
 	{
 		setAlive(false);

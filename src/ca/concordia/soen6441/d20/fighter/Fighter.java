@@ -130,7 +130,11 @@ public class Fighter extends GameObject {
 		setCharacterEntity(new FighterEntity());
 		dice = new Dice();
 	}
-	
+	/**
+	 * This method checks whether the given location is in range movement of the character
+	 * @param l location that is being checked
+	 * @return
+	 */
 	private boolean isInRange(Location l){
 		Location fighterLocation = this.getLocation();
 		return (fighterLocation.getX() == (l.getX()+1) 
@@ -142,7 +146,11 @@ public class Fighter extends GameObject {
 				|| (fighterLocation.getY() == (l.getY()-1)
 				&& fighterLocation.getX() == l.getX());
 	}
-		
+	/**
+	 * This method implements the attack. by calling this method character attacks the enemy. character may be
+	 * successful or not.
+	 * @param enemy the game character(player) will attack specified enemy.
+	 */
 	public void attack(Fighter enemy) {
 		Location enemyLocation = enemy.getLocation();
 		if(isInRange(enemyLocation)){
@@ -164,7 +172,11 @@ public class Fighter extends GameObject {
 		}
 		
 	}
-	
+	/**
+	 * the damage points that should be subtracted from character's hit points.
+	 * @param damage
+	 * @return
+	 */
 	public boolean takeDamge(int damage){
 
 		getHitPoint().setBase((getHitPoint().getPoint() - damage));
