@@ -33,7 +33,7 @@ public class FriendlyNPC extends Strategy{
 			
 			applyEffects();
 			
-			if(isAlive()){
+			if(isAlive() && !isFreeze()){
 				if(isCanInteract()){
 					interact();
 				}else if (isCanAttack()){
@@ -44,8 +44,17 @@ public class FriendlyNPC extends Strategy{
 					System.out.println("FNPC Waiting: ");
 				}
 			}else{
-				game.getGameView().removeDeadFighter(getOrigin());
-				System.out.println("Fighter: "+ getFighter().getName() + " Dies because of weapon effects" );
+				
+				if(isAlive()){
+					game.getGameView().removeDeadFighter(getOrigin());
+					System.out.println("Fighter: "+ getFighter().getName() + " Dies because of weapon effects" );
+				}
+				
+				if(isFreeze()){
+					System.out.println("FREEZED");
+				}
+				
+				break;
 			}
 			
 		}

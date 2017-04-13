@@ -21,9 +21,12 @@ public abstract class Strategy {
 	protected boolean isAlive;
 	protected int burnTimes;
 	protected int burnDamage;
+	protected int freezeTimes;
+	protected boolean freeze;
 	
 	public Strategy() {
 		setAlive(true);
+		setFreeze(false);
 	}
 	
 	public abstract void turn(Game game);
@@ -63,6 +66,11 @@ public abstract class Strategy {
 			setAlive(!getFighter().takeDamge(getBurnDamage()));
 		}
 		
+		if(getFreezeTimes() > 0 ){
+			setFreezeTimes(getFreezeTimes() - 1 );
+		}else{
+			setFreeze(false);
+		}
 	}
 	
 	public void activeBuringEffect(int burnDamge){
@@ -73,6 +81,11 @@ public abstract class Strategy {
 	public void activeSlayingEffect()
 	{
 		setAlive(false);
+	}
+	
+	public void activeFreezeEffect(int freezeTimes){
+		setFreezeTimes(freezeTimes);
+		setFreeze(true);
 	}
 	
 	public void setSlayingEffect(){
@@ -260,5 +273,33 @@ public abstract class Strategy {
 	 */
 	public void setBurnDamage(int burnDamage) {
 		this.burnDamage = burnDamage;
+	}
+
+	/**
+	 * @return the freezeTimes
+	 */
+	public int getFreezeTimes() {
+		return freezeTimes;
+	}
+
+	/**
+	 * @param freezeTimes the freezeTimes to set
+	 */
+	public void setFreezeTimes(int freezeTimes) {
+		this.freezeTimes = freezeTimes;
+	}
+
+	/**
+	 * @return the freeze
+	 */
+	public boolean isFreeze() {
+		return freeze;
+	}
+
+	/**
+	 * @param freeze the freeze to set
+	 */
+	public void setFreeze(boolean freeze) {
+		this.freeze = freeze;
 	}
 }
