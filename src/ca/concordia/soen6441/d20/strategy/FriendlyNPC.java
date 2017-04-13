@@ -62,19 +62,24 @@ public class FriendlyNPC extends Strategy{
 
 	@Override
 	public void move() {
-		setMoveCounter(getMoveCounter() + 1);
-		
-		if(checkDestination(getGame(), destinationUp).equals("Ground")){
-			getGame().moveUP(getOrigin());
-		}else if (checkDestination(getGame(), destinationDown).equals("Ground")){
-			getGame().moveDown(getOrigin());
-		}else if(checkDestination(getGame(), destinationLeft).equals("Ground")){
-			getGame().moveLeft(getOrigin());
-		}else if (checkDestination(getGame(), destinationRight).equals("Ground")){
-			getGame().moveRight(getOrigin());
+		if(isFear()){
+			
 		}else {
-			System.out.println("Friendly out move and waiting");
+			setMoveCounter(getMoveCounter() + 1);
+			
+			if(checkDestination(getGame(), destinationUp).equals("Ground")){
+				getGame().moveUP(getOrigin());
+			}else if (checkDestination(getGame(), destinationDown).equals("Ground")){
+				getGame().moveDown(getOrigin());
+			}else if(checkDestination(getGame(), destinationLeft).equals("Ground")){
+				getGame().moveLeft(getOrigin());
+			}else if (checkDestination(getGame(), destinationRight).equals("Ground")){
+				getGame().moveRight(getOrigin());
+			}else {
+				System.out.println("Friendly out move and waiting");
+			}
 		}
+
 	}
 
 	@Override
