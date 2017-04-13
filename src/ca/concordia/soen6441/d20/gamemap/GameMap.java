@@ -273,6 +273,15 @@ public class GameMap extends Observable{
 		setGameObjectAtLocation(location, instance, saveEntity);
 	}
 	
+	/**
+	 * move
+	 * @param originX x
+	 * @param originY y
+	 * @param destinationX  x destination
+	 * @param destinationY  y destination
+	 * @param game game
+	 * @return can move or not
+	 */
 	public boolean move(int originX, int originY, int destinationX, int destinationY,Game game){
 		return move(originX, originY, destinationX, destinationY, game,true);
 	}
@@ -298,8 +307,10 @@ public class GameMap extends Observable{
 		
 		System.out.println("TAG IN MOVE: " + getGameObjectInstanceAtLocation(destination).getGameObject().getTag());
 		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Ground")){
+			DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+			Date dateobj = new Date();
 			setGameObjectInstanceAtLocation(destination, getGameObjectInstanceAtLocation(origin));
-			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+originX+originY+"dontduplicate"), this));
+			setGameObjectInstanceAtLocation(origin, new GameObjectInstance(new Ground(getMapName()+df.format(dateobj)+originX+originY), this));
 			
 			if(isMainCharacter){
 				game.setCurrentLocation(destination);
@@ -399,6 +410,12 @@ public class GameMap extends Observable{
 
 	}
 	
+	/**
+	 * update the location
+	 * @param game game controller
+	 * @param origin origin
+	 * @param destination destination
+	 */
 	private void updateLocation(Game game,Location origin,Location destination){
 		for(Map.Entry<Fighter,Location> location : game.getLocations().entrySet()){
 			if(location.getValue().equals(origin)){
@@ -408,6 +425,11 @@ public class GameMap extends Observable{
 		}	
 	}
 	
+	/**
+	 * put item from dead fighter in chest 
+	 * @param fighter fighter
+	 * @param chest chest 
+	 */
 	public void putFromFighterToChest(Fighter fighter,Chest chest){
 		for(int i = 0 ; i < fighter.getWearItems().size() ; i++){
 			Item refItem = fighter.getWearItems().get(i);
@@ -424,7 +446,7 @@ public class GameMap extends Observable{
 		}
 	}
 	/**
-	 * 
+	 *  can we move?
 	 * @param originX x coordinate where the element currently is
 	 * @param originY y coordinate where the element currently is
 	 * @param destinationX x coordinate where the element wants to be
@@ -458,6 +480,9 @@ public class GameMap extends Observable{
 		return true;
 	}
 	
+	/**
+	 * empty the map
+	 */
 	private void emptyMap() {
 		for(int i=0; i<this.getHeight(); i++){
 			for(int j=0; j<this.getWidth(); j++) {

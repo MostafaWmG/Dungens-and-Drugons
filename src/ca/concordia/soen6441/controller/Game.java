@@ -15,6 +15,7 @@ import ca.concordia.soen6441.d20.fighter.Fighter;
 import ca.concordia.soen6441.d20.gamemap.GameMap;
 import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Chest;
 import ca.concordia.soen6441.d20.item.Item;
@@ -26,7 +27,6 @@ import ca.concordia.soen6441.d20.item.decorator.Pacifying;
 import ca.concordia.soen6441.d20.item.decorator.Slaying;
 import ca.concordia.soen6441.d20.strategy.AggressiveNPC;
 import ca.concordia.soen6441.d20.strategy.FriendlyNPC;
-import ca.concordia.soen6441.persistence.dao.DaoFactory;
 import ca.concordia.soen6441.view.map.Observers.GameView;
 import ca.concordia.soen6441.view.map.viewElement.ViewExchange;
 
@@ -104,7 +104,6 @@ public class Game implements Runnable {
 		setDice(new Dice());
 		setFighters(new ArrayList<Fighter>());
 		setTempSort(new ArrayList<Fighter>());
-//		setTurnOrder();
 		setOrdered(false);
 		setLocations(new HashMap<Fighter, Location>());
 		initializeAndShow();
@@ -128,7 +127,6 @@ public class Game implements Runnable {
 		setDice(new Dice());
 		setFighters(new ArrayList<Fighter>());
 		setTempSort(new ArrayList<Fighter>());
-//		setTurnOrder(new Vector<Fighter>());
 		setOrdered(false);
 		setLocations(new HashMap<Fighter, Location>());
 		initializeAndShow(test);
@@ -158,12 +156,9 @@ public class Game implements Runnable {
 				GameObject reference = map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject();
 				
 				if (reference.getTag().equals("Ground") ){
-//					System.out.print("G");//ground
 				}else if (reference.getTag().equals("Wall") ){
-//					System.out.print("W");//wall
 					getWalls().add((Wall)reference);
 				}else if (reference.getTag().equals("Enemy") ){
-//					System.out.print("H");//hostile
 					Fighter tempFighter = (Fighter)reference;
 					decorateItem(tempFighter);
 					tempFighter.setStrategy(new AggressiveNPC(tempFighter));
@@ -171,7 +166,6 @@ public class Game implements Runnable {
 					getFighters().add(tempFighter);
 					getLocations().put(tempFighter, new Location(j,i));
 				}else if (reference.getTag().equals("Player") ){
-//					System.out.print("F");//friendly
 					Fighter tempFighter = (Fighter)reference;
 					decorateItem(tempFighter);
 					tempFighter.setStrategy(new FriendlyNPC(tempFighter));
@@ -179,13 +173,10 @@ public class Game implements Runnable {
 					getFighters().add(tempFighter);
 					getLocations().put(tempFighter, new Location(j,i));
 				}else if (reference.getTag().equals("Chest") ){
-//					System.out.print("C");//chest
 					getChests().add((Chest)reference);
 				}else if (reference.getTag().equals("Exit") ){
-//					System.out.print("Q");//exit
 					setExit(new Location(j,i));
 				}else if (reference.getTag().equals("Enter") ){
-//					System.out.print("E");//enter
 					setEntery((Entery)reference);
 					decorateItem(getFighter());
 					setCurrentLocation(new Location(j,i));
@@ -233,7 +224,9 @@ public class Game implements Runnable {
 		}
 	}
 	
-	
+	/**
+	 * dice to order fighters
+	 */
 	private void orderFighters(){
 		setOrdered(true);
 		for (int i = 0; i < 21; i++) {
@@ -264,21 +257,27 @@ public class Game implements Runnable {
 //			System.out.println("sorted: " + getTurnOrder().get(i));
 		}
 	}
-	
+	/**
+	 * save
+	 */
 	public void save(){
 		System.out.println("GAME SAVED:");
-//		DaoFactory.getCampaignDao().update(getCampaign().getCampaignEntity());
-//		DaoFactory.getFighterDao().update(getFighter().getCharacterEntity());
-//		DaoFactory.getCampaignDao().delete(getCampaign().getCampaignEntity());
-//		DaoFactory.getFighterDao().delete(getFighter().getCharacterEntity());
-		DaoFactory.getCampaignDao().create(getCampaign().getCampaignEntity());
-		DaoFactory.getFighterDao().create(getFighter().getCharacterEntity());
+		
+//		for (Iterator<Fighter> iterator = getTurnOrder().iterator() ; iterator.hasNext();) {
+//			Fighter fighter = iterator.next();
+//			fighter.getStrategy().setCount(0);
+//		}
+		setRunner(false);
+//		getMap().setGameObjectInstanceAtLocation(getCurrentLocation(), new GameObjectInstance(new Entery(getMap().getMapName()+"dontduplicate"),getMap()));
 	}
 	
+	/**
+	 * ask how to decorate fighters in map
+	 * @param fighter
+	 */
 	public void decorateItem(Fighter fighter){
 		System.out.println("decorate item: " + fighter.getName());
 		System.out.println("Enter to decorate: F-S-B-P-R");
-//		IItem itemEffect  = fighter.getItem(ItemEnum.WEAPON);
 		Item item = fighter.getItem(ItemEnum.WEAPON);
 		@SuppressWarnings("resource")
 		Scanner  scanner = new Scanner(System.in);
@@ -331,6 +330,9 @@ public class Game implements Runnable {
 		fighter.addObserver(viewExchange);
 	}
 	
+	/**
+	 * reset the game
+	 */
 	public void reset(){
 		setMapNumber(getMapNumber()+1);
 		getFighter().levelUp(1,true);
@@ -354,6 +356,10 @@ public class Game implements Runnable {
 		terminate();
 	}
 	
+	/**
+	 * tag the player which is going to die to clean later from list
+	 * @param fighter
+	 */
 	public void die(Fighter fighter){
 		fighter.getStrategy().setAlive(false);
 	}
@@ -483,34 +489,13 @@ public class Game implements Runnable {
 	public void setCurrentLocation(Location currentLocation) {
 		this.currentLocation = currentLocation;
 	}
-
+	
+	/**
+	 * thread for gamePlay
+	 */
 	@Override
 	public void run() {
 
-//		Strategy strategy;
-//		scanner  = new Scanner(System.in);
-//		String keyStr;
-//		while(runner){
-//			System.out.println("Please move the character: ");
-//			keyStr = scanner.nextLine();
-//			
-//			try {
-//				Thread.sleep(200);
-//			} catch (Exception e) {
-//				break;			}
-//			
-//			if(keyStr.equalsIgnoreCase("w") ){
-//				moveUP();
-//
-//			}else if (keyStr.equalsIgnoreCase("a")){
-//				moveLeft();
-//			}else if (keyStr.equalsIgnoreCase("s")){
-//				moveDown();
-//			}else if (keyStr.equalsIgnoreCase("d")){
-//				moveRight();
-//			}
-//	
-//		}
 		while(runner){
 
 			if(getTurnOrder().isEmpty())
