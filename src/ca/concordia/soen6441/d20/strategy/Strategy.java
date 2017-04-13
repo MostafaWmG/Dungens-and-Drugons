@@ -23,10 +23,14 @@ public abstract class Strategy {
 	protected int burnDamage;
 	protected int freezeTimes;
 	protected boolean freeze;
+	protected int fearTiems;
+	protected Location fearTarget;
+	protected boolean fear;
 	
 	public Strategy() {
 		setAlive(true);
 		setFreeze(false);
+		setFear(false);
 	}
 	
 	public abstract void turn(Game game);
@@ -71,6 +75,18 @@ public abstract class Strategy {
 		}else{
 			setFreeze(false);
 		}
+		
+		if(getFreezeTimes() > 0){
+			setFreezeTimes(getFreezeTimes() - 1);
+		}else{
+			setFear(false);
+		}
+	}
+	
+	public void activeFearEffect(int fearTimes,Fighter attacker){
+		setFearTiems(fearTimes);
+		getGame().getLocations().get(attacker);
+		setFear(true);
 	}
 	
 	public void activeBuringEffect(int burnDamge){
@@ -87,11 +103,7 @@ public abstract class Strategy {
 		setFreezeTimes(freezeTimes);
 		setFreeze(true);
 	}
-	
-	public void setSlayingEffect(){
 		
-	}
-	
 	public void threadSleep()
 	{
 		try {
@@ -301,5 +313,47 @@ public abstract class Strategy {
 	 */
 	public void setFreeze(boolean freeze) {
 		this.freeze = freeze;
+	}
+
+	/**
+	 * @return the fearTiems
+	 */
+	public int getFearTiems() {
+		return fearTiems;
+	}
+
+	/**
+	 * @param fearTiems the fearTiems to set
+	 */
+	public void setFearTiems(int fearTiems) {
+		this.fearTiems = fearTiems;
+	}
+
+	/**
+	 * @return the fearTarget
+	 */
+	public Location getFearTarget() {
+		return fearTarget;
+	}
+
+	/**
+	 * @param fearTarget the fearTarget to set
+	 */
+	public void setFearTarget(Location fearTarget) {
+		this.fearTarget = fearTarget;
+	}
+
+	/**
+	 * @return the fear
+	 */
+	public boolean isFear() {
+		return fear;
+	}
+
+	/**
+	 * @param fear the fear to set
+	 */
+	public void setFear(boolean fear) {
+		this.fear = fear;
 	}
 }
