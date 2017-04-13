@@ -124,7 +124,11 @@ public class Fighter extends GameObject {
 		setCharacterEntity(new FighterEntity());
 		dice = new Dice();
 	}
-	
+	/**
+	 * 
+	 * @param l
+	 * @return
+	 */
 	private boolean isInRange(Location l){
 		Location fighterLocation = this.getLocation();
 		return (fighterLocation.getX() == (l.getX()+1) 
