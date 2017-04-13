@@ -1,5 +1,7 @@
 package ca.concordia.soen6441.d20.strategy;
 
+import java.util.Random;
+
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
@@ -63,6 +65,44 @@ public class FriendlyNPC extends Strategy{
 	@Override
 	public void move() {
 		if(isFear()){
+			System.out.println("FEARED: ");
+			setMoveCounter(getMoveCounter() + 1);
+			Location direction;
+			direction =new Location(getOrigin().getX() - getFearTarget().getX(),getOrigin().getY() - getFearTarget().getY());
+			double magnetude  = Math.sqrt( Math.pow(direction.getX(),2) + Math.pow(direction.getY(), 2) );
+			direction.setX((int) (direction.getX() / magnetude));
+			direction.setY((int) (direction.getY()/magnetude));
+			
+			System.out.println("direction:" + direction.getX() +" : "+ direction.getY());
+			if(direction.getX() != 0 && direction.getY() != 0){
+				System.out.println("BOTH NOT ZERO");
+				boolean rand = new Random().nextBoolean();
+				if(rand){
+					System.out.println("X DIR");
+					direction.setX(0);
+				}else {
+					System.out.println("Y DIR");
+					direction.setY(0);
+				}
+	       			getGame().moveDirection(getOrigin(), direction,true);
+			}else if (direction.getX() == 0 && direction.getY() == 0){
+				System.out.println("BOTH ZERO");
+				int rand = new Random().nextInt(4);
+				System.out.println("RANDOM DIR FOR AI: "+ rand);
+				if(rand ==0){
+					getGame().moveUP(getOrigin());
+				}else if (rand == 1){
+					getGame().moveDown(getOrigin());
+				}else if (rand == 2){
+					getGame().moveLeft(getOrigin());
+				}else if (rand == 3){
+					getGame().moveRight(getOrigin());
+				}
+			}else{
+				System.out.println("NORMAL MOVE OF AI");
+					getGame().moveDirection(getOrigin(), direction,true);
+			}
+			threadSleep();
 			
 		}else {
 			setMoveCounter(getMoveCounter() + 1);
