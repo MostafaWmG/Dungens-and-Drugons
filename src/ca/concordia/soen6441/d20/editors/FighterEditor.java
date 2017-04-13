@@ -20,7 +20,8 @@ import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
 import ca.concordia.soen6441.persistence.dao.DaoFactory;
 /**
- * this is a characterEditor userInterface class
+ * this is a characterEditor userInterface class. It creates, edits ,etc characters. It is also used for checking
+ * inventory and etc.
  */
 public class FighterEditor {
 
