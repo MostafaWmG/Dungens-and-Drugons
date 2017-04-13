@@ -6,7 +6,12 @@ import java.util.Scanner;
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-
+/**
+ * One subclass of Strategy class in strategy pattern.
+ * This strategy is for a player character controlled by the user. It requires user 
+ * interaction for determining where the player moves, what NPC it attacks, and 
+ * what other interactions it will do during a turn. 
+ */
 public class HumanPlayer extends Strategy {
 
 
@@ -16,7 +21,9 @@ public class HumanPlayer extends Strategy {
 		super();
 		setFighter(fighter);
 	}
-
+	/**
+	 * each character by calling this method gets a turn to play the game
+	 */
 	@Override
 	public void turn(Game game) {
 		setCount(6);
@@ -69,7 +76,11 @@ public class HumanPlayer extends Strategy {
 		}
 		
 	}
-	
+	/**
+	 * Check to see what is in front of the character a chest or an enemy
+	 * @param location in around character
+	 * @return
+	 */
 	private boolean check(Location location){
 		if(checkDestination(getGame(), location).equals("Enemy")){
 			if(isCanAttack()){
@@ -88,6 +99,9 @@ public class HumanPlayer extends Strategy {
 		}
 		return true;
 	}
+	/**
+	 * This is a method used to implement character's movement
+	 */
 	@Override
 	public void move() {
 		if(isFear()){
@@ -162,7 +176,9 @@ public class HumanPlayer extends Strategy {
 		}
 
 	}
-
+	/**
+	 * By calling this method a character attacks another character
+	 */
 	@Override
 	public void attack() {
 		String temp;

@@ -5,7 +5,14 @@ import java.util.Random;
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-
+/**
+ * One subclass of Strategy class in strategy pattern.
+ * This strategy is for friendly NPCs. A friendly NPC will wander around the map 
+ * randomly. If it comes near a chest while moving, it will loot it. If a character using 
+ * the friendly strategy is attacked, it will change its strategy and become 
+ * aggressive.  
+ *
+ */
 public class FriendlyNPC extends Strategy{
 	
 
@@ -14,7 +21,9 @@ public class FriendlyNPC extends Strategy{
 		super();
 		setFighter(fighter);
 	}
-	
+	/**
+	 * each character by calling this method gets a turn to play the game
+	 */
 	@Override
 	public void turn(Game game) {	
 		setCount(6);
@@ -61,7 +70,9 @@ public class FriendlyNPC extends Strategy{
 			
 		}
 	}
-
+	/**
+	 * This is a method used to implement character's movement
+	 */
 	@Override
 	public void move() {
 		if(isFear()){
@@ -121,7 +132,9 @@ public class FriendlyNPC extends Strategy{
 		}
 
 	}
-
+	/**
+	 * By calling this method a character attacks another character
+	 */
 	@Override
 	public void attack() {
 		if(checkDestination(game, getDestinationUp()).equalsIgnoreCase("Enemy")){
