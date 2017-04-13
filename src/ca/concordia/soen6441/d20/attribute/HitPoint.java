@@ -3,7 +3,7 @@ package ca.concordia.soen6441.d20.attribute;
 import ca.concordia.soen6441.d20.item.ILevelUp;
 /**
  * 
- *Hit points measure how hard character is to kill. This class attempt to implement this concept. 
+ * Hit points measure how hard character is to kill. This class attempt to implement this concept. 
  *
  */
 public class HitPoint implements ILevelUp {

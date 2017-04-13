@@ -1,8 +1,8 @@
 package ca.concordia.soen6441.d20.attribute;
 /**
  * 
- * This class represents three different type of bonuses that character can gain.
- *
+ * This class represents three different types of bonuses that character can gain.
+ * These are consists of ARMORCLASS bonus, ATTACKBONUS,DAMAGEBONUS.
  */
 
 public enum AttributeEnum {

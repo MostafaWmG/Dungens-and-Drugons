@@ -485,6 +485,11 @@ public class Game implements Runnable {
 
 	}
 	
+	/**
+	 * This method moves the character from its origin to its direction
+	 * @param origin of the character
+	 * @param direction the character ends up in that location
+	 */
 	public void moveDirection(Location origin,Location direction){
 		moveDirection(origin, direction,true);
 	}
@@ -508,6 +513,10 @@ public class Game implements Runnable {
 
 	}
 	
+	/**
+	 * This method moves character to up from given location
+	 * @param origin is current location of the character
+	 */
 	public void moveUP(Location origin){
 		System.out.println("moved up ");
 		if(getMap().move(origin.getX(), origin.getY(),origin.getX() ,origin.getY() - 1 ,this,false)){
@@ -516,6 +525,9 @@ public class Game implements Runnable {
 		}	
 	}
 	
+	/**
+	 * checks if the character can move up or not
+	 */
 	public void moveUP(){
 		System.out.println("w pressed ");
 		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() - 1 ,this)){
@@ -524,6 +536,10 @@ public class Game implements Runnable {
 		}
 	}
 	
+	/**
+	 * This method moves character to down from given location
+	 * @param origin is current location of the character
+	 */
 	public void moveDown(Location origin){
 		System.out.println("moved down ");
 		if(getMap().move(origin.getX(), origin.getY(),origin.getX() ,origin.getY() + 1 ,this,false)){
@@ -532,6 +548,9 @@ public class Game implements Runnable {
 		}		
 	}
 	
+	/**
+	 * checks if the character can move down or not
+	 */
 	public void moveDown(){
 		System.out.println("s pressed ");
 		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() ,currentLocation.getY() + 1 ,this)){
@@ -540,6 +559,11 @@ public class Game implements Runnable {
 		}		
 	}
 	
+	/**
+	 * This method moves character to left from given location
+	 * @param origin is current location of the character
+	 */
+	
 	public void moveLeft(Location origin){
 		System.out.println("moved left ");
 		if(getMap().move(origin.getX(), origin.getY(),origin.getX() - 1,origin.getY() ,this,false)){
@@ -547,7 +571,9 @@ public class Game implements Runnable {
 			System.out.println("NPC Cant move Left");
 		}
 	}
-	
+	/**
+	 * checks if the character can move left or not
+	 */
 	public void moveLeft(){
 		System.out.println("a pressed ");
 		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() - 1,currentLocation.getY() ,this)){
@@ -555,7 +581,10 @@ public class Game implements Runnable {
 			System.out.println("Cant move Left");
 		}
 	}
-	
+	/**
+	 * This method moves character to right from given location
+	 * @param origin is current location of the character
+	 */
 	public void moveRight(Location origin){
 		System.out.println("moved Right ");
 		if(getMap().move(origin.getX(), origin.getY(),origin.getX() + 1 ,origin.getY()  ,this,false)){
@@ -563,7 +592,9 @@ public class Game implements Runnable {
 			System.out.println("NPC Cant move Right");
 		}
 	}
-	
+	/**
+	 * checks if the character can move right or not
+	 */
 	public void moveRight(){
 		System.out.println("d pressed ");
 		if(getMap().move(currentLocation.getX(), currentLocation.getY(),currentLocation.getX() + 1 ,currentLocation.getY()  ,this)){
