@@ -16,12 +16,11 @@ import ca.concordia.soen6441.d20.item.decorator.IItem;
 public class Item extends GameObject implements ILevelUp,IItem{
 	
 	private ItemEntity itemEntity;
-	
-	private boolean mele;
-	
-	public Item(String name,ItemEnum item,AbilityEnum enchantmentType, int point) {
+		
+	public Item(String name,ItemEnum item,AbilityEnum enchantmentType, int point,boolean mele) {
 		initEmptyEntity();
 		setName(name);
+		setMele(mele);
 		setTag("Item");
 		getItemEntity().setItemEnum(item);
 		getItemEntity().setEnchantmentType(enchantmentType);
@@ -29,10 +28,11 @@ public class Item extends GameObject implements ILevelUp,IItem{
 		getItemEntity().setPoint(point);
 	}
 	
-	public Item(String name,ItemEnum item,AttributeEnum attributeType, int point){
+	public Item(String name,ItemEnum item,AttributeEnum attributeType, int point,boolean mele){
 		initEmptyEntity();
 		setTag("Item");
 		setName(name);
+		setMele(mele);
 		getItemEntity().setItemEnum(item);
 		getItemEntity().setAttributeType(attributeType);
 		getItemEntity().setEnchantmentType(null);
@@ -51,6 +51,7 @@ public class Item extends GameObject implements ILevelUp,IItem{
 		getItemEntity().setEnchantmentType(null);
 		getItemEntity().setAttributeType(null);
 		getItemEntity().setPoint(-1);
+		getItemEntity().setMele(true);
 	}
 	
 	/**
@@ -65,6 +66,7 @@ public class Item extends GameObject implements ILevelUp,IItem{
 		getItemEntity().setAttributeType(item.getAttributeType());
 		getItemEntity().setEnchantmentType(item.getEnchantmentType());
 		getItemEntity().setPoint(item.getEnchantmentPoint());
+		getItemEntity().setMele(item.isMele());
 	}
 	
 	/**
@@ -303,13 +305,13 @@ public class Item extends GameObject implements ILevelUp,IItem{
 	 * @return the mele
 	 */
 	public boolean isMele() {
-		return mele;
+		return getItemEntity().isMele();
 	}
 
 	/**
 	 * @param mele the mele to set
 	 */
 	public void setMele(boolean mele) {
-		this.mele = mele;
+		getItemEntity().setMele(mele);
 	}
 }

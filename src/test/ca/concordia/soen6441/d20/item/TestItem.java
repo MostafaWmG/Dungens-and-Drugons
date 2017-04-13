@@ -23,7 +23,7 @@ public class TestItem {
 	 */
 	@Before
 	public void beforeMethod(){
-		item = new Item("dont care", ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 1);
+		item = new Item("dont care", ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 1,false);
 	}
 	/**
 	 * this test case should return the expected enchantment point "5".

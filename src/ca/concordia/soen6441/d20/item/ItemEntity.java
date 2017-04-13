@@ -30,6 +30,7 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	private boolean mele;
 	/**
 	 * the attribute that represent the enchantment point.
 	 */
@@ -128,5 +129,17 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 	 */
 	public void setItemTag(String itemTag) {
 		this.itemTag = itemTag;
+	}
+	/**
+	 * @return the mele
+	 */
+	public boolean isMele() {
+		return mele;
+	}
+	/**
+	 * @param mele the mele to set
+	 */
+	public void setMele(boolean mele) {
+		this.mele = mele;
 	}	   
 }

@@ -36,8 +36,8 @@ public class ChestTest {
 	 */
 	@Test
 	public void whenAddItemsToChest_chestHasItems() {
-		Item armor = new Item("armor",ItemEnum.ARMOR,AttributeEnum.ARMORCLASS, 0);
-		Item belt = new Item("armor",ItemEnum.BELT,AttributeEnum.ARMORCLASS, 0);
+		Item armor = new Item("armor",ItemEnum.ARMOR,AttributeEnum.ARMORCLASS, 0,false);
+		Item belt = new Item("armor",ItemEnum.BELT,AttributeEnum.ARMORCLASS, 0,false);
 		
 		chest.addItem(armor);
 		chest.addItem(belt);
@@ -51,7 +51,7 @@ public class ChestTest {
 	 */
 	@Test
 	public void whenPuttingChestIntoBackpack_ItemsGetIntoBackpackIfthereIsRoom() {
-		Item armor = new Item("armor",ItemEnum.ARMOR,AttributeEnum.ARMORCLASS, 1);
+		Item armor = new Item("armor",ItemEnum.ARMOR,AttributeEnum.ARMORCLASS, 1,false);
 		chest.addItem(armor);
 		
 		chest.putRootedIntoBackPack(fighter);

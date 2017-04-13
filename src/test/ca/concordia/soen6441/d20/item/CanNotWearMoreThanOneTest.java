@@ -31,8 +31,8 @@ public class CanNotWearMoreThanOneTest {
 	 */
 	@Test
 	public void testAssertionHelmet(){
-		item = new Item("test", ItemEnum.HELMET,AbilityEnum.INTELLIGENCE,1);
-		itemSecond = new Item("testSecond",ItemEnum.HELMET,AbilityEnum.WISDOM,1);
+		item = new Item("test", ItemEnum.HELMET,AbilityEnum.INTELLIGENCE,1,false);
+		itemSecond = new Item("testSecond",ItemEnum.HELMET,AbilityEnum.WISDOM,1,false);
 		
 		assertFalse(figher.putOnItem(item));
 		
@@ -44,8 +44,8 @@ public class CanNotWearMoreThanOneTest {
 	 */
 	@Test
 	public void testAssertionRing(){
-		item = new Item("test", ItemEnum.RING,AttributeEnum.ARMORCLASS,1);
-		itemSecond = new Item("testSecond",ItemEnum.RING,AttributeEnum.ARMORCLASS,1);
+		item = new Item("test", ItemEnum.RING,AttributeEnum.ARMORCLASS,1,false);
+		itemSecond = new Item("testSecond",ItemEnum.RING,AttributeEnum.ARMORCLASS,1,false);
 		
 		assertFalse(figher.putOnItem(item));
 		
@@ -57,8 +57,8 @@ public class CanNotWearMoreThanOneTest {
 	 */
 	@Test
 	public void testAssertionShiled(){
-		item = new Item("test", ItemEnum.SHIELD,AttributeEnum.ARMORCLASS,1);
-		itemSecond = new Item("testSecond",ItemEnum.SHIELD,AttributeEnum.ARMORCLASS,1);
+		item = new Item("test", ItemEnum.SHIELD,AttributeEnum.ARMORCLASS,1,false);
+		itemSecond = new Item("testSecond",ItemEnum.SHIELD,AttributeEnum.ARMORCLASS,1,false);
 		
 		assertFalse(figher.putOnItem(item));
 		
@@ -70,8 +70,8 @@ public class CanNotWearMoreThanOneTest {
 	 */
 	@Test
 	public void testAssertionBelt(){
-		item = new Item("test", ItemEnum.BELT,AbilityEnum.STRENGTH,1);
-		itemSecond = new Item("testSecond",ItemEnum.BELT,AbilityEnum.STRENGTH,1);
+		item = new Item("test", ItemEnum.BELT,AbilityEnum.STRENGTH,1,false);
+		itemSecond = new Item("testSecond",ItemEnum.BELT,AbilityEnum.STRENGTH,1,false);
 		
 		assertFalse(figher.putOnItem(item));
 		
@@ -83,8 +83,8 @@ public class CanNotWearMoreThanOneTest {
 	 */
 	@Test
 	public void testAssertionBoots(){
-		item = new Item("test", ItemEnum.BOOTS,AttributeEnum.ARMORCLASS,1);
-		itemSecond = new Item("testSecond",ItemEnum.BOOTS,AttributeEnum.ARMORCLASS,1);
+		item = new Item("test", ItemEnum.BOOTS,AttributeEnum.ARMORCLASS,1,false);
+		itemSecond = new Item("testSecond",ItemEnum.BOOTS,AttributeEnum.ARMORCLASS,1,false);
 		
 		assertFalse(figher.putOnItem(item));
 		
@@ -96,8 +96,8 @@ public class CanNotWearMoreThanOneTest {
 	 */
 	@Test
 	public void testAssertionWeapon(){
-		item = new Item("test", ItemEnum.WEAPON,AttributeEnum.ARMORCLASS,1);
-		itemSecond = new Item("testSecond",ItemEnum.WEAPON,AttributeEnum.ARMORCLASS,1);
+		item = new Item("test", ItemEnum.WEAPON,AttributeEnum.ARMORCLASS,1,false);
+		itemSecond = new Item("testSecond",ItemEnum.WEAPON,AttributeEnum.ARMORCLASS,1,false);
 		
 		assertFalse(figher.putOnItem(item));
 		
@@ -109,8 +109,8 @@ public class CanNotWearMoreThanOneTest {
 	 */
 	@Test
 	public void testAssertionArmor(){
-		item = new Item("test", ItemEnum.ARMOR,AttributeEnum.ARMORCLASS,1);
-		itemSecond = new Item("testSecond",ItemEnum.ARMOR,AttributeEnum.ARMORCLASS,1);
+		item = new Item("test", ItemEnum.ARMOR,AttributeEnum.ARMORCLASS,1,false);
+		itemSecond = new Item("testSecond",ItemEnum.ARMOR,AttributeEnum.ARMORCLASS,1,false);
 		
 		assertFalse(figher.putOnItem(item));
 		

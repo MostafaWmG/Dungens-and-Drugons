@@ -127,6 +127,10 @@ public class ItemEditor {
 		String itemEnumString = scanner.nextLine();
 		System.out.println("Please Enter Your Item Type : ");
 		String itemType = scanner.nextLine();
+		System.out.println("Please Enter Your Item Range : ");
+		String itemRange = scanner.nextLine();
+		
+		boolean mele = itemRange.equalsIgnoreCase("mele") ? true:false;
 		
 		try {
 			AttributeEnum.valueOf(itemType.toUpperCase());
@@ -138,11 +142,11 @@ public class ItemEditor {
 		
 		try {
 			if(!enumChecker){
-				Item item = itemFactory.createItem(itemName,ItemEnum.valueOf(itemEnumString.toUpperCase()),AttributeEnum.valueOf(itemType.toUpperCase()));
+				Item item = itemFactory.createItem(itemName,ItemEnum.valueOf(itemEnumString.toUpperCase()),AttributeEnum.valueOf(itemType.toUpperCase()),mele);
 				item.show();
 				saveItemFactory(item,"create");
 			}else{
-				Item item = itemFactory.createItem(itemName,ItemEnum.valueOf(itemEnumString.toUpperCase()), AbilityEnum.valueOf(itemType.toUpperCase()));
+				Item item = itemFactory.createItem(itemName,ItemEnum.valueOf(itemEnumString.toUpperCase()), AbilityEnum.valueOf(itemType.toUpperCase()),mele);
 				item.show();
 				saveItemFactory(item, "create");
 			}
@@ -168,17 +172,22 @@ public class ItemEditor {
 		}
 		Item item = (Item) list.get(0).createModel();
 		
-		System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t)");
+		System.out.println("Choose to change : (Item Point : Type p), (Item Type : Type t) , (Item Range : Type R)");
 		String change = scanner.nextLine();
 		if(change.equals("p")){
 			changeItemPoint(item);
 		}else if (change.equals("t")){
 			changeItemType(item);
+		}else if (change.equalsIgnoreCase("r") ){
+			changeItemRange(item);
 		}else{
 			System.out.println("Error");
 		}
 	}
 	
+	private void changeItemRange(Item item){
+		
+	}
 	/**
 	 * this is a method for changing itemPoint
 	 * @param Item item

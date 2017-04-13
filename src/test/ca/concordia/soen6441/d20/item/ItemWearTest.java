@@ -35,7 +35,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionHelmetEffectScore(){
-		item = new Item("testHelmet", ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 4);
+		item = new Item("testHelmet", ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 4,false);
 		Ability originalIntelligence = fighter.getAbility(AbilityEnum.INTELLIGENCE);
 		int originalSocre = originalIntelligence.getScore();
 		
@@ -53,7 +53,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionHelmetEffectModifier(){
-		item = new Item("testHelmet", ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 4);
+		item = new Item("testHelmet", ItemEnum.HELMET, AbilityEnum.INTELLIGENCE, 4,false);
 		Ability originalIntelligence = fighter.getAbility(AbilityEnum.INTELLIGENCE);
 		int originalModifier = originalIntelligence.getModifier();
 		int originalSocre = originalIntelligence.getScore();
@@ -74,7 +74,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionArmorEffect(){
-		item = new Item("test", ItemEnum.ARMOR, AttributeEnum.ARMORCLASS, 4);
+		item = new Item("test", ItemEnum.ARMOR, AttributeEnum.ARMORCLASS, 4,false);
 		ArmorClass originalAttribute = fighter.getArmor();
 		int originalPoint = originalAttribute.getPoint();
 		
@@ -92,7 +92,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionShieldEffect(){
-		item = new Item("test", ItemEnum.SHIELD, AttributeEnum.ARMORCLASS, 3);
+		item = new Item("test", ItemEnum.SHIELD, AttributeEnum.ARMORCLASS, 3,false);
 		ArmorClass originalAttribute = fighter.getArmor();
 		int originalPoint = originalAttribute.getPoint();
 		
@@ -111,7 +111,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionRingEffectScore(){
-		item = new Item("test", ItemEnum.RING, AbilityEnum.STRENGTH, 4);
+		item = new Item("test", ItemEnum.RING, AbilityEnum.STRENGTH, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.STRENGTH);
 		int originalSocre = originalAbility.getScore();
 		
@@ -130,7 +130,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionRingEffectModifier(){
-		item = new Item("test", ItemEnum.RING, AbilityEnum.STRENGTH, 4);
+		item = new Item("test", ItemEnum.RING, AbilityEnum.STRENGTH, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.STRENGTH);
 		int originalModifier = originalAbility.getModifier();
 		int originalSocre = originalAbility.getScore();
@@ -152,7 +152,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionRingEffectDamageBonus(){
-		item = new Item("test", ItemEnum.RING, AbilityEnum.STRENGTH, 4);
+		item = new Item("test", ItemEnum.RING, AbilityEnum.STRENGTH, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.STRENGTH);
 		int originalModifier = originalAbility.getModifier();
 		DamageBonus originalDamage = fighter.getDamage();
@@ -177,7 +177,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionBeltEffectScore(){
-		item = new Item("test", ItemEnum.BELT, AbilityEnum.CONSTITUTION, 4);
+		item = new Item("test", ItemEnum.BELT, AbilityEnum.CONSTITUTION, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.CONSTITUTION);
 		int originalSocre = originalAbility.getScore();
 		
@@ -195,7 +195,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionBeltEffectModifier(){
-		item = new Item("test", ItemEnum.BELT, AbilityEnum.CONSTITUTION, 4);
+		item = new Item("test", ItemEnum.BELT, AbilityEnum.CONSTITUTION, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.CONSTITUTION);
 		int originalModifier = originalAbility.getModifier();
 		int originalSocre = originalAbility.getScore();
@@ -217,7 +217,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionBeltEffectHitPoint(){
-		item = new Item("test", ItemEnum.BELT, AbilityEnum.CONSTITUTION, 4);
+		item = new Item("test", ItemEnum.BELT, AbilityEnum.CONSTITUTION, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.CONSTITUTION);
 		int originalModifier = originalAbility.getModifier();
 		HitPoint originalHitPoint = fighter.getHitPoint();
@@ -242,7 +242,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionBootsEffectScore(){
-		item = new Item("test", ItemEnum.BELT, AbilityEnum.DEXTERITY, 4);
+		item = new Item("test", ItemEnum.BELT, AbilityEnum.DEXTERITY, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.DEXTERITY);
 		int originalSocre = originalAbility.getScore();
 		
@@ -260,7 +260,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionBootsEffectModifier(){
-		item = new Item("test", ItemEnum.BELT, AbilityEnum.DEXTERITY, 4);
+		item = new Item("test", ItemEnum.BELT, AbilityEnum.DEXTERITY, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.DEXTERITY);
 		int originalModifier = originalAbility.getModifier();
 		int originalSocre = originalAbility.getScore();
@@ -282,7 +282,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionBootsEffectAttackBonus(){
-		item = new Item("test", ItemEnum.BELT, AbilityEnum.DEXTERITY, 4);
+		item = new Item("test", ItemEnum.BELT, AbilityEnum.DEXTERITY, 4,false);
 		Ability originalAbility = fighter.getAbility(AbilityEnum.DEXTERITY);
 		int originalModifier = originalAbility.getModifier();
 		AttackBonus originalAttack = fighter.getAttack();
@@ -307,7 +307,7 @@ public class ItemWearTest {
 	 */
 	@Test
 	public void testAssertionWeaponEffect(){
-		item = new Item("test", ItemEnum.SHIELD, AttributeEnum.ATTACKBONUS, 3);
+		item = new Item("test", ItemEnum.SHIELD, AttributeEnum.ATTACKBONUS, 3,false);
 		AttackBonus originalAttribute = fighter.getAttack();
 		int originalPoint = originalAttribute.getPoint();
 		
