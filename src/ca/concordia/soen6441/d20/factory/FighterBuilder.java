@@ -13,6 +13,7 @@ import ca.concordia.soen6441.d20.item.Item;
 
 /**
  * this an abstract class for creating character and items.
+ * It implements builder pattern
  * @author mostafa
  */
 public abstract class FighterBuilder {
@@ -48,7 +49,9 @@ public abstract class FighterBuilder {
 	}
 	
 	public abstract void setCharacterAbility();
-	
+	/**
+	 * sets attributes for character
+	 */
 	public void setCharacterAttribute(){
 		fighter.setArmor(new ArmorClass(fighter.getAbilities() .get(AbilityEnum.DEXTERITY.getValue()).getModifier()));
 		fighter.setDamage(new DamageBonus(fighter.getAbilities().get(AbilityEnum.STRENGTH.getValue()).getModifier()));
@@ -56,7 +59,9 @@ public abstract class FighterBuilder {
 		fighter.setHitPoint(new HitPoint(fighter.getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).getModifier(),fighter.getLevel()));
 		fighter.setAbilitiesListener();	
 	}
-	
+	/**
+	 * Shows abilities, attributes and items wear by character
+	 */
 	public void show(){
 		fighter.showAbilities();
 		fighter.showAttributes();
