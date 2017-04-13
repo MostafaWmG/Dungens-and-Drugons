@@ -35,5 +35,7 @@ public interface IGenericDao<T, PK extends Serializable> {
 	 * @param t The record that should be deleted from the storage
 	 */
 	void delete(T t);
+	
+	void flush();
 
 }

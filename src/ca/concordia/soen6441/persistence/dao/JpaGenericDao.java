@@ -70,4 +70,9 @@ public class JpaGenericDao<T, PK extends Serializable> implements IGenericDao<T,
 		t = update(t);
 		em.remove(t);		
 	}
+	@Override
+	public void flush() {
+		em.flush();
+		
+	}
 }
