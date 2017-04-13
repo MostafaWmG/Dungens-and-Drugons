@@ -35,6 +35,7 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 	 */
 	private int point;
 	private String itemTag;
+	private boolean isMelee;
 	/**
 	 * the attribute that that represent item's name. If you change enum values, you need to update database
 	 */
@@ -128,5 +129,18 @@ public class ItemEntity extends GameObjectEntity implements Serializable {
 	 */
 	public void setItemTag(String itemTag) {
 		this.itemTag = itemTag;
-	}	   
+	}
+	/**
+	 * @return the isMelee
+	 */
+	public boolean isMelee() {
+		return isMelee;
+	}
+	/**
+	 * @param isMelee the isMelee to set
+	 */
+	public void setMelee(boolean isMelee) {
+		this.isMelee = isMelee;
+	}
+	
 }

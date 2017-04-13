@@ -15,9 +15,7 @@ import ca.concordia.soen6441.d20.item.decorator.IItem;
  */
 public class Item extends GameObject implements ILevelUp,IItem{
 	
-	private ItemEntity itemEntity;
-	
-	private boolean mele;
+	private ItemEntity itemEntity;	
 	
 	public Item(String name,ItemEnum item,AbilityEnum enchantmentType, int point) {
 		initEmptyEntity();
@@ -303,13 +301,13 @@ public class Item extends GameObject implements ILevelUp,IItem{
 	 * @return the mele
 	 */
 	public boolean isMele() {
-		return mele;
+		return getItemEntity().isMelee();
 	}
 
 	/**
 	 * @param mele the mele to set
 	 */
 	public void setMele(boolean mele) {
-		this.mele = mele;
+		getItemEntity().setMelee(mele);
 	}
 }
