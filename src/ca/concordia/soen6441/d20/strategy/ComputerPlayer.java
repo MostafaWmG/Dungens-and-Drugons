@@ -5,14 +5,23 @@ import java.util.Random;
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
-
+/**
+ * 
+ * One subclass of Strategy class in strategy pattern.
+ * This strategy is for a player character controlled by the computer. A computer  
+ * player character’s objective is to go to the next map, i.e. fulfilling any objective 
+ * that you have defined to finish a map. 
+ 
+ */
 public class ComputerPlayer extends Strategy{
 		
 	public ComputerPlayer(Fighter fighter) {
 		super();
 		setFighter(fighter);
 	}
-	
+	/**
+	 * each character by calling this method gets a turn to play the game
+	 */
 	@Override
 	public void turn(Game game) {
 		setCount(6);
@@ -49,7 +58,9 @@ public class ComputerPlayer extends Strategy{
 		}
 		
 	}
-
+	/**
+	 * This is a method used to implement character's movement
+	 */
 	@Override
 	public void move() {
 		if(isFear()){
@@ -143,7 +154,9 @@ public class ComputerPlayer extends Strategy{
 //			setCanInteract(false);
 //		}
 //	}
-	
+	/**
+	 * By calling this method a character attacks another character
+	 */
 	@Override
 	public void attack() {
 		// TODO Auto-generated method stub
