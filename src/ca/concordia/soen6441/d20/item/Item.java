@@ -298,7 +298,7 @@ public class Item extends GameObject implements ILevelUp,IItem{
 
 	@Override
 	public void specialEffect(Fighter attacker,Fighter target) {
-		
+		System.out.println("simple item");
 	}
 
 	/**

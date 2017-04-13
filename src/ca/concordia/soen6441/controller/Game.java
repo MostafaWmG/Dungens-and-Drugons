@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import ca.concordia.soen6441.d20.campaign.Campaign;
@@ -16,8 +17,16 @@ import ca.concordia.soen6441.d20.gamemap.element.Entery;
 import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.Wall;
 import ca.concordia.soen6441.d20.item.Chest;
+import ca.concordia.soen6441.d20.item.Item;
+import ca.concordia.soen6441.d20.item.ItemEnum;
+import ca.concordia.soen6441.d20.item.decorator.Burning;
+import ca.concordia.soen6441.d20.item.decorator.Freezing;
+import ca.concordia.soen6441.d20.item.decorator.Frightening;
+import ca.concordia.soen6441.d20.item.decorator.Pacifying;
+import ca.concordia.soen6441.d20.item.decorator.Slaying;
 import ca.concordia.soen6441.d20.strategy.AggressiveNPC;
 import ca.concordia.soen6441.d20.strategy.FriendlyNPC;
+import ca.concordia.soen6441.persistence.dao.DaoFactory;
 import ca.concordia.soen6441.view.map.Observers.GameView;
 import ca.concordia.soen6441.view.map.viewElement.ViewExchange;
 
@@ -149,33 +158,36 @@ public class Game implements Runnable {
 				GameObject reference = map.getGameObjectInstanceAtLocation(new Location(j,i)).getGameObject();
 				
 				if (reference.getTag().equals("Ground") ){
-					System.out.print("G");//ground
+//					System.out.print("G");//ground
 				}else if (reference.getTag().equals("Wall") ){
-					System.out.print("W");//wall
+//					System.out.print("W");//wall
 					getWalls().add((Wall)reference);
 				}else if (reference.getTag().equals("Enemy") ){
-					System.out.print("H");//hostile
+//					System.out.print("H");//hostile
 					Fighter tempFighter = (Fighter)reference;
+					decorateItem(tempFighter);
 					tempFighter.setStrategy(new AggressiveNPC(tempFighter));
 					getEnemies().add(tempFighter);
 					getFighters().add(tempFighter);
 					getLocations().put(tempFighter, new Location(j,i));
 				}else if (reference.getTag().equals("Player") ){
-					System.out.print("F");//friendly
+//					System.out.print("F");//friendly
 					Fighter tempFighter = (Fighter)reference;
+					decorateItem(tempFighter);
 					tempFighter.setStrategy(new FriendlyNPC(tempFighter));
 					getFriends().add(tempFighter);
 					getFighters().add(tempFighter);
 					getLocations().put(tempFighter, new Location(j,i));
 				}else if (reference.getTag().equals("Chest") ){
-					System.out.print("C");//chest
+//					System.out.print("C");//chest
 					getChests().add((Chest)reference);
 				}else if (reference.getTag().equals("Exit") ){
-					System.out.print("Q");//exit
+//					System.out.print("Q");//exit
 					setExit(new Location(j,i));
 				}else if (reference.getTag().equals("Enter") ){
-					System.out.print("E");//enter
+//					System.out.print("E");//enter
 					setEntery((Entery)reference);
+					decorateItem(getFighter());
 					setCurrentLocation(new Location(j,i));
 				}
 				
@@ -250,6 +262,62 @@ public class Game implements Runnable {
 		
 		for (int i = 0; i < getTurnOrder().size(); i++) {
 //			System.out.println("sorted: " + getTurnOrder().get(i));
+		}
+	}
+	
+	public void save(){
+		System.out.println("GAME SAVED:");
+//		DaoFactory.getCampaignDao().update(getCampaign().getCampaignEntity());
+//		DaoFactory.getFighterDao().update(getFighter().getCharacterEntity());
+//		DaoFactory.getCampaignDao().delete(getCampaign().getCampaignEntity());
+//		DaoFactory.getFighterDao().delete(getFighter().getCharacterEntity());
+		DaoFactory.getCampaignDao().create(getCampaign().getCampaignEntity());
+		DaoFactory.getFighterDao().create(getFighter().getCharacterEntity());
+	}
+	
+	public void decorateItem(Fighter fighter){
+		System.out.println("decorate item: " + fighter.getName());
+		System.out.println("Enter to decorate: F-S-B-P-R");
+//		IItem itemEffect  = fighter.getItem(ItemEnum.WEAPON);
+		Item item = fighter.getItem(ItemEnum.WEAPON);
+		@SuppressWarnings("resource")
+		Scanner  scanner = new Scanner(System.in);
+		String input = scanner.nextLine();
+		String[] decorates = input.split(",");
+		
+		if(item.getAttributeType() == null && item.getEnchantmentType() == null){
+			System.out.println("Empty");
+		}else{
+			for(int i = 0 ; i< decorates.length ; i++){
+				if(decorates[i].equalsIgnoreCase("b")){
+					System.out.println("burning added to: " + fighter.getName());
+					fighter.removeItem(item);
+					item = new Burning(item);
+					fighter.putOnItem(item);
+				}else if(decorates[i].equalsIgnoreCase("f")){
+					System.out.println("freeze added to: " + fighter.getName());
+					fighter.removeItem(item);
+					item = new Freezing(item);
+					fighter.putOnItem(item);
+				}else if(decorates[i].equalsIgnoreCase("s")){
+					System.out.println("Slaying added to: " + fighter.getName());
+					fighter.removeItem(item);
+					item = new Slaying(item);
+					fighter.putOnItem(item);
+				}else if(decorates[i].equalsIgnoreCase("p")){
+					System.out.println("Pacifying added to: " + fighter.getName());
+					fighter.removeItem(item);
+					item = new Pacifying(item);
+					fighter.putOnItem(item);
+				}else if(decorates[i].equalsIgnoreCase("R")){
+					System.out.println("Frightening added to: " + fighter.getName());
+					fighter.removeItem(item);
+					item = new Frightening(item);
+					fighter.putOnItem(item);
+				}else{
+					System.out.println("nothing added to: " + fighter.getName());
+				}
+			}
 		}
 	}
 	/**

@@ -339,11 +339,17 @@ public class GameMap extends Observable{
 				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 				Date dateobj = new Date();
 				Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
-				Chest chest = new Chest(fighter.getName() +df.format(dateobj));
-				putFromFighterToChest(fighter,chest);
-				setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
-				game.getGameView().updateWithOutObserver(origin, destination);
-				game.die(fighter);
+				Fighter attacker =(Fighter)getGameObjectInstanceAtLocation(origin).getGameObject();
+				if(fighter.attack(attacker,fighter,origin,destination)){
+					Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+					putFromFighterToChest(fighter,chest);
+					setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
+					game.setCurrentLocation(destination);
+					game.getGameView().updateWithOutObserver(origin, destination,true);
+					game.die(fighter);
+				}else{
+					System.out.println("Still alive Player");
+				}
 			}
 
 		}else if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Enemy")){
@@ -351,27 +357,35 @@ public class GameMap extends Observable{
 				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 				Date dateobj = new Date();
 				Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
-				
 				Fighter attacker =(Fighter)getGameObjectInstanceAtLocation(origin).getGameObject();
-				attacker.attack(fighter);
+				if(fighter.attack(attacker,fighter,origin,destination)){
+					Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+					putFromFighterToChest(fighter,chest);
+					setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
+					game.setCurrentLocation(destination);
+					setChanged();
+					notifyObservers(this);
+					game.die(fighter);
+				}else{
+					System.out.println("Still alive Enemy-m");
+				}
 				
-				Chest chest = new Chest(fighter.getName() +df.format(dateobj));
-				putFromFighterToChest(fighter,chest);
-				setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
-				game.setCurrentLocation(destination);
-				setChanged();
-				notifyObservers(this);
-				game.die(fighter);
 			}else if(friendly){
 				DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 				Date dateobj = new Date();
 				Fighter fighter =(Fighter) getGameObjectInstanceAtLocation(destination).getGameObject();
-				Chest chest = new Chest(fighter.getName() +df.format(dateobj));
-				putFromFighterToChest(fighter,chest);
-				setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
-				game.setCurrentLocation(destination);
-				game.getGameView().updateWithOutObserver(origin, destination,true);
-				game.die(fighter);
+				Fighter attacker =(Fighter)getGameObjectInstanceAtLocation(origin).getGameObject();
+				if(fighter.attack(attacker,fighter,origin,destination)){
+					Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+					putFromFighterToChest(fighter,chest);
+					setGameObjectInstanceAtLocation(destination,new GameObjectInstance(chest, this));
+					game.setCurrentLocation(destination);
+					game.getGameView().updateWithOutObserver(origin, destination,true);
+					game.die(fighter);
+				}else{
+					System.out.println("Still alive Enemy-f");
+				}
+
 			}else{
 //				game.createViewExchange((Fighter)getGameObjectInstanceAtLocation(destination).getGameObject(), (Fighter)getGameObjectInstanceAtLocation(origin).getGameObject());
 				System.out.println("ITEM EXCHANGE BETWEEN ENEMY");
@@ -394,7 +408,7 @@ public class GameMap extends Observable{
 		}	
 	}
 	
-	private void putFromFighterToChest(Fighter fighter,Chest chest){
+	public void putFromFighterToChest(Fighter fighter,Chest chest){
 		for(int i = 0 ; i < fighter.getWearItems().size() ; i++){
 			Item refItem = fighter.getWearItems().get(i);
 			if(!chest.isNullItem(refItem)){
@@ -419,17 +433,17 @@ public class GameMap extends Observable{
 	 */
 	public boolean moveCanBeDone(int originX, int originY, int destinationX, int destinationY) {
 		if(originX<0 || originY<0 || destinationX<0 ||destinationY<0) {
-			System.out.println("debug1");
+//			System.out.println("debug1");
 			return false;
 		}
 		
 		if(originX >= getWidth() || destinationX >= getWidth() ){
-			System.out.println("debug2");
+//			System.out.println("debug2");
 			return false;
 		}
 		
 		if(originY >= getHeight() || destinationY >= getHeight() ){
-			System.out.println("debug3");
+//			System.out.println("debug3");
 			return false;
 		} 
 		
@@ -437,7 +451,7 @@ public class GameMap extends Observable{
 		Location destination = new Location(destinationX, destinationY);
 		
 		if(getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Wall")){
-			System.out.println("debug4");
+//			System.out.println("debug4");
 			return false;
 		}
 

@@ -75,6 +75,9 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 		JButton ability = new JButton("Ability");
 		initializeButton(ability, "Ability",0,0,-100,0,0 ,2);
 		
+		JButton save = new JButton("Save");
+		initializeButton(save, "Save",0,0,-100,0,0 ,4);
+		
 		initializeDimension();
 		setVisible(true);
 	}
@@ -209,6 +212,8 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 				setInventoryEn(true);
 			}else if (e.getActionCommand().equals("Ability")){
 				setInventoryEn(false);
+			}else if (e.getActionCommand().equalsIgnoreCase("Save")){
+				game.save();
 			}
 		}
 	}
@@ -297,7 +302,7 @@ public class GameView  extends JFrame implements ActionListener,Observer{
 	
 	public void removeDeadFighter(Location origin){
 		removeElement(origin.getY(),origin.getX());
-		viewElements[origin.getY()][origin.getX()] = new ViewGround("Ground");
+		viewElements[origin.getY()][origin.getX()] = new ViewChest("Chest",(Chest)map.getGameObjectInstanceAtLocation(origin).getGameObject());
 		setButton(origin.getY(), origin.getX());
 	}
 	/**

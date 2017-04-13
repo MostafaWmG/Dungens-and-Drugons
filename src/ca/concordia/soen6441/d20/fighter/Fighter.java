@@ -135,52 +135,85 @@ public class Fighter extends GameObject {
 	 * @param l location that is being checked
 	 * @return
 	 */
-	private boolean isInRange(Location l){
-		Location fighterLocation = this.getLocation();
-		return (fighterLocation.getX() == (l.getX()+1) 
-				&& fighterLocation.getY() == l.getY()) 
-				|| (fighterLocation.getY() == l.getY() +1 
-				&& fighterLocation.getX() == l.getX())
-				|| (fighterLocation.getX() == (l.getX()-1)
-				&& fighterLocation.getY() == l.getY())
-				|| (fighterLocation.getY() == (l.getY()-1)
-				&& fighterLocation.getX() == l.getX());
+	private boolean isInRange(boolean isMele,Location l,Location fighterLocation){
+		if(isMele){
+			return (fighterLocation.getX() == (l.getX()+1) 
+					&& fighterLocation.getY() == l.getY()) 
+					|| (fighterLocation.getY() == l.getY() +1 
+					&& fighterLocation.getX() == l.getX())
+					|| (fighterLocation.getX() == (l.getX()-1)
+					&& fighterLocation.getY() == l.getY())
+					|| (fighterLocation.getY() == (l.getY()-1)
+					&& fighterLocation.getX() == l.getX());
+		}else{
+			return (fighterLocation.getX() <= (l.getX()+2) 
+					&& fighterLocation.getY() <= l.getY()) 
+					|| (fighterLocation.getY() <= l.getY() +2 
+					&& fighterLocation.getX() <= l.getX())
+					|| (fighterLocation.getX() <= (l.getX()-2)
+					&& fighterLocation.getY() <= l.getY())
+					|| (fighterLocation.getY() <= (l.getY()-2)
+					&& fighterLocation.getX() <= l.getX());
+		}
+
 	}
 	/**
 	 * This method implements the attack. by calling this method character attacks the enemy. character may be
 	 * successful or not.
 	 * @param enemy the game character(player) will attack specified enemy.
 	 */
-	public void attack(Fighter enemy) {
-		Location enemyLocation = enemy.getLocation();
-		if(isInRange(enemyLocation)){
-			int strong = dice.roll6() + (this.attackBonus==null?0:this.attackBonus.getModifier()) 
-					+ (this.armorClass==null?0:this.armorClass.getModfier())+ this.getLevel();
-			
-			if(strong > (enemy.getArmor()==null?0:enemy.getArmor().getPoint())){
-				enemy.getHitPoint().setModifier(enemy.getHitPoint().getModifier());
-				enemy.getHitPoint().setBase(enemy.getHitPoint().getBase()-strong);
-				if(enemy.getHitPoint().getBase()<=0){
-					System.out.println(String.format("enemy %s has died", enemy));
+	public boolean attack(Fighter attacker,Fighter enemy,Location attackerLoc, Location targetLoc ) {
+		Item weapon = attacker.getItem(ItemEnum.WEAPON);
+	
+		if(isInRange(weapon.isMele(),targetLoc,attackerLoc)){
+			if(weapon.isMele()){
+				int rand = dice.roll20();	
+				int damage =  rand + attacker.getAttack().getPoint() + attacker.getAbility(AbilityEnum.STRENGTH).getModifier();
+				System.out.println("ATTACK LOG :" + " DICE  :" +rand+" AttackBonus: " + attacker.getAttack().getPoint() + " Mele: " + weapon.isMele() + " STRENGTH modifier: " + attacker.getAbility(AbilityEnum.STRENGTH).getModifier()+ " Damage: " +damage+ " Enemy armor: " + enemy.getArmor().getPoint());
+				if(damage >= enemy.getArmor().getPoint()){
+					int hit = attacker.getDamage().getPoint() + attacker.getAbility(AbilityEnum.STRENGTH).getModifier();
+					System.out.println("DAMAGE LOG: " + " DAMAGE BONUS: " + attacker.getDamage().getPoint() + " STRENGTH modifier: " + attacker.getAbility(AbilityEnum.STRENGTH).getModifier() + " HIT: " + hit);
+					weapon.specialEffect(attacker, enemy);
+					if(!enemy.getStrategy().isAlive())
+						return true;
+					return takeDamge(hit);
+				}else{
+					System.out.println("Attack Missed");
+					return false;
 				}
-				else System.out.println("You have hit the enemy :)");
-			} else {
-				System.out.println("You have missed :(");
+			}else{
+				int rand = dice.roll20();
+				int damage = rand +attacker.getAttack().getPoint() + attacker.getAbility(AbilityEnum.DEXTERITY).getModifier();
+				System.out.println("ATTACK LOG :" + " DICE  :" +rand+" AttackBonus: " + attacker.getAttack().getPoint() + " Mele: " + weapon.isMele() + " DEXTERITY modifier: " + attacker.getAbility(AbilityEnum.DEXTERITY).getModifier()+ " Damage: " +damage + " Enemy armor: " + enemy.getArmor().getPoint());
+				if(damage >= enemy.getArmor().getPoint()){
+					int hit = attacker.getDamage().getPoint() + attacker.getAbility(AbilityEnum.DEXTERITY).getModifier();
+					System.out.println("DAMAGE LOG: " + " DAMAGE BONUS: " + attacker.getDamage().getPoint() + " DEXTERITY modifier: " + attacker.getAbility(AbilityEnum.DEXTERITY).getModifier() + " HIT: " + hit);
+					weapon.specialEffect(attacker, enemy);
+					if(!enemy.getStrategy().isAlive())
+						return true;
+					return takeDamge(hit);
+				}else{
+					System.out.println("Attack Missed");
+					return false;
+				}
 			}
+
 		} else {
 			System.out.println("You cannot attack. Enemy too far away");
+			return false;
 		}
 		
 	}
+	
 	/**
 	 * the damage points that should be subtracted from character's hit points.
 	 * @param damage
 	 * @return
 	 */
 	public boolean takeDamge(int damage){
-
-		getHitPoint().setBase((getHitPoint().getPoint() - damage));
-
+		System.out.println(getName() + " HPPOINT BEFORE Damage: " + getHitPoint().getPoint() + " damage : " + damage +" Base: "+ getHitPoint().getBase() + " modifier: " + getHitPoint().getModifier());
+		getHitPoint().setBase((getHitPoint().getBase() - damage));
+		System.out.println(getName() + " HPPOINT AFTER Damage: " + getHitPoint().getPoint());
 		if(getHitPoint().getPoint() <= 0){
 			return true;
 		}else {
@@ -317,7 +350,6 @@ public class Fighter extends GameObject {
 		getAbilities().get(AbilityEnum.DEXTERITY.getValue()).addListener(getArmor());
 		getAbilities().get(AbilityEnum.CONSTITUTION.getValue()).addListener(getHitPoint());
 		getAbilities().get(AbilityEnum.STRENGTH.getValue()).addListener(getDamage());
-		getAbilities().get(AbilityEnum.DEXTERITY.getValue()).addListener(getAttack());
 	}
 	
 	/**

@@ -7,10 +7,11 @@ import ca.concordia.soen6441.d20.item.Item;
  * any IItem implemented by subclasses of IItem.
  *
  */
-public abstract class ItemDecorator implements IItem {
-	protected final IItem decoratedItem;
+public abstract class ItemDecorator extends Item {
+	protected final Item decoratedItem;
 	
 	public ItemDecorator(Item decoratedItem) {
+		super(decoratedItem);
 		this.decoratedItem = decoratedItem;
 	}
 

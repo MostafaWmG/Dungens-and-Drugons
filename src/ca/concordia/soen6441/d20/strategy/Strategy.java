@@ -55,10 +55,10 @@ public abstract class Strategy {
 	 */
 	public String checkDestination(Game game,Location destination){
 		if(! game.getMap().moveCanBeDone(game.getCurrentLocation().getX(), game.getCurrentLocation().getY(), destination.getX(), destination.getY())) {
-			System.out.println("out of map");
+//			System.out.println("out of map");
 			return "null";
 		}else{
-			System.out.println("we can go");
+//			System.out.println("we can go");
 		}
 //		System.out.println("error:"+ game.getMap().getGameObjectInstanceAtLocation(destination).getGameObject());
 		if(game.getMap().getGameObjectInstanceAtLocation(destination).getGameObject().getTag().equals("Ground"))
@@ -79,22 +79,26 @@ public abstract class Strategy {
 	 * this method applies the effect that is appropriate
 	 */
 	protected void applyEffects(){
-		if(getBurnTimes() > 0){
-			setBurnTimes(getBurnTimes() - 1);
-			setAlive(!getFighter().takeDamge(getBurnDamage()));
+		if(getCount() == 5){
+			if(getBurnTimes() > 0){
+				setBurnTimes(getBurnTimes() - 1);
+				setAlive(!getFighter().takeDamge(getBurnDamage()));
+				System.out.println(getBurnDamage() + " Burning damge taken by: " + getFighter().getName()+ " at: " + (3-getBurnTimes()) +" Times");
+			}
+			
+			if(getFreezeTimes() > 0 ){
+				setFreezeTimes(getFreezeTimes() - 1 );
+			}else{
+				setFreeze(false);
+			}
+			
+			if(getFearTiems() > 0){
+				setFearTiems(getFearTiems() - 1);
+			}else{
+				setFear(false);
+			}
 		}
-		
-		if(getFreezeTimes() > 0 ){
-			setFreezeTimes(getFreezeTimes() - 1 );
-		}else{
-			setFreeze(false);
-		}
-		
-		if(getFreezeTimes() > 0){
-			setFreezeTimes(getFreezeTimes() - 1);
-		}else{
-			setFear(false);
-		}
+
 	}
 	/**
 	 * apply fear effect
@@ -103,7 +107,7 @@ public abstract class Strategy {
 	 */
 	public void activeFearEffect(int fearTimes,Fighter attacker){
 		setFearTiems(fearTimes);
-		getGame().getLocations().get(attacker);
+		setFearTarget(getGame().getLocations().get(attacker));
 		setFear(true);
 	}
 	/**
@@ -120,6 +124,7 @@ public abstract class Strategy {
 	public void activeSlayingEffect()
 	{
 		setAlive(false);
+		System.out.println("slaying effect active: " + getFighter().getName() + " " + isAlive());
 	}
 	
 	public void activeFreezeEffect(int freezeTimes){

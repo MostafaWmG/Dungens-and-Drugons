@@ -22,7 +22,7 @@ public class Frightening extends ItemDecorator {
 			System.out.println("CHARACTER HAS NO WEAPON.");
 		}else{
 			int fearTimes = item.getEnchantmentPoint();
-			System.out.println("Freeze Times: " + fearTimes);
+			System.out.println("Fear Times: " + fearTimes);
 			
 			target.getStrategy().activeFearEffect(fearTimes,attacker);
 			decoratedItem.specialEffect(attacker,target);

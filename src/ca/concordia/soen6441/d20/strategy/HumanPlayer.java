@@ -1,11 +1,16 @@
 package ca.concordia.soen6441.d20.strategy;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
+import ca.concordia.soen6441.d20.item.Chest;
 /**
  * One subclass of Strategy class in strategy pattern.
  * This strategy is for a player character controlled by the user. It requires user 
@@ -33,6 +38,7 @@ public class HumanPlayer extends Strategy {
 		setGame(game);
 		
 		while(getCount() > 0){
+			System.out.println("ENTER HUMAN PLAYER LOOP: ");
 			setOrigin(game.getCurrentLocation()); 
 			setDestinationUp(new Location(getOrigin().getX(),getOrigin().getY()-1));
 			setDestinationDown(new Location(getOrigin().getX(),getOrigin().getY()+1));
@@ -59,7 +65,12 @@ public class HumanPlayer extends Strategy {
 				
 				threadSleep();
 			}else{
-				if(isAlive()){
+				if(!isAlive()){
+					DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+					Date dateobj = new Date();
+					Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+					getGame().getMap().putFromFighterToChest(getFighter(),chest);
+					getGame().getMap().setGameObjectInstanceAtLocation(getOrigin(),new GameObjectInstance(chest, getGame().getMap()));
 					game.getGameView().removeDeadFighter(getOrigin());
 					System.out.println("Fighter: "+ getFighter().getName() + " Dies because of weapon effects" );
 				}
@@ -186,21 +197,25 @@ public class HumanPlayer extends Strategy {
 		temp = checkDestination(getGame(),getDestinationUp());
 		if(temp.equals("Enemy")){
 			getGame().moveUP();
+			setCanAttack(false);
 		}else{
 			System.out.println("attack down");
 			temp = checkDestination(getGame(),getDestinationDown());
 			if(temp.equals("Enemy")){
 				getGame().moveDown();
+				setCanAttack(false);
 			}else{
 				System.out.println("attack left");
 				temp = checkDestination(getGame(),getDestinationLeft());
 				if(temp.equals("Enemy")){
 					getGame().moveLeft();
+					setCanAttack(false);
 				}else{
 					System.out.println("attack right");
 					temp = checkDestination(getGame(),getDestinationRight());
 					if(temp.equals("Enemy")){
 						getGame().moveRight();
+						setCanAttack(false);
 					}else{
 						System.out.println("interact");
 						if(isCanInteract()){

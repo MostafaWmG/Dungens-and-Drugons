@@ -1,10 +1,15 @@
 package ca.concordia.soen6441.d20.strategy;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import ca.concordia.soen6441.controller.Game;
 import ca.concordia.soen6441.d20.common.Location;
 import ca.concordia.soen6441.d20.fighter.Fighter;
+import ca.concordia.soen6441.d20.gamemap.element.GameObjectInstance;
+import ca.concordia.soen6441.d20.item.Chest;
 /**
  * 
  * One subclass of Strategy class in strategy pattern.
@@ -44,7 +49,12 @@ public class ComputerPlayer extends Strategy{
 					System.out.println("COMPUTER Waiting: ");
 				}
 			}else{
-				if(isAlive()){
+				if(!isAlive()){
+					DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+					Date dateobj = new Date();
+					Chest chest = new Chest(fighter.getName() +df.format(dateobj));
+					getGame().getMap().putFromFighterToChest(getFighter(),chest);
+					getGame().getMap().setGameObjectInstanceAtLocation(getOrigin(),new GameObjectInstance(chest, getGame().getMap()));
 					game.getGameView().removeDeadFighter(getOrigin());
 					System.out.println("Fighter: "+ getFighter().getName() + " Dies because of weapon effects" );
 				}
