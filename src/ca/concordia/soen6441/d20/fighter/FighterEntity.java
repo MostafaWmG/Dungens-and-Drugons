@@ -40,6 +40,7 @@ public class FighterEntity extends GameObjectEntity implements Serializable {
 	//TODO Fighters, armors and some other game objects have level. So I don't think we should put level here
 	//Maybe we need to put it in GameObject
 	private int level;
+	private boolean isHumanPlayer;
 	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable(
 			name="FIGHTER_ABILITIES",
@@ -194,5 +195,16 @@ public class FighterEntity extends GameObjectEntity implements Serializable {
 	public void setFighterType(String fighterType) {
 		this.fighterType = fighterType;
 	}
-	
+	/**
+	 * @return the isHumanPlayer
+	 */
+	public boolean isHumanPlayer() {
+		return isHumanPlayer;
+	}
+	/**
+	 * @param isHumanPlayer the isHumanPlayer to set
+	 */
+	public void setHumanPlayer(boolean isHumanPlayer) {
+		this.isHumanPlayer = isHumanPlayer;
+	}		
 }

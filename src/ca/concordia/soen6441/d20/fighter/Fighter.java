@@ -21,6 +21,8 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 import ca.concordia.soen6441.d20.item.Item;
 import ca.concordia.soen6441.d20.item.ItemEntity;
 import ca.concordia.soen6441.d20.item.ItemEnum;
+import ca.concordia.soen6441.d20.strategy.ComputerPlayer;
+import ca.concordia.soen6441.d20.strategy.HumanPlayer;
 import ca.concordia.soen6441.d20.strategy.Strategy;
 
 /**
@@ -111,6 +113,10 @@ public class Fighter extends GameObject {
 		setAttack(entity.getAttackBonus().createAttackBonus());
 		setDamage(entity.getDamageBonus().createDamageBonus());
 		setHitPoint(entity.getHitPoint().createHitPoint());
+		if (isHumanPlayer())
+			setStrategy(new HumanPlayer(this));
+		else
+			setStrategy(new ComputerPlayer(this));
 		setAbilitiesListener();
 		showAll();
 		showBackPack();
@@ -980,5 +986,20 @@ public class Fighter extends GameObject {
 	 */
 	public void setStrategy(Strategy strategy) {
 		this.strategy = strategy;
+		if (strategy instanceof HumanPlayer)
+			setIsHumanPlayer(true);
+		else
+			setIsHumanPlayer(false);
+			
+	}
+	
+	public boolean isHumanPlayer()
+	{
+		return getCharacterEntity().isHumanPlayer();
+	}
+	
+	public void setIsHumanPlayer(boolean isHumanPlayer)
+	{
+		getCharacterEntity().setHumanPlayer(isHumanPlayer);
 	}
 }
