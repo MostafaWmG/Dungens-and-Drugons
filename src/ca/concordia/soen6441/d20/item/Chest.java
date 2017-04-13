@@ -11,7 +11,7 @@ import ca.concordia.soen6441.d20.gamemap.element.GameObject;
 import ca.concordia.soen6441.d20.gamemap.element.GameObjectEntity;
 
 /**
- * this is a container for items.
+ * this class implements the chest which is a container for items that character will wear or collects.
  * @author wmg
  *
  */
@@ -193,7 +193,11 @@ public class Chest extends GameObject implements ILevelUp,IRoot{
 			}	
 		}
 	}
-
+	/**
+	 * This method checks that the specified item exist in chest or not.
+	 * @param item item to check
+	 * @return true if the item is not in the chest
+	 */
 	public boolean isNullItem(Item item){
 		if(item.getAttributeType() == null && item.getEnchantmentType() == null){
 			return true;
