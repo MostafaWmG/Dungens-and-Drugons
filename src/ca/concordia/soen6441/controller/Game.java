@@ -189,7 +189,7 @@ public class Game implements Runnable {
 			}
 		}
 		
-		if(!isOrdered())
+		if(!isOrdered() && test)
 			orderFighters();
 
 		if(test){
