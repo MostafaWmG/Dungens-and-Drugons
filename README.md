@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README #
 
 ## Procedures for every task ##
@@ -36,3 +37,6 @@ git commit --message="Issue #XX Fixing a bug..."
 
 * Repo owner or admin
 * Other community or team contact
+=======
+# Dungens-and-Drugons
+>>>>>>> 5f0d32a771cc72084b972d221df3d9223a931ac5
