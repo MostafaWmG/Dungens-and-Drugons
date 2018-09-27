@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 derby.log
 dungeonsdb/
 
 # The following lines are from https://raw.githubusercontent.com/github/gitignore/master/Global/Eclipse.gitignore
-<<<<<<< HEAD
 derby.log
 dungeonsdb/
 
@@ -88,7 +86,6 @@ local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
->>>>>>> 5f0d32a771cc72084b972d221df3d9223a931ac5
 .metadata
 bin/
 tmp/
@@ -169,4 +166,3 @@ local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
->>>>>>> 5f0d32a771cc72084b972d221df3d9223a931ac5
